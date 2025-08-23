@@ -1,16 +1,14 @@
 {
-  "manifest_version": 3,
-  "name": "LINE Docs to Markdown",
-  "version": "1.0",
-  "description": "LINE DevelopersのドキュメントページからMarkdownをコピーします。",
-  "permissions": [
-    "clipboardWrite"
-  ],
-  "content_scripts": [
-    {
-      "matches": ["https://developers.line.biz/ja/docs/*"],
-      "js": ["content.js"],
-      "css": ["style.css"]
-    }
-  ]
+	"manifest_version": 3,
+	"name": "LINE Docs to Markdown",
+	"version": "1.0",
+	"description": "LINE DevelopersのドキュメントページからMarkdownをコピーします。",
+	"permissions": ["clipboardWrite"],
+	"content_scripts": [
+		{
+			"matches": ["https://developers.line.biz/ja/docs/*"],
+			"js": ["content.js"],
+			"css": ["style.css"]
+		}
+	]
 }
