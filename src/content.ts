@@ -33,25 +33,27 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   turndownService.use(gfm);
 
   turndownService.addRule("customBlock", {
-    filter: (node: any) =>
-      node.classList && node.classList.contains("custom-block"),
-    replacement: (_content: string, node: any) => {
+    filter: (node: HTMLElement) => !!node.classList?.contains("custom-block"),
+    replacement: (_content: string, node: HTMLElement) => {
       const title =
         node.querySelector(".custom-block-title")?.textContent?.trim() || "";
-      const bodyContent = node.querySelector(".custom-block-content");
+      const bodyContent = node.querySelector(
+        ".custom-block-content",
+      ) as HTMLElement;
       const body = bodyContent ? turndownService.turndown(bodyContent) : "";
       return `> **${title}**\n>\n> ${body.replace(/\n\n/g, "\n> \n> ").replace(/\n/g, "\n> ")}\n\n`;
     },
   });
 
   turndownService.addRule("absoluteLink", {
-    filter: (node: any) => node.nodeName === "A" && node.getAttribute("href"),
-    replacement: (content: string, node: any) => {
+    filter: (node: HTMLElement) =>
+      node.nodeName === "A" && !!node.getAttribute("href"),
+    replacement: (content: string, node: HTMLElement) => {
       let href = node.getAttribute("href");
-      if (href && href.startsWith("/")) {
-        href = "https://developers.line.biz" + href;
+      if (href?.startsWith("/")) {
+        href = `https://developers.line.biz${href}`;
       }
-      return "[" + content + "](" + href + ")";
+      return `[${content}](${href})`;
     },
   });
 
@@ -63,7 +65,9 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   // ヘッダーアンカーを削除
   contentElement
     .querySelectorAll("a.header-anchor")
-    .forEach((el: any) => el.remove());
+    .forEach((el: HTMLElement) => {
+      el.remove();
+    });
 
   const markdown = turndownService.turndown(contentElement);
 
