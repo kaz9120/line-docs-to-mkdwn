@@ -1,24 +1,24 @@
 {
-	"name": "line-docs-to-mkdwn",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"preview": "vite preview",
-		"lint": "biome lint .",
-		"format": "biome format . --write",
-		"check": "biome check . --write"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.2.0",
-		"@types/turndown": "^5.0.5",
-		"typescript": "~5.8.3",
-		"vite": "^7.1.2"
-	},
-	"dependencies": {
-		"turndown": "^7.2.1",
-		"turndown-plugin-gfm": "^1.0.2"
-	}
+  "name": "line-docs-to-mkdwn",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "biome lint .",
+    "fmt": "biome format . --write",
+    "check": "biome check . --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@types/turndown": "^5.0.5",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "turndown": "^7.2.1",
+    "turndown-plugin-gfm": "^1.0.2"
+  }
 }

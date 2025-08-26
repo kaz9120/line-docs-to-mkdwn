@@ -1,25 +1,25 @@
 .copy-markdown-button {
-	background-color: #f6f8fa;
-	border: 1px solid rgba(27, 31, 35, 0.15);
-	border-radius: 6px;
-	color: #24292e;
-	cursor: pointer;
-	font-family:
-		-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-	font-size: 13px;
-	font-weight: 500;
-	line-height: 20px;
-	padding: 5px 16px;
-	margin-left: 12px;
-	transition: background-color 0.2s ease-in-out;
+  background-color: #f6f8fa;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  color: #24292e;
+  cursor: pointer;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 5px 16px;
+  margin-left: 12px;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .copy-markdown-button:hover {
-	background-color: #f3f4f6;
+  background-color: #f3f4f6;
 }
 
 .copy-markdown-button.success {
-	background-color: #e6ffed;
-	border-color: #28a745;
-	color: #28a745;
+  background-color: #e6ffed;
+  border-color: #28a745;
+  color: #28a745;
 }
