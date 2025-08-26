@@ -1,7 +1,5 @@
 declare module "turndown-plugin-gfm" {
-  export const gfm: {
-    tables: boolean;
-    strikethrough: boolean;
-    taskListItems: boolean;
-  };
+  type TurndownPlugin = () => void;
+  const gfm: TurndownPlugin;
+  export { gfm };
 }

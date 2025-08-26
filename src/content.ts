@@ -34,10 +34,12 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
 
   turndownService.addRule("customBlock", {
     filter: (node: HTMLElement) => !!node.classList?.contains("custom-block"),
-    replacement: (_content: string, node: HTMLElement) => {
+    replacement: (_content: string, node: Node) => {
       const title =
-        node.querySelector(".custom-block-title")?.textContent?.trim() || "";
-      const bodyContent = node.querySelector(
+        (node as Element)
+          .querySelector(".custom-block-title")
+          ?.textContent?.trim() || "";
+      const bodyContent = (node as Element).querySelector(
         ".custom-block-content",
       ) as HTMLElement;
       const body = bodyContent ? turndownService.turndown(bodyContent) : "";
@@ -48,8 +50,8 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   turndownService.addRule("absoluteLink", {
     filter: (node: HTMLElement) =>
       node.nodeName === "A" && !!node.getAttribute("href"),
-    replacement: (content: string, node: HTMLElement) => {
-      let href = node.getAttribute("href");
+    replacement: (content: string, node: Node) => {
+      let href = (node as Element).getAttribute("href");
       if (href?.startsWith("/")) {
         href = `https://developers.line.biz${href}`;
       }
@@ -63,11 +65,9 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   if (!contentElement) return;
 
   // ヘッダーアンカーを削除
-  contentElement
-    .querySelectorAll("a.header-anchor")
-    .forEach((el: HTMLElement) => {
-      el.remove();
-    });
+  contentElement.querySelectorAll("a.header-anchor").forEach((el: Element) => {
+    el.remove();
+  });
 
   const markdown = turndownService.turndown(contentElement);
 
