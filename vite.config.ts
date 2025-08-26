@@ -1,5 +1,6 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
+import { copyFileSync } from "node:fs";
 
 export default defineConfig({
   build: {
@@ -23,4 +24,20 @@ export default defineConfig({
   define: {
     "process.env": {},
   },
+  plugins: [
+    {
+      name: "copy-extension-files",
+      writeBundle() {
+        // manifest.jsonとstyle.cssをdistにコピー
+        copyFileSync(
+          resolve(__dirname, "manifest.json"),
+          resolve(__dirname, "dist/manifest.json"),
+        );
+        copyFileSync(
+          resolve(__dirname, "src/style.css"),
+          resolve(__dirname, "dist/style.css"),
+        );
+      },
+    },
+  ],
 });
