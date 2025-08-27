@@ -1,6 +1,24 @@
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
 
+// SVGアイコンを生成する関数
+function createCopyIcon() {
+  return `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M4 2a2 2 0 0 1 2-2h4.5L14 3.5V12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3.707L11.293 1H6z"/>
+      <path d="M3.5 1.75a.25.25 0 0 0-.25.25v8.5a.25.25 0 0 0 .5 0V2a.75.75 0 0 1 .75-.75H8a.25.25 0 0 0 0-.5H3.5z"/>
+    </svg>
+  `;
+}
+
+function createCheckIcon() {
+  return `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.78-9.72a.75.75 0 0 0-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5z"/>
+    </svg>
+  `;
+}
+
 // ボタンを初期化する関数
 function initializeButton() {
   // ボタンが既に追加されていないか確認
@@ -14,16 +32,26 @@ function initializeButton() {
     return;
   }
 
-  // 1. ボタン要素を作成
+  // 1. コンテナを作成
+  const container = document.createElement("div");
+  container.className = "markdown-copy-container";
+
+  // 2. ボタン要素を作成
   const button = document.createElement("button");
   button.id = "copy-markdown-btn";
-  button.textContent = "Markdownコピー";
   button.className = "copy-markdown-button";
 
-  // 2. ボタンをページのタイトル横に追加
-  titleElement.appendChild(button);
+  // アイコンとテキストを設定
+  button.innerHTML = `
+    <span class="button-icon">${createCopyIcon()}</span>
+    <span class="button-text">Markdownコピー</span>
+  `;
 
-  // 3. ボタンがクリックされたときの処理
+  // 3. コンテナにボタンを追加し、タイトルの後に挿入
+  container.appendChild(button);
+  titleElement.parentNode?.insertBefore(container, titleElement.nextSibling);
+
+  // 4. ボタンがクリックされたときの処理
   button.addEventListener("click", (event) => {
     event.stopPropagation(); // イベントの伝播を停止
     copyMarkdownToClipboard(button);
@@ -174,15 +202,26 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
     .then(() => {
       console.log("✅ Markdownをクリップボードにコピーしました！");
       // 成功したことをユーザーにフィードバック
-      button.textContent = "コピー完了！";
+      const iconElement = button.querySelector(".button-icon");
+      const textElement = button.querySelector(".button-text");
+      if (iconElement && textElement) {
+        iconElement.innerHTML = createCheckIcon();
+        textElement.textContent = "コピー完了！";
+      }
       button.classList.add("success");
       setTimeout(() => {
-        button.textContent = "Markdownコピー";
+        if (iconElement && textElement) {
+          iconElement.innerHTML = createCopyIcon();
+          textElement.textContent = "Markdownコピー";
+        }
         button.classList.remove("success");
       }, 2000); // 2秒後に元に戻す
     })
     .catch((err) => {
       console.error("クリップボードへのコピーに失敗:", err);
-      button.textContent = "コピー失敗";
+      const textElement = button.querySelector(".button-text");
+      if (textElement) {
+        textElement.textContent = "コピー失敗";
+      }
     });
 }
