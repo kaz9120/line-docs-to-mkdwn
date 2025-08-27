@@ -117,6 +117,26 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   // プラグインとカスタムルールの追加
   turndownService.use(gfm);
 
+  // テーブルセル内にリストがある場合はHTMLタグを保持するルール
+  turndownService.addRule("tableCellWithList", {
+    filter: (node: HTMLElement) => {
+      return (
+        (node.nodeName === "TD" || node.nodeName === "TH") &&
+        node.querySelector &&
+        !!(node.querySelector("ul") || node.querySelector("ol"))
+      );
+    },
+    replacement: (_content: string, node: Node) => {
+      const element = node as Element;
+      // セル内のHTMLをそのまま保持し、余分な空白を削除
+      const innerHTML = element.innerHTML
+        .trim()
+        .replace(/\n\s+/g, "\n")
+        .replace(/\s+/g, " ");
+      return innerHTML;
+    },
+  });
+
   turndownService.addRule("customBlock", {
     filter: (node: HTMLElement) => !!node.classList?.contains("custom-block"),
     replacement: (_content: string, node: Node) => {
