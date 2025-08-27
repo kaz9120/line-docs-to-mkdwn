@@ -92,15 +92,36 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   turndownService.addRule("customBlock", {
     filter: (node: HTMLElement) => !!node.classList?.contains("custom-block"),
     replacement: (_content: string, node: Node) => {
+      const element = node as Element;
       const title =
-        (node as Element)
-          .querySelector(".custom-block-title")
-          ?.textContent?.trim() || "";
-      const bodyContent = (node as Element).querySelector(
+        element.querySelector(".custom-block-title")?.textContent?.trim() || "";
+      const bodyContent = element.querySelector(
         ".custom-block-content",
       ) as HTMLElement;
       const body = bodyContent ? turndownService.turndown(bodyContent) : "";
-      return `> **${title}**\n>\n> ${body.replace(/\n\n/g, "\n> \n> ").replace(/\n/g, "\n> ")}\n\n`;
+
+      // Qiita記法に変換
+      let noteType = "info";
+      if (
+        element.classList.contains("danger") ||
+        element.classList.contains("alert")
+      ) {
+        noteType = "alert";
+      } else if (element.classList.contains("warning")) {
+        noteType = "warn";
+      } else if (
+        element.classList.contains("tip") ||
+        element.classList.contains("info")
+      ) {
+        noteType = "info";
+      }
+
+      let content = body;
+      if (title) {
+        content = `${title}\n${body}`;
+      }
+
+      return `:::note ${noteType}\n${content}\n:::\n\n`;
     },
   });
 
@@ -116,6 +137,19 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
     },
   });
 
+  turndownService.addRule("absoluteImage", {
+    filter: (node: HTMLElement) =>
+      node.nodeName === "IMG" && !!node.getAttribute("src"),
+    replacement: (_content: string, node: Node) => {
+      let src = (node as Element).getAttribute("src");
+      const alt = (node as Element).getAttribute("alt") || "";
+      if (src?.startsWith("/")) {
+        src = `https://developers.line.biz${src}`;
+      }
+      return `![${alt}](${src})`;
+    },
+  });
+
   const contentElement = document
     .querySelector(".content__default")
     ?.cloneNode(true) as HTMLElement;
@@ -125,6 +159,13 @@ function copyMarkdownToClipboard(button: HTMLButtonElement) {
   contentElement.querySelectorAll("a.header-anchor").forEach((el: Element) => {
     el.remove();
   });
+
+  // Markdownコピーボタンを削除
+  contentElement
+    .querySelectorAll("#copy-markdown-btn")
+    .forEach((el: Element) => {
+      el.remove();
+    });
 
   const markdown = turndownService.turndown(contentElement);
 
