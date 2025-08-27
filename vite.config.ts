@@ -1,6 +1,6 @@
+import { copyFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
-import { copyFileSync } from "node:fs";
 
 export default defineConfig({
   build: {
