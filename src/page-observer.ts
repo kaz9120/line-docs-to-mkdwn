@@ -1,6 +1,6 @@
+import { initializeButton } from "./button-manager";
 import { SELECTORS, TIMEOUTS } from "./constants";
 import { isElementAdded } from "./dom-utils";
-import { initializeButton } from "./button-manager";
 
 export class PageObserver {
   private mutationObserver?: MutationObserver;

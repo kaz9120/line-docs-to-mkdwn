@@ -9,13 +9,20 @@
     "preview": "vite preview",
     "lint": "biome lint .",
     "fmt": "biome format . --write",
-    "check": "biome check . --write"
+    "check": "biome check . --write",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
     "@types/turndown": "^5.0.5",
+    "@vitest/ui": "^3.2.4",
+    "happy-dom": "^15.11.7",
+    "jsdom": "^26.1.0",
     "typescript": "~5.8.3",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "turndown": "^7.2.1",

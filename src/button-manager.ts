@@ -1,10 +1,10 @@
-import { CSS_CLASSES, BUTTON_TEXTS, TIMEOUTS } from "./constants";
-import { createCopyIcon, createCheckIcon } from "./icons";
-import { findPageTitle, findCopyButton, insertAfterElement } from "./dom-utils";
 import {
-  copyMarkdownToClipboard,
   type ClipboardResult,
+  copyMarkdownToClipboard,
 } from "./clipboard-manager";
+import { BUTTON_TEXTS, CSS_CLASSES, TIMEOUTS } from "./constants";
+import { findCopyButton, findPageTitle, insertAfterElement } from "./dom-utils";
+import { createCheckIcon, createCopyIcon } from "./icons";
 
 export function createCopyButton(): HTMLButtonElement {
   const button = document.createElement("button");

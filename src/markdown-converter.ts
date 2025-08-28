@@ -1,6 +1,6 @@
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
-import { SELECTORS, CSS_CLASSES, BASE_URL, NOTE_TYPES } from "./constants";
+import { BASE_URL, CSS_CLASSES, NOTE_TYPES, SELECTORS } from "./constants";
 import { cloneContentElement, removeElements } from "./dom-utils";
 
 function createTurndownService(): TurndownService {
