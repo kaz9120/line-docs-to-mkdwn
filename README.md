@@ -30,12 +30,6 @@ LINE DevelopersのドキュメントページからMarkdownをコピーできる
 npm install
 ```
 
-### 開発サーバー起動
-
-```bash
-npm run dev
-```
-
 ### ビルド
 
 ```bash
@@ -57,13 +51,32 @@ npm run fmt
 npm run check
 ```
 
-### Chrome拡張機能としてインストール
+### 動作確認・デバッグ
+
+Chrome拡張機能は通常のWebサーバーでは動作しないため、以下の手順で確認：
 
 1. `npm run build` でビルドを実行
 2. Chrome拡張機能管理ページ（`chrome://extensions/`）を開く
 3. 「デベロッパーモード」を有効にする
 4. 「パッケージ化されていない拡張機能を読み込む」をクリック
 5. プロジェクトルートフォルダを選択
+6. LINE Developersのドキュメントページで動作確認
+
+**注意**: コード変更後は必ず`npm run build`を実行し、拡張機能の更新ボタンをクリックしてください。
+
+## アーキテクチャ
+
+### モジュール構成
+- **関心の分離**: 機能別にモジュールを分割し、単一責任の原則を適用
+- **型安全性**: TypeScriptによる厳密な型チェック
+- **設定の一元管理**: 定数・設定値は`constants.ts`で管理
+- **テスタビリティ**: 各機能を独立したモジュールに分割
+
+### 主要モジュール
+- `page-observer.ts` - ページ変更監視とライフサイクル管理
+- `button-manager.ts` - UI要素の作成と状態管理
+- `markdown-converter.ts` - HTML→Markdown変換処理
+- `clipboard-manager.ts` - クリップボード操作と結果管理
 
 ## 技術スタック
 
