@@ -17,30 +17,9 @@ function createTurndownService(): TurndownService {
 }
 
 function addCustomRules(turndownService: TurndownService): void {
-  addTableCellWithListRule(turndownService);
   addCustomBlockRule(turndownService);
   addAbsoluteLinkRule(turndownService);
   addAbsoluteImageRule(turndownService);
-}
-
-function addTableCellWithListRule(turndownService: TurndownService): void {
-  turndownService.addRule("tableCellWithList", {
-    filter: (node: HTMLElement) => {
-      return (
-        (node.nodeName === "TD" || node.nodeName === "TH") &&
-        node.querySelector &&
-        !!(node.querySelector("ul") || node.querySelector("ol"))
-      );
-    },
-    replacement: (_content: string, node: Node) => {
-      const element = node as Element;
-      const innerHTML = element.innerHTML
-        .trim()
-        .replace(/\n\s+/g, "\n")
-        .replace(/\s+/g, " ");
-      return innerHTML;
-    },
-  });
 }
 
 function addCustomBlockRule(turndownService: TurndownService): void {
@@ -115,12 +94,47 @@ function preprocessContentElement(contentElement: HTMLElement): void {
   removeElements(contentElement, SELECTORS.HEADER_ANCHOR);
   removeElements(contentElement, SELECTORS.COPY_BUTTON);
   preprocessTableBreakTags(contentElement);
+  preprocessTableListTags(contentElement);
 }
 
 function preprocessTableBreakTags(contentElement: HTMLElement): void {
   const tableCells = contentElement.querySelectorAll("td, th");
   tableCells.forEach((cell) => {
     cell.innerHTML = cell.innerHTML.replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+  });
+}
+
+const tableListPlaceholders: Map<string, string> = new Map();
+
+function preprocessTableListTags(contentElement: HTMLElement): void {
+  tableListPlaceholders.clear();
+  let listCounter = 0;
+
+  const tableCells = contentElement.querySelectorAll("td, th");
+  tableCells.forEach((cell) => {
+    const ulElements = cell.querySelectorAll("ul");
+    ulElements.forEach((ul) => {
+      const placeholder = `ULLISTPLACEHOLDER${listCounter}END`;
+      const originalHtml = ul.outerHTML
+        .replace(/\n\s*/g, "")
+        .replace(/\s+/g, " ")
+        .replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+      tableListPlaceholders.set(placeholder, originalHtml);
+      ul.outerHTML = placeholder;
+      listCounter++;
+    });
+
+    const olElements = cell.querySelectorAll("ol");
+    olElements.forEach((ol) => {
+      const placeholder = `OLLISTPLACEHOLDER${listCounter}END`;
+      const originalHtml = ol.outerHTML
+        .replace(/\n\s*/g, "")
+        .replace(/\s+/g, " ")
+        .replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+      tableListPlaceholders.set(placeholder, originalHtml);
+      ol.outerHTML = placeholder;
+      listCounter++;
+    });
   });
 }
 
@@ -135,8 +149,13 @@ export function convertToMarkdown(): string | null {
   const turndownService = createTurndownService();
   let markdown = turndownService.turndown(contentElement);
 
-  // プレースホルダーを<br/>に変換
+  // プレースホルダーを元のHTMLに戻す
   markdown = markdown.replace(/BRLINEBREAKTAG/g, "<br/>");
+
+  // リストプレースホルダーを元のHTMLに戻す
+  for (const [placeholder, originalHtml] of tableListPlaceholders.entries()) {
+    markdown = markdown.replace(placeholder, originalHtml);
+  }
 
   return markdown;
 }

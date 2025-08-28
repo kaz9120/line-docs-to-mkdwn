@@ -4,6 +4,7 @@ import { convertToMarkdown } from "../markdown-converter";
 import {
   basicContent,
   complexContent,
+  complexTableContent,
   contentWithAnchorAndButton,
   customBlockContent,
   emptyContent,
@@ -122,6 +123,40 @@ describe("convertToMarkdown", () => {
 
       expect(tableLines.length).toBeGreaterThanOrEqual(3); // ヘッダー、区切り線、データ行
       expect(tableLines.find((line) => line.includes("---"))).toBeDefined(); // 区切り線
+    });
+
+    it("リストと改行タグを含む複合的なテーブルを適切に処理する", () => {
+      document.body.innerHTML = complexTableContent;
+      const result = convertToMarkdown();
+
+      expect(result).not.toBeNull();
+      if (!result) return;
+
+      // ヘッダーの<br>タグが<br/>に変換されている
+      expect(result).toContain("iOS版LINE<br/>Android版LINE");
+      expect(result).toContain("PC版LINE<br/>（macOS版、Windows版）");
+
+      // リストが適切に含まれている
+      expect(result).toContain("<ul>");
+      expect(result).toContain("<li>");
+      expect(result).toContain("maxWidth");
+      expect(result).toContain("maxHeight");
+
+      // バージョン情報が含まれている
+      expect(result).toContain("11.22.0以上");
+      expect(result).toContain("7.7.0以上");
+
+      // テーブル構造の基本チェック
+      const lines = result.split("\n");
+      const tableLines = lines.filter(
+        (line) => line.includes("|") && line.trim() !== "",
+      );
+
+      // ヘッダー、区切り線、データ行が存在
+      expect(tableLines.length).toBeGreaterThanOrEqual(3);
+
+      // 区切り線が存在
+      expect(tableLines.find((line) => line.includes("---"))).toBeDefined();
     });
   });
 

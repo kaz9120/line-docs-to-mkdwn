@@ -149,6 +149,32 @@ export const tableWithBreakTags = `
   </div>
 `;
 
+export const complexTableContent = `
+  <div class="content__default">
+    <table class="parameter-table">
+      <thead>
+        <tr>
+          <th>機能</th>
+          <th style="text-align: center;">iOS版LINE<br>Android版LINE</th>
+          <th style="text-align: center;">PC版LINE<br>（macOS版、Windows版）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <ul>
+              <li><a href="/ja/reference/messaging-api/#box" class="">ボックス</a>の<code>maxWidth</code>プロパティ</li>
+              <li><a href="/ja/reference/messaging-api/#box" class="">ボックス</a>の<code>maxHeight</code>プロパティ</li>
+            </ul>
+          </td>
+          <td style="text-align: center;">11.22.0以上</td>
+          <td style="text-align: center;">7.7.0以上</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+`;
+
 export const emptyContent = `
   <div class="content__default">
   </div>
