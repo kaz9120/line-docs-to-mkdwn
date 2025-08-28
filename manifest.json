@@ -6,7 +6,7 @@
   "permissions": ["clipboardWrite"],
   "content_scripts": [
     {
-      "matches": ["https://developers.line.biz/ja/docs/*"],
+      "matches": ["https://developers.line.biz/*"],
       "js": ["content.js"],
       "css": ["style.css"]
     }
