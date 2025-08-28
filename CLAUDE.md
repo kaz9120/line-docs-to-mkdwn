@@ -9,6 +9,11 @@ npm run fmt       # Biomeでフォーマット実行
 npm run check     # リント + フォーマット実行
 ```
 
+### テスト
+```bash
+npm test          # Vitestでユニットテスト実行
+```
+
 ### ビルド
 ```bash
 npm run build     # TypeScript + Viteでビルド
@@ -53,6 +58,7 @@ LINE Developersのドキュメントページ用Chrome拡張機能。
 - Chrome Extensions Manifest V3
 - Turndown（HTML→Markdown変換）
 - GFM（GitHub Flavored Markdown）サポート
+- Vitest + jsdom（テスト）
 - Biome（リント・フォーマット）
 
 ### アーキテクチャ原則
@@ -62,6 +68,7 @@ LINE Developersのドキュメントページ用Chrome拡張機能。
 - テスタビリティ：機能を独立したモジュールに分割
 
 ### 注意事項
-- `npm run lint`と`npm run build`の両方が通ることを必ず確認する
+- `npm test`、`npm run lint`、`npm run build`の全てが通ることを必ず確認する
 - 新機能は適切なモジュールに実装し、必要に応じて新モジュールを作成
+- コア機能の変更時は対応するテストケースも更新する
 - Biomeのルール変更は不可
