@@ -12,7 +12,8 @@
     "check": "biome check . --write",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "package": "npm run build && cd dist && zip -r ../line-docs-to-mkdwn.zip ."
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
