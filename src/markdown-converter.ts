@@ -114,6 +114,14 @@ function addAbsoluteImageRule(turndownService: TurndownService): void {
 function preprocessContentElement(contentElement: HTMLElement): void {
   removeElements(contentElement, SELECTORS.HEADER_ANCHOR);
   removeElements(contentElement, SELECTORS.COPY_BUTTON);
+  preprocessTableBreakTags(contentElement);
+}
+
+function preprocessTableBreakTags(contentElement: HTMLElement): void {
+  const tableCells = contentElement.querySelectorAll("td, th");
+  tableCells.forEach((cell) => {
+    cell.innerHTML = cell.innerHTML.replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+  });
 }
 
 export function convertToMarkdown(): string | null {
@@ -125,5 +133,10 @@ export function convertToMarkdown(): string | null {
   preprocessContentElement(contentElement);
 
   const turndownService = createTurndownService();
-  return turndownService.turndown(contentElement);
+  let markdown = turndownService.turndown(contentElement);
+
+  // プレースホルダーを<br/>に変換
+  markdown = markdown.replace(/BRLINEBREAKTAG/g, "<br/>");
+
+  return markdown;
 }

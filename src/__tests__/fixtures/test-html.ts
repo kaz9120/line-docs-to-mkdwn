@@ -123,6 +123,32 @@ export const complexContent = `
   </div>
 `;
 
+export const tableWithBreakTags = `
+  <div class="content__default">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>方法1<br>Messaging APIの<br>「<a href="/ja/reference/messaging-api/#get-profile">プロフィール情報を取得する</a>」</th>
+          <th>方法2<br>LINEログインの<br>「<a href="/ja/reference/line-login/#userinfo">ユーザー情報を取得する</a>」</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ユーザーID</td>
+          <td>✅（<code>userId</code>）</td>
+          <td>✅（<code>sub</code>）</td>
+        </tr>
+        <tr>
+          <td>表示名</td>
+          <td>✅（<code>displayName</code>）</td>
+          <td>✅（<code>name</code>）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+`;
+
 export const emptyContent = `
   <div class="content__default">
   </div>

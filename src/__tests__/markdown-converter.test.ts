@@ -10,6 +10,7 @@ import {
   imageContent,
   linkContent,
   tableContent,
+  tableWithBreakTags,
 } from "./fixtures/test-html";
 
 describe("convertToMarkdown", () => {
@@ -87,6 +88,40 @@ describe("convertToMarkdown", () => {
       expect(result).toContain("<li>リスト項目1</li>");
       expect(result).toContain("<li>リスト項目2</li>");
       expect(result).toContain("</ul>");
+    });
+
+    it("テーブルセル内の改行タグを適切に処理する", () => {
+      document.body.innerHTML = tableWithBreakTags;
+      const result = convertToMarkdown();
+
+      expect(result).not.toBeNull();
+      if (!result) return;
+
+      // ヘッダー内の<br>タグが<br/>に変換されている
+      expect(result).toContain("<br/>");
+      expect(result).toContain(
+        "方法1<br/>Messaging APIの<br/>「[プロフィール情報を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-profile)」",
+      );
+      expect(result).toContain(
+        "方法2<br/>LINEログインの<br/>「[ユーザー情報を取得する](https://developers.line.biz/ja/reference/line-login/#userinfo)」",
+      );
+
+      // セル内のコンテンツが正しく含まれている
+      expect(result).toContain("ユーザーID");
+      expect(result).toContain("✅（`userId`）");
+      expect(result).toContain("✅（`sub`）");
+      expect(result).toContain("表示名");
+      expect(result).toContain("✅（`displayName`）");
+      expect(result).toContain("✅（`name`）");
+
+      // テーブル構造の基本チェック
+      const lines = result.split("\n");
+      const tableLines = lines.filter(
+        (line) => line.includes("|") && line.trim() !== "",
+      );
+
+      expect(tableLines.length).toBeGreaterThanOrEqual(3); // ヘッダー、区切り線、データ行
+      expect(tableLines.find((line) => line.includes("---"))).toBeDefined(); // 区切り線
     });
   });
 
