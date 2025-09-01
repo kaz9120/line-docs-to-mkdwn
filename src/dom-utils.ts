@@ -1,19 +1,19 @@
-import { NEWS_SELECTORS, SELECTORS } from "./constants";
+import { SELECTORS } from "./constants";
+import { detectCurrentPageStrategy } from "./strategies";
 
 export function findPageTitle(): HTMLElement | null {
-  // 既存のドキュメントページのタイトル
-  const docTitle = document.querySelector(SELECTORS.PAGE_TITLE);
-  if (docTitle) {
-    return docTitle as HTMLElement;
-  }
-
-  // ニュースページのタイトル
-  const newsTitle = document.querySelector(NEWS_SELECTORS.NEWS_TITLE);
-  return newsTitle as HTMLElement | null;
+  const strategy = detectCurrentPageStrategy();
+  return strategy?.getTitleElement() || null;
 }
 
 export function findContentElement(): HTMLElement | null {
-  return document.querySelector(SELECTORS.CONTENT_DEFAULT);
+  const strategy = detectCurrentPageStrategy();
+  return strategy?.getContentElement() || null;
+}
+
+export function findButtonAnchorElement(): HTMLElement | null {
+  const strategy = detectCurrentPageStrategy();
+  return strategy?.getButtonAnchorElement() || null;
 }
 
 export function findCopyButton(): HTMLElement | null {
@@ -51,8 +51,13 @@ export function isElementAdded(
   );
 }
 
+// Deprecated: Strategy パターンでfindButtonAnchorElement()を使用
 export function findNewsDate(): HTMLElement | null {
-  return document.querySelector(NEWS_SELECTORS.NEWS_DATE);
+  const strategy = detectCurrentPageStrategy();
+  if (strategy?.name === "news") {
+    return strategy.getButtonAnchorElement();
+  }
+  return null;
 }
 
 export function cloneContentElement(): HTMLElement | null {

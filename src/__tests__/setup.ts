@@ -5,6 +5,7 @@ Object.defineProperty(window, "location", {
   value: {
     href: "https://developers.line.biz/ja/docs/",
     origin: "https://developers.line.biz",
+    pathname: "/ja/docs/",
   },
   writable: true,
 });
