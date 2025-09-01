@@ -3,7 +3,12 @@ import {
   copyMarkdownToClipboard,
 } from "./clipboard-manager";
 import { BUTTON_TEXTS, CSS_CLASSES, TIMEOUTS } from "./constants";
-import { findCopyButton, findPageTitle, insertAfterElement } from "./dom-utils";
+import {
+  findCopyButton,
+  findNewsDate,
+  findPageTitle,
+  insertAfterElement,
+} from "./dom-utils";
 import { createCheckIcon, createCopyIcon } from "./icons";
 
 export function createCopyButton(): HTMLButtonElement {
@@ -32,6 +37,19 @@ export function initializeButton(): boolean {
     return false;
   }
 
+  // ニュースページの場合は日付の後に配置
+  const newsDateElement = findNewsDate();
+  if (newsDateElement) {
+    const container = createButtonContainer();
+    const button = createCopyButton();
+
+    container.appendChild(button);
+    insertAfterElement(container, newsDateElement);
+
+    return true;
+  }
+
+  // ドキュメントページの場合はタイトルの後に配置
   const titleElement = findPageTitle();
   if (!titleElement) {
     return false;

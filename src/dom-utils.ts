@@ -1,7 +1,15 @@
-import { SELECTORS } from "./constants";
+import { NEWS_SELECTORS, SELECTORS } from "./constants";
 
 export function findPageTitle(): HTMLElement | null {
-  return document.querySelector(SELECTORS.PAGE_TITLE);
+  // 既存のドキュメントページのタイトル
+  const docTitle = document.querySelector(SELECTORS.PAGE_TITLE);
+  if (docTitle) {
+    return docTitle as HTMLElement;
+  }
+
+  // ニュースページのタイトル
+  const newsTitle = document.querySelector(NEWS_SELECTORS.NEWS_TITLE);
+  return newsTitle as HTMLElement | null;
 }
 
 export function findContentElement(): HTMLElement | null {
@@ -41,6 +49,10 @@ export function isElementAdded(
     (node) =>
       node.matches?.(selector) || node.querySelector?.(selector) !== null,
   );
+}
+
+export function findNewsDate(): HTMLElement | null {
+  return document.querySelector(NEWS_SELECTORS.NEWS_DATE);
 }
 
 export function cloneContentElement(): HTMLElement | null {

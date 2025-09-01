@@ -9,6 +9,18 @@ export const SELECTORS = {
   CUSTOM_BLOCK_CONTENT: ".custom-block-content",
 } as const;
 
+export const NEWS_SELECTORS = {
+  NEWS_TITLE: ".news-title",
+  NEWS_DATE: ".text-caption-date",
+  NEWS_CONTENT: ".news-article-content-slot",
+  // 除外する要素
+  NEWS_LINK_HIDDEN: ".news-link.hidden",
+  TAGS_SECTION: ".tags",
+  PREV_NEXT_SECTION: "hr + .flex",
+  SIDE_COLUMN: ".side-column",
+  HR_SEPARATOR: "hr", // 区切り線
+} as const;
+
 export const CSS_CLASSES = {
   CONTAINER: "markdown-copy-container",
   BUTTON: "copy-markdown-button",

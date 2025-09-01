@@ -1,6 +1,12 @@
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
-import { BASE_URL, CSS_CLASSES, NOTE_TYPES, SELECTORS } from "./constants";
+import {
+  BASE_URL,
+  CSS_CLASSES,
+  NEWS_SELECTORS,
+  NOTE_TYPES,
+  SELECTORS,
+} from "./constants";
 import { cloneContentElement, removeElements } from "./dom-utils";
 
 function createTurndownService(): TurndownService {
@@ -20,6 +26,7 @@ function addCustomRules(turndownService: TurndownService): void {
   addCustomBlockRule(turndownService);
   addAbsoluteLinkRule(turndownService);
   addAbsoluteImageRule(turndownService);
+  addNewsElementRules(turndownService);
 }
 
 function addCustomBlockRule(turndownService: TurndownService): void {
@@ -90,9 +97,33 @@ function addAbsoluteImageRule(turndownService: TurndownService): void {
   });
 }
 
+function addNewsElementRules(turndownService: TurndownService): void {
+  // ニュースタイトルをh1として扱う
+  turndownService.addRule("newsTitle", {
+    filter: (node: HTMLElement) => !!node.classList?.contains("news-title"),
+    replacement: (content: string) => `# ${content.trim()}\n\n`,
+  });
+
+  // hr要素を除外
+  turndownService.addRule("excludeHR", {
+    filter: "hr",
+    replacement: () => "",
+  });
+}
+
 function preprocessContentElement(contentElement: HTMLElement): void {
+  // 共通要素の削除
   removeElements(contentElement, SELECTORS.HEADER_ANCHOR);
   removeElements(contentElement, SELECTORS.COPY_BUTTON);
+
+  // ニュースページ固有要素の削除
+  removeElements(contentElement, NEWS_SELECTORS.NEWS_LINK_HIDDEN);
+  removeElements(contentElement, NEWS_SELECTORS.TAGS_SECTION);
+  removeElements(contentElement, NEWS_SELECTORS.PREV_NEXT_SECTION);
+  removeElements(contentElement, NEWS_SELECTORS.SIDE_COLUMN);
+  removeElements(contentElement, NEWS_SELECTORS.HR_SEPARATOR);
+
+  // テーブル処理
   preprocessTableBreakTags(contentElement);
   preprocessTableListTags(contentElement);
 }
