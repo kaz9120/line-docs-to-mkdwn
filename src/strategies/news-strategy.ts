@@ -5,7 +5,7 @@ import { removeElements } from "../dom-utils";
 
 export class NewsPageStrategy extends BasePageStrategy {
   readonly name = "news";
-  readonly urlPattern = /\/news\//;
+  readonly urlPattern = /\/news\/\d{4}\/\d{2}\/\d{2}\//;
 
   readonly selectors = {
     title: NEWS_SELECTORS.NEWS_TITLE,
