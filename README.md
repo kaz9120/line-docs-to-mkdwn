@@ -19,6 +19,38 @@ LINE DevelopersのドキュメントページからMarkdownをコピーできる
 
 ## 開発
 
+### 開発フロー
+
+このプロジェクトはGitHub Flowを採用しています：
+
+1. **フィーチャーブランチの作成**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **変更の実装**
+   - コードの修正・追加を行う
+
+3. **品質チェック**
+   ```bash
+   npm run check  # リント・フォーマット
+   npm test       # テスト実行
+   npm run build  # ビルド確認
+   ```
+
+4. **変更をプッシュ**
+   ```bash
+   git add .
+   git commit -m "your commit message"
+   git push origin feature/your-feature-name
+   ```
+
+5. **プルリクエストの作成**
+   - GitHub WebUIからプルリクエストを作成
+   - レビュー完了後、mainブランチにマージ
+
+**注意**: mainブランチに直接pushすることはできません。
+
 ### 必要な環境
 
 - Node.js 18+

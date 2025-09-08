@@ -28,6 +28,50 @@ Chrome拡張機能のため、通常のWebサーバーでは動作しません�
 3. 「パッケージ化されていない拡張機能を読み込む」でプロジェクトルートを選択
 4. LINE Developersサイトで動作確認
 
+## 開発フロー（GitHub Flow）
+
+このプロジェクトはGitHub Flowを採用しています。**mainブランチに直接pushすることは禁止**されています。
+
+### 開発手順
+
+1. **フィーチャーブランチの作成**
+   ```bash
+   git checkout -b feature/description-of-change
+   ```
+   - ブランチ名は `feature/`, `fix/`, `docs/` などのプレフィックスを推奨
+
+2. **変更の実装**
+   - 必要なコード変更を実装
+
+3. **品質チェック（必須）**
+   ```bash
+   npm run check     # リント・フォーマット
+   npm test          # ユニットテスト
+   npm run build     # ビルド確認
+   ```
+   - **すべてのチェックが通ることを必ず確認**
+
+4. **変更のコミット・プッシュ**
+   ```bash
+   git add .
+   git commit -m "適切なコミットメッセージ"
+   git push origin feature/description-of-change
+   ```
+
+5. **プルリクエストの作成（ghコマンド使用）**
+   ```bash
+   gh pr create --title "プルリクエストのタイトル" --body "変更内容の説明"
+   ```
+
+6. **レビュー・マージ**
+   - レビュアー（kaz9120）がレビューを実施
+   - 承認後、mainブランチにマージ
+
+### 注意事項
+- mainブランチへの直接pushは技術的に防止されています
+- プルリクエスト作成には必ずghコマンドを使用してください
+- 品質チェックが通らない場合は修正してから再度プッシュしてください
+
 ## プロジェクト概要
 
 LINE Developersのドキュメントページ用Chrome拡張機能。
