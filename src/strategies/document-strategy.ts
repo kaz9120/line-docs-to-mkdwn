@@ -4,7 +4,7 @@ import { BasePageStrategy } from "../page-strategies";
 
 export class DocumentPageStrategy extends BasePageStrategy {
   readonly name = "document";
-  readonly urlPattern = /\/(docs|reference|faq|glossary|ja\/docs)\//;
+  readonly urlPattern = /\/(docs|reference|faq|ja\/docs)\//;
 
   readonly selectors = {
     title: SELECTORS.PAGE_TITLE,

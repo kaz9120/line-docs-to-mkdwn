@@ -21,6 +21,14 @@ export const NEWS_SELECTORS = {
   HR_SEPARATOR: "hr", // 区切り線
 } as const;
 
+export const GLOSSARY_SELECTORS = {
+  GLOSSARY_PAGE: ".glossary-page",
+  GLOSSARY_SECTION: ".glossary-section",
+  GLOSSARY_SECTION_HEADER: ".glossary-section-header",
+  GLOSSARY_ENTRY: ".glossary-entry",
+  SIDE_COLUMN: ".side-column", // 索引部分（除外対象）
+} as const;
+
 export const CSS_CLASSES = {
   CONTAINER: "markdown-copy-container",
   BUTTON: "copy-markdown-button",

@@ -6,6 +6,11 @@
   border-bottom: 1px solid #e1e4e8;
 }
 
+/* 用語集ページ専用のスタイル */
+.glossary-page .markdown-copy-container {
+  margin-bottom: 32px;
+}
+
 /* ボタンのスタイル（Stripeライク） */
 .copy-markdown-button {
   background: transparent;
