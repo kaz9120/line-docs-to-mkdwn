@@ -1,6 +1,6 @@
-import { BasePageStrategy } from "../page-strategies";
 import { SELECTORS } from "../constants";
 import { removeElements } from "../dom-utils";
+import { BasePageStrategy } from "../page-strategies";
 
 export class DocumentPageStrategy extends BasePageStrategy {
   readonly name = "document";

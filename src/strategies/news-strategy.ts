@@ -1,7 +1,7 @@
 import type TurndownService from "turndown";
-import { BasePageStrategy } from "../page-strategies";
 import { NEWS_SELECTORS, SELECTORS } from "../constants";
 import { removeElements } from "../dom-utils";
+import { BasePageStrategy } from "../page-strategies";
 
 export class NewsPageStrategy extends BasePageStrategy {
   readonly name = "news";

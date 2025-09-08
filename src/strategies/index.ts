@@ -1,6 +1,6 @@
+import type { PageStrategy } from "../page-strategies";
 import { DocumentPageStrategy } from "./document-strategy";
 import { NewsPageStrategy } from "./news-strategy";
-import type { PageStrategy } from "../page-strategies";
 
 export const PAGE_STRATEGIES: ReadonlyArray<PageStrategy> = [
   new NewsPageStrategy(),
