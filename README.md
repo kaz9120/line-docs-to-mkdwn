@@ -53,7 +53,7 @@ LINE DevelopersのドキュメントページからMarkdownをコピーできる
 
 ### 必要な環境
 
-- Node.js 18+
+- Node.js 22+
 - npm
 
 ### セットアップ
@@ -131,7 +131,28 @@ Chrome拡張機能は通常のWebサーバーでは動作しないため、以�
 - Turndown Plugin GFM
 - Biome（リント・フォーマット）
 - Vitest + jsdom（テスト）
+- GitHub Actions（CI/CD）
 - Chrome Extensions Manifest V3
+
+## CI/CD
+
+プロジェクトではGitHub Actionsを使用した自動化を導入しています：
+
+### プルリクエスト時
+- コード品質チェック（リント・フォーマット）
+- ユニットテスト実行
+- ビルド検証
+- テストカバレッジ生成
+
+### mainブランチマージ時
+- 本番環境相当のビルド
+- Chrome拡張機能パッケージの作成
+- アーティファクトの保存
+
+### 定期実行
+- 依存関係の脆弱性監査（週1回）
+
+すべてのプルリクエストはCIチェックの通過が必須です。
 
 ## ライセンス
 
