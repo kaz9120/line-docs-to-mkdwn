@@ -1,0 +1,45 @@
+name: Dependency Audit
+
+on:
+  schedule:
+    # Run every Monday at 9:00 AM UTC (6:00 PM JST)
+    - cron: '0 9 * * 1'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        
+      - name: Check for vulnerabilities
+        run: |
+          # Check for high severity vulnerabilities
+          # npm audit exits with code 0 if no vulnerabilities, non-zero if vulnerabilities found
+          if npm audit --audit-level=high; then
+            echo "No high severity vulnerabilities found."
+          else
+            echo "High severity vulnerabilities detected!"
+            echo "Running detailed audit report:"
+            npm audit --audit-level=high
+            exit 1
+          fi
