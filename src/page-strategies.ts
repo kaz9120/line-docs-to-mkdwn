@@ -1,4 +1,5 @@
 import type TurndownService from "turndown";
+import type { FrontMatter } from "./global";
 
 export interface PageSelectors {
   title?: string;
@@ -16,6 +17,7 @@ export interface PageStrategy {
   getTitleElement(): HTMLElement | null;
   getContentElement(): HTMLElement | null;
   getButtonAnchorElement(): HTMLElement | null;
+  getMetadata(): FrontMatter;
   addCustomRules?(turndownService: TurndownService): void;
   preprocessContent?(contentElement: HTMLElement): void;
 }
@@ -52,6 +54,7 @@ export abstract class BasePageStrategy implements PageStrategy {
     return null;
   }
 
+  abstract getMetadata(): FrontMatter;
   preprocessContent?(contentElement: HTMLElement): void;
   addCustomRules?(turndownService: TurndownService): void;
 }

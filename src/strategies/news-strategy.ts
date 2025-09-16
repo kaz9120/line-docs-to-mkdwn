@@ -1,6 +1,7 @@
 import type TurndownService from "turndown";
 import { NEWS_SELECTORS, SELECTORS } from "../constants";
 import { removeElements } from "../dom-utils";
+import type { NewsFrontMatter } from "../global";
 import { BasePageStrategy } from "../page-strategies";
 
 export class NewsPageStrategy extends BasePageStrategy {
@@ -54,5 +55,25 @@ export class NewsPageStrategy extends BasePageStrategy {
     this.selectors.excludeElements?.forEach((selector) => {
       removeElements(contentElement, selector);
     });
+  }
+
+  getMetadata(): NewsFrontMatter {
+    return {
+      url: window.location.href,
+      copied_at: new Date().toISOString(),
+      tags: this.extractTags(),
+    };
+  }
+
+  private extractTags(): string[] | undefined {
+    const tagsElement = document.querySelector(NEWS_SELECTORS.TAGS_SECTION);
+    if (!tagsElement) return undefined;
+
+    const tagElements = tagsElement.querySelectorAll("a");
+    if (tagElements.length === 0) return undefined;
+
+    return Array.from(tagElements)
+      .map((tag) => tag.textContent?.trim() || "")
+      .filter(Boolean);
   }
 }
