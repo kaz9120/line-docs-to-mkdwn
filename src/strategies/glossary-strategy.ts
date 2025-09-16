@@ -1,6 +1,7 @@
 import type TurndownService from "turndown";
 import { GLOSSARY_SELECTORS, SELECTORS } from "../constants";
 import { removeElements } from "../dom-utils";
+import type { GlossaryFrontMatter } from "../global";
 import { BasePageStrategy } from "../page-strategies";
 
 export class GlossaryPageStrategy extends BasePageStrategy {
@@ -76,7 +77,7 @@ export class GlossaryPageStrategy extends BasePageStrategy {
       });
     });
 
-    return table + "\n";
+    return `${table}\n`;
   }
 
   private cleanTermText(text: string): string {
@@ -91,5 +92,12 @@ export class GlossaryPageStrategy extends BasePageStrategy {
     text = text.replace(/\s+/g, " "); // 連続する空白を単一の空白に
     text = text.replace(/\|/g, "\\|"); // パイプ文字をエスケープ
     return text.trim();
+  }
+
+  getMetadata(): GlossaryFrontMatter {
+    return {
+      url: window.location.href,
+      copied_at: new Date().toISOString(),
+    };
   }
 }

@@ -2,6 +2,7 @@ import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
 import { BASE_URL, CSS_CLASSES, NOTE_TYPES, SELECTORS } from "./constants";
 import { cloneContentElement } from "./dom-utils";
+import { generateFrontMatter } from "./frontmatter-generator";
 import { detectCurrentPageStrategy } from "./strategies";
 
 function createTurndownService(): TurndownService {
@@ -147,6 +148,11 @@ function preprocessTableListTags(contentElement: HTMLElement): void {
 }
 
 export function convertToMarkdown(): string | null {
+  const strategy = detectCurrentPageStrategy();
+  if (!strategy) {
+    return null;
+  }
+
   const contentElement = cloneContentElement();
   if (!contentElement) {
     return null;
@@ -165,5 +171,9 @@ export function convertToMarkdown(): string | null {
     markdown = markdown.replace(placeholder, originalHtml);
   }
 
-  return markdown;
+  // フロントマターを追加
+  const metadata = strategy.getMetadata();
+  const frontMatter = generateFrontMatter(metadata);
+
+  return frontMatter + markdown;
 }

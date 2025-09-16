@@ -32,11 +32,14 @@ describe("convertToMarkdown", () => {
       expect(result).toContain("*   リスト項目2");
     });
 
-    it("空のコンテンツの場合は空文字列を返す", () => {
+    it("空のコンテンツの場合はフロントマターのみ返す", () => {
       document.body.innerHTML = emptyContent;
       const result = convertToMarkdown();
 
-      expect(result).toBe("");
+      expect(result).toContain("---");
+      expect(result).toContain("url: https://developers.line.biz");
+      expect(result).toContain("copied_at: ");
+      expect(result).toContain("---\n");
     });
 
     it("コンテンツ要素が見つからない場合はnullを返す", () => {
