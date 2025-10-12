@@ -18,6 +18,14 @@ describe("convertToMarkdown", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     document.body.innerHTML = "";
+    // ドキュメントページとして検出されるようにURLをモック
+    // @ts-expect-error
+    delete window.location;
+    // @ts-expect-error
+    window.location = {
+      href: "https://developers.line.biz/ja/docs/messaging-api/",
+      pathname: "/ja/docs/messaging-api/",
+    };
   });
 
   describe("基本的な変換機能", () => {
