@@ -1,6 +1,7 @@
 export const SELECTORS = {
-  PAGE_TITLE: "#page-title",
-  CONTENT_DEFAULT: ".content__default",
+  // ドキュメントページ用セレクタ
+  PAGE_TITLE: ".markdown-content h1",
+  CONTENT_DEFAULT: ".markdown-content > div",
   HEADER_ANCHOR: "a.header-anchor",
   COPY_BUTTON: "#copy-markdown-btn",
   TABLE_CELL_WITH_LIST: "TD, TH",
@@ -10,9 +11,11 @@ export const SELECTORS = {
 } as const;
 
 export const NEWS_SELECTORS = {
+  NEWS_ARTICLE: ".news-article",
   NEWS_TITLE: ".news-title",
   NEWS_DATE: ".text-caption-date",
   NEWS_CONTENT: ".news-article-content-slot",
+  NEWS_CONTENT_WRAPPER: ".news-content",
   // 除外する要素
   NEWS_LINK_HIDDEN: ".news-link.hidden",
   TAGS_SECTION: ".tags",

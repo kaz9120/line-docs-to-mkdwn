@@ -10,7 +10,7 @@ export class NewsPageStrategy extends BasePageStrategy {
 
   readonly selectors = {
     title: NEWS_SELECTORS.NEWS_TITLE,
-    content: SELECTORS.CONTENT_DEFAULT,
+    content: NEWS_SELECTORS.NEWS_CONTENT,
     buttonAnchor: NEWS_SELECTORS.NEWS_DATE, // 日付の下にボタンを配置
     excludeElements: [
       SELECTORS.HEADER_ANCHOR,
@@ -22,6 +22,13 @@ export class NewsPageStrategy extends BasePageStrategy {
       NEWS_SELECTORS.HR_SEPARATOR,
     ],
   };
+
+  getContentElement(): HTMLElement | null {
+    // .news-article-content-slot を直接取得
+    return document.querySelector(
+      NEWS_SELECTORS.NEWS_CONTENT,
+    ) as HTMLElement | null;
+  }
 
   getButtonAnchorElement(): HTMLElement | null {
     // ニュースページでは日付の下にボタンを配置
@@ -54,6 +61,34 @@ export class NewsPageStrategy extends BasePageStrategy {
     // 共通要素の削除
     this.selectors.excludeElements?.forEach((selector) => {
       removeElements(contentElement, selector);
+    });
+
+    // 見出し内のアンカー構造を正規化
+    this.normalizeHeadings(contentElement);
+  }
+
+  private normalizeHeadings(contentElement: HTMLElement): void {
+    // h2, h3, h4などの見出し要素を処理
+    const headings = contentElement.querySelectorAll("h2, h3, h4, h5, h6");
+    headings.forEach((heading) => {
+      // 見出し内の不要なdiv要素を削除（アンカー用の空div）
+      const anchorDiv = heading.querySelector(
+        "div.w-px.h-px.absolute",
+      ) as HTMLElement;
+      if (anchorDiv) {
+        anchorDiv.remove();
+      }
+
+      // 見出し内のaタグからテキストを抽出して、見出し要素に直接設定
+      const anchorLink = heading.querySelector(
+        "a.markdown-header-anchor",
+      ) as HTMLAnchorElement;
+      if (anchorLink) {
+        const textContent = anchorLink.textContent?.trim() || "";
+        if (textContent) {
+          heading.textContent = textContent;
+        }
+      }
     });
   }
 
