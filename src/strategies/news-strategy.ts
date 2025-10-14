@@ -10,11 +10,12 @@ export class NewsPageStrategy extends BasePageStrategy {
 
   readonly selectors = {
     title: NEWS_SELECTORS.NEWS_TITLE,
-    content: NEWS_SELECTORS.NEWS_CONTENT,
+    content: NEWS_SELECTORS.NEWS_ARTICLE, // .news-article 全体を取得
     buttonAnchor: NEWS_SELECTORS.NEWS_DATE, // 日付の下にボタンを配置
     excludeElements: [
       SELECTORS.HEADER_ANCHOR,
       SELECTORS.COPY_BUTTON,
+      ".markdown-copy-container", // ボタンコンテナを除外
       NEWS_SELECTORS.NEWS_LINK_HIDDEN,
       NEWS_SELECTORS.TAGS_SECTION,
       NEWS_SELECTORS.PREV_NEXT_SECTION,
@@ -24,9 +25,9 @@ export class NewsPageStrategy extends BasePageStrategy {
   };
 
   getContentElement(): HTMLElement | null {
-    // .news-article-content-slot を直接取得
+    // .news-article 全体を取得（タイトル、日付、コンテンツすべて含む）
     return document.querySelector(
-      NEWS_SELECTORS.NEWS_CONTENT,
+      NEWS_SELECTORS.NEWS_ARTICLE,
     ) as HTMLElement | null;
   }
 
@@ -44,10 +45,18 @@ export class NewsPageStrategy extends BasePageStrategy {
   }
 
   addCustomRules(turndownService: TurndownService): void {
-    // ニュースタイトルをh1として扱う
+    // ニュースタイトル(.news-title)をh1として扱う
     turndownService.addRule("newsTitle", {
       filter: (node: HTMLElement) => !!node.classList?.contains("news-title"),
       replacement: (content: string) => `# ${content.trim()}\n\n`,
+    });
+
+    // 日付(.text-caption-date)を削除（フロントマターに含まれるため）
+    turndownService.addRule("newsDate", {
+      filter: (node: HTMLElement) =>
+        node.classList?.contains("text-caption-date") ||
+        node.classList?.contains("mb-20"),
+      replacement: () => "",
     });
 
     // hr要素を除外
