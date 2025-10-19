@@ -1,6 +1,12 @@
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
-import { BASE_URL, CSS_CLASSES, NOTE_TYPES, SELECTORS } from "./constants";
+import {
+  BASE_URL,
+  CSS_CLASSES,
+  NOTE_TYPES,
+  PLACEHOLDER_STRINGS,
+  SELECTORS,
+} from "./constants";
 import { cloneContentElement } from "./dom-utils";
 import { generateFrontMatter } from "./frontmatter-generator";
 import { detectCurrentPageStrategy } from "./strategies";
@@ -109,7 +115,10 @@ function preprocessContentElement(contentElement: HTMLElement): void {
 function preprocessTableBreakTags(contentElement: HTMLElement): void {
   const tableCells = contentElement.querySelectorAll("td, th");
   tableCells.forEach((cell) => {
-    cell.innerHTML = cell.innerHTML.replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+    cell.innerHTML = cell.innerHTML.replace(
+      /<br\s*\/?>/gi,
+      PLACEHOLDER_STRINGS.BR_LINE_BREAK,
+    );
   });
 }
 
@@ -123,11 +132,11 @@ function preprocessTableListTags(contentElement: HTMLElement): void {
   tableCells.forEach((cell) => {
     const ulElements = cell.querySelectorAll("ul");
     ulElements.forEach((ul) => {
-      const placeholder = `ULLISTPLACEHOLDER${listCounter}END`;
+      const placeholder = `${PLACEHOLDER_STRINGS.UL_LIST_PREFIX}${listCounter}${PLACEHOLDER_STRINGS.LIST_SUFFIX}`;
       const originalHtml = ul.outerHTML
         .replace(/\n\s*/g, "")
         .replace(/\s+/g, " ")
-        .replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+        .replace(/<br\s*\/?>/gi, PLACEHOLDER_STRINGS.BR_LINE_BREAK);
       tableListPlaceholders.set(placeholder, originalHtml);
       ul.outerHTML = placeholder;
       listCounter++;
@@ -135,11 +144,11 @@ function preprocessTableListTags(contentElement: HTMLElement): void {
 
     const olElements = cell.querySelectorAll("ol");
     olElements.forEach((ol) => {
-      const placeholder = `OLLISTPLACEHOLDER${listCounter}END`;
+      const placeholder = `${PLACEHOLDER_STRINGS.OL_LIST_PREFIX}${listCounter}${PLACEHOLDER_STRINGS.LIST_SUFFIX}`;
       const originalHtml = ol.outerHTML
         .replace(/\n\s*/g, "")
         .replace(/\s+/g, " ")
-        .replace(/<br\s*\/?>/gi, "BRLINEBREAKTAG");
+        .replace(/<br\s*\/?>/gi, PLACEHOLDER_STRINGS.BR_LINE_BREAK);
       tableListPlaceholders.set(placeholder, originalHtml);
       ol.outerHTML = placeholder;
       listCounter++;
@@ -164,7 +173,10 @@ export function convertToMarkdown(): string | null {
   let markdown = turndownService.turndown(contentElement);
 
   // プレースホルダーを元のHTMLに戻す
-  markdown = markdown.replace(/BRLINEBREAKTAG/g, "<br/>");
+  markdown = markdown.replace(
+    new RegExp(PLACEHOLDER_STRINGS.BR_LINE_BREAK, "g"),
+    "<br/>",
+  );
 
   // リストプレースホルダーを元のHTMLに戻す
   for (const [placeholder, originalHtml] of tableListPlaceholders.entries()) {

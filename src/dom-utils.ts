@@ -51,15 +51,6 @@ export function isElementAdded(
   );
 }
 
-// Deprecated: Strategy パターンでfindButtonAnchorElement()を使用
-export function findNewsDate(): HTMLElement | null {
-  const strategy = detectCurrentPageStrategy();
-  if (strategy?.name === "news") {
-    return strategy.getButtonAnchorElement();
-  }
-  return null;
-}
-
 export function cloneContentElement(): HTMLElement | null {
   const contentElement = findContentElement();
   if (!contentElement) {
