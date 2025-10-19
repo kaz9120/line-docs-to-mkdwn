@@ -65,3 +65,10 @@ export const NOTE_TYPES = {
   WARN: "warn",
   ALERT: "alert",
 } as const;
+
+export const PLACEHOLDER_STRINGS = {
+  BR_LINE_BREAK: "BRLINEBREAKTAG",
+  UL_LIST_PREFIX: "ULLISTPLACEHOLDER",
+  OL_LIST_PREFIX: "OLLISTPLACEHOLDER",
+  LIST_SUFFIX: "END",
+} as const;
