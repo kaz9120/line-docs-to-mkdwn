@@ -26,9 +26,14 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Get Playwright version
         id: playwright-version
-        run: echo "version=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache Playwright browsers
         uses: actions/cache@v4
@@ -36,9 +41,6 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Install Playwright browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -52,13 +54,13 @@ jobs:
         run: npm run build
 
       - name: Run Playwright tests
-        run: npm run test:e2e
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run test:e2e
         env:
           CI: true
 
       - name: Generate HTML report
         if: always()
-        run: npm run generate-html-report
+        run: npm run generate-html-report || echo "HTML report generation skipped (no test results)"
 
       - name: Generate GitHub Summary
         if: always()
@@ -68,16 +70,17 @@ jobs:
           echo "### Test Execution Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          if [ -d "test-results/markdown-outputs" ]; then
+          if [ -d "test-results/markdown-outputs" ] && [ -n "$(ls -A test-results/markdown-outputs/*.json 2>/dev/null)" ]; then
             echo "| URL | Status | Length | Timestamp |" >> $GITHUB_STEP_SUMMARY
             echo "|-----|--------|--------|-----------|" >> $GITHUB_STEP_SUMMARY
 
             for file in test-results/markdown-outputs/*.json; do
               if [ -f "$file" ]; then
-                url=$(jq -r '.url' "$file")
-                status=$(jq -r '.status' "$file")
-                length=$(jq -r '.length' "$file")
-                timestamp=$(jq -r '.timestamp' "$file")
+                # Using jq to parse JSON (jq is pre-installed on ubuntu-latest)
+                url=$(jq -r '.url // "N/A"' "$file" 2>/dev/null || echo "N/A")
+                status=$(jq -r '.status // "unknown"' "$file" 2>/dev/null || echo "unknown")
+                length=$(jq -r '.length // 0' "$file" 2>/dev/null || echo "0")
+                timestamp=$(jq -r '.timestamp // "N/A"' "$file" 2>/dev/null || echo "N/A")
 
                 echo "| $url | ✅ $status | $length chars | $timestamp |" >> $GITHUB_STEP_SUMMARY
               fi
@@ -90,10 +93,12 @@ jobs:
             echo "- Total Markdown files: $(ls -1 test-results/markdown-outputs/*.md 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
           else
             echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Tests may have failed before generating results. Check the test logs above." >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Upload Playwright report
-        if: always()
+        if: always() && hashFiles('playwright-report/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
@@ -101,7 +106,7 @@ jobs:
           retention-days: 30
 
       - name: Upload test results
-        if: always()
+        if: always() && hashFiles('test-results/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: test-results
@@ -109,7 +114,7 @@ jobs:
           retention-days: 30
 
       - name: Upload HTML report
-        if: always()
+        if: always() && hashFiles('test-report.html') != ''
         uses: actions/upload-artifact@v4
         with:
           name: html-report
