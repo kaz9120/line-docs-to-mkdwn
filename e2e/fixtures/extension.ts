@@ -15,7 +15,8 @@ export const test = base.extend<{
   /**
    * Create a persistent context with the Chrome extension loaded
    */
-  context: async (_, use) => {
+  // biome-ignore lint/correctness/noEmptyPattern: Playwright fixture requires object destructuring
+  context: async ({}, use) => {
     // Path to the built extension (dist directory)
     const pathToExtension = path.join(__dirname, "../../dist");
 
