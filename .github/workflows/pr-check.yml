@@ -12,7 +12,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+        with:
+          fetch-depth: 0  # Fetch all history for version comparison
+
+      - name: Check version against main branch
+        run: |
+          # Save current branch package.json
+          cp package.json package.json.current
+
+          # Get main branch package.json
+          git show origin/main:package.json > package.json.main
+
+          # Restore current branch package.json
+          mv package.json.current package.json
+
+          # Run version check script
+          node scripts/check-version.js
+
+          # Clean up
+          rm package.json.main
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
