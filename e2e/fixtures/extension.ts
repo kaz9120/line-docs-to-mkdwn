@@ -1,5 +1,9 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { type BrowserContext, test as base, chromium } from "@playwright/test";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Custom fixtures for Chrome Extension testing
