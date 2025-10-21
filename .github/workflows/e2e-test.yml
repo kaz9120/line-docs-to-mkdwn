@@ -1,0 +1,117 @@
+name: E2E Tests
+
+on:
+  push:
+    branches:
+      - main
+      - 'claude/**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Playwright E2E Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Run Playwright tests
+        run: npm run test:e2e
+        env:
+          CI: true
+
+      - name: Generate HTML report
+        if: always()
+        run: npm run generate-html-report
+
+      - name: Generate GitHub Summary
+        if: always()
+        run: |
+          echo "## 📋 Markdown Copy Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -d "test-results/markdown-outputs" ]; then
+            echo "| URL | Status | Length | Timestamp |" >> $GITHUB_STEP_SUMMARY
+            echo "|-----|--------|--------|-----------|" >> $GITHUB_STEP_SUMMARY
+
+            for file in test-results/markdown-outputs/*.json; do
+              if [ -f "$file" ]; then
+                url=$(jq -r '.url' "$file")
+                status=$(jq -r '.status' "$file")
+                length=$(jq -r '.length' "$file")
+                timestamp=$(jq -r '.timestamp' "$file")
+
+                echo "| $url | ✅ $status | $length chars | $timestamp |" >> $GITHUB_STEP_SUMMARY
+              fi
+            done
+
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Files Generated" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- Total JSON files: $(ls -1 test-results/markdown-outputs/*.json 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+            echo "- Total Markdown files: $(ls -1 test-results/markdown-outputs/*.md 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 30
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: test-report.html
+          retention-days: 30
