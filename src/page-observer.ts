@@ -6,9 +6,6 @@ export class PageObserver {
   private mutationObserver?: MutationObserver;
   private urlWatcher?: number;
   private currentUrl: string;
-  private initRetryCount = 0;
-  private readonly MAX_INIT_RETRIES = 5;
-  private readonly INIT_RETRY_DELAY = 500;
 
   constructor() {
     this.currentUrl = window.location.href;
@@ -18,8 +15,32 @@ export class PageObserver {
     this.setupMutationObserver();
     this.setupUrlWatcher();
 
-    // Wait for DOM to be ready before initializing button
-    this.waitForDOMAndInitialize();
+    // 初期ロード時にDOMが完全に読み込まれるまで待つ
+    this.initializeButtonWhenReady();
+  }
+
+  private initializeButtonWhenReady(): void {
+    // DOMが既に読み込まれている場合は即座に実行
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
+      // 念のため少し遅延を入れてDOMが確実に構築されるのを待つ
+      setTimeout(() => {
+        initializeButton();
+      }, TIMEOUTS.BUTTON_INIT_DELAY);
+    } else {
+      // DOMの読み込みを待つ
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          setTimeout(() => {
+            initializeButton();
+          }, TIMEOUTS.BUTTON_INIT_DELAY);
+        },
+        { once: true },
+      );
+    }
   }
 
   public stop(): void {
@@ -75,54 +96,6 @@ export class PageObserver {
     setTimeout(() => {
       initializeButton();
     }, TIMEOUTS.BUTTON_INIT_DELAY);
-  }
-
-  /**
-   * Wait for DOM to be ready and initialize button with retry logic
-   */
-  private waitForDOMAndInitialize(): void {
-    // If DOM is already ready, try to initialize immediately
-    if (
-      document.readyState === "complete" ||
-      document.readyState === "interactive"
-    ) {
-      this.tryInitializeWithRetry();
-      return;
-    }
-
-    // Otherwise, wait for DOMContentLoaded
-    const initOnReady = () => {
-      this.tryInitializeWithRetry();
-    };
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initOnReady, {
-        once: true,
-      });
-    } else {
-      // Fallback: try immediately if readyState is unexpected
-      this.tryInitializeWithRetry();
-    }
-  }
-
-  /**
-   * Try to initialize button with retry logic
-   * This handles cases where DOM is ready but content is still loading
-   */
-  private tryInitializeWithRetry(): void {
-    const success = initializeButton();
-
-    // If initialization succeeded or we've exhausted retries, stop
-    if (success || this.initRetryCount >= this.MAX_INIT_RETRIES) {
-      this.initRetryCount = 0;
-      return;
-    }
-
-    // Retry after delay
-    this.initRetryCount++;
-    setTimeout(() => {
-      this.tryInitializeWithRetry();
-    }, this.INIT_RETRY_DELAY);
   }
 }
 
