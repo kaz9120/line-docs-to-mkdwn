@@ -15,6 +15,8 @@ export class GlossaryPageStrategy extends BasePageStrategy {
       SELECTORS.HEADER_ANCHOR,
       SELECTORS.COPY_BUTTON,
       GLOSSARY_SELECTORS.SIDE_COLUMN,
+      GLOSSARY_SELECTORS.GLOSSARY_SECTION_HEADER, // 索引文字を除外
+      "hr", // 区切り線を除外
     ],
   };
 
@@ -29,18 +31,6 @@ export class GlossaryPageStrategy extends BasePageStrategy {
         return this.convertGlossaryToTable(element);
       },
     });
-  }
-
-  preprocessContent(contentElement: HTMLElement): void {
-    // 基底クラスの共通処理を実行
-    super.preprocessContent(contentElement);
-
-    // タイトル要素を取得してcontentElementの先頭に追加
-    const titleElement = this.getTitleElement();
-    if (titleElement) {
-      const titleClone = titleElement.cloneNode(true) as HTMLElement;
-      contentElement.insertBefore(titleClone, contentElement.firstChild);
-    }
   }
 
   private convertGlossaryToTable(glossaryElement: Element): string {
