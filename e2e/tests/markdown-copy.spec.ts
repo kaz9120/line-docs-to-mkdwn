@@ -37,32 +37,20 @@ test.describe("Markdown Copy Button", () => {
    */
   for (const url of TEST_URLS) {
     test(`should copy markdown from ${url}`, async ({ page }, testInfo) => {
-      // Navigate to the test URL
-      await page.goto(url, { waitUntil: "networkidle" });
+      // Navigate to the test URL with faster load strategy
+      await page.goto(url, { waitUntil: "domcontentloaded" });
 
       // Wait for page content to load (important for LINE Developers docs)
       // The content script waits for this element before adding the button
-      await page.waitForSelector(".markdown-content h1", { timeout: 15000 });
-
-      // Wait additional time for content script to initialize and add button
-      await page.waitForTimeout(2000);
+      await page.waitForSelector(".markdown-content h1", { timeout: 10000 });
 
       // Wait for the copy button to appear (correct ID: copy-markdown-btn)
       const copyButton = page.locator("#copy-markdown-btn");
-      await expect(copyButton).toBeVisible({ timeout: 15000 });
+      await expect(copyButton).toBeVisible({ timeout: 10000 });
       await expect(copyButton).toHaveText("Markdownコピー");
-
-      // Take screenshot before clicking
-      await testInfo.attach("before-click", {
-        body: await page.screenshot(),
-        contentType: "image/png",
-      });
 
       // Click the copy button
       await copyButton.click();
-
-      // Wait for clipboard operation to complete
-      await page.waitForTimeout(500);
 
       // Read markdown content from clipboard
       const markdownContent = await page.evaluate(async () => {
@@ -76,40 +64,43 @@ test.describe("Markdown Copy Button", () => {
       // Verify it's actually Markdown (should contain heading markers)
       expect(markdownContent).toMatch(/^#/m);
 
-      // Create safe filename from URL
-      const safeFileName = url
-        .replace(/https?:\/\//, "")
-        .replace(/\//g, "_")
-        .replace(/[^a-zA-Z0-9_-]/g, "");
+      // Only save files and attach artifacts if SAVE_TEST_OUTPUTS is set
+      if (process.env.SAVE_TEST_OUTPUTS === "true") {
+        // Create safe filename from URL
+        const safeFileName = url
+          .replace(/https?:\/\//, "")
+          .replace(/\//g, "_")
+          .replace(/[^a-zA-Z0-9_-]/g, "");
 
-      // Create result object with metadata
-      const result = {
-        url: url,
-        markdown: markdownContent,
-        timestamp: new Date().toISOString(),
-        testName: testInfo.title,
-        status: "passed",
-        length: markdownContent.length,
-        duration: testInfo.duration,
-      };
+        // Create result object with metadata
+        const result = {
+          url: url,
+          markdown: markdownContent,
+          timestamp: new Date().toISOString(),
+          testName: testInfo.title,
+          status: "passed",
+          length: markdownContent.length,
+          duration: testInfo.duration,
+        };
 
-      // Save as JSON
-      const outputDir = path.join(
-        __dirname,
-        "../../test-results/markdown-outputs",
-      );
-      const jsonPath = path.join(outputDir, `${safeFileName}.json`);
-      await fs.writeFile(jsonPath, JSON.stringify(result, null, 2));
+        // Save as JSON
+        const outputDir = path.join(
+          __dirname,
+          "../../test-results/markdown-outputs",
+        );
+        const jsonPath = path.join(outputDir, `${safeFileName}.json`);
+        await fs.writeFile(jsonPath, JSON.stringify(result, null, 2));
 
-      // Save as Markdown file
-      const mdPath = path.join(outputDir, `${safeFileName}.md`);
-      await fs.writeFile(mdPath, markdownContent);
+        // Save as Markdown file
+        const mdPath = path.join(outputDir, `${safeFileName}.md`);
+        await fs.writeFile(mdPath, markdownContent);
 
-      // Attach to Playwright report
-      await testInfo.attach("captured-markdown", {
-        body: markdownContent,
-        contentType: "text/markdown",
-      });
+        // Attach to Playwright report
+        await testInfo.attach("captured-markdown", {
+          body: markdownContent,
+          contentType: "text/markdown",
+        });
+      }
 
       // Log summary
       console.log(
@@ -127,15 +118,17 @@ test.describe("Button visibility", () => {
     page,
   }) => {
     // Navigate to a non-LINE Developers page
-    await page.goto("https://www.google.com");
+    await page.goto("https://www.google.com", {
+      waitUntil: "domcontentloaded",
+    });
 
     // Wait a bit to ensure content script would have loaded if it was going to
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
 
     // Button should not exist (correct ID: copy-markdown-btn)
     const copyButton = page.locator("#copy-markdown-btn");
     await expect(copyButton)
-      .not.toBeVisible({ timeout: 3000 })
+      .not.toBeVisible({ timeout: 2000 })
       .catch(() => {
         // Expected to fail - button should not be visible
       });
