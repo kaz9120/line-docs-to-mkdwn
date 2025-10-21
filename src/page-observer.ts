@@ -15,7 +15,32 @@ export class PageObserver {
     this.setupMutationObserver();
     this.setupUrlWatcher();
 
-    initializeButton();
+    // 初期ロード時にDOMが完全に読み込まれるまで待つ
+    this.initializeButtonWhenReady();
+  }
+
+  private initializeButtonWhenReady(): void {
+    // DOMが既に読み込まれている場合は即座に実行
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
+      // 念のため少し遅延を入れてDOMが確実に構築されるのを待つ
+      setTimeout(() => {
+        initializeButton();
+      }, TIMEOUTS.BUTTON_INIT_DELAY);
+    } else {
+      // DOMの読み込みを待つ
+      document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+          setTimeout(() => {
+            initializeButton();
+          }, TIMEOUTS.BUTTON_INIT_DELAY);
+        },
+        { once: true },
+      );
+    }
   }
 
   public stop(): void {
