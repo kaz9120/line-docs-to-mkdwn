@@ -86,6 +86,55 @@ Chrome拡張機能のため、通常のWebサーバーでは動作しません�
 - プルリクエスト作成には必ずghコマンドを使用してください
 - 品質チェックが通らない場合は修正してから再度プッシュしてください
 
+## リリースフロー（自動化）
+
+このプロジェクトでは、Chrome Web Storeへのデプロイメントが自動化されています。
+
+### リリース手順
+
+1. **バージョン更新とマージ**
+   - 開発フローに従ってプルリクエストを作成
+   - `package.json` のバージョンを適切に更新
+   - プルリクエストがマージされると自動的に：
+     - リリースタグ（`v*.*.*`）が作成される
+     - GitHubリリースが作成される
+     - Chrome Web Storeへアップロードされる
+
+2. **自動実行されるワークフロー**
+   - `main-push.yml`: mainブランチへのマージ時に実行
+     - ビルド、テスト、パッケージング
+     - Gitタグとリリースの作成
+   - `release-to-chrome-store.yml`: タグ作成時に実行
+     - Chrome Web Storeへ自動アップロード
+   - `refresh-chrome-token.yml`: 月次で自動実行
+     - APIトークンの有効期限切れを防止
+
+3. **Chrome Web Storeでの公開**
+   - デフォルトでは下書きとしてアップロード
+   - [デベロッパーダッシュボード](https://chrome.google.com/webstore/devconsole)で確認
+   - 準備ができたら手動で「審査に提出」をクリック
+
+### 初回セットアップ
+
+Chrome Web Storeへの自動デプロイメントを有効にするには、認証情報の設定が必要です。
+
+詳細な手順は [`docs/CHROME_STORE_SETUP.md`](docs/CHROME_STORE_SETUP.md) を参照してください。
+
+必要なGitHub Secrets:
+- `CHROME_EXTENSION_ID`: 拡張機能ID
+- `CHROME_CLIENT_ID`: OAuth 2.0クライアントID
+- `CHROME_CLIENT_SECRET`: OAuth 2.0クライアントシークレット
+- `CHROME_REFRESH_TOKEN`: リフレッシュトークン
+
+### トラブルシューティング
+
+リリースに関する問題が発生した場合：
+
+1. GitHub Actionsのログを確認
+2. すべてのシークレットが正しく設定されているか確認
+3. Chrome Web Store APIが有効化されているか確認
+4. `docs/CHROME_STORE_SETUP.md` のトラブルシューティングセクションを参照
+
 ## プロジェクト概要
 
 LINE Developersのドキュメントページ用Chrome拡張機能。
