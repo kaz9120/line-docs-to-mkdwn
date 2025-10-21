@@ -40,9 +40,16 @@ test.describe("Markdown Copy Button", () => {
       // Navigate to the test URL
       await page.goto(url, { waitUntil: "networkidle" });
 
-      // Wait for the copy button to appear
-      const copyButton = page.locator("#copy-markdown-button");
-      await expect(copyButton).toBeVisible({ timeout: 10000 });
+      // Wait for page content to load (important for LINE Developers docs)
+      // The content script waits for this element before adding the button
+      await page.waitForSelector(".markdown-content h1", { timeout: 15000 });
+
+      // Wait additional time for content script to initialize and add button
+      await page.waitForTimeout(2000);
+
+      // Wait for the copy button to appear (correct ID: copy-markdown-btn)
+      const copyButton = page.locator("#copy-markdown-btn");
+      await expect(copyButton).toBeVisible({ timeout: 15000 });
       await expect(copyButton).toHaveText("Markdownコピー");
 
       // Take screenshot before clicking
@@ -122,8 +129,11 @@ test.describe("Button visibility", () => {
     // Navigate to a non-LINE Developers page
     await page.goto("https://www.google.com");
 
-    // Button should not exist
-    const copyButton = page.locator("#copy-markdown-button");
+    // Wait a bit to ensure content script would have loaded if it was going to
+    await page.waitForTimeout(2000);
+
+    // Button should not exist (correct ID: copy-markdown-btn)
+    const copyButton = page.locator("#copy-markdown-btn");
     await expect(copyButton)
       .not.toBeVisible({ timeout: 3000 })
       .catch(() => {
