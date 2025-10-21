@@ -1,6 +1,18 @@
 # LINE Docs to Markdown
 
-LINE DevelopersのドキュメントページからMarkdownをコピーできるChrome拡張機能です。
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bnbonjnlgejplgblndeagjjmmdbfbaag)](https://chromewebstore.google.com/detail/line-docs-to-markdown/bnbonjnlgejplgblndeagjjmmdbfbaag)
+
+LINE Developersのドキュメントページのコンテンツを、ワンクリックでMarkdown形式に変換してクリップボードにコピーできるChrome拡張機能です。
+
+## 概要
+
+この拡張機能を使用すると、LINE Developersの公式ドキュメント（`https://developers.line.biz/ja/docs/*`）を簡単にMarkdown形式で取得できます。ドキュメントの引用や参照、個人的なメモ作成などに便利です。
+
+開発の経緯については[こちらのブログ記事](https://zenn.dev/moshjp/articles/ec8ad908e9002f)をご覧ください。
+
+## インストール
+
+[Chrome Web Store](https://chromewebstore.google.com/detail/line-docs-to-markdown/bnbonjnlgejplgblndeagjjmmdbfbaag)からインストールできます。
 
 ## 機能
 
@@ -12,10 +24,10 @@ LINE DevelopersのドキュメントページからMarkdownをコピーできる
 
 ## 使い方
 
-1. Chrome拡張機能としてインストール
+1. [Chrome Web Store](https://chromewebstore.google.com/detail/line-docs-to-markdown/bnbonjnlgejplgblndeagjjmmdbfbaag)から拡張機能をインストール
 2. LINE Developersのドキュメントページ（`https://developers.line.biz/ja/docs/*`）を開く
 3. ページタイトル横に表示される「Markdownコピー」ボタンをクリック
-4. 変換されたMarkdownがクリップボードにコピーされる
+4. 変換されたMarkdownがクリップボードにコピーされます
 
 ## 開発
 
@@ -38,15 +50,27 @@ LINE DevelopersのドキュメントページからMarkdownをコピーできる
    npm run build  # ビルド確認
    ```
 
-4. **変更をプッシュ**
+4. **セキュリティチェックとバージョン更新**
+   ```bash
+   npm audit         # 脆弱性の確認
+   npm audit fix     # 脆弱性の修正（修正可能な場合）
+   # package.jsonのバージョン番号を更新
+   # - 新機能追加: マイナーバージョンをインクリメント
+   # - バグ修正: パッチバージョンをインクリメント
+   # - 破壊的変更: メジャーバージョンをインクリメント
+   ```
+
+5. **変更をプッシュ**
    ```bash
    git add .
    git commit -m "your commit message"
    git push origin feature/your-feature-name
    ```
 
-5. **プルリクエストの作成**
-   - GitHub WebUIからプルリクエストを作成
+6. **プルリクエストの作成**
+   ```bash
+   gh pr create --title "プルリクエストのタイトル" --body "変更内容の説明"
+   ```
    - レビュー完了後、mainブランチにマージ
 
 **注意**: mainブランチに直接pushすることはできません。
@@ -156,17 +180,7 @@ Chrome拡張機能は通常のWebサーバーでは動作しないため、以�
 
 ## 変更履歴
 
-### v1.3.1 (2025-10-12)
-- LINE DevelopersサイトのHTML構造変更に対応
-  - ドキュメントページでボタンが表示されない問題を修正
-  - ニュースページ・用語集ページでコンテンツ抽出が失敗する問題を修正
-  - 見出し内のアンカー構造を正規化し、Markdown出力を改善
-
-### v1.3.0
-- フロントマター機能を実装
-
-### v1.2.0
-- 初期リリース
+変更履歴は[GitHubのリリースページ](https://github.com/kaz9120/line-docs-to-mkdwn/releases)をご覧ください。
 
 ## ライセンス
 
