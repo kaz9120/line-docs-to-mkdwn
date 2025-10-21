@@ -1,7 +1,7 @@
 {
   "name": "line-docs-to-mkdwn",
   "private": true,
-  "version": "1.4.2",
+  "version": "1.5.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,10 +13,17 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "generate-html-report": "node scripts/generate-report.js",
     "package": "npm run build && cd dist && zip -r ../line-docs-to-mkdwn.zip ."
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.1",
     "@types/turndown": "^5.0.5",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
