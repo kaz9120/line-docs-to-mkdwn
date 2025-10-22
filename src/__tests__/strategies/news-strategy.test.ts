@@ -110,4 +110,92 @@ describe("NewsPageStrategy", () => {
       expect(metadata.tags).toBeUndefined();
     });
   });
+
+  describe("getVisibleArticle", () => {
+    it("表示されている記事を取得する", () => {
+      document.body.innerHTML = `
+        <div class="news-article" style="display: none;">
+          <div class="news-title">非表示の記事</div>
+          <div class="text-caption-date">2024/01/01</div>
+        </div>
+        <div class="news-article">
+          <div class="news-title">表示されている記事</div>
+          <div class="text-caption-date">2024/01/02</div>
+        </div>
+      `;
+
+      const contentElement = strategy.getContentElement();
+      expect(contentElement).not.toBeNull();
+      expect(contentElement?.querySelector(".news-title")?.textContent).toBe(
+        "表示されている記事",
+      );
+    });
+
+    it("すべての記事が非表示の場合はnullを返す", () => {
+      document.body.innerHTML = `
+        <div class="news-article" style="display: none;">
+          <div class="news-title">非表示の記事1</div>
+        </div>
+        <div class="news-article" style="display: none;">
+          <div class="news-title">非表示の記事2</div>
+        </div>
+      `;
+
+      const contentElement = strategy.getContentElement();
+      expect(contentElement).toBeNull();
+    });
+
+    it("記事が1つだけで表示されている場合", () => {
+      document.body.innerHTML = `
+        <div class="news-article">
+          <div class="news-title">記事タイトル</div>
+          <div class="text-caption-date">2024/01/01</div>
+        </div>
+      `;
+
+      const contentElement = strategy.getContentElement();
+      expect(contentElement).not.toBeNull();
+      expect(contentElement?.querySelector(".news-title")?.textContent).toBe(
+        "記事タイトル",
+      );
+    });
+  });
+
+  describe("getButtonAnchorElement", () => {
+    it("表示されている記事内の日付要素を取得する", () => {
+      document.body.innerHTML = `
+        <div class="news-article" style="display: none;">
+          <div class="news-title">非表示の記事</div>
+          <div class="text-caption-date">2024/01/01</div>
+        </div>
+        <div class="news-article">
+          <div class="news-title">表示されている記事</div>
+          <div class="text-caption-date">2024/01/02</div>
+        </div>
+      `;
+
+      const anchorElement = strategy.getButtonAnchorElement();
+      expect(anchorElement).not.toBeNull();
+      expect(anchorElement?.textContent).toBe("2024/01/02");
+    });
+
+    it("日付要素が見つからない場合はタイトル要素を返す", () => {
+      document.body.innerHTML = `
+        <div class="news-article">
+          <div class="news-title">記事タイトル</div>
+        </div>
+      `;
+
+      const anchorElement = strategy.getButtonAnchorElement();
+      expect(anchorElement).not.toBeNull();
+      expect(anchorElement?.textContent).toBe("記事タイトル");
+    });
+
+    it("記事が見つからない場合はnullを返す", () => {
+      document.body.innerHTML = `<div>コンテンツ</div>`;
+
+      const anchorElement = strategy.getButtonAnchorElement();
+      expect(anchorElement).toBeNull();
+    });
+  });
 });
