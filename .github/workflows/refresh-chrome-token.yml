@@ -1,0 +1,31 @@
+name: Refresh Chrome Web Store Token
+
+# Googleのリフレッシュトークンは6ヶ月間使用されないと失効する可能性があるため、
+# 月次でトークンを使用して有効期限を延長します
+on:
+  schedule:
+    # 毎月2日の午前3時（UTC）に実行
+    - cron: '0 3 2 * *'
+  # 手動実行も可能
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh-token:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Refresh Google API Token
+        uses: cardinalby/google-api-fetch-token-action@v1
+        with:
+          clientId: ${{ secrets.CHROME_CLIENT_ID }}
+          clientSecret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refreshToken: ${{ secrets.CHROME_REFRESH_TOKEN }}
+
+      - name: Token refresh summary
+        run: |
+          echo "✅ Chrome Web Store APIトークンがリフレッシュされました"
+          echo "📅 次回実行予定: 来月2日"
+          echo "ℹ️  このワークフローはトークンの有効期限切れを防ぎます"
