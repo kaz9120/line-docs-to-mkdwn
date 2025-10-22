@@ -64,3 +64,23 @@ jobs:
             line-docs-to-mkdwn.zip \
             --title "v${{ steps.get_version.outputs.version }}" \
             --generate-notes
+
+      # Chrome Web Storeへアップロード
+      # 注意: publish: false にすると下書きとしてアップロード（手動で審査提出が必要）
+      #       publish: true にすると自動的に審査に提出
+      - name: Upload to Chrome Web Store
+        uses: mnao305/chrome-extension-upload@v5.0.0
+        with:
+          file-path: line-docs-to-mkdwn.zip
+          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          publish: false  # 安全のため下書きとしてアップロード
+
+      - name: Deployment summary
+        run: |
+          echo "✅ Chrome Web Storeへのアップロードが完了しました"
+          echo "📦 バージョン: v${{ steps.get_version.outputs.version }}"
+          echo "🔗 デベロッパーダッシュボード: https://chrome.google.com/webstore/devconsole"
+          echo "⚠️  下書きとしてアップロードされました。デベロッパーダッシュボードから手動で審査に提出してください。"
