@@ -32,9 +32,8 @@ export function createButtonContainer(): HTMLDivElement {
 }
 
 export function initializeButton(): boolean {
-  if (findCopyButton()) {
-    return false;
-  }
+  // 既存のボタンとコンテナを削除（ページ遷移時の対応）
+  removeExistingButton();
 
   // Strategyパターンでボタン配置先を取得
   const anchorElement = findButtonAnchorElement();
@@ -49,6 +48,20 @@ export function initializeButton(): boolean {
   insertAfterElement(container, anchorElement);
 
   return true;
+}
+
+function removeExistingButton(): void {
+  // ボタン本体を削除
+  const existingButton = findCopyButton();
+  if (existingButton) {
+    existingButton.remove();
+  }
+
+  // コンテナも削除（複数存在する可能性があるため全て削除）
+  const containers = document.querySelectorAll(`.${CSS_CLASSES.CONTAINER}`);
+  for (const container of containers) {
+    container.remove();
+  }
 }
 
 async function handleButtonClick(event: Event): Promise<void> {
