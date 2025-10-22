@@ -23,17 +23,33 @@ export class NewsPageStrategy extends BasePageStrategy {
     ],
   };
 
+  /**
+   * 表示されている記事要素を取得
+   * display:noneでない最初の.news-article要素を返す
+   */
+  private getVisibleArticle(): HTMLElement | null {
+    const articles = document.querySelectorAll(NEWS_SELECTORS.NEWS_ARTICLE);
+    for (const article of articles) {
+      const htmlElement = article as HTMLElement;
+      // 計算されたスタイルでdisplayがnoneでないことを確認
+      const computedStyle = window.getComputedStyle(htmlElement);
+      if (computedStyle.display !== "none") {
+        return htmlElement;
+      }
+    }
+    return null;
+  }
+
   getContentElement(): HTMLElement | null {
-    // .news-article 全体を取得（タイトル、日付、コンテンツすべて含む）
-    return document.querySelector(
-      NEWS_SELECTORS.NEWS_ARTICLE,
-    ) as HTMLElement | null;
+    // 表示されている記事を取得（タイトル、日付、コンテンツすべて含む）
+    return this.getVisibleArticle();
   }
 
   getButtonAnchorElement(): HTMLElement | null {
-    // ニュースページでは日付の下にボタンを配置
-    if (this.selectors.buttonAnchor) {
-      const dateElement = document.querySelector(
+    // 表示されている記事内の日付要素を取得
+    const visibleArticle = this.getVisibleArticle();
+    if (visibleArticle && this.selectors.buttonAnchor) {
+      const dateElement = visibleArticle.querySelector(
         this.selectors.buttonAnchor,
       ) as HTMLElement | null;
       if (dateElement) return dateElement;
