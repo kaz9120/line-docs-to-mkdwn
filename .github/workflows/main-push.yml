@@ -65,10 +65,56 @@ jobs:
             --title "v${{ steps.get_version.outputs.version }}" \
             --generate-notes
 
+      # Chrome Web Store環境変数の検証
+      - name: Validate Chrome Web Store secrets
+        env:
+          EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+        run: |
+          echo "🔍 Validating Chrome Web Store secrets..."
+
+          # 各環境変数の存在と文字数を確認
+          if [ -z "$EXTENSION_ID" ]; then
+            echo "❌ CHROME_EXTENSION_ID is not set or empty"
+            exit 1
+          else
+            echo "✅ CHROME_EXTENSION_ID is set (length: ${#EXTENSION_ID})"
+            echo "   First 4 chars: ${EXTENSION_ID:0:4}..."
+          fi
+
+          if [ -z "$CLIENT_ID" ]; then
+            echo "❌ CHROME_CLIENT_ID is not set or empty"
+            exit 1
+          else
+            echo "✅ CHROME_CLIENT_ID is set (length: ${#CLIENT_ID})"
+            echo "   Format check: ${CLIENT_ID:0:20}..."
+          fi
+
+          if [ -z "$CLIENT_SECRET" ]; then
+            echo "❌ CHROME_CLIENT_SECRET is not set or empty"
+            exit 1
+          else
+            echo "✅ CHROME_CLIENT_SECRET is set (length: ${#CLIENT_SECRET})"
+          fi
+
+          if [ -z "$REFRESH_TOKEN" ]; then
+            echo "❌ CHROME_REFRESH_TOKEN is not set or empty"
+            exit 1
+          else
+            echo "✅ CHROME_REFRESH_TOKEN is set (length: ${#REFRESH_TOKEN})"
+          fi
+
+          echo ""
+          echo "📋 All secrets are configured correctly"
+
       # Chrome Web Storeへアップロード
       # 注意: publish: false にすると下書きとしてアップロード（手動で審査提出が必要）
       #       publish: true にすると自動的に審査に提出
       - name: Upload to Chrome Web Store
+        id: chrome_upload
+        continue-on-error: true
         uses: mnao305/chrome-extension-upload@v5.0.0
         with:
           file-path: line-docs-to-mkdwn.zip
@@ -78,7 +124,35 @@ jobs:
           refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
           publish: false  # 安全のため下書きとしてアップロード
 
+      - name: Handle upload failure
+        if: steps.chrome_upload.outcome == 'failure'
+        env:
+          EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+        run: |
+          echo "❌ Chrome Web Store upload failed"
+          echo ""
+          echo "📋 Debugging information:"
+          echo "  - Extension ID length: ${#EXTENSION_ID}"
+          echo "  - Extension ID prefix: ${EXTENSION_ID:0:8}..."
+          echo "  - Zip file exists: $([ -f line-docs-to-mkdwn.zip ] && echo 'Yes' || echo 'No')"
+          echo "  - Zip file size: $(ls -lh line-docs-to-mkdwn.zip | awk '{print $5}')"
+          echo ""
+          echo "🔍 Common causes for 403 Forbidden:"
+          echo "  1. Extension ID mismatch (check CHROME_EXTENSION_ID secret)"
+          echo "  2. OAuth credentials not authorized for this extension"
+          echo "  3. Refresh token was generated with different Google account"
+          echo "  4. Refresh token expired or revoked"
+          echo "  5. Chrome Web Store API not enabled in Google Cloud project"
+          echo ""
+          echo "💡 Troubleshooting steps:"
+          echo "  1. Verify extension ID matches the one in Chrome Web Store"
+          echo "  2. Confirm refresh token was generated with extension owner's account"
+          echo "  3. Check Chrome Web Store API is enabled in Google Cloud Console"
+          echo "  4. Try regenerating refresh token using chrome-webstore-upload-keys"
+          exit 1
+
       - name: Deployment summary
+        if: steps.chrome_upload.outcome == 'success'
         run: |
           echo "✅ Chrome Web Storeへのアップロードが完了しました"
           echo "📦 バージョン: v${{ steps.get_version.outputs.version }}"
