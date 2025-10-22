@@ -104,7 +104,6 @@ Chrome拡張機能のため、通常のWebサーバーでは動作しません�
    - `main-push.yml`: mainブランチへのマージ時に実行
      - ビルド、テスト、パッケージング
      - Gitタグとリリースの作成
-   - `release-to-chrome-store.yml`: タグ作成時に実行
      - Chrome Web Storeへ自動アップロード
    - `refresh-chrome-token.yml`: 月次で自動実行
      - APIトークンの有効期限切れを防止
