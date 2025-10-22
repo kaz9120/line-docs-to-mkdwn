@@ -171,12 +171,17 @@ Chrome拡張機能は通常のWebサーバーでは動作しないため、以�
 ### mainブランチマージ時
 - 本番環境相当のビルド
 - Chrome拡張機能パッケージの作成
+- GitタグとGitHubリリースの自動作成
+- Chrome Web Storeへの自動アップロード（既存の拡張機能の更新のみ）
 - アーティファクトの保存
 
 ### 定期実行
 - 依存関係の脆弱性監査（週1回）
+- Chrome Web Store APIトークンのリフレッシュ（月1回）
 
 すべてのプルリクエストはCIチェックの通過が必須です。
+
+**⚠️ Chrome Web Store自動デプロイメント**: 初回公開は必ず手動で行う必要があります。設定方法の詳細は[`docs/CHROME_STORE_SETUP.md`](docs/CHROME_STORE_SETUP.md)を参照してください。
 
 ## 変更履歴
 

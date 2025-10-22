@@ -4,18 +4,24 @@
 
 ## 概要
 
-リリースタグ（`v*.*.*`）が作成されると、GitHub Actionsが自動的に：
+mainブランチへのマージ時に、GitHub Actionsが自動的に：
 
 1. 拡張機能をビルド
 2. テストを実行
 3. ZIPファイルを作成
-4. Chrome Web Storeへアップロード
+4. GitタグとGitHubリリースを作成
+5. Chrome Web Storeへアップロード
+
+**⚠️ 重要**: このワークフローは**既存の拡張機能の更新**にのみ使用できます。初回公開は必ず手動で行う必要があります（ステップ6を参照）。
 
 ## 前提条件
 
 - Chrome Web Storeデベロッパーアカウント（[登録](https://chrome.google.com/webstore/devconsole)）
-- 拡張機能が既にChrome Web Storeに公開されていること（初回は手動公開が必要）
-- Googleアカウント
+- **⚠️ 重要**: 拡張機能が既にChrome Web Storeに公開されていること
+  - **APIを使用する前に、必ず最初の1回は手動で公開する必要があります**
+  - 手動公開時に、ストアリスティング、スクリーンショット、プライバシーポリシーを完全に設定する
+  - APIは既存の拡張機能の更新にのみ使用可能（新規公開には使用できません）
+- Googleアカウント（拡張機能の所有者アカウント）
 
 ## セットアップ手順
 
@@ -82,15 +88,39 @@ npx chrome-webstore-upload-keys
 9. 「Exchange authorization code for tokens」をクリック
 10. **Refresh token**をコピーして安全に保存
 
-### ステップ6: 拡張機能IDの取得
+### ステップ6: 拡張機能の初回手動公開（必須）
+
+⚠️ **このステップは必須です。APIを使用する前に完了してください。**
 
 1. [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard) にアクセス
-2. 拡張機能の詳細ページを開く
+2. 「新しいアイテム」をクリック
+3. プロジェクトの `line-docs-to-mkdwn.zip` ファイルをアップロード
+   - ローカルで `npm run build && npm run package` を実行してZIPファイルを生成
+4. **ストアリスティング**を完全に記入：
+   - 詳細な説明
+   - カテゴリ
+   - 言語
+   - スクリーンショット（最低1枚、推奨5枚）
+   - アイコン画像
+5. **プライバシー**タブを記入：
+   - プライバシーポリシーのURL
+   - データ使用に関する開示
+6. **配布**設定を確認
+7. 「審査に提出」をクリックして初回公開
+8. 審査完了を待つ（通常1〜3日）
+
+### ステップ7: 拡張機能IDの取得
+
+初回公開後、拡張機能IDを取得します：
+
+1. [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard) にアクセス
+2. 公開した拡張機能の詳細ページを開く
 3. URLから32文字の拡張機能IDをコピー
    - 例: `https://chrome.google.com/webstore/detail/abcdefghijklmnopqrstuvwxyz123456`
    - この場合、IDは `abcdefghijklmnopqrstuvwxyz123456`
+4. または、アイテムIDのセクションから直接コピー
 
-### ステップ7: GitHub Secretsへの保存
+### ステップ8: GitHub Secretsへの保存
 
 1. GitHubリポジトリの「Settings」→「Secrets and variables」→「Actions」に移動
 2. 「New repository secret」をクリックして、以下のシークレットを追加：
@@ -138,6 +168,28 @@ publish: true  # 自動的に審査に提出
 ⚠️ **注意**: `publish: true` にすると、審査に自動的に提出されます。下書きとして確認してから手動で提出する方が安全です。
 
 ## トラブルシューティング
+
+### エラー: 403 Forbidden
+
+**原因:**
+- **拡張機能がまだChrome Web Storeに初回公開されていない（最も一般的）**
+- OAuth同意画面が「公開」状態になっていない
+- リフレッシュトークン取得時に使用したGoogleアカウントが拡張機能の所有者でない
+- Chrome Web Store APIが有効化されていない、または有効化後1時間経っていない
+- ストアリスティングが不完全（スクリーンショット、説明、プライバシーポリシーが未設定）
+
+**解決策:**
+1. **ステップ6: 拡張機能の初回手動公開を完了してください**
+   - これはAPIを使用する前の必須ステップです
+   - Developer Dashboardでストアリスティングを完全に記入
+   - 審査に提出して承認を待つ
+2. OAuth同意画面が「公開」状態になっているか確認（ステップ3）
+3. リフレッシュトークン取得時に、拡張機能の所有者アカウントでログインしているか確認
+4. Chrome Web Store APIが有効化されて1時間以上経過しているか確認（ステップ2）
+5. Developer Dashboardで以下が設定されているか確認：
+   - スクリーンショット（最低1枚）
+   - 詳細な説明
+   - プライバシーポリシー
 
 ### エラー: 401 Unauthorized
 
@@ -190,9 +242,17 @@ publish: true  # 自動的に審査に提出
 
 問題が発生した場合は、以下を確認してください：
 
-1. すべてのシークレットが正しく設定されているか
-2. Chrome Web Store APIが有効化されているか（1時間待機）
-3. OAuth同意画面が「公開」状態になっているか
-4. 拡張機能が既にChrome Web Storeに公開されているか
+### 403 Forbiddenエラーのチェックリスト
+
+1. ✅ **拡張機能が既にChrome Web Storeに初回公開されているか**（最重要）
+   - APIは新規公開には使用できません
+   - 必ず手動で一度公開してから、APIで更新を自動化してください
+2. ✅ すべてのシークレットが正しく設定されているか
+3. ✅ Chrome Web Store APIが有効化されているか（1時間待機）
+4. ✅ OAuth同意画面が「公開」状態になっているか
+5. ✅ リフレッシュトークン取得時に拡張機能の所有者アカウントでログインしたか
+6. ✅ Developer Dashboardでストアリスティングが完全に記入されているか
+
+### その他のエラー
 
 それでも解決しない場合は、GitHub Actionsのログを確認してエラーメッセージを特定してください。
