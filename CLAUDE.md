@@ -214,20 +214,39 @@ https://developers.line.biz/ja/docs/line-login/overview/
    git commit -m "feat: Add markdown for <page-name>"
    ```
 
-### CI検証（厳密モード）
+### CI検証（スマートチェック）
 
-プルリクエスト作成時、GitHub Actionsが**厳密モード**で自動的に検証：
+#### PR時の検証（高速・数秒）
 
-1. **Markdownファイルの存在確認**
-2. **内容の最新性チェック**: 実際に再生成して差分を確認
-3. **変換ロジックの更新検出**: 拡張機能のコードを変更した場合、既存のMarkdownファイルが古いことを検出
-4. **LINE Developers側の更新検出**: ドキュメントページが更新された場合も検出可能
-5. **フロントマター正規化**: `copy_date` を除外して比較するため、コピー日時の違いは無視
+プルリクエスト作成時、GitHub Actionsが以下をチェック：
 
-**重要**:
-- Markdownファイルを更新し忘れた場合、CIが失敗します
-- 変換ロジックを変更した場合も、既存Markdownの再生成が必要です
-- `npm run generate:markdown` を実行してコミットに含めてください
+1. **Markdownファイルの存在確認**: urls.txtの全URLに対応するファイルが存在するか
+2. **変換ロジック変更検出**: `src/` 配下の変換ロジック関連ファイルが変更されている場合、警告を表示
+
+**変換ロジック変更時の警告例:**
+```
+⚠️ Warning: Converter logic has been modified
+
+The following converter-related files were changed:
+- src/markdown-converter.ts
+- src/frontmatter-generator.ts
+
+⚠️ If the conversion logic has changed, please regenerate all markdown files:
+npm run generate:markdown
+```
+
+**重要**: 変換ロジックを変更した場合は、警告に従って全Markdownを再生成してください。
+
+#### 週次の厳密検証（毎週月曜 9:00 JST）
+
+GitHub Actionsが週次で厳密モードを自動実行：
+
+1. **全Markdownファイルを再生成**: 最新の拡張機能で全URLを変換
+2. **内容の差分チェック**: 既存ファイルと比較（copy_date除外）
+3. **変換ロジック更新検出**: 拡張機能の変更による差分を検出
+4. **LINE Developers更新検出**: ドキュメントページの更新を検出
+
+検証失敗時は自動的にIssueが作成されます。
 
 ### 厳密モード検証（ローカル実行）
 
@@ -237,12 +256,12 @@ https://developers.line.biz/ja/docs/line-login/overview/
 npm run validate:markdown:strict
 ```
 
-#### 通常モードとの違い
+#### 検証モードの比較
 
 | モード | 用途 | 検証内容 | 速度 |
 |--------|------|----------|------|
-| 通常 | 高速チェック | ファイルの存在のみ | 数秒 |
-| 厳密 | CI/PR、定期実行 | 実際に再生成して差分確認 | 数分 |
+| 通常 | **PR時のCI**、高速チェック | ファイルの存在のみ | 数秒 |
+| 厳密 | **週次CI**、ローカル実行 | 実際に再生成して差分確認 | 数分〜数十分 |
 
 #### 実行例
 
