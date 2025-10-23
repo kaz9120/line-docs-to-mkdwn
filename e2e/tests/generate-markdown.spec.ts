@@ -7,33 +7,44 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Interface for URL configuration
+ * Convert URL to markdown file path
+ * Example: https://developers.line.biz/ja/docs/basics/channel-access-token/
+ *       -> docs/basics/channel-access-token.md
  */
-interface UrlConfig {
-  url: string;
-  path: string;
-}
+function urlToPath(url: string): string {
+  const baseUrl = "https://developers.line.biz/ja/";
+  if (!url.startsWith(baseUrl)) {
+    throw new Error(`URL must start with ${baseUrl}`);
+  }
 
-interface UrlsJson {
-  urls: UrlConfig[];
+  // Remove base URL and trailing slash
+  let relativePath = url.substring(baseUrl.length);
+  if (relativePath.endsWith("/")) {
+    relativePath = relativePath.slice(0, -1);
+  }
+
+  // Add .md extension
+  return `${relativePath}.md`;
 }
 
 /**
- * Load URL list from urls.json
+ * Load URL list from urls.txt
  */
-async function loadUrlList(): Promise<UrlConfig[]> {
-  const urlsJsonPath = path.join(__dirname, "../../urls.json");
-  const content = await fs.readFile(urlsJsonPath, "utf-8");
-  const urlsJson: UrlsJson = JSON.parse(content);
-  return urlsJson.urls;
+async function loadUrlList(): Promise<string[]> {
+  const urlsFilePath = path.join(__dirname, "../../urls.txt");
+  const content = await fs.readFile(urlsFilePath, "utf-8");
+  return content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.startsWith("#"));
 }
 
 /**
- * Load URL configurations at module level (top-level await)
+ * Load URLs at module level (top-level await)
  */
-const urlConfigs = await loadUrlList();
+const urls = await loadUrlList();
 
-console.log(`Loaded ${urlConfigs.length} URLs from urls.json`);
+console.log(`Loaded ${urls.length} URLs from urls.txt`);
 
 /**
  * E2E tests for generating Markdown files from LINE Developers documentation
@@ -43,12 +54,12 @@ test.describe("Generate Markdown Files", () => {
    * Test each URL and save the generated Markdown
    */
 
-  for (const config of urlConfigs) {
-    test(`should generate markdown for ${config.path}`, async ({
+  for (const url of urls) {
+    const relativePath = urlToPath(url);
+
+    test(`should generate markdown for ${relativePath}`, async ({
       page,
     }, testInfo) => {
-      const { url, path: relativePath } = config;
-
       console.log(`Processing: ${url}`);
 
       // Navigate to the URL

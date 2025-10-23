@@ -149,25 +149,25 @@ Chrome Web Storeへの自動デプロイメントを有効にするには、認�
 
 ### 概要
 
-- 変換対象のURLは `urls.json` で管理
+- 変換対象のURLは `urls.txt` で管理（1行1URL）
 - 変換結果は `./markdown/` ディレクトリに保存
+- URLからMarkdownファイルのパスは自動生成される
 - E2Eテストを使用して自動生成
 - GitHub ActionsのCIで最新性を検証
 
-### URL管理ファイル (urls.json)
+### URL管理ファイル (urls.txt)
 
-変換対象のURLとMarkdownファイルのパスを定義：
+変換対象のURLを1行1URLで列挙：
 
-```json
-{
-  "urls": [
-    {
-      "url": "https://developers.line.biz/ja/docs/basics/channel-access-token/",
-      "path": "docs/basics/channel-access-token.md"
-    }
-  ]
-}
 ```
+https://developers.line.biz/ja/docs/basics/channel-access-token/
+https://developers.line.biz/ja/docs/messaging-api/overview/
+https://developers.line.biz/ja/docs/messaging-api/sending-messages/
+https://developers.line.biz/ja/docs/line-login/overview/
+```
+
+URLは自動的にMarkdownファイルのパスに変換されます：
+- `https://developers.line.biz/ja/docs/basics/channel-access-token/` → `docs/basics/channel-access-token.md`
 
 ### Markdownファイルの生成
 
@@ -175,7 +175,7 @@ Chrome Web Storeへの自動デプロイメントを有効にするには、認�
 
 1. **URLを追加**
    ```bash
-   # urls.json にURLとパスを追加
+   # urls.txt に新しいURLを追加（1行1URL）
    ```
 
 2. **Markdownを生成**
@@ -185,11 +185,11 @@ Chrome Web Storeへの自動デプロイメントを有効にするには、認�
    - ビルドを実行
    - PlaywrightでChrome拡張をロード
    - 各URLにアクセスして変換
-   - `./markdown/` 配下に保存
+   - `./markdown/` 配下に自動的にパスを生成して保存
 
 3. **変更をコミット**
    ```bash
-   git add urls.json markdown/
+   git add urls.txt markdown/
    git commit -m "feat: Add markdown for <page-name>"
    ```
 
@@ -207,10 +207,8 @@ Chrome Web Storeへの自動デプロイメントを有効にするには、認�
 
 ```
 line-docs-to-mkdwn/
-├── urls.json                 # URL管理ファイル
-├── urls.schema.json          # JSONスキーマ（型安全性）
-└── markdown/                 # 変換結果の保存先
-    ├── README.md            # ディレクトリの説明
+├── urls.txt                  # URL管理ファイル（1行1URL）
+└── markdown/                 # 変換結果の保存先（自動生成ファイルのみ）
     └── docs/
         ├── basics/
         │   └── channel-access-token.md

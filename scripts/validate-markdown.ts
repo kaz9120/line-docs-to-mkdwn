@@ -6,25 +6,36 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Interface for URL configuration
+ * Convert URL to markdown file path
+ * Example: https://developers.line.biz/ja/docs/basics/channel-access-token/
+ *       -> docs/basics/channel-access-token.md
  */
-interface UrlConfig {
-  url: string;
-  path: string;
-}
+function urlToPath(url: string): string {
+  const baseUrl = "https://developers.line.biz/ja/";
+  if (!url.startsWith(baseUrl)) {
+    throw new Error(`URL must start with ${baseUrl}`);
+  }
 
-interface UrlsJson {
-  urls: UrlConfig[];
+  // Remove base URL and trailing slash
+  let relativePath = url.substring(baseUrl.length);
+  if (relativePath.endsWith("/")) {
+    relativePath = relativePath.slice(0, -1);
+  }
+
+  // Add .md extension
+  return `${relativePath}.md`;
 }
 
 /**
- * Load URL list from urls.json
+ * Load URL list from urls.txt
  */
-async function loadUrlList(): Promise<UrlConfig[]> {
-  const urlsJsonPath = path.join(__dirname, "../urls.json");
-  const content = await fs.readFile(urlsJsonPath, "utf-8");
-  const urlsJson: UrlsJson = JSON.parse(content);
-  return urlsJson.urls;
+async function loadUrlList(): Promise<string[]> {
+  const urlsFilePath = path.join(__dirname, "../urls.txt");
+  const content = await fs.readFile(urlsFilePath, "utf-8");
+  return content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0 && !line.startsWith("#"));
 }
 
 /**
@@ -45,34 +56,35 @@ async function fileExists(filePath: string): Promise<boolean> {
 async function validateMarkdownFiles(): Promise<void> {
   console.log("Validating markdown files...\n");
 
-  const urlConfigs = await loadUrlList();
+  const urls = await loadUrlList();
   let hasErrors = false;
   const missingFiles: string[] = [];
 
-  for (const config of urlConfigs) {
-    const markdownPath = path.join(__dirname, "../markdown", config.path);
+  for (const url of urls) {
+    const relativePath = urlToPath(url);
+    const markdownPath = path.join(__dirname, "../markdown", relativePath);
     const exists = await fileExists(markdownPath);
 
     if (!exists) {
-      console.error(`❌ Missing: ${config.path}`);
-      console.error(`   URL: ${config.url}`);
-      missingFiles.push(config.path);
+      console.error(`❌ Missing: ${relativePath}`);
+      console.error(`   URL: ${url}`);
+      missingFiles.push(relativePath);
       hasErrors = true;
     } else {
       // Check if file is not empty
       const content = await fs.readFile(markdownPath, "utf-8");
       if (content.trim().length === 0) {
-        console.error(`❌ Empty file: ${config.path}`);
-        missingFiles.push(config.path);
+        console.error(`❌ Empty file: ${relativePath}`);
+        missingFiles.push(relativePath);
         hasErrors = true;
       } else {
-        console.log(`✓ ${config.path}`);
+        console.log(`✓ ${relativePath}`);
       }
     }
   }
 
-  console.log(`\nTotal URLs: ${urlConfigs.length}`);
-  console.log(`Valid files: ${urlConfigs.length - missingFiles.length}`);
+  console.log(`\nTotal URLs: ${urls.length}`);
+  console.log(`Valid files: ${urls.length - missingFiles.length}`);
   console.log(`Missing/Invalid files: ${missingFiles.length}`);
 
   if (hasErrors) {
