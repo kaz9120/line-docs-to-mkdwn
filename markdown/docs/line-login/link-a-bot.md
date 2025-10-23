@@ -1,0 +1,120 @@
+---
+url: https://developers.line.biz/ja/docs/line-login/link-a-bot/
+copied_at: 2025-10-23T15:58:29.929Z
+---
+# LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）
+
+ユーザーがアプリにログインするときに、LINE公式アカウントを友だち追加するオプションを表示するように設定できます。これを、**友だち追加オプション**と呼びます。友だち追加するLINE公式アカウントは、LINE Developersコンソールで指定します。
+
+![同意画面](https://developers.line.biz/media/line-login/link-a-bot/consent-screen-with-bot-ja.png)
+
+上記の同意画面でユーザーが［**友だち追加する**］を有効にしてログインすると、LINE公式アカウントがユーザーの友だちとして追加されます。ボットの作成について詳しくは、『Messaging APIドキュメント』の「[Messaging APIの概要](https://developers.line.biz/ja/docs/messaging-api/overview/)」を参照してください。
+
+## LINE公式アカウントを友だち追加するオプションを表示するには
+
+LINE公式アカウントを友だち追加するオプションを、同意画面に表示するには、以下の設定を行います。
+
+1.  [チャネルにLINE公式アカウントをリンクする](#link-a-line-official-account)
+2.  [LINEログインの認可URLに`bot_prompt`クエリパラメータを付けてユーザーをリダイレクトする](#redirect-users)
+
+### チャネルにLINE公式アカウントをリンクする
+
+LINE Developersコンソールで、LINEログインのチャネルにLINE公式アカウントをリンクします。
+
+:::note warn
+注意
+
+:::
+
+1.  [LINE Developersコンソール](https://developers.line.biz/console/)にログインし、LINEログインのチャネルがあるプロバイダーをクリックします。
+2.  LINEログインのチャネルをクリックします。
+3.  ［**チャネル基本設定**］タブをクリックし、［**リンクされたLINE公式アカウント**］の［**編集**］をクリックします。
+4.  ユーザーに友だち追加させるLINE公式アカウントを選択して、［**更新**］をクリックします。  
+    現在ログインしているアカウントが管理者権限を持っているLINE公式アカウントを選択できます。  
+    1つのLINEログインチャネルには、1つのLINE公式アカウントをリンクできます。
+
+### LINEログインの認可URLにbot\_promptクエリパラメータを付けてユーザーをリダイレクトする
+
+チャネルにLINE公式アカウントをリンクし終えたら、LINEログインの認可URLに`bot_prompt`クエリパラメータを付けてユーザーをリダイレクトします。
+
+text
+
+`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={CHANNEL_ID}&redirect_uri={CALLBACK_URL}&state={STATE}&bot_prompt={BOT_PROMPT}&scope={SCOPE_LIST}`
+
+`bot_prompt`クエリパラメータの設定に応じて、以下のようにオプションが表示されます。
+
+| 値 | 説明 |
+| --- | --- |
+| `normal` | LINEログインの同意画面に、LINE公式アカウントを友だち追加するオプションを表示します。 |
+| `aggressive` | LINEログインの同意画面の後に、LINE公式アカウントを友だち追加するかどうか確認する画面を表示します。 |
+
+![表示される画面](https://developers.line.biz/media/line-login/link-a-bot/bot-prompt-ja.png)
+
+:::note info
+ヒント
+
+:::
+
+#### 同意画面のオプションの表示について
+
+ユーザーとLINE公式アカウントの友だち関係にあわせて、LINE公式アカウントを友だち追加するオプションが以下のように表示されます。
+
+| 同意画面が表示されたときの友だち関係 | ユーザーに表示されるオプション |
+| --- | --- |
+| 友だち未追加 | LINE公式アカウントを友だち追加するオプションが表示されます。ユーザーがオプションを有効にして続行すると、LINE公式アカウントが友だち追加されます。 |
+| ブロック済み | LINE公式アカウントのブロックを解除するオプションが表示されます。ユーザーがオプションを有効にして続行すると、LINE公式アカウントのブロックが解除されます。 |
+| 友だち追加済み | LINE公式アカウントが友だち追加済みであることが表示されます。LINE公式アカウントを友だち追加するオプションは表示されません。 |
+
+:::note info
+認証プロバイダーの場合、オプションはデフォルトで有効になります
+
+:::
+
+## ユーザーとLINE公式アカウントの関係を取得する
+
+友だち追加オプションを利用している場合は、LINEログインのチャネルにリンクされているLINE公式アカウントとユーザーの友だち関係を、次の方法で取得できます。
+
+*   [`friendship_status_changed`クエリパラメータを確認する](#use-friendship_status_changed)
+*   [LINEログインAPIを使って友だち関係を取得する](#use-line-login-api)
+
+### friendship\_status\_changedクエリパラメータを確認する
+
+[認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)ときに`bot_prompt`クエリパラメータを指定していた場合は、ユーザーの認証と認可が完了すると、`friendship_status_changed`クエリパラメータを含むコールバックURLにリダイレクトされます。
+
+リダイレクト先URLの例：
+
+text
+
+`https://client.example.org/cb?code={CODE}&state={STATE}&friendship_status_changed={FRIENDSHIP_STATUS_CHANGED}`
+
+`friendship_status_changed`クエリパラメータは、以下のいずれかの値になります。コールバックURLについて詳しくは、「[認可コードを受け取る](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#receiving-the-authorization-code)」を参照してください。
+
+| 値 | 説明 |
+| --- | --- |
+| `true` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しました。具体的には、以下のいずれかです。<br/><ul><!--[--><li><!--[-->ユーザーがLINE公式アカウントを友だち追加した。<!--]--></li><li><!--[-->ユーザーがブロックを解除した。<!--]--></li><!--]--></ul> |
+| `false` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しませんでした。具体的には、以下のいずれかです。<br/><ul><!--[--><li><!--[-->ユーザーは以前からLINE公式アカウントと友だちだった。<!--]--></li><li><!--[-->ユーザーがLINE公式アカウントを友だち追加しなかった。<!--]--></li><li><!--[-->ユーザーがLINE公式アカウントのブロックを解除しなかった。<!--]--></li><!--]--></ul> |
+
+:::note warn
+注意
+
+:::
+
+### LINEログインAPIを使って友だち関係を取得する
+
+[ウェブアプリで取得したアクセストークン](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#get-access-token)を利用すると、LINEログインのチャネルにリンクされているLINE公式アカウントと、ユーザーの友だち関係を取得できます。
+
+リクエストの例：
+
+sh
+
+`curl -v -X GET https://api.line.me/friendship/v1/status \ -H 'Authorization: Bearer {access token}'`
+
+レスポンスの例：
+
+json
+
+`{   "friendFlag": true }`
+
+詳しくは、『LINEログイン v2.1 APIリファレンス』の「[LINE公式アカウントとの友だち関係を取得する](https://developers.line.biz/ja/reference/line-login/#get-friendship-status)」を参照してください。
+
+html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}

@@ -1,0 +1,214 @@
+---
+url: https://developers.line.biz/ja/docs/messaging-api/receiving-messages/
+copied_at: 2025-10-23T15:56:49.802Z
+---
+# メッセージ（Webhook）を受信する
+
+ユーザーが、LINE公式アカウントを友だち追加したり、LINE公式アカウントにメッセージを送ったりすると、[LINE Developersコンソール](https://developers.line.biz/console/)の「Webhook URL」に指定したURL（ボットサーバー）に対して、LINEプラットフォームからWebhookイベントオブジェクトを含むHTTP POSTリクエストが送られます。
+
+ボットサーバーがWebhookイベントオブジェクトを適切に処理していることを確認してください。なお、ボットサーバーがWebhookの受信に長期間失敗している場合、LINEプラットフォームからボットサーバーへのWebhookの送信を停止する可能性があります。
+
+:::note alert
+セキュリティ上の警告
+
+:::
+
+:::note info
+イベントは非同期で処理することを推奨します
+
+:::
+
+## 署名を検証する
+
+ボットサーバーにWebhookのリクエストが届いたら、[Webhookイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)を処理する前に、リクエストヘッダーに含まれる署名を検証してください。署名の検証は、開発者のボットサーバーに届いたリクエストが「LINEプラットフォームから送信されたWebhookか」および「通信経路で改ざんされていないか」などを確認するための重要な手順です。
+
+詳しくは、「[Webhookの署名を検証する](https://developers.line.biz/ja/docs/messaging-api/verify-webhook-signature/)」を参照してください。
+
+## Webhookイベントのタイプ
+
+Webhookイベントオブジェクトに含まれるデータに基づいて、ボットがどのように反応するかを制御できます。また、ボットに何かアクションを起こさせたり、ユーザーに応答させることもできます。[トーク](#webhook-event-in-one-on-one-talk-or-group-chat)、[ビーコン、アカウント連携](#other-webhook-events)のWebhookイベントを取得できます。詳しくは、『Messaging APIリファレンス』の「[Webhookイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)」を参照してください。
+
+### トークでのWebhookイベント
+
+1対1のトーク、および[グループトークと複数人トーク](https://developers.line.biz/ja/docs/messaging-api/group-chats/)において、ボットサーバーが受信するWebhookイベントは以下のとおりです。
+
+| Webhookイベント | 受信するタイミング | 1対1のトーク | グループトークと複数人トーク |
+| --- | --- | --- | --- |
+| [メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event) | ユーザーがメッセージを送信した時。このイベントには応答できます。 | ✅ | ✅ |
+| [送信取消イベント](https://developers.line.biz/ja/reference/messaging-api/#unsend-event) | ユーザーがメッセージの送信を取り消した時。このイベントの処理について詳しくは、[送信取消イベント受信時の処理](#webhook-unsend-message)を参照してください。 | ✅ | ✅ |
+| [フォローイベント](https://developers.line.biz/ja/reference/messaging-api/#follow-event) | LINE公式アカウントが友だち追加またはブロック解除された時。このイベントには応答できます。 | ✅ | ❌ |
+| [フォロー解除イベント](https://developers.line.biz/ja/reference/messaging-api/#unfollow-event) | LINE公式アカウントがブロックされた時 | ✅ | ❌ |
+| [参加イベント](https://developers.line.biz/ja/reference/messaging-api/#join-event) | LINE公式アカウントがグループトークまたは複数人トークに参加した時。このイベントには応答できます。 | ❌ | ✅ |
+| [退出イベント](https://developers.line.biz/ja/reference/messaging-api/#leave-event) | ユーザーがグループトークからLINE公式アカウントを削除したか、LINE公式アカウントがグループトークまたは複数人トークから退出した時 | ❌ | ✅ |
+| [メンバー参加イベント](https://developers.line.biz/ja/reference/messaging-api/#member-joined-event) | LINE公式アカウントがメンバーになっているグループトークまたは複数人トークに、ユーザーが参加した時。このイベントには応答できます。 | ❌ | ✅ |
+| [メンバー退出イベント](https://developers.line.biz/ja/reference/messaging-api/#member-left-event) | LINE公式アカウントがメンバーになっているグループトークまたは複数人トークから、ユーザーが退出した時 | ❌ | ✅ |
+| [ポストバックイベント](https://developers.line.biz/ja/reference/messaging-api/#postback-event) | ユーザーが、[ポストバックアクション](https://developers.line.biz/ja/reference/messaging-api/#postback-action)を実行した時。このイベントには応答できます。 | ✅ | ✅ |
+| [動画視聴完了イベント](https://developers.line.biz/ja/reference/messaging-api/#video-viewing-complete) | ユーザーが、LINE公式アカウントから送信された`trackingId`が指定された動画メッセージの視聴が完了した時。このイベントには応答できます。 | ✅ | ❌ |
+
+✅ ボットサーバーはイベントを受信する    ❌ ボットサーバーはイベントを受信しない
+
+#### liff.sendMessages()でメッセージが送信されたときのWebhook
+
+ユーザーはLINEアプリを用いて自分から[テンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#template-messages)や[Flex Message](https://developers.line.biz/ja/reference/messaging-api/#flex-message)を送ることができませんが、開発者が[`liff.sendMessages()`](https://developers.line.biz/ja/reference/liff/#send-messages)を利用することで、ユーザーの代わりに、LINEミニアプリやLIFFアプリが開かれているトーク画面にユーザーからのメッセージを送信できます。
+
+この`liff.sendMessages()`によってユーザーからテンプレートメッセージまたはFlex Messageが送信された場合、LINEプラットフォームからWebhookは送信されません。それ以外の[メッセージタイプ](https://developers.line.biz/ja/docs/messaging-api/message-types/)であれば、Webhookは送信されます。
+
+#### ユーザーが送った引用メッセージをWebhookで受け取る
+
+ユーザーが過去のメッセージを引用してメッセージを送った場合、Webhookの`message`プロパティに含まれる`quotedMessageId`で引用対象となったメッセージのIDを確認できます。このとき、引用対象となったメッセージのIDは確認できますが、メッセージの内容（テキストやスタンプなど）は再取得できません。
+
+![](https://developers.line.biz/media/messaging-api/receiving-messages/chat-reply.png)
+
+以下は、ユーザーが過去のメッセージを引用したメッセージを送った際に、ボットサーバーに届くWebhookの例です。
+
+json
+
+`{   "destination": "xxxxxxxxxx",  "events": [    {      "type": "message",      "message": {        "type": "text",        "id": "468789577898262530", // 送られてきたメッセージのID        "quotedMessageId": "468789532432007169", // 引用対象となったメッセージのID        "quoteToken": "q3Plxr4AgKd...",        "text": "Chicken, please." // 送られてきたメッセージのテキスト      },      "webhookEventId": "01H810YECXQQZ37VAXPF6H9E6T",      "deliveryContext": {        "isRedelivery": false      },      "timestamp": 1692251666727,      "source": {        "type": "group",        "groupId": "Ca56f94637c...",        "userId": "U4af4980629..."      },      "replyToken": "38ef843bde154d9b91c21320ffd17a0f",      "mode": "active"    }  ] }`
+
+`quotedMessageId`プロパティについて詳しくは、『Messaging APIリファレンス』の「[メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event)」の「[テキスト](https://developers.line.biz/ja/reference/messaging-api/#wh-text)」および「[スタンプ](https://developers.line.biz/ja/reference/messaging-api/#wh-sticker)」を参照してください。
+
+ユーザーが引用メッセージを送る方法について詳しくは、『LINEみんなの使い方ガイド』の「[トークのリプライ機能を利用する](https://guide.line.me/ja/chats-calls-notifications/chats/chat-reply.html)」を参照してください。
+
+#### ボットへのメンションを含むメッセージが送信されたときのWebhook
+
+ユーザーが送信したメッセージに自分のボットへのメンションがあった場合、ボットサーバーに送信されるWebhookイベント内の[テキストメッセージオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#wh-text)において、次の値が設定されます。
+
+*   `mention.mentionees[].type`に`user`が設定される。
+*   `mention.mentionees[].userId`にボットのユーザーIDが設定される。
+*   `mention.mentionees[].isSelf`に`true`が設定される。
+
+たとえば、次のようなメッセージイベントを含むWebhookイベントオブジェクトがボットサーバーに送信されます。
+
+json
+
+`"message": {   "id": "444573844083572737",  "type": "text",  "quoteToken": "q3Plxr4AgKd...",  "text": "@example_bot Good Morning!!",  "mention": {    "mentionees": [      {        "index": 0,        "length": 12,        "userId": "{ボットのユーザーID}",        "type": "user",        "isSelf": true      }    ]  } }`
+
+なお、ボットのユーザーIDは、[Webhookのリクエストボディ](https://developers.line.biz/ja/reference/messaging-api/#request-body)にある`destination`プロパティや、「[ボットの情報を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-bot-info)」エンドポイントで取得できる`userId`プロパティで確認できます。
+
+### その他のWebhookイベント
+
+Webhookイベントは、以下のようにビーコンやアカウント連携にも利用できます。
+
+| Webhookイベント | 受信するタイミング |
+| --- | --- |
+| [ビーコンイベント](https://developers.line.biz/ja/reference/messaging-api/#beacon-event) | ビーコンの電波の受信圏にユーザーが入った時。このイベントには応答できます。詳しくは、「[LINEでビーコンを使う](https://developers.line.biz/ja/docs/messaging-api/using-beacons/)」を参照してください。 |
+| [アカウント連携イベント](https://developers.line.biz/ja/reference/messaging-api/#account-link-event) | ユーザーがLINEアカウントとプロバイダーが提供するサービスのアカウントを連携した時。このイベントには応答できます。詳しくは、「[ユーザーアカウントの連携](https://developers.line.biz/ja/docs/messaging-api/linking-accounts/)」を参照してください。 |
+
+## 送信取消イベント受信時の処理
+
+ユーザーは、送信後24時間以内であれば、自分が送ったメッセージの送信を取り消すことができます。
+
+ユーザーがメッセージの送信を取り消すと、ボットサーバーに[送信取消イベント](https://developers.line.biz/ja/reference/messaging-api/#unsend-event)が届きます。送信取消イベントを受け取った場合、サービス提供者はユーザーがメッセージの送信を取り消した意図を尊重し、以降は対象のメッセージを見たり利用したりできないよう、最大限の配慮を持って対象のメッセージを適切に扱うことを推奨します。
+
+たとえば、送信が取り消されたメッセージを以下のように取り扱ってください。
+
+*   独自の管理画面などで表示している対象のメッセージの表示を取り消す
+*   データベースなどに保存している対象のメッセージを削除する
+
+LINEアプリでのメッセージの送信取消について詳しくは、『LINEみんなの使い方ガイド』の「[トークの送信取消機能を利用する](https://guide.line.me/ja/chats-calls-notifications/chats/chat-delete.html)」を参照してください。
+
+## 受け取りに失敗したWebhookを再送する
+
+Messaging APIでは、ボットサーバー側が受け取りに失敗したWebhookを再送する機能を提供しています。ボットサーバーが一時的なアクセス過多などの理由でWebhookに対して正常に応答できなかった場合でも、一定の期間、LINEプラットフォームから再送されるため、ボットサーバーの復旧後にWebhookを受け取ることができます。
+
+Webhookの再送は、すべてのMessaging APIチャネルで利用可能です。
+
+:::note warn
+Webhookの再送を有効にする前に確認してください
+
+:::
+
+### 再送されるWebhook
+
+再送される[Webhookイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)の内容は、`deliveryContext.isRedelivery`の値を除き、元のWebhookイベントオブジェクトと同じになります。WebhookイベントIDや応答トークンなどの値は変更されません。
+
+なお、再送されるWebhookイベントオブジェクトに含まれる応答トークンは、特定の場合を除き使用できます。応答トークンについて詳しくは、『Messaging APIリファレンス』の「[応答トークン](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message-reply-token)」を参照してください。
+
+### Webhookの再送を有効にする
+
+Webhookの再送は、デフォルトでは無効になっています。Webhookの再送を有効にするには、次の手順を行います。
+
+1.  [LINE Developersコンソール](https://developers.line.biz/console/)からチャネルの設定画面を開く。
+2.  ［**Messaging API設定**］タブをクリックする。
+3.  ［**Webhookの利用**］を有効にする。
+4.  ［**Webhookの再送**］を有効にする。
+
+［**Webhookの再送**］を有効にする際、Webhook再送の利用に際する注意事項が表示されます。注意事項を確認し、理解した上でWebhook再送を有効にしてください。
+
+![](https://developers.line.biz/media/messaging-api/receiving-messages/enable-webhook-redelivery-ja.png)
+
+### Webhookが再送される条件
+
+LINEプラットフォームから送信されたWebhookは、次の2つの条件を満たすときに、一定の期間内に、一定の時間を空けて再送されます。
+
+*   [Webhookの再送を有効にしている](#enable-webhook-redelivery)。
+*   Webhookに対して、ボットサーバーがステータスコード`200`番台を返さなかった。
+
+:::note warn
+Webhookを再送できない場合があります
+
+:::
+
+## Webhookの送信におけるエラーの統計情報を確認する
+
+こちらに記載されていた内容は、「[エラーが発生した原因を確認する](https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/#check-error-reason)」に移動しました。
+
+## ユーザーが送ったコンテンツを取得する
+
+[Webhook](https://developers.line.biz/ja/reference/messaging-api/#webhooks)で受信したメッセージIDを使って、ユーザーが送信したコンテンツを取得できます。取得できるコンテンツは、次のとおりです。
+
+*   [画像、動画、音声、ファイル](#getting-content-file-sent-by-users)
+*   [画像または動画のプレビュー画像](#getting-content-preview-image)
+
+:::note warn
+注意
+
+:::
+
+### 画像、動画、音声、ファイルを取得する
+
+Webhookで受信したメッセージIDを使って、ユーザーが送信した[画像](https://developers.line.biz/ja/reference/messaging-api/#wh-image)、[動画](https://developers.line.biz/ja/reference/messaging-api/#wh-video)、[音声](https://developers.line.biz/ja/reference/messaging-api/#wh-audio)、および[ファイル](https://developers.line.biz/ja/reference/messaging-api/#wh-file)を取得できます。
+
+リクエストの例
+
+sh
+
+`curl -v -X GET https://api-data.line.me/v2/bot/message/{messageId}/content \ -H 'Authorization: Bearer {channel access token}'`
+
+詳しくは、『Messaging APIリファレンス』の「[コンテンツを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-content)」を参照してください。
+
+### 画像または動画のプレビュー画像を取得する
+
+Webhookで受信したメッセージIDを使って、ユーザーが送信した画像、動画のプレビュー画像を取得できます。
+
+リクエストの例
+
+sh
+
+`curl -v -X GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview \ -H 'Authorization: Bearer {channel access token}'`
+
+プレビュー画像は、実際のコンテンツよりも軽量なデータサイズに変換された画像データです。
+
+たとえば、プレビュー画像はサムネイルとして使用できます。CRMのようなサイトを構築する際には、大きな画像や動画のダウンロード中にサムネイルを表示できます。これにより、ユーザーはすばやくコンテンツの概要を確認でき、システムのユーザーエクスペリエンスを向上させることができます。
+
+詳しくは、『Messaging APIリファレンス』の「[画像または動画のプレビュー画像を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-image-or-video-preview)」を参照してください。
+
+## ユーザープロフィール情報を取得する
+
+[Webhook](https://developers.line.biz/ja/reference/messaging-api/#webhooks)に含まれるユーザーIDを使って、ユーザーのLINEプロフィール情報（ユーザーの表示名、ユーザーID、プロフィール画像のURL、ステータスメッセージなど）を取得できます。
+
+リクエストの例
+
+sh
+
+`curl -v -X GET https://api.line.me/v2/bot/profile/{userId} \ -H 'Authorization: Bearer {channel access token}'`
+
+成功した場合、JSONオブジェクトが返されます。
+
+json
+
+`{   "displayName": "LINE Botto",  "userId": "U4af4980629...",  "pictureUrl": "https://profile.line-scdn.net/ch/v2/p/uf9da5ee2b...",  "statusMessage": "Hello world!" }`
+
+詳しくは、『Messaging APIリファレンス』の「[プロフィールを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-profile)」を参照してください。
+
+html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}

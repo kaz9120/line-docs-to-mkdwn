@@ -1,0 +1,34 @@
+---
+url: https://developers.line.biz/ja/docs/line-login/roadmap/
+copied_at: 2025-10-23T15:58:46.764Z
+---
+# ロードマップ
+
+[LINEログイン](https://developers.line.biz/ja/docs/line-login/overview/)、およびLINEログインの仕組みを利用している[LINE Front-end Framework（LIFF）](https://developers.line.biz/ja/docs/liff/overview/)や[LINEミニアプリ](https://developers.line.biz/ja/docs/line-mini-app/discover/introduction/)において、今後リリースが予定されている機能と、それらのリリース予定時期を紹介するロードマップです。
+
+過去にロードマップで予定していた機能の中で、既にリリースされたものについては、「[リリース済みの機能](#released-features)」を参照してください。
+
+:::note warn
+ロードマップは記載の機能を提供することを保証するものではありません
+
+:::
+
+| リリース時期 | 機能 | 概要 | 対象プロダクト |
+| --- | --- | --- | --- |
+| 2025年内 | チャネル同意画面における同意率などの公開 | 管理しているチャネルにおいて、チャネル同意画面でのユーザーの同意率などがLINE Developersコンソールで確認できるようになります。 | <ul><!--[--><li><!--[-->LINEログイン<!--]--></li><li><!--[-->LIFF<!--]--></li><li><!--[-->LINEミニアプリ<!--]--></li><!--]--></ul> |
+| 2025年内 | LIFFアプリからLINEミニアプリへの移行手段の提供 | LIFFとLINEミニアプリのブランド統合に伴い、LINEログインチャネルのLIFFアプリをLINEミニアプリに移行する手段を提供します。詳しくは、2025年2月12日のニュース、「[LIFFアプリを新規作成する際は、LINEミニアプリとして作成することを推奨します](https://developers.line.biz/ja/news/2025/02/12/line-mini-app/)」を参照してください。 | <ul><!--[--><li><!--[-->LIFF<!--]--></li><li><!--[-->LINEミニアプリ<!--]--></li><!--]--></ul> |
+| 2025年内 | `liff.scanCodeV2()`への機能追加 | `liff.scanCodeV2()`にQRコードをより読み取りやすくなる機能を追加します。 | LIFF |
+| 時期未定 | サブウィンドウ機能 | LIFFブラウザをより没入感のある体験にするべく、開発者はLIFFアプリ上で別のLIFFアプリをモーダルとして表示することができるようになります。 | LIFF |
+| 時期未定 | LIFFブラウザがダークモードに対応 | ダークモード表示に対応したLIFFアプリをLIFFブラウザで開いた場合、意図した画面表示になるよう、ダークモードを正式にサポートします。 | LIFF |
+| 時期未定 | LINEログイン v1、v2.0へのアクセス遮断 | 既に廃止されているLINEログイン v1、および非推奨となっているLINEログイン v2.0へのアクセスを完全に遮断します。 | LINEログイン |
+| 継続実施 | アクセシビリティ対応 | LINEログインを、より多くのエンドユーザーにとって使いやすいプロダクトにするため、アクセシビリティ対応を継続して推進していきます。 | LINEログイン |
+| 継続実施 | 同意画面をより使いやすいものに改善 | LINEログインを、より多くのエンドユーザーにとって使いやすいプロダクトにするため、A/Bテストなどの分析に基づき、機能やUIの改善を継続して推進していきます。 | LINEログイン |
+
+## リリース済みの機能
+
+| リリース日 | 機能 | リリースのニュース | 対象プロダクト |
+| --- | --- | --- | --- |
+| 2024年10月18日 | ユーザープロフィールのクイック入力機能 | [クイック入力のドキュメントを公開しました](https://developers.line.biz/ja/docs/partner-docs/notice/#partner-news-20241018) | LINEミニアプリ |
+| 2024年11月27日 | 未認証ミニアプリ | [2024年11月28日より、どなたでもLINEミニアプリを公開できるようになりました](https://developers.line.biz/ja/news/2024/11/27/line-mini-app/) | LINEミニアプリ |
+| 2024年12月17日 | LINEログインのダークモード表示の対象拡大 | [LINEログインの一部画面がダークモードに対応しました](https://developers.line.biz/ja/news/2025/01/06/line-login-dark-mode/) | LINEログイン |
+| 2025年1月15日 | LIFFブラウザを最小化する機能をAndroidでも提供 | [Android版LINEバージョン15.0.0以降でLIFFブラウザを最小化できるようになりました](https://developers.line.biz/ja/news/2025/01/15/minimizing-liff-browser/) | LIFF |
