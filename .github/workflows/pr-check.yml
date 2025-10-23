@@ -35,10 +35,13 @@ jobs:
         
       - name: Run build
         run: npm run build
-        
+
       - name: Run tests with coverage
         run: npm run test:coverage
-        
+
+      - name: Validate markdown files are up-to-date
+        run: npm run validate:markdown
+
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         if: always()

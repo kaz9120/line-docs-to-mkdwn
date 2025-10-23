@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LINE Developers Documentation URLs",
+  "description": "List of LINE Developers documentation URLs to convert to Markdown",
+  "type": "object",
+  "properties": {
+    "urls": {
+      "type": "array",
+      "description": "Array of URL entries",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://developers\\.line\\.biz/",
+            "description": "Full URL to the LINE Developers documentation page"
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^docs/.*\\.md$",
+            "description": "Relative path where the markdown file should be stored (relative to ./markdown/)"
+          }
+        },
+        "required": ["url", "path"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["urls"],
+  "additionalProperties": false
+}

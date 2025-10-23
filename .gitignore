@@ -143,3 +143,8 @@ vite.config.ts.timestamp-*
 # Sample data (not for commit)
 sample_data/
 line-docs-to-mkdwn.zip
+
+# Playwright test results
+test-results/
+playwright-report/
+playwright/.cache/
