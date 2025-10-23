@@ -148,3 +148,6 @@ line-docs-to-mkdwn.zip
 test-results/
 playwright-report/
 playwright/.cache/
+
+# Markdown validation temporary directory
+.temp-markdown-validation/

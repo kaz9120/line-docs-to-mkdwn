@@ -20,6 +20,7 @@
     "generate-html-report": "node scripts/generate-report.js",
     "generate:markdown": "npm run build && playwright test e2e/tests/generate-markdown.spec.ts",
     "validate:markdown": "tsx scripts/validate-markdown.ts",
+    "validate:markdown:strict": "tsx scripts/validate-markdown.ts --strict",
     "package": "npm run build && cd dist && zip -r ../line-docs-to-mkdwn.zip ."
   },
   "devDependencies": {

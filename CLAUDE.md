@@ -17,8 +17,9 @@ npm run test:e2e  # PlaywrightでE2Eテスト実行
 
 ### Markdown生成と検証
 ```bash
-npm run generate:markdown    # URLリストから全Markdownファイルを生成
-npm run validate:markdown    # Markdownファイルが最新かチェック
+npm run generate:markdown         # URLリストから全Markdownファイルを生成
+npm run validate:markdown         # Markdownファイルの存在チェック（高速）
+npm run validate:markdown:strict  # 厳密モード：実際に再生成して差分チェック（低速）
 ```
 
 ### ビルド
@@ -202,6 +203,48 @@ URLは自動的にMarkdownファイルのパスに変換されます：
 - 不足があればCI失敗
 
 **重要**: Markdownファイルを更新し忘れた場合、CIが失敗します。`npm run generate:markdown` を実行してコミットに含めてください。
+
+### 厳密モード検証
+
+通常の検証はファイルの存在のみをチェックしますが、厳密モードでは実際に再生成して内容を比較します。
+
+```bash
+npm run validate:markdown:strict
+```
+
+#### 検証内容
+
+1. **変換ロジックの更新検出**: 拡張機能のコードを変更した場合、既存のMarkdownファイルが古いことを検出
+2. **LINE Developers側の更新検出**: ドキュメントページが更新された場合も検出可能
+3. **フロントマター正規化**: `copy_date` を除外して比較するため、コピー日時の違いは無視
+
+#### 実行例
+
+```bash
+$ npm run validate:markdown:strict
+
+Validating markdown files (strict mode)...
+Running strict validation (this may take a while)...
+
+✓ docs/basics/channel-access-token.md (no changes)
+⚠️  docs/messaging-api/overview.md
+   Content has changed (23 lines differ)
+   → Run 'npm run generate:markdown' to update
+
+✓ docs/messaging-api/sending-messages.md (no changes)
+✓ docs/line-login/overview.md (no changes)
+
+Total URLs: 4
+Valid files: 4
+Outdated files: 1
+
+⚠️  Some files are outdated!
+```
+
+#### 使い分け
+
+- **通常モード (`validate:markdown`)**: CI/PRチェック、高速チェック
+- **厳密モード (`validate:markdown:strict`)**: 定期的な手動実行、変換ロジック更新時
 
 ### ディレクトリ構造
 

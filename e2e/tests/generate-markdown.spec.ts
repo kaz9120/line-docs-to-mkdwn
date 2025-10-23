@@ -85,8 +85,10 @@ test.describe("Generate Markdown Files", () => {
       expect(markdownContent.length).toBeGreaterThan(0);
       expect(markdownContent).toMatch(/^#/m);
 
-      // Prepare output path
-      const outputPath = path.join(__dirname, "../../markdown", relativePath);
+      // Prepare output path (use TEMP_MARKDOWN_DIR if set for strict validation)
+      const baseDir =
+        process.env.TEMP_MARKDOWN_DIR || path.join(__dirname, "../../markdown");
+      const outputPath = path.join(baseDir, relativePath);
       const outputDir = path.dirname(outputPath);
 
       // Create directory if it doesn't exist
