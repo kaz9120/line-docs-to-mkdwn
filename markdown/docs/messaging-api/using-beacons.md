@@ -1,0 +1,72 @@
+---
+url: https://developers.line.biz/ja/docs/messaging-api/using-beacons/
+copied_at: 2025-10-23T15:56:23.850Z
+---
+# LINEでビーコンを使う
+
+LINE Beaconを使うと、ユーザーがビーコンの電波の受信圏に入ったときに[Webhookビーコンイベント](https://developers.line.biz/ja/reference/messaging-api/#beacon-event)を受け取ることができます。ビーコンを使用して、ビジネスニーズに合ったコンテキストでユーザーとやりとりするようにボットアプリをカスタマイズできます。
+
+:::note warn
+注意
+
+:::
+
+:::note info
+LINEビーコンは最新バージョンのLINEで利用してください
+
+:::
+
+## ビーコン端末を準備する
+
+LINE Beaconを使用するには、LINE公式アカウントとリンクするBluetooth® Low Energy対応ビーコンが必要です。以下のいずれかのタイプの端末を使用できます。
+
+*   [LINE Beacon](https://developers.line.biz/ja/docs/messaging-api/beacon-device-spec/)に対応しているビーコン端末。これらのビーコン端末は、それぞれの国でのみサポートされます。
+    *   日本で対応している端末については、[こちらのページ](https://beacon.theshop.jp/items/6617930)を参照してください。
+    *   タイで対応している端末については、[こちらのページ](https://linedevth.line.me/th/tech-partner?filterTech=Beacon)を参照してください。
+*   [LINE Simple Beacon](https://github.com/line/line-simple-beacon)規格に準拠しているBluetooth® Low Energy端末。
+
+## ビーコンとLINE公式アカウントをリンクする
+
+LINE公式アカウントをビーコンとリンクするには、[LINE Official Account Manager](https://manager.line.biz/beacon/register)のビーコン登録ページを開きます。登録ページでは、LINE Beacon対応端末とLINE公式アカウントをリンクできます。また、**LINE Simple BeaconハードウェアID**を端末に発行できます。
+
+:::note warn
+注意
+
+:::
+
+## Webhookイベントを受け取る
+
+以下の条件を満たしたユーザーがビーコンの受信圏に入ると、ボットサーバーが[Webhookのビーコンイベント](https://developers.line.biz/ja/reference/messaging-api/#beacon-event)を受け取れます。
+
+*   BluetoothとLINE Beaconの設定を有効にしている
+*   ボットアプリが関連付けられているLINE公式アカウントを、事前に友だち追加している
+
+Webhookのビーコンイベントを発生させるには、以下の手順に従います。
+
+1.  スマートフォンのBluetoothがオンになっていることを確認します。
+2.  LINEで［**設定**］>［**プライバシー管理**］を開き、［**LINE Beacon**］を有効にします。
+3.  ビーコンの電源が入っていることを確認し、スマートフォンをビーコンに近づけます。
+4.  ボットサーバーがビーコンイベントオブジェクトを受信することを確認します。
+
+以下は、[ビーコンイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#beacon-event)の例です。
+
+json
+
+`{   "destination": "xxxxxxxxxx",  "events": [    {      "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",      "type": "beacon",      "mode": "active",      "timestamp": 1462629479859,      "source": {        "type": "user",        "userId": "U4af4980629..."      },      "webhookEventId": "01FZ74A0TDDPYRVKNK77XKC3ZR",      "deliveryContext": {        "isRedelivery": false      },      "beacon": {        "hwid": "d41d8cd98f",        "type": "enter"      }    }  ] }`
+
+## ビーコンバナー
+
+ビーコンバナーとは、ビーコンでユーザーが検知されると、ユーザーのLINEのトーク画面上部に現れるバナーです。
+
+ユーザーがビーコンにリンクされているLINE公式アカウントと友だちになっていない場合、バナーをタップするとLINE公式アカウントを友だち追加できます。
+
+ユーザーがバナーをタップすると、LINE公式アカウントが指定したウェブページが開きます。LINE公式アカウントが友だち追加されている場合は、ユーザーがバナーをタップしたその場でLINE公式アカウントからのメッセージを受信させることができます。
+
+:::note warn
+注意
+
+:::
+
+![](https://developers.line.biz/media/messaging-api/using-beacons/beacon-banner_ja.png)
+
+html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

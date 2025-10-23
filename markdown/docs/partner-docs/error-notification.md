@@ -1,0 +1,103 @@
+---
+url: https://developers.line.biz/ja/docs/partner-docs/error-notification/
+copied_at: 2025-10-23T16:02:18.293Z
+---
+# エラー通知
+
+:::note warn
+オプション機能を利用するには手続きが必要です
+
+:::
+
+## 概要
+
+ユーザーが、LINE公式アカウントを友だち追加したり、LINE公式アカウントにメッセージを送ったりすると、[LINE Developersコンソール](https://developers.line.biz/console/)の「Webhook URL」で指定したURL（ボットサーバー）に対して、LINEプラットフォームからWebhookイベントが送られます。
+
+このWebhookイベント送信に対して、ボットサーバーが応答を返さない、あるいはステータスコード`200`番台以外の応答を返したとき、チャネルの管理者はエラーの発生を知らせる通知メールを受け取れます。このオプション機能を「エラー通知」と呼びます。
+
+![ボットサーバーからエラーが返ってくると通知メールが送られます](https://developers.line.biz/media/partner-docs/normal-error-notification-ja.jpg)
+
+## 送信されるメール
+
+エラー通知で送信されるメールについて説明します。
+
+### メールの宛先
+
+エラー通知のメールは、以下のメールアドレス宛に送信されます。
+
+*   対象チャネルの［**チャネル基本設定**］ページに登録されているメールアドレス
+*   対象チャネルに対してAdmin権限を持つユーザーの登録メールアドレス
+
+### メールの種類
+
+エラー通知のメールには、以下の種類があります。
+
+*   [LINEプラットフォームがエラーの発生を検知したとき](#detected-error)
+*   [LINEプラットフォームがWebhookの再送を停止したとき](#webhook-redelivery-stopped)（Webhookの再送が有効の場合のみ）
+
+#### LINEプラットフォームがエラーの発生を検知したとき
+
+LINEプラットフォームがエラーの発生を検知したときは、以下のようなメールを送信します。なお、メールの内容やエラーメッセージの表記は、予告なく変更される可能性があります。
+
+| dummy | dummy |
+| --- | --- |
+| 件名 | Messaging API: Your bot server returned no response or an error - `<Channel name>` |
+| 本文 | LINE Platform sent a webhook, but your bot server did not respond or returned an error.<br/>Check the reason and details for the error and your bot server's configuration. Then make any necessary changes so that it can receive webhooks properly. |
+| エラーの詳細 | エラーの原因や発生日時などが状況に応じて記載されます。詳細については、[メール本文](#content)を参照してください。 |
+
+:::note info
+エラーはLINE Developersコンソールでも確認できます
+
+:::
+
+#### LINEプラットフォームがWebhookの再送を停止したとき
+
+Messaging APIチャネルの設定で[Webhookの再送を有効](https://developers.line.biz/ja/docs/messaging-api/receiving-messages/#enable-webhook-redelivery)にしていた場合、LINEプラットフォームは、ボットサーバーが受け取りに失敗したWebhookを再送します。
+
+そして、一定の期間ボットサーバーの応答がなかった場合に、Webhookの再送を停止し、以下のようなメールを送信します。なお、メールの件名および本文は、予告なく変更される可能性があります。
+
+| dummy | dummy |
+| --- | --- |
+| 件名 | Messaging API: Webhook redelivery stopped - `<Channel name>` |
+| 本文 | The LINE Platform tried to send the webhook for the event(s), but stopped redelivery due to no response from your bot server.<br/>Please visit the LINE Developers site for details. |
+| エラーの詳細 | エラーの原因や発生日時などが状況に応じて記載されます。詳細については、[メール本文](#content)を参照してください。 |
+
+Webhookの再送について詳しくは、[受け取りに失敗したWebhookを再送する](https://developers.line.biz/ja/docs/messaging-api/receiving-messages/#webhook-redelivery)を参照してください。
+
+### 通知メールの例
+
+![通知メールの例](https://developers.line.biz/media/partner-docs/error-notification-email-sample.png)
+
+### メール本文
+
+メールの内容は以下のとおりです。
+
+| 項目 | 説明 |
+| --- | --- |
+| Channel ID | 対象のチャネルID |
+| Channel name | 対象のチャネル名 |
+| Reason for error | エラー発生原因の概要。詳しくは、『Messaging APIドキュメント』の「[エラーが発生した原因を確認する](https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/#check-error-reason)」を参照してください。 |
+| Detail for error | エラー発生原因の詳細。詳しくは、『Messaging APIドキュメント』の「[エラーの詳細を確認する](https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/#check-detail-for-error)」を参照してください。 |
+| Error count | エラーの発生回数 |
+| Time detected | エラーの発生日時 |
+
+## 通知メール受信時の対応例
+
+たとえば、受信したエラー通知の内容が[通知メールの例](#sample-mail)だった場合、Reason for errorが`error_status_code`、Detail for errorが`500`であるため、[エラーが発生した原因を確認する](https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/#check-error-reason)ことで「ボットサーバーがWebhookリクエストに対して、HTTPステータスコード`500`をレスポンスした」ということが分かります。
+
+この場合、ボットサーバーは受信したWebhookイベントを正常に処理することができなかったと考えられます。ボットサーバーのWebhookイベントの処理に関するログなどを調査し、問題の発生原因を調査してください。
+
+:::note warn
+エラーの調査について
+
+:::
+
+## LINE Developersコンソールの［統計情報］タブ内の［エラー］について
+
+通知メールで受け取ったエラーの情報は、[LINE Developersコンソール](https://developers.line.biz/console/)のMessaging APIチャネルの［**統計情報**］タブ内の［**エラー**］でも確認できます。また［**TSVファイルをダウンロード**］をクリックして、過去に発生したエラーの情報をTSV形式でダウンロードできます。
+
+表示されるエラーの、日付や時刻の基準となるタイムゾーンはUTC+9です。
+
+［**統計情報**］タブ内の［**エラー**］は、［**Messaging API設定**］タブで［**エラーの統計情報**］を有効にしたチャネルでのみ表示されます。エラーの統計情報を有効にする方法について詳しくは、『Messaging APIドキュメント』の「[エラーの統計情報を有効にする](https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/#enable-error-statistics)」を参照してください。
+
+![統計情報タブの「エラー」](https://developers.line.biz/media/partner-docs/console-error-sample_ja.png)

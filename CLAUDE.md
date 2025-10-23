@@ -12,6 +12,14 @@ npm run check     # リント + フォーマット実行
 ### テスト
 ```bash
 npm test          # Vitestでユニットテスト実行
+npm run test:e2e  # PlaywrightでE2Eテスト実行
+```
+
+### Markdown生成と検証
+```bash
+npm run generate:markdown         # URLリストから全Markdownファイルを生成
+npm run validate:markdown         # Markdownファイルの存在チェック（高速）
+npm run validate:markdown:strict  # 厳密モード：実際に再生成して差分チェック（低速）
 ```
 
 ### ビルド
@@ -45,11 +53,13 @@ Chrome拡張機能のため、通常のWebサーバーでは動作しません�
 
 3. **品質チェック（必須）**
    ```bash
-   npm run check     # リント・フォーマット
-   npm test          # ユニットテスト
-   npm run build     # ビルド確認
+   npm run check              # リント・フォーマット
+   npm test                   # ユニットテスト
+   npm run build              # ビルド確認
+   npm run validate:markdown  # Markdownファイルの検証（urls.json変更時）
    ```
    - **すべてのチェックが通ることを必ず確認**
+   - `urls.json` を変更した場合は、`npm run generate:markdown` で Markdown ファイルを生成
 
 4. **セキュリティチェックとバージョン更新（必須）**
    ```bash
@@ -133,6 +143,206 @@ Chrome Web Storeへの自動デプロイメントを有効にするには、認�
 2. すべてのシークレットが正しく設定されているか確認
 3. Chrome Web Store APIが有効化されているか確認
 4. `docs/CHROME_STORE_SETUP.md` のトラブルシューティングセクションを参照
+
+## Markdown変換結果の管理
+
+このプロジェクトでは、LINE Developersドキュメントページの変換結果をGitHub上で管理しています。
+
+### 概要
+
+- 変換対象のURLは `urls.txt` で管理（1行1URL）
+- 変換結果は `./markdown/` ディレクトリに保存
+- URLからMarkdownファイルのパスは自動生成される
+- E2Eテストを使用して自動生成
+- GitHub ActionsのCIで最新性を検証
+
+### URL管理ファイル (urls.txt)
+
+変換対象のURLを1行1URLで列挙：
+
+```
+# LINE Developers ドキュメント URL リスト
+# 各行に1つのURLを記載
+# '#' で始まる行はコメントとして扱われます
+# 空行は無視されます
+
+# 基本機能
+https://developers.line.biz/ja/docs/basics/channel-access-token/
+
+# Messaging API
+https://developers.line.biz/ja/docs/messaging-api/overview/
+https://developers.line.biz/ja/docs/messaging-api/sending-messages/
+
+# LINE Login
+https://developers.line.biz/ja/docs/line-login/overview/
+```
+
+**記法:**
+- 1行に1URL
+- `#` で始まる行はコメント
+- 空行は無視される
+- コメントと空行でグループ化して見やすく管理できます
+
+**パス変換:**
+- URLは自動的にMarkdownファイルのパスに変換されます
+- 例: `https://developers.line.biz/ja/docs/basics/channel-access-token/` → `docs/basics/channel-access-token.md`
+
+### Markdownファイルの生成
+
+新しいURLを追加した場合や、ドキュメントが更新された場合：
+
+1. **URLを追加**
+   ```bash
+   # urls.txt に新しいURLを追加（1行1URL）
+   ```
+
+2. **Markdownを生成**
+   ```bash
+   npm run generate:markdown
+   ```
+   - ビルドを実行
+   - PlaywrightでChrome拡張をロード
+   - 各URLに**順番に**アクセスして変換（安定性優先）
+   - `./markdown/` 配下に自動的にパスを生成して保存
+   - 失敗した場合、自動的に2回までリトライ
+
+   **注意**: 安定性を優先し、テストは直列実行されます。URLが多い場合は時間がかかります。
+
+3. **変更をコミット**
+   ```bash
+   git add urls.txt markdown/
+   git commit -m "feat: Add markdown for <page-name>"
+   ```
+
+### CI検証（スマートチェック）
+
+#### PR時の検証（高速・数秒）
+
+プルリクエスト作成時、GitHub Actionsが以下をチェック：
+
+1. **Markdownファイルの存在確認**: urls.txtの全URLに対応するファイルが存在するか
+2. **変換ロジック変更検出**: `src/` 配下の変換ロジック関連ファイルが変更されている場合、警告を表示
+
+**変換ロジック変更時の警告例:**
+```
+⚠️ Warning: Converter logic has been modified
+
+The following converter-related files were changed:
+- src/markdown-converter.ts
+- src/frontmatter-generator.ts
+
+⚠️ If the conversion logic has changed, please regenerate all markdown files:
+npm run generate:markdown
+```
+
+**重要**: 変換ロジックを変更した場合は、警告に従って全Markdownを再生成してください。
+
+#### 週次の厳密検証（毎週月曜 9:00 JST）
+
+GitHub Actionsが週次で厳密モードを自動実行：
+
+1. **全Markdownファイルを再生成**: 最新の拡張機能で全URLを変換
+2. **内容の差分チェック**: 既存ファイルと比較（copy_date除外）
+3. **変換ロジック更新検出**: 拡張機能の変更による差分を検出
+4. **LINE Developers更新検出**: ドキュメントページの更新を検出
+
+検証失敗時は自動的にIssueが作成されます。
+
+### 厳密モード検証（ローカル実行）
+
+ローカルでも厳密モードを実行できます：
+
+```bash
+npm run validate:markdown:strict
+```
+
+#### 検証モードの比較
+
+| モード | 用途 | 検証内容 | 速度 |
+|--------|------|----------|------|
+| 通常 | **PR時のCI**、高速チェック | ファイルの存在のみ | 数秒 |
+| 厳密 | **週次CI**、ローカル実行 | 実際に再生成して差分確認 | 数分〜数十分 |
+
+#### 実行例
+
+```bash
+$ npm run validate:markdown:strict
+
+Validating markdown files (strict mode)...
+Running strict validation (this may take a while)...
+
+✓ docs/basics/channel-access-token.md (no changes)
+⚠️  docs/messaging-api/overview.md
+   Content has changed (23 lines differ)
+   → Run 'npm run generate:markdown' to update
+
+✓ docs/messaging-api/sending-messages.md (no changes)
+✓ docs/line-login/overview.md (no changes)
+
+Total URLs: 4
+Valid files: 4
+Outdated files: 1
+
+⚠️  Some files are outdated!
+```
+
+### ディレクトリ構造
+
+```
+line-docs-to-mkdwn/
+├── urls.txt                  # URL管理ファイル（1行1URL）
+└── markdown/                 # 変換結果の保存先（自動生成ファイルのみ）
+    └── docs/
+        ├── basics/
+        │   └── channel-access-token.md
+        ├── messaging-api/
+        │   ├── overview.md
+        │   └── sending-messages.md
+        └── line-login/
+            └── overview.md
+```
+
+### トラブルシューティング
+
+#### CIで "Missing markdown files" エラー
+
+```bash
+# 不足しているファイルを生成
+npm run generate:markdown
+
+# 生成されたファイルをコミット
+git add markdown/
+git commit -m "docs: Update markdown files"
+```
+
+#### タイムアウトエラーが発生する場合
+
+Markdown生成は安定性を優先し、以下の設定で実行されます：
+
+- **直列実行**: ワーカー数1（並列実行なし）
+- **タイムアウト**: テスト1件あたり60秒
+- **リトライ**: 失敗時に最大2回まで自動リトライ
+- **ナビゲーションタイムアウト**: ページ読み込みに30秒
+- **アクションタイムアウト**: ボタンクリックなどに15秒
+
+これらの設定は `playwright-generate.config.ts` で定義されています。
+
+さらに調整が必要な場合は、以下の値を変更してください：
+
+```typescript
+// playwright-generate.config.ts
+timeout: 90 * 1000,  // テストタイムアウトを90秒に延長
+retries: 3,          // リトライ回数を3回に増加
+```
+
+#### 特定のURLのみ再生成したい場合
+
+PlaywrightのE2Eテストでは、個別のテストを実行できます：
+
+```bash
+npm run build
+npx playwright test --config=playwright-generate.config.ts -g "docs/basics/channel-access-token.md"
+```
 
 ## プロジェクト概要
 

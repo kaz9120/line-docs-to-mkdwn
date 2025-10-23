@@ -1,0 +1,115 @@
+name: Weekly Strict Validation
+
+on:
+  schedule:
+    # Run every Monday at 9:00 AM JST (00:00 UTC)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  strict-validation:
+    name: Strict Markdown Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get Playwright version
+        id: playwright-version
+        run: |
+          VERSION=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Run strict validation
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run validate:markdown:strict
+        env:
+          CI: true
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## 📊 Weekly Strict Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This workflow validates that all markdown files are up-to-date by:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Regenerating all markdown files from LINE Developers documentation" >> $GITHUB_STEP_SUMMARY
+          echo "2. Comparing with existing files (ignoring copy_date)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Detecting changes in converter logic or source documentation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ $? -eq 0 ]; then
+            echo "✅ All markdown files are up-to-date!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Some markdown files are outdated or missing." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Possible causes:**" >> $GITHUB_STEP_SUMMARY
+            echo "- LINE Developers documentation has been updated" >> $GITHUB_STEP_SUMMARY
+            echo "- Converter logic changes were not applied to existing files" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+            echo "npm run generate:markdown" >> $GITHUB_STEP_SUMMARY
+            echo "git add markdown/" >> $GITHUB_STEP_SUMMARY
+            echo "git commit -m \"docs: Update markdown files\"" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Create issue if validation fails
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ Weekly Markdown Validation Failed',
+              body: `## Weekly Strict Validation Failed
+
+The weekly markdown validation detected outdated or missing markdown files.
+
+### Possible Causes
+- LINE Developers documentation has been updated
+- Converter logic changes were not applied to existing files
+
+### Action Required
+Please regenerate the markdown files:
+
+\`\`\`bash
+npm run generate:markdown
+git add markdown/
+git commit -m "docs: Update markdown files"
+git push
+\`\`\`
+
+See the [workflow run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for details.`,
+              labels: ['documentation', 'automated']
+            });
+            console.log('Created issue:', issue.data.html_url);
