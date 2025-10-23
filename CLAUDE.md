@@ -98,20 +98,20 @@ Chrome拡張機能のため、通常のWebサーバーでは動作しません�
    - プルリクエストがマージされると自動的に：
      - リリースタグ（`v*.*.*`）が作成される
      - GitHubリリースが作成される
-     - Chrome Web Storeへアップロードされる
+     - Chrome Web Storeへアップロードされ、自動的に公開される
 
 2. **自動実行されるワークフロー**
    - `main-push.yml`: mainブランチへのマージ時に実行
      - ビルド、テスト、パッケージング
      - Gitタグとリリースの作成
-     - Chrome Web Storeへ自動アップロード
+     - Chrome Web Storeへ自動アップロードと公開
    - `refresh-chrome-token.yml`: 月次で自動実行
      - APIトークンの有効期限切れを防止
 
 3. **Chrome Web Storeでの公開**
-   - デフォルトでは下書きとしてアップロード
-   - [デベロッパーダッシュボード](https://chrome.google.com/webstore/devconsole)で確認
-   - 準備ができたら手動で「審査に提出」をクリック
+   - 自動的にChrome Web Storeへ公開される
+   - [デベロッパーダッシュボード](https://chrome.google.com/webstore/devconsole)で確認可能
+   - 公開後、数分以内にChrome Web Storeで利用可能になる
 
 ### 初回セットアップ
 
