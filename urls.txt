@@ -1,4 +1,14 @@
+# LINE Developers ドキュメント URL リスト
+# 各行に1つのURLを記載
+# '#' で始まる行はコメントとして扱われます
+# 空行は無視されます
+
+# 基本機能
 https://developers.line.biz/ja/docs/basics/channel-access-token/
+
+# Messaging API
 https://developers.line.biz/ja/docs/messaging-api/overview/
 https://developers.line.biz/ja/docs/messaging-api/sending-messages/
+
+# LINE Login
 https://developers.line.biz/ja/docs/line-login/overview/

@@ -161,14 +161,31 @@ Chrome Web Storeへの自動デプロイメントを有効にするには、認�
 変換対象のURLを1行1URLで列挙：
 
 ```
+# LINE Developers ドキュメント URL リスト
+# 各行に1つのURLを記載
+# '#' で始まる行はコメントとして扱われます
+# 空行は無視されます
+
+# 基本機能
 https://developers.line.biz/ja/docs/basics/channel-access-token/
+
+# Messaging API
 https://developers.line.biz/ja/docs/messaging-api/overview/
 https://developers.line.biz/ja/docs/messaging-api/sending-messages/
+
+# LINE Login
 https://developers.line.biz/ja/docs/line-login/overview/
 ```
 
-URLは自動的にMarkdownファイルのパスに変換されます：
-- `https://developers.line.biz/ja/docs/basics/channel-access-token/` → `docs/basics/channel-access-token.md`
+**記法:**
+- 1行に1URL
+- `#` で始まる行はコメント
+- 空行は無視される
+- コメントと空行でグループ化して見やすく管理できます
+
+**パス変換:**
+- URLは自動的にMarkdownファイルのパスに変換されます
+- 例: `https://developers.line.biz/ja/docs/basics/channel-access-token/` → `docs/basics/channel-access-token.md`
 
 ### Markdownファイルの生成
 
