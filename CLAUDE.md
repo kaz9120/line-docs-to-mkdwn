@@ -202,8 +202,11 @@ https://developers.line.biz/ja/docs/line-login/overview/
    ```
    - ビルドを実行
    - PlaywrightでChrome拡張をロード
-   - 各URLにアクセスして変換
+   - 各URLに**順番に**アクセスして変換（安定性優先）
    - `./markdown/` 配下に自動的にパスを生成して保存
+   - 失敗した場合、自動的に2回までリトライ
+
+   **注意**: 安定性を優先し、テストは直列実行されます。URLが多い場合は時間がかかります。
 
 3. **変更をコミット**
    ```bash
@@ -292,13 +295,33 @@ git add markdown/
 git commit -m "docs: Update markdown files"
 ```
 
+#### タイムアウトエラーが発生する場合
+
+Markdown生成は安定性を優先し、以下の設定で実行されます：
+
+- **直列実行**: ワーカー数1（並列実行なし）
+- **タイムアウト**: テスト1件あたり60秒
+- **リトライ**: 失敗時に最大2回まで自動リトライ
+- **ナビゲーションタイムアウト**: ページ読み込みに30秒
+- **アクションタイムアウト**: ボタンクリックなどに15秒
+
+これらの設定は `playwright-generate.config.ts` で定義されています。
+
+さらに調整が必要な場合は、以下の値を変更してください：
+
+```typescript
+// playwright-generate.config.ts
+timeout: 90 * 1000,  // テストタイムアウトを90秒に延長
+retries: 3,          // リトライ回数を3回に増加
+```
+
 #### 特定のURLのみ再生成したい場合
 
 PlaywrightのE2Eテストでは、個別のテストを実行できます：
 
 ```bash
 npm run build
-npx playwright test -g "docs/basics/channel-access-token.md"
+npx playwright test --config=playwright-generate.config.ts -g "docs/basics/channel-access-token.md"
 ```
 
 ## プロジェクト概要

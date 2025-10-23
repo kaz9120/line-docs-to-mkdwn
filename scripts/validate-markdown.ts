@@ -140,7 +140,7 @@ async function validateMarkdownFiles(strictMode: boolean): Promise<void> {
     const { execSync } = await import("node:child_process");
     try {
       execSync(
-        `TEMP_MARKDOWN_DIR="${tempDir}" npm run build && npx playwright test e2e/tests/generate-markdown.spec.ts`,
+        `TEMP_MARKDOWN_DIR="${tempDir}" npm run build && npx playwright test --config=playwright-generate.config.ts e2e/tests/generate-markdown.spec.ts`,
         {
           stdio: "inherit",
           cwd: path.join(__dirname, ".."),
