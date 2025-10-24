@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/emoji-list/
-copied_at: 2025-10-24T06:28:00.778Z
+copied_at: 2025-10-24T10:15:12.749Z
 ---
 # LINE絵文字
 
@@ -18,7 +18,7 @@ Messaging APIを使うと、テキストのメッセージでLINE絵文字を使
 > | --- | --- | --- |
 > | LINE絵文字 | テキストメッセージ | `emojis`プロパティに、プロダクトIDおよび絵文字IDを指定します。 |
 > | LINE絵文字 | テキストメッセージ（v2） | [絵文字オブジェクト](https://developers.line.biz/ja/reference/messaging-api/#text-message-v2-emoji-object)に、プロダクトIDおよび絵文字IDを指定します。 |
-> | Unicode絵文字 | <ul><!--[--><li><!--[-->テキストメッセージ<!--]--></li><li><!--[-->テキストメッセージ（v2）<!--]--></li><!--]--></ul> | `text`プロパティ内に、絵文字を直接入力するか、Unicodeコードポイントを入力します。 |
+> | Unicode絵文字 | <ul><li>テキストメッセージ</li><li>テキストメッセージ（v2）</li></ul> | `text`プロパティ内に、絵文字を直接入力するか、Unicodeコードポイントを入力します。 |
 
 ## メッセージオブジェクトにLINE絵文字を指定する
 

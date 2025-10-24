@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/secure-message-sample/
-copied_at: 2025-10-23T15:57:51.380Z
+copied_at: 2025-10-24T10:15:32.033Z
 ---
 # Secure message生成のサンプルデータとコード
 
@@ -91,14 +91,183 @@ Timestampの値が`65536`にインクリメントされると、Secure message�
 
 以下は、Secure messageを生成するJavaのサンプルコードです。
 
-java
+```java
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
-`import java.nio.ByteBuffer; import java.nio.ByteOrder; import java.security.MessageDigest; import java.security.NoSuchAlgorithmException; import java.util.Arrays; import javax.xml.bind.DatatypeConverter; public class LineBeacon {     private static byte[] sha256(byte[] input) {        try {            return MessageDigest.getInstance("SHA-256").digest(input);        } catch (NoSuchAlgorithmException e) {            throw new IllegalStateException("SHA-256 is always supported in Java7+", e);        }    }     private static byte[] xor(byte[] input, int xorCount) {        if (xorCount == 0) {            return input;        }         byte[] latterHalf = Arrays.copyOfRange(input, input.length / 2, input.length);        for (int i = 0; i < latterHalf.length; i++) {            latterHalf[i] ^= input[i];        }        return xor(latterHalf, xorCount - 1);    }     private static byte[] concat(byte[]...inputs) {        int size = 0;        for (byte[] in: inputs) {            size += in .length;        }        ByteBuffer bb = ByteBuffer.allocate(size);        for (byte[] in: inputs) {            bb.put( in );        }        return bb.array();    }     public static byte[] createSecureMessage(long timestamp, byte[] hwid, byte[] vendorKey, byte[] lotKey, byte batteryLevel) {        if (hwid.length != 5) {            throw new IllegalArgumentException("HWID must be 5 bytes long. " + hwid.length);        }        if (vendorKey.length != 4) {            throw new IllegalArgumentException("Vendor key must be 4 bytes long. " + vendorKey.length);        }        if (lotKey.length != 8) {            throw new IllegalArgumentException("Lot key must be 8 bytes long. " + lotKey.length);        }        if (batteryLevel < 0x00 || 0x0b < batteryLevel) {            throw new IllegalArgumentException("Battery Level must be between 0x00 and 0x0b: " + batteryLevel);        }         byte[] rawTimestamp = ByteBuffer            .allocate(8) // Timestamp of LINE Beacon is always 8 bytes long.            .order(ByteOrder.BIG_ENDIAN) // LINE Beacon always uses big-endian.            .putLong(timestamp)            .array();        byte[] input = concat(rawTimestamp, hwid, vendorKey, lotKey, new byte[] {            batteryLevel        });        byte[] digest = sha256(input);        byte[] messageAuthenticationCode = xor(digest, 3);        byte[] secureMessage = ByteBuffer            .allocate(7) // Current secureMessage is always 7 bytes long.            .put(messageAuthenticationCode)            .put(rawTimestamp, 6, 2) // Mask the upper 6 bytes of the timestamp.            .put(batteryLevel)            .array();         System.out.printf("%20s\t%s\t%s\t%s\t%s\n",            Long.toUnsignedString(timestamp),            DatatypeConverter.printHexBinary(secureMessage),            DatatypeConverter.printHexBinary(input),            DatatypeConverter.printHexBinary(digest),            DatatypeConverter.printHexBinary(messageAuthenticationCode)        );        return secureMessage;    } }`
+import javax.xml.bind.DatatypeConverter;
+
+public class LineBeacon {
+
+    private static byte[] sha256(byte[] input) {
+        try {
+            return MessageDigest.getInstance("SHA-256").digest(input);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("SHA-256 is always supported in Java7+", e);
+        }
+    }
+
+    private static byte[] xor(byte[] input, int xorCount) {
+        if (xorCount == 0) {
+            return input;
+        }
+
+        byte[] latterHalf = Arrays.copyOfRange(input, input.length / 2, input.length);
+        for (int i = 0; i < latterHalf.length; i++) {
+            latterHalf[i] ^= input[i];
+        }
+        return xor(latterHalf, xorCount - 1);
+    }
+
+    private static byte[] concat(byte[]...inputs) {
+        int size = 0;
+        for (byte[] in: inputs) {
+            size += in .length;
+        }
+        ByteBuffer bb = ByteBuffer.allocate(size);
+        for (byte[] in: inputs) {
+            bb.put( in );
+        }
+        return bb.array();
+    }
+
+    public static byte[] createSecureMessage(long timestamp, byte[] hwid, byte[] vendorKey, byte[] lotKey, byte batteryLevel) {
+        if (hwid.length != 5) {
+            throw new IllegalArgumentException("HWID must be 5 bytes long. " + hwid.length);
+        }
+        if (vendorKey.length != 4) {
+            throw new IllegalArgumentException("Vendor key must be 4 bytes long. " + vendorKey.length);
+        }
+        if (lotKey.length != 8) {
+            throw new IllegalArgumentException("Lot key must be 8 bytes long. " + lotKey.length);
+        }
+        if (batteryLevel < 0x00 || 0x0b < batteryLevel) {
+            throw new IllegalArgumentException("Battery Level must be between 0x00 and 0x0b: " + batteryLevel);
+        }
+
+        byte[] rawTimestamp = ByteBuffer
+            .allocate(8) // Timestamp of LINE Beacon is always 8 bytes long.
+            .order(ByteOrder.BIG_ENDIAN) // LINE Beacon always uses big-endian.
+            .putLong(timestamp)
+            .array();
+        byte[] input = concat(rawTimestamp, hwid, vendorKey, lotKey, new byte[] {
+            batteryLevel
+        });
+        byte[] digest = sha256(input);
+        byte[] messageAuthenticationCode = xor(digest, 3);
+        byte[] secureMessage = ByteBuffer
+            .allocate(7) // Current secureMessage is always 7 bytes long.
+            .put(messageAuthenticationCode)
+            .put(rawTimestamp, 6, 2) // Mask the upper 6 bytes of the timestamp.
+            .put(batteryLevel)
+            .array();
+
+        System.out.printf("%20s\t%s\t%s\t%s\t%s\n",
+            Long.toUnsignedString(timestamp),
+            DatatypeConverter.printHexBinary(secureMessage),
+            DatatypeConverter.printHexBinary(input),
+            DatatypeConverter.printHexBinary(digest),
+            DatatypeConverter.printHexBinary(messageAuthenticationCode)
+        );
+        return secureMessage;
+    }
+}
+```
 
 以下は、「[サンプルデータ](#sample-data)」セクションのデータを使って、上記のSecure message生成コードをテストするサンプルコードです。
 
-java
+```java
+import org.junit.Test;
 
-`import org.junit.Test; import static org.junit.Assert.*; import javax.xml.bind.DatatypeConverter; public class LineBeaconTest {     @Test    public void testSecureMessage() {        byte[] HWID_01deadbeef = DatatypeConverter.parseHexBinary("01deadbeef");        byte[] VENDOR_KEY_5cf2a423 = DatatypeConverter.parseHexBinary("5cf2a423");        byte[] LOTKEY_8c194fe41d7fe34f = DatatypeConverter.parseHexBinary("8c194fe41d7fe34f");        byte BATTEY_LEVEL_0x01 = 0x01;         assertArrayEquals(            "initial timestamp",            DatatypeConverter.parseHexBinary("037cf6f1000001"),            LineBeacon.createSecureMessage(                0,                HWID_01deadbeef,                VENDOR_KEY_5cf2a423,                LOTKEY_8c194fe41d7fe34f,                BATTEY_LEVEL_0x01             )        );        assertArrayEquals(            "timestamp after 15 sec",            DatatypeConverter.parseHexBinary("c86489c6000101"),            LineBeacon.createSecureMessage(                1,                HWID_01deadbeef,                VENDOR_KEY_5cf2a423,                LOTKEY_8c194fe41d7fe34f,                BATTEY_LEVEL_0x01             )        );        assertArrayEquals(            "timestamp as UNSIGNED_SHORT_MAX_VALUE",            DatatypeConverter.parseHexBinary("958497b8ffff01"),            LineBeacon.createSecureMessage(                0xffff,                HWID_01deadbeef,                VENDOR_KEY_5cf2a423,                LOTKEY_8c194fe41d7fe34f,                BATTEY_LEVEL_0x01             )        );        assertArrayEquals(            "carry-over test",            DatatypeConverter.parseHexBinary("564cfb90000001"),            LineBeacon.createSecureMessage(                0x0001 _0000,                HWID_01deadbeef,                VENDOR_KEY_5cf2a423,                LOTKEY_8c194fe41d7fe34f,                BATTEY_LEVEL_0x01             )        );        assertArrayEquals(            "timestamp as SIGNED_LONG_MAX_VALUE",            DatatypeConverter.parseHexBinary("05d522a7ffff01"),            LineBeacon.createSecureMessage(                9223372036854775807 L,                HWID_01deadbeef,                VENDOR_KEY_5cf2a423,                LOTKEY_8c194fe41d7fe34f,                BATTEY_LEVEL_0x01             )        );        assertArrayEquals(            "timestamp as UNSIGNED_LONG_MAX_VALUE",            DatatypeConverter.parseHexBinary("7393bd92ffff01"),            LineBeacon.createSecureMessage(                Long.parseUnsignedLong("ffffffffffffffff", 16),                HWID_01deadbeef,                VENDOR_KEY_5cf2a423,                LOTKEY_8c194fe41d7fe34f,                BATTEY_LEVEL_0x01             )        );    } }`
+import static org.junit.Assert.*;
+
+import javax.xml.bind.DatatypeConverter;
+
+public class LineBeaconTest {
+    @Test
+    public void testSecureMessage() {
+        byte[] HWID_01deadbeef = DatatypeConverter.parseHexBinary("01deadbeef");
+        byte[] VENDOR_KEY_5cf2a423 = DatatypeConverter.parseHexBinary("5cf2a423");
+        byte[] LOTKEY_8c194fe41d7fe34f = DatatypeConverter.parseHexBinary("8c194fe41d7fe34f");
+        byte BATTEY_LEVEL_0x01 = 0x01;
+
+        assertArrayEquals(
+            "initial timestamp",
+            DatatypeConverter.parseHexBinary("037cf6f1000001"),
+            LineBeacon.createSecureMessage(
+                0,
+                HWID_01deadbeef,
+                VENDOR_KEY_5cf2a423,
+                LOTKEY_8c194fe41d7fe34f,
+                BATTEY_LEVEL_0x01
+
+            )
+        );
+        assertArrayEquals(
+            "timestamp after 15 sec",
+            DatatypeConverter.parseHexBinary("c86489c6000101"),
+            LineBeacon.createSecureMessage(
+                1,
+                HWID_01deadbeef,
+                VENDOR_KEY_5cf2a423,
+                LOTKEY_8c194fe41d7fe34f,
+                BATTEY_LEVEL_0x01
+
+            )
+        );
+        assertArrayEquals(
+            "timestamp as UNSIGNED_SHORT_MAX_VALUE",
+            DatatypeConverter.parseHexBinary("958497b8ffff01"),
+            LineBeacon.createSecureMessage(
+                0xffff,
+                HWID_01deadbeef,
+                VENDOR_KEY_5cf2a423,
+                LOTKEY_8c194fe41d7fe34f,
+                BATTEY_LEVEL_0x01
+
+            )
+        );
+        assertArrayEquals(
+            "carry-over test",
+            DatatypeConverter.parseHexBinary("564cfb90000001"),
+            LineBeacon.createSecureMessage(
+                0x0001 _0000,
+                HWID_01deadbeef,
+                VENDOR_KEY_5cf2a423,
+                LOTKEY_8c194fe41d7fe34f,
+                BATTEY_LEVEL_0x01
+
+            )
+        );
+        assertArrayEquals(
+            "timestamp as SIGNED_LONG_MAX_VALUE",
+            DatatypeConverter.parseHexBinary("05d522a7ffff01"),
+            LineBeacon.createSecureMessage(
+                9223372036854775807 L,
+                HWID_01deadbeef,
+                VENDOR_KEY_5cf2a423,
+                LOTKEY_8c194fe41d7fe34f,
+                BATTEY_LEVEL_0x01
+
+            )
+        );
+        assertArrayEquals(
+            "timestamp as UNSIGNED_LONG_MAX_VALUE",
+            DatatypeConverter.parseHexBinary("7393bd92ffff01"),
+            LineBeacon.createSecureMessage(
+                Long.parseUnsignedLong("ffffffffffffffff", 16),
+                HWID_01deadbeef,
+                VENDOR_KEY_5cf2a423,
+                LOTKEY_8c194fe41d7fe34f,
+                BATTEY_LEVEL_0x01
+
+            )
+        );
+    }
+}
+```
 
 html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

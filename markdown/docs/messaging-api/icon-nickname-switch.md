@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/icon-nickname-switch/
-copied_at: 2025-10-23T15:56:30.310Z
+copied_at: 2025-10-24T10:15:14.860Z
 ---
 # アイコンと表示名をカスタマイズする
 
@@ -26,9 +26,24 @@ APIを使って以下のメッセージを送る際には、LINE公式アカウ�
 
 以下は、アイコンと表示名をカスタマイズしてメッセージを送信するリクエストの例です。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {CHANNEL_ACCESS_TOKEN}' \ -d '{     "to": "U1234....",    "messages": [        {            "type": "text",            "text": "Hello, I am Cony!!",            "sender": {                "name": "Cony",                "iconUrl": "https://line.me/conyprof"            }        }    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {CHANNEL_ACCESS_TOKEN}' \
+-d '{
+    "to": "U1234....",
+    "messages": [
+        {
+            "type": "text",
+            "text": "Hello, I am Cony!!",
+            "sender": {
+                "name": "Cony",
+                "iconUrl": "https://line.me/conyprof"
+            }
+        }
+    ]
+}'
+```
 
 ## アイコンと表示名のカスタマイズ範囲
 

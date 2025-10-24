@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/flex-message-layout/
-copied_at: 2025-10-24T06:28:19.979Z
+copied_at: 2025-10-24T10:15:27.479Z
 ---
 # Flex Messageのレイアウト
 
@@ -77,9 +77,31 @@ Flex Messageでは、[CSS Flexible Box（CSS Flexbox）](https://www.w3.org/TR/c
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "color": "#ff0000",        "flex": 2      },      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "color": "#0000ff",        "flex": 3      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "wrap": true,
+        "color": "#ff0000",
+        "flex": 2
+      },
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "wrap": true,
+        "color": "#0000ff",
+        "flex": 3
+      }
+    ]
+  }
+}
+```
 
 コンポーネントの`flex`プロパティが`0`の場合、コンポーネントはボックスの幅のうち、コンポーネントの内容をすべて表示するのに必要な幅を取ります。ただし、ボックスの幅からはみ出した部分は表示されません。
 
@@ -89,9 +111,37 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "Hello",        "color": "#00ff00",        "flex": 0      },      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "color": "#ff0000",        "flex": 2      },      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "color": "#0000ff",        "flex": 3      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Hello",
+        "color": "#00ff00",
+        "flex": 0
+      },
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "wrap": true,
+        "color": "#ff0000",
+        "flex": 2
+      },
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "wrap": true,
+        "color": "#0000ff",
+        "flex": 3
+      }
+    ]
+  }
+}
+```
 
 > [!TIP]
 > flexプロパティとCSS Flexbox
@@ -118,9 +168,57 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "wrap": true,            "text": "TEXT\nTEXT\nTEXT\nTEXT\nTEXT"          }        ],        "backgroundColor": "#c0c0c0"      },      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "separator",            "color": "#ff0000"          },          {            "type": "text",            "text": "flex=2",            "flex": 2          },          {            "type": "separator",            "color": "#ff0000"          },          {            "type": "text",            "text": "flex=3",            "flex": 3          },          {            "type": "separator",            "color": "#ff0000"          }        ]      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "wrap": true,
+            "text": "TEXT\nTEXT\nTEXT\nTEXT\nTEXT"
+          }
+        ],
+        "backgroundColor": "#c0c0c0"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "separator",
+            "color": "#ff0000"
+          },
+          {
+            "type": "text",
+            "text": "flex=2",
+            "flex": 2
+          },
+          {
+            "type": "separator",
+            "color": "#ff0000"
+          },
+          {
+            "type": "text",
+            "text": "flex=3",
+            "flex": 3
+          },
+          {
+            "type": "separator",
+            "color": "#ff0000"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 > [!TIP]
 > CSS flexプロパティとCSS Flexbox
@@ -190,9 +288,29 @@ Flex Messageの[ボタン](https://developers.line.biz/ja/reference/messaging-ap
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "hello, world",        "size": "30px"      },      {        "type": "text",        "text": "hello, world",        "margin": "10px",        "size": "30px",        "scaling": true      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello, world",
+        "size": "30px"
+      },
+      {
+        "type": "text",
+        "text": "hello, world",
+        "margin": "10px",
+        "size": "30px",
+        "scaling": true
+      }
+    ]
+  }
+}
+```
 
 > [!TIP]
 > フォントサイズの自動縮小との併用
@@ -202,7 +320,7 @@ json
 > 
 > | dummy | dummy |
 > | --- | --- |
-> | ![](https://developers.line.biz/media/messaging-api/flex-message-layout/scaling-sample-small-tip.png) | <ol><!--[--><li><!--[-->デフォルトの場合<!--]--></li><li><!--[--><code><!--[-->scaling<!--]--></code>プロパティに<code><!--[-->true<!--]--></code>を指定した場合<!--]--></li><li><!--[--><code><!--[-->scaling<!--]--></code>プロパティに<code><!--[-->true<!--]--></code>を指定し、<code><!--[-->adjustMode<!--]--></code>プロパティに<code><!--[-->shrink-to-fit<!--]--></code>を指定した場合<!--]--></li><!--]--></ol> |
+> | ![](https://developers.line.biz/media/messaging-api/flex-message-layout/scaling-sample-small-tip.png) | <ol><li>デフォルトの場合</li><li><code>scaling</code>プロパティに<code>true</code>を指定した場合</li><li><code>scaling</code>プロパティに<code>true</code>を指定し、<code>adjustMode</code>プロパティに<code>shrink-to-fit</code>を指定した場合</li></ol> |
 
 ## コンポーネントの位置
 
@@ -222,9 +340,40 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "align=start",        "align": "start"      },      {        "type": "separator",        "color": "#ff0000"      },      {        "type": "text",        "text": "align=center",        "align": "center"      },      {        "type": "separator",        "color": "#ff0000"      },      {        "type": "text",        "text": "align=end",        "align": "end"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "align=start",
+        "align": "start"
+      },
+      {
+        "type": "separator",
+        "color": "#ff0000"
+      },
+      {
+        "type": "text",
+        "text": "align=center",
+        "align": "center"
+      },
+      {
+        "type": "separator",
+        "color": "#ff0000"
+      },
+      {
+        "type": "text",
+        "text": "align=end",
+        "align": "end"
+      }
+    ]
+  }
+}
+```
 
 ### テキスト、画像、ボタンを垂直方向に整列させる
 
@@ -242,9 +391,56 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "wrap": true,            "text": "TEXT\nTEXT\nTEXT\nTEXT\nTEXT"          }        ],        "backgroundColor": "#c0c0c0"      },      {        "type": "text",        "text": "top",        "gravity": "top"      },      {        "type": "separator",        "color": "#ff0000"      },      {        "type": "text",        "text": "center",        "gravity": "center"      },      {        "type": "separator",        "color": "#ff0000"      },      {        "type": "text",        "text": "bottom",        "gravity": "bottom"      },      {        "type": "separator",        "color": "#ff0000"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "wrap": true,
+            "text": "TEXT\nTEXT\nTEXT\nTEXT\nTEXT"
+          }
+        ],
+        "backgroundColor": "#c0c0c0"
+      },
+      {
+        "type": "text",
+        "text": "top",
+        "gravity": "top"
+      },
+      {
+        "type": "separator",
+        "color": "#ff0000"
+      },
+      {
+        "type": "text",
+        "text": "center",
+        "gravity": "center"
+      },
+      {
+        "type": "separator",
+        "color": "#ff0000"
+      },
+      {
+        "type": "text",
+        "text": "bottom",
+        "gravity": "bottom"
+      },
+      {
+        "type": "separator",
+        "color": "#ff0000"
+      }
+    ]
+  }
+}
+```
 
 ### ボックスのパディングで子コンポーネントを配置する
 
@@ -262,9 +458,32 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "hello, world"          }        ],        "backgroundColor": "#ffffff"      }    ],    "backgroundColor": "#ffd2d2",    "paddingTop": "20px",    "paddingAll": "80px",    "paddingStart": "40px"  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "hello, world"
+          }
+        ],
+        "backgroundColor": "#ffffff"
+      }
+    ],
+    "backgroundColor": "#ffd2d2",
+    "paddingTop": "20px",
+    "paddingAll": "80px",
+    "paddingStart": "40px"
+  }
+}
+```
 
 なお、上のFlex Messageのテキストを長くすると、以下のようにレイアウトされます。
 
@@ -301,9 +520,47 @@ json
 
 たとえば上記の`flex-start`のFlex Messageを表現するには、以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "direction": "ltr",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [],        "width": "40px",        "height": "30px",        "backgroundColor": "#00aaff",        "flex": 0      },      {        "type": "box",        "layout": "vertical",        "contents": [],        "width": "20px",        "height": "30px",        "backgroundColor": "#00aaff",        "flex": 0      },      {        "type": "box",        "layout": "vertical",        "contents": [],        "height": "30px",        "width": "50px",        "backgroundColor": "#00aaff",        "flex": 0      }    ],    "justifyContent": "flex-start",    "spacing": "5px"  } }`
+```json
+{
+  "type": "bubble",
+  "direction": "ltr",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "width": "40px",
+        "height": "30px",
+        "backgroundColor": "#00aaff",
+        "flex": 0
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "width": "20px",
+        "height": "30px",
+        "backgroundColor": "#00aaff",
+        "flex": 0
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "height": "30px",
+        "width": "50px",
+        "backgroundColor": "#00aaff",
+        "flex": 0
+      }
+    ],
+    "justifyContent": "flex-start",
+    "spacing": "5px"
+  }
+}
+```
 
 #### 交差軸に沿って子コンポーネントを配置する
 
@@ -321,9 +578,48 @@ json
 
 たとえば上記の`flex-start`のFlex Messageを表現するには、以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "direction": "ltr",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [],        "height": "100px",        "backgroundColor": "#00aaff",        "flex": 0,        "width": "85px"      },      {        "type": "box",        "layout": "vertical",        "contents": [],        "height": "30px",        "backgroundColor": "#00aaff",        "flex": 0,        "width": "85px"      },      {        "type": "box",        "layout": "vertical",        "contents": [],        "height": "60px",        "backgroundColor": "#00aaff",        "flex": 0,        "width": "85px"      }    ],    "spacing": "5px",    "alignItems": "flex-start",    "height": "200px"  } }`
+```json
+{
+  "type": "bubble",
+  "direction": "ltr",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "height": "100px",
+        "backgroundColor": "#00aaff",
+        "flex": 0,
+        "width": "85px"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "height": "30px",
+        "backgroundColor": "#00aaff",
+        "flex": 0,
+        "width": "85px"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "height": "60px",
+        "backgroundColor": "#00aaff",
+        "flex": 0,
+        "width": "85px"
+      }
+    ],
+    "spacing": "5px",
+    "alignItems": "flex-start",
+    "height": "200px"
+  }
+}
+```
 
 ### ボックスのspacingプロパティ
 
@@ -340,9 +636,51 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "spacing": "md",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "text": "TEXT1"          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "text": "TEXT2"          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "text": "TEXT3"          }        ],        "backgroundColor": "#80ffff"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TEXT1"
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TEXT2"
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TEXT3"
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      }
+    ]
+  }
+}
+```
 
 特定のコンポーネントについてこの設定を上書きするには、そのコンポーネントで`margin`プロパティを設定します。
 
@@ -363,9 +701,52 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "spacing": "md",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "text": "TEXT1"          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "text": "TEXT2"          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "text": "TEXT3"          }        ],        "backgroundColor": "#80ffff",        "margin": "xxl"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TEXT1"
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TEXT2"
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TEXT3"
+          }
+        ],
+        "backgroundColor": "#80ffff",
+        "margin": "xxl"
+      }
+    ]
+  }
+}
+```
 
 ### オフセット
 
@@ -379,9 +760,42 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "direction": "ltr",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "REFERENCE BOX\n1\n2\n3",            "align": "center",            "wrap": true          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "TARGET"          }        ],        "backgroundColor": "#ff8080"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "direction": "ltr",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "REFERENCE BOX\n1\n2\n3",
+            "align": "center",
+            "wrap": true
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TARGET"
+          }
+        ],
+        "backgroundColor": "#ff8080"
+      }
+    ]
+  }
+}
+```
 
 #### 相対位置の場合のオフセット
 
@@ -412,9 +826,45 @@ json
 
 例のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "direction": "ltr",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "REFERENCE BOX\n1\n2\n3",            "align": "center",            "wrap": true          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "TARGET"          }        ],        "backgroundColor": "#ff8080",        "offsetTop": "10px",        "offsetStart": "40px",        "position": "relative"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "direction": "ltr",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "REFERENCE BOX\n1\n2\n3",
+            "align": "center",
+            "wrap": true
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TARGET"
+          }
+        ],
+        "backgroundColor": "#ff8080",
+        "offsetTop": "10px",
+        "offsetStart": "40px",
+        "position": "relative"
+      }
+    ]
+  }
+}
+```
 
 #### 絶対位置の場合のオフセット
 
@@ -450,9 +900,47 @@ json
 
 例のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "direction": "ltr",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "REFERENCE BOX\n1\n2\n3",            "align": "center",            "wrap": true          }        ],        "backgroundColor": "#80ffff"      },      {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "TARGET"          }        ],        "backgroundColor": "#ff8080",        "position": "absolute",        "offsetStart": "40px",        "offsetEnd": "80px",        "offsetTop": "10px",        "offsetBottom": "20px"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "direction": "ltr",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "REFERENCE BOX\n1\n2\n3",
+            "align": "center",
+            "wrap": true
+          }
+        ],
+        "backgroundColor": "#80ffff"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "TARGET"
+          }
+        ],
+        "backgroundColor": "#ff8080",
+        "position": "absolute",
+        "offsetStart": "40px",
+        "offsetEnd": "80px",
+        "offsetTop": "10px",
+        "offsetBottom": "20px"
+      }
+    ]
+  }
+}
+```
 
 ##### 絶対位置の子コンポーネントと親コンポーネントのサイズ
 
@@ -489,9 +977,23 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [],    "background": {      "type": "linearGradient",      "angle": "0deg",      "startColor": "#ff0000",      "endColor": "#0000ff"    },    "height": "200px"  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [],
+    "background": {
+      "type": "linearGradient",
+      "angle": "0deg",
+      "startColor": "#ff0000",
+      "endColor": "#0000ff"
+    },
+    "height": "200px"
+  }
+}
+```
 
 **45度の線形グラデーション（左下から右上）**
 
@@ -517,9 +1019,25 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [],    "background": {      "type": "linearGradient",      "angle": "0deg",      "startColor": "#ff0000",      "centerColor": "#0000ff",      "endColor": "#00ff00",      "centerPosition": "10%"    },    "height": "200px"  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [],
+    "background": {
+      "type": "linearGradient",
+      "angle": "0deg",
+      "startColor": "#ff0000",
+      "centerColor": "#0000ff",
+      "endColor": "#00ff00",
+      "centerPosition": "10%"
+    },
+    "height": "200px"
+  }
+}
+```
 
 **開始点から50%の位置に中間色を置いた場合**
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/module-technical-using-messaging-api/
-copied_at: 2025-10-24T06:30:07.119Z
+copied_at: 2025-10-24T10:17:26.829Z
 ---
 # モジュールチャネルからMessaging APIを利用する
 
@@ -30,9 +30,9 @@ LINEマーケットプレイスで提供するモジュールチャネルでは�
 
 **Lから始まる68桁の識別子の例**
 
-text
-
-`LUb577ef3cbe786a8da85ff8e902a03fc6-U5fac33f633e72c192759f09afc41fa28`
+```text
+LUb577ef3cbe786a8da85ff8e902a03fc6-U5fac33f633e72c192759f09afc41fa28
+```
 
 ### モジュールチャネルのチャネルアクセストークン
 
@@ -88,9 +88,21 @@ Authorization
 
 以下は、モジュールチャネルからMessaging APIで[プッシュメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-push-message)を送信する場合の例です。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type:application/json' \ -H 'Authorization: Bearer {channel access token}' \ -H 'ボットのユーザーIDを指定するヘッダー: xxxxxxxxxxxxxxxxxxxxxxxx'　\      // NEED THIS HEADER -d '{     "to": "LUb577ef3cbe...",    "messages":[        {            "type":"text",            "text":"Hello, world1"        }    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type:application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-H 'ボットのユーザーIDを指定するヘッダー: xxxxxxxxxxxxxxxxxxxxxxxx'　\      // NEED THIS HEADER
+-d '{
+    "to": "LUb577ef3cbe...",
+    "messages":[
+        {
+            "type":"text",
+            "text":"Hello, world1"
+        }
+    ]
+}'
+```
 
 ### Messaging APIを利用する際のレート制限
 
@@ -148,9 +160,41 @@ LINE公式アカウントにアタッチされているチャネルのうち、`
 
 以下は、`mode`プロパティの値が`active`場合と`standby`の場合に送信されるWebhookイベントの例です。
 
-sh
+```sh
+#Active Channelに送信されるWebhookイベントの例
+{
+    "replyToken": "0f3779fba3b349968c5d07db31eab56f", // NOTICE THIS PROPERTY
+    "type": "message",
+    "mode": "active", // NOTICE THIS PROPERTY
+    "timestamp": 1462629479859,
+    "source": {
+        "type": "user",
+        "userId": "LUb577ef3cbe..."
+    },
+    "message": {
+        "id": "325708",
+        "type": "text",
+        "text": "Hello, world"
+    }
+}
 
-`#Active Channelに送信されるWebhookイベントの例 {     "replyToken": "0f3779fba3b349968c5d07db31eab56f", // NOTICE THIS PROPERTY    "type": "message",    "mode": "active", // NOTICE THIS PROPERTY    "timestamp": 1462629479859,    "source": {        "type": "user",        "userId": "LUb577ef3cbe..."    },    "message": {        "id": "325708",        "type": "text",        "text": "Hello, world"    } } #Standby Channelに送信されるWebhookイベントの例 {     // replyToken PROPERTY DOES NOT EXIST    "type": "message",    "mode": "standby", // NOTICE THIS PROPERTY    "timestamp": 1462629479859,    "source": {        "type": "user",        "userId": "U4af4980629..."    },    "message": {        "id": "325708",        "type": "text",        "text": "Hello, world!"    } }`
+#Standby Channelに送信されるWebhookイベントの例
+{
+    // replyToken PROPERTY DOES NOT EXIST
+    "type": "message",
+    "mode": "standby", // NOTICE THIS PROPERTY
+    "timestamp": 1462629479859,
+    "source": {
+        "type": "user",
+        "userId": "U4af4980629..."
+    },
+    "message": {
+        "id": "325708",
+        "type": "text",
+        "text": "Hello, world!"
+    }
+}
+```
 
 ### destinationプロパティ
 
@@ -170,9 +214,12 @@ Webhookイベントの送信元のLINE公式アカウントのボットのユー
 
 以下は、Webhookイベントの例です。
 
-sh
-
-`{   "destination": "U53387d54817...",  // CHECK THIS PROPERTY  "events": [...] }`
+```sh
+{
+  "destination": "U53387d54817...",  // CHECK THIS PROPERTY
+  "events": [...]
+}
+```
 
 ### モジュールチャネル専用のWebhookイベントを受信する
 
@@ -193,8 +240,8 @@ sh
 > 
 > | イベントタイプ | 説明 |
 > | --- | --- |
-> | <ul><!--[--><li><!--[--><a href="/ja/reference/partner-docs/#activated-event" class=""><!--[--><!--[-->Activatedイベント<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/partner-docs/#deactivated-event" class=""><!--[--><!--[-->Deactivatedイベント<!--]--><!--]--></a><!--]--></li><!--]--></ul> | LINE公式アカウントにアタッチされているモジュールチャネルが、Acquire Control APIまたはRelease Control APIを呼び出し、チャットの主導権（Chat Control）が切り替わった際に送信されるイベント |
-> | <ul><!--[--><li><!--[--><a href="/ja/reference/messaging-api/#follow-event" class=""><!--[--><!--[-->フォローイベント<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#unfollow-event" class=""><!--[--><!--[-->フォロー解除イベント<!--]--><!--]--></a><!--]--></li><!--]--></ul> | エンドユーザーがLINE公式アカウントを友だち追加したり、ブロックしたりすると送信されるイベント。<br/>LINE公式アカウントをブロックして再度友だち追加すると、主導権（Chat Control）は自動的にデフォルト状態にリセットされます。「[Default Active](https://developers.line.biz/ja/docs/partner-docs/module-technical-chat-control/#default-active)」の機能が付与されたモジュールチャネルの場合は、自動的にActive Channelになります。 |
+> | <ul><li><a href="/ja/reference/partner-docs/#activated-event" class="">Activatedイベント</a></li><li><a href="/ja/reference/partner-docs/#deactivated-event" class="">Deactivatedイベント</a></li></ul> | LINE公式アカウントにアタッチされているモジュールチャネルが、Acquire Control APIまたはRelease Control APIを呼び出し、チャットの主導権（Chat Control）が切り替わった際に送信されるイベント |
+> | <ul><li><a href="/ja/reference/messaging-api/#follow-event" class="">フォローイベント</a></li><li><a href="/ja/reference/messaging-api/#unfollow-event" class="">フォロー解除イベント</a></li></ul> | エンドユーザーがLINE公式アカウントを友だち追加したり、ブロックしたりすると送信されるイベント。<br/>LINE公式アカウントをブロックして再度友だち追加すると、主導権（Chat Control）は自動的にデフォルト状態にリセットされます。「[Default Active](https://developers.line.biz/ja/docs/partner-docs/module-technical-chat-control/#default-active)」の機能が付与されたモジュールチャネルの場合は、自動的にActive Channelになります。 |
 
 > [!TIP]
 > LINE公式アカウントの一時停止状態（Suspend）について

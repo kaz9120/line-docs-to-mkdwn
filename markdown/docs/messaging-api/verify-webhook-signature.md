@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/verify-webhook-signature/
-copied_at: 2025-10-24T06:28:10.575Z
+copied_at: 2025-10-24T10:15:37.835Z
 ---
 # Webhookの署名を検証する
 
@@ -98,34 +98,29 @@ LINEプラットフォームから送信されたWebhookであるにも関わら
 ![検証ボタンを押すと疎通確認のWebhookが送信される](https://developers.line.biz/media/news/webhook-url.png)
 
 1.  ボットサーバーに届いたWebhookのリクエストボディ
-    
-    json
-    
-    `{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}`
+    ```json
+    {"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}
+    ```
     
 2.  ボットサーバーに届いたWebhookの署名（`x-line-signature`）
-    
-    text
-    
-    `GhRKmvmHys4Pi8DxkF4+EayaH0OqtJtaZxgTD9fMDLs=`
+    ```text
+    GhRKmvmHys4Pi8DxkF4+EayaH0OqtJtaZxgTD9fMDLs=
+    ```
     
 3.  当該チャネルのチャネルシークレット
-    
-    text
-    
-    `8c570fa6dd201bb328f1c1eac23a96d8`
+    ```text
+    8c570fa6dd201bb328f1c1eac23a96d8
+    ```
     
 4.  ボットサーバーで署名を検証するコマンド
-    
-    sh
-    
-    `echo -n '{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}' | openssl dgst -sha256 -hmac '8c570fa6dd201bb328f1c1eac23a96d8' -binary | openssl base64`
+    ```sh
+    echo -n '{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}' | openssl dgst -sha256 -hmac '8c570fa6dd201bb328f1c1eac23a96d8' -binary | openssl base64
+    ```
     
 5.  ボットサーバーで生成された署名
-    
-    text
-    
-    `GhRKmvmHys4Pi8DxkF4+EayaH0OqtJtaZxgTD9fMDLs=`
+    ```text
+    GhRKmvmHys4Pi8DxkF4+EayaH0OqtJtaZxgTD9fMDLs=
+    ```
     
 
 LINEプラットフォームから届いた2の署名と、ボットサーバーで生成した5の署名が一致しているため、ボットサーバーに届いたWebhookはLINEプラットフォームから送信されたものであり、改ざんされていないことが確認できました。
@@ -158,22 +153,20 @@ Webhookがボットサーバーに到達する前に、プロキシやロード�
 署名検証前に、受信したWebhookのリクエストボディの文字列をパース、あるいはデシリアライズして、オブジェクトや配列に変換してしまうと署名検証は失敗します。
 
 1.  ボットサーバーに届いたWebhookのリクエストボディ
-    
-    json
-    
-    `{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}`
+    ```json
+    {"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}
+    ```
     
 2.  Webhookのリクエストボディをデシリアライズして出力する
-    
-    python
-    
-    `decoded_data = json.loads('{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}') print(decoded_data)`
+    ```python
+    decoded_data = json.loads('{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}')
+    print(decoded_data)
+    ```
     
 3.  デシリアライズしたことでダブルクォートがシングルクォートに変わったり、空白が入ったりしてしまっている
-    
-    python
-    
-    `{'destination': 'U8e742f61d673b39c7fff3cecb7536ef0', 'events': []}`
+    ```python
+    {'destination': 'U8e742f61d673b39c7fff3cecb7536ef0', 'events': []}
+    ```
     
 
 署名検証には、受信したWebhookのリクエストボディの文字列をそのまま使用してください。
@@ -183,16 +176,17 @@ Webhookがボットサーバーに到達する前に、プロキシやロード�
 署名検証前に、受信したWebhookのリクエストボディの文字列（JSON）を、開発者にとって見やすくするために整形してしまうと署名検証は失敗します。
 
 1.  ボットサーバーに届いたWebhookのリクエストボディ
-    
-    json
-    
-    `{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}`
+    ```json
+    {"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}
+    ```
     
 2.  Webhookのリクエストボディの文字列（JSON）を整形すると、署名検証に失敗する
-    
-    json
-    
-    `{   "destination": "U8e742f61d673b39c7fff3cecb7536ef0",  "events": [] }`
+    ```json
+    {
+      "destination": "U8e742f61d673b39c7fff3cecb7536ef0",
+      "events": []
+    }
+    ```
     
 
 署名検証には、受信したWebhookのリクエストボディの文字列をそのまま使用してください。
@@ -225,15 +219,15 @@ Webhookがボットサーバーに到達する前に、プロキシやロード�
 
 たとえば、ローカル環境で`echo`コマンドを使って署名検証の動作確認を行う際は、ダブルクォートではなくシングルクォートで囲うことで、エスケープ文字をそのままの形で扱うことができます。
 
-sh
-
-`echo -n '{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}' | openssl dgst -sha256 -hmac '8c570fa6dd201bb328f1c1eac23a96d8' -binary | openssl base64`
+```sh
+echo -n '{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[]}' | openssl dgst -sha256 -hmac '8c570fa6dd201bb328f1c1eac23a96d8' -binary | openssl base64
+```
 
 Pythonであれば、raw文字列リテラル（`r"..."`）を使うことで、エスケープ文字をそのままの形で扱うことができます。
 
-python
-
-`body = r'{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[{"type":"message","text":"hello\ntest1\ntest2"}]}'`
+```python
+body = r'{"destination":"U8e742f61d673b39c7fff3cecb7536ef0","events":[{"type":"message","text":"hello\ntest1\ntest2"}]}'
+```
 
 署名検証を行う際は、エスケープ文字を解釈せず、受信したWebhookのリクエストボディの文字列をそのまま使用してください。
 

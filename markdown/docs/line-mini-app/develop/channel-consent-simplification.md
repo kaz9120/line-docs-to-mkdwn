@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/channel-consent-simplification/
-copied_at: 2025-10-24T06:29:37.405Z
+copied_at: 2025-10-24T10:17:05.078Z
 ---
 # チャネル同意のプロセスをスキップする
 
@@ -114,9 +114,13 @@ copied_at: 2025-10-24T06:29:37.405Z
     > 
     > 以下は、`profile`スコープの権限付与にユーザーが未同意の場合に「アクセス許可要求画面」を表示するコードの例です。
     > 
-    > javascript
-    > 
-    > `liff.permission.query("profile").then((permissionStatus) => {   if (permissionStatus.state === "prompt") {    liff.permission.requestAll();  } });`
+    > ```javascript
+    > liff.permission.query("profile").then((permissionStatus) => {
+    >   if (permissionStatus.state === "prompt") {
+    >     liff.permission.requestAll();
+    >   }
+    > });
+    > ```
     > 
     > 詳しくは、『LIFF APIリファレンス』の「[`liff.permission.query()`](https://developers.line.biz/ja/reference/liff/#permission-query)」と「[`liff.permission.requestAll()`](https://developers.line.biz/ja/reference/liff/#permission-request-all)」を参照してください。
     

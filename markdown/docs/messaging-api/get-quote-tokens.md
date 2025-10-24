@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/get-quote-tokens/
-copied_at: 2025-10-23T15:56:38.981Z
+copied_at: 2025-10-24T10:15:17.763Z
 ---
 # 引用トークンを取得する
 
@@ -33,9 +33,14 @@ Messaging APIで、過去のメッセージを引用したメッセージを送�
 *   [画像](https://developers.line.biz/ja/reference/messaging-api/#wh-image)
 *   [動画](https://developers.line.biz/ja/reference/messaging-api/#wh-video)
 
-json
-
-`"message": {   "type": "text",  "id": "468789577898262530",  "quoteToken": "q3Plxr4AgKd...", // 引用トークン  "text": "Can I reserve a table for dinner tonight?" }`
+```json
+"message": {
+  "type": "text",
+  "id": "468789577898262530",
+  "quoteToken": "q3Plxr4AgKd...", // 引用トークン
+  "text": "Can I reserve a table for dinner tonight?"
+}
+```
 
 Webhookについて詳しくは、「[メッセージ（Webhook）を受信する](https://developers.line.biz/ja/docs/messaging-api/receiving-messages/)」を参照してください。
 
@@ -43,9 +48,16 @@ Webhookについて詳しくは、「[メッセージ（Webhook）を受信す�
 
 Messaging APIで、[応答メッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)または[プッシュメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-push-message)を送ると、レスポンスとして`sentMessages`プロパティを含むJSONオブジェクトが返ってきます。
 
-json
-
-`{   "sentMessages": [    {      "id": "461230966842064897",      "quoteToken": "IStG5h1Tz7b..."    }  ] }`
+```json
+{
+  "sentMessages": [
+    {
+      "id": "461230966842064897",
+      "quoteToken": "IStG5h1Tz7b..."
+    }
+  ]
+}
+```
 
 ただし、レスポンスに引用トークン（`sentMessages[].quoteToken`）が含まれるのは、引用対象として指定可能な以下のメッセージオブジェクトを送信したときのみです。
 
@@ -59,8 +71,19 @@ json
 
 上記のメッセージオブジェクトを複数指定してメッセージを送った場合、同じ個数の引用トークンが返ってきます。このとき、`sentMessages`配列内の要素の順番は、送信時のメッセージオブジェクトと同じ順番であることが保証されます。
 
-json
-
-`{   "sentMessages": [    {      "id": "471875397094211585",      "quoteToken": "YKPDqjc2jmW..."    },    {      "id": "471875397127766017",      "quoteToken": "eG5SfLhgiFX..."    }  ] }`
+```json
+{
+  "sentMessages": [
+    {
+      "id": "471875397094211585",
+      "quoteToken": "YKPDqjc2jmW..."
+    },
+    {
+      "id": "471875397127766017",
+      "quoteToken": "eG5SfLhgiFX..."
+    }
+  ]
+}
+```
 
 html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

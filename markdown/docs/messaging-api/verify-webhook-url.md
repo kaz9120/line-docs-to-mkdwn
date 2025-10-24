@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/verify-webhook-url/
-copied_at: 2025-10-24T06:28:11.272Z
+copied_at: 2025-10-24T10:15:20.195Z
 ---
 # Webhook URLを検証する
 
@@ -15,9 +15,12 @@ Messaging APIのWebhookを利用する場合、LINEプラットフォームか�
 > 
 > Webhookイベントが含まれないHTTP POSTリクエストの例：
 > 
-> json
-> 
-> `{   "destination": "xxxxxxxxxx",  "events": [] }`
+> ```json
+> {
+>   "destination": "xxxxxxxxxx",
+>   "events": []
+> }
+> ```
 
 Webhook URLを検証した結果、ボットサーバーがWebhookを受信できていない場合は、[Webhookの受信に失敗する原因を調査](#investigate-webhook-reception-failure)してください。
 

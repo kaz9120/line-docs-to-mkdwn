@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/link-a-bot/
-copied_at: 2025-10-24T06:28:36.505Z
+copied_at: 2025-10-24T10:16:01.979Z
 ---
 # LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）
 
@@ -41,9 +41,9 @@ LINE Developersコンソールで、LINEログインのチャネルにLINE公式
 
 チャネルにLINE公式アカウントをリンクし終えたら、LINEログインの認可URLに`bot_prompt`クエリパラメータを付けてユーザーをリダイレクトします。
 
-text
-
-`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={CHANNEL_ID}&redirect_uri={CALLBACK_URL}&state={STATE}&bot_prompt={BOT_PROMPT}&scope={SCOPE_LIST}`
+```text
+https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id={CHANNEL_ID}&redirect_uri={CALLBACK_URL}&state={STATE}&bot_prompt={BOT_PROMPT}&scope={SCOPE_LIST}
+```
 
 `bot_prompt`クエリパラメータの設定に応じて、以下のようにオプションが表示されます。
 
@@ -89,16 +89,16 @@ text
 
 リダイレクト先URLの例：
 
-text
-
-`https://client.example.org/cb?code={CODE}&state={STATE}&friendship_status_changed={FRIENDSHIP_STATUS_CHANGED}`
+```text
+https://client.example.org/cb?code={CODE}&state={STATE}&friendship_status_changed={FRIENDSHIP_STATUS_CHANGED}
+```
 
 `friendship_status_changed`クエリパラメータは、以下のいずれかの値になります。コールバックURLについて詳しくは、「[認可コードを受け取る](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#receiving-the-authorization-code)」を参照してください。
 
 | 値 | 説明 |
 | --- | --- |
-| `true` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しました。具体的には、以下のいずれかです。<br/><ul><!--[--><li><!--[-->ユーザーがLINE公式アカウントを友だち追加した。<!--]--></li><li><!--[-->ユーザーがブロックを解除した。<!--]--></li><!--]--></ul> |
-| `false` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しませんでした。具体的には、以下のいずれかです。<br/><ul><!--[--><li><!--[-->ユーザーは以前からLINE公式アカウントと友だちだった。<!--]--></li><li><!--[-->ユーザーがLINE公式アカウントを友だち追加しなかった。<!--]--></li><li><!--[-->ユーザーがLINE公式アカウントのブロックを解除しなかった。<!--]--></li><!--]--></ul> |
+| `true` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しました。具体的には、以下のいずれかです。<br/><ul><li>ユーザーがLINE公式アカウントを友だち追加した。</li><li>ユーザーがブロックを解除した。</li></ul> |
+| `false` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しませんでした。具体的には、以下のいずれかです。<br/><ul><li>ユーザーは以前からLINE公式アカウントと友だちだった。</li><li>ユーザーがLINE公式アカウントを友だち追加しなかった。</li><li>ユーザーがLINE公式アカウントのブロックを解除しなかった。</li></ul> |
 
 > [!WARNING]
 > 注意
@@ -110,15 +110,18 @@ text
 
 リクエストの例：
 
-sh
-
-`curl -v -X GET https://api.line.me/friendship/v1/status \ -H 'Authorization: Bearer {access token}'`
+```sh
+curl -v -X GET https://api.line.me/friendship/v1/status \
+-H 'Authorization: Bearer {access token}'
+```
 
 レスポンスの例：
 
-json
-
-`{   "friendFlag": true }`
+```json
+{
+  "friendFlag": true
+}
+```
 
 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[LINE公式アカウントとの友だち関係を取得する](https://developers.line.biz/ja/reference/line-login/#get-friendship-status)」を参照してください。
 

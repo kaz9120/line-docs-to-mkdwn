@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-line-share-buttons/
-copied_at: 2025-10-24T06:28:26.657Z
+copied_at: 2025-10-24T10:15:34.562Z
 ---
 # 「LINEで送る」ボタンを設置する
 
@@ -14,11 +14,61 @@ LINE Social Pluginsの「LINEで送る」ボタンは、簡単に作成してウ
 
 LINE公式デザインの「LINEで送る」ボタンは、以下の手順で作成します。言語を選択し、ボタンを設置するウェブサイトのURLを入力して、ボタンタイプを選択するだけで作成できます。
 
+1\. 言語を選択 ボタンを設置するウェブサイトの言語を選択してください。選択した言語でボタンが作成されます。
+
+ English
+
+ 日本語
+
+ 한국어
+
+ 中文
+
+ ภาษาไทย
+
+ Bahasa Indonesia
+
+2\. URLを設定 ボタンを設置するウェブサイトのURLを入力してください。 ユーザーが「LINEで送る」ボタンを使用した時に入力したウェブサイトがシェアされます。
+
+3\. ボタンタイプ ボタンのタイプを選択してください。
+
+![](https://developers.line.biz/media/line-social-plugins/square-default.png)
+
+![](https://developers.line.biz/media/line-social-plugins/square-grey.png)
+
+![](https://developers.line.biz/media/line-social-plugins/round-default.png)
+
+![](https://developers.line.biz/media/line-social-plugins/round-grey.png)
+
+![](https://developers.line.biz/media/line-social-plugins/ja/wide-default.png)
+
+![](https://developers.line.biz/media/line-social-plugins/ja/wide-grey.png)
+
+4\. サイズ
+
+ 小
+
+ 大
+
+5\. シェア数 ボタンと一緒にシェア数（「LINEで送る」ボタンが使用された回数）を表示できます。
+
+ オン
+
+ オフ
+
+LINE Social Pluginsの利用ガイドラインに同意すると、選択したオプションで作成されたコードを確認できます。このコードは、ウェブサイトのDOMに追加すると、DOMContentLoadedイベントで呼び出されます。 ボタンを表示したい場所に、コードを挿入してください。1つのページに複数のボタンを設置する場合は、最後のボタンにのみscriptタグを含めてください。
+
+LINE Social Plugins[ガイドライン](https://developers.line.biz/ja/docs/line-social-plugins/general/guidelines/)に同意します
+
+LINE Social Pluginsを利用するには、ガイドラインを確認して同意する必要があります。ガイドラインに同意すると、LINE Social Pluginsの機能が利用できるようになります。
+
 ## カスタムアイコンを使用
 
 カスタムアイコンでボタンを作成します。LINE Social Pluginsの利用ガイドラインに同意すると、リンクを確認できます。リンクをコピーして、ご自身のオリジナルのデザインの「LINEで送る」ボタンに適用してください。
 
 LINE Social Plugins[ガイドライン](https://developers.line.biz/ja/docs/line-social-plugins/general/guidelines/)に同意します
+
+LINE Social Pluginsを利用するには、ガイドラインを確認して同意する必要があります。ガイドラインに同意すると、LINE Social Pluginsの機能が利用できるようになります。
 
 > [!TIP]
 > ヒント
@@ -28,9 +78,9 @@ LINE Social Plugins[ガイドライン](https://developers.line.biz/ja/docs/line
 
 WebサイトでDOMツリーが構築されてコンテンツが作成されたら、`LineIt.loadButton()`を呼び出してLINEで送るボタンを有効にしてください。
 
-sh
-
-`<script type="text/javascript">LineIt.loadButton();</script>`
+```sh
+<script type="text/javascript">LineIt.loadButton();</script>
+```
 
    
  
@@ -54,15 +104,17 @@ String
 
 #### リクエスト例
 
-sh
-
-`curl -X GET 'https://api.line.me/social-plugin/metrics?url=https://line.me/en'`
+```sh
+curl -X GET 'https://api.line.me/social-plugin/metrics?url=https://line.me/en'
+```
 
 #### レスポンス例
 
-json
-
-`{     "share": "4173", }`
+```json
+{
+    "share": "4173",
+}
+```
 
 #### ステータスコード
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/using-objc/
-copied_at: 2025-10-23T15:59:15.326Z
+copied_at: 2025-10-24T10:16:15.512Z
 ---
 # Objective-CのコードでSDKを使用する
 
@@ -47,16 +47,19 @@ LINE SDK for iOSをビルドしてObjective-Cラッパーを介して使用す�
 CocoaPodsについて詳しくない場合は、『[CocoaPods Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html)』を参照してください。CocoaPodsを使ってLINE SDK for iOS Swiftをアプリに組み込む前に、作業環境にCocoaPodsのgemをインストールする必要があります。
 
 1.  Podfileを準備したら、ターゲットに以下のpodコマンドを追加します。
+    ```ruby
+    platform :ios, '11.0'
+    use_frameworks!
     
-    ruby
-    
-    `platform :ios, '11.0' use_frameworks! target '<Your App Target Name>' do     pod 'LineSDKSwift/ObjC', '~> 5.0' end`
+    target '<Your App Target Name>' do
+        pod 'LineSDKSwift/ObjC', '~> 5.0'
+    end
+    ```
     
 2.  以下のコマンドを実行します。
-    
-    bash
-    
-    `$ pod install`
+    ```bash
+    $ pod install
+    ```
     
 3.  LINE SDK for iOS Swiftがダウンロードされ、Xcodeのワークスペースに組み込まれます。
 
@@ -64,31 +67,34 @@ CocoaPodsについて詳しくない場合は、『[CocoaPods Getting Started Gu
 
 LINE SDK for iOS SwiftをObjective-Cラッパーと共にObjective-Cのプロジェクトにインポートするには、以下のように`@import LineSDK;`を追加します。
 
-objective-c
+```objective-c
+#import "ViewController.h"
+@import LineSDK;
 
-`#import "ViewController.h" @import LineSDK; @implementation ViewController // ... @end`
+@implementation ViewController
+// ...
+@end
+```
 
 #### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage)は分散型の依存性マネージャーで、ライブラリをビルドしてバイナリのフレームワークとして利用できます。
 
 1.  Carthageツールをインストールするには、[Homebrew](https://brew.sh/)を使います。
-    
-    bash
-    
-    `$ brew update $ brew install carthage`
+    ```bash
+    $ brew update
+    $ brew install carthage
+    ```
     
 2.  Carthageを使ってLINE SDK for iOS SwiftをXcodeプロジェクトに組み込むには、CartfileにSDKのGitHubリポジトリを以下のように指定します。
-    
-    text
-    
-    `github "line/line-sdk-ios-swift" ~> 5.0`
+    ```text
+    github "line/line-sdk-ios-swift" ~> 5.0
+    ```
     
 3.  以下のコマンドを実行してLINE SDK for iOS Swiftをビルドします。
-    
-    text
-    
-    `$ carthage update line-sdk-ios-swift`
+    ```text
+    $ carthage update line-sdk-ios-swift
+    ```
     
 
 以下のセクションに記載された手順に従って、ビルドされた`LineSDK.framework`ファイルと`LineSDKObjC.framework`ファイルをXcodeプロジェクトに追加できます。
@@ -100,22 +106,21 @@ objective-c
 ##### ビルドフェーズでフレームワークファイルをコピーする
 
 1.  アプリのターゲットの［Build Phases］設定タブで ［**+**］アイコンをクリックして、［**New Run Script Phase**］を選択します。以下の内容で実行スクリプトを作成します。
-    
-    text
-    
-    `/usr/local/bin/carthage copy-frameworks`
+    ```text
+    /usr/local/bin/carthage copy-frameworks
+    ```
     
 2.  フレームワークファイルのパスを［Input Files］セクションに追加します。
-    
-    text
-    
-    `$(SRCROOT)/Carthage/Build/iOS/LineSDK.framework $(SRCROOT)/Carthage/Build/iOS/LineSDKObjC.framework`
+    ```text
+    $(SRCROOT)/Carthage/Build/iOS/LineSDK.framework
+    $(SRCROOT)/Carthage/Build/iOS/LineSDKObjC.framework
+    ```
     
 3.  フレームワークファイルのパスを［Output Files］セクションに追加します。
-    
-    text
-    
-    `$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LineSDK.framework $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LineSDKObjC.framework`
+    ```text
+    $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LineSDK.framework
+    $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LineSDKObjC.framework
+    ```
     
 
 ［Build Phases］設定タブは以下のようになるはずです。
@@ -130,9 +135,14 @@ objective-c
 
 LINE SDK for iOS SwiftをObjective-Cラッパーと共にObjective-Cのプロジェクトにインポートするには、以下のように`@import LineSDKObjC;`を追加します。
 
-objective-c
+```objective-c
+#import "ViewController.h"
+@import LineSDKObjC;
 
-`#import "ViewController.h" @import LineSDKObjC; @implementation ViewController // ... @end`
+@implementation ViewController
+// ...
+@end
+```
 
 ### 命名規則
 
@@ -140,29 +150,61 @@ Objective-Cラッパーを使う場合、タイプとほとんどのSDKコンポ
 
 #### 複数の権限を指定してユーザーをログインさせる
 
-objective-c
-
-`NSSet *permissions = [NSSet setWithObjects:                           [LineSDKLoginPermission profile],                          [LineSDKLoginPermission openID],                          nil]; [[LineSDKLoginManager sharedManager]     loginWithPermissions:permissions        inViewController:self              parameters:nil       completionHandler:^(LineSDKLoginResult *result, NSError *error) {           if (result) {               NSLog(@"User Name: %@", result.userProfile.displayName);           } else {               NSLog(@"Error: %@", error);           }       } ];`
+```objective-c
+NSSet *permissions = [NSSet setWithObjects:
+                          [LineSDKLoginPermission profile],
+                          [LineSDKLoginPermission openID],
+                          nil];
+[[LineSDKLoginManager sharedManager]
+    loginWithPermissions:permissions
+        inViewController:self
+              parameters:nil
+       completionHandler:^(LineSDKLoginResult *result, NSError *error) {
+           if (result) {
+               NSLog(@"User Name: %@", result.userProfile.displayName);
+           } else {
+               NSLog(@"Error: %@", error);
+           }
+       }
+ ];
+```
 
 #### ユーザープロフィールを取得する
 
-objective-c
-
-`[LineSDKAPI getProfileWithCompletionHandler:     ^(LineSDKUserProfile * _Nullable profile, NSError * _Nullable error) {     if (profile) {        NSLog(@"User Name: %@", profile.displayName);    } else {        NSLog(@"Error: %@", error);    } }];`
+```objective-c
+[LineSDKAPI getProfileWithCompletionHandler:
+    ^(LineSDKUserProfile * _Nullable profile, NSError * _Nullable error)
+{
+    if (profile) {
+        NSLog(@"User Name: %@", profile.displayName);
+    } else {
+        NSLog(@"Error: %@", error);
+    }
+}];
+```
 
 ### Objective-Cラッパーでエラーを制御する
 
 Objective-Cの規則に対応するため、Objective-Cラッパーは`NSError`オブジェクトをスローします。以下のコードでは、エラーがLINE SDKに関係するのかどうかを確認しています。
 
-objective-c
-
-`NSError *error = // ... An error from LINE SDK ObjC Wrapper if ([error.domain isEqualToString:[LineSDKErrorConstant errorDomain]]) {     // SDK Error }`
+```objective-c
+NSError *error = // ... An error from LINE SDK ObjC Wrapper
+if ([error.domain isEqualToString:[LineSDKErrorConstant errorDomain]]) {
+    // SDK Error
+}
+```
 
 ラッパーからスローされるすべてのエラーは、本来のLINE SDK for iOS Swiftからスローされるのと同じ`code`プロパティと`userInfo`プロパティを持ちます。それらを使ってエラーの原因を確認できます。
 
-objective-c
-
-`if (error.code == 2004) {     // invalidHTTPStatusAPIError    NSNumber *statusCode = error.userInfo[[LineSDKErrorConstant userInfoKeyStatusCode]];    if ([statusCode integerValue] == 403) {        // Permission granting issue. Ask for authorization with enough permission again.    } }`
+```objective-c
+if (error.code == 2004) {
+    // invalidHTTPStatusAPIError
+    NSNumber *statusCode = error.userInfo[[LineSDKErrorConstant userInfoKeyStatusCode]];
+    if ([statusCode integerValue] == 403) {
+        // Permission granting issue. Ask for authorization with enough permission again.
+    }
+}
+```
 
 エラーを特定して制御する方法については、「[エラーを制御する](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/error-handling/)」を参照してください。
 

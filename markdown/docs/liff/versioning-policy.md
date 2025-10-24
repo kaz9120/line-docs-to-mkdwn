@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/versioning-policy/
-copied_at: 2025-10-24T06:29:23.447Z
+copied_at: 2025-10-24T10:16:40.461Z
 ---
 # バージョニングポリシー
 
@@ -60,9 +60,9 @@ LIFFでは、LIFF v2.1.13リリース以降、以下の2種類のCDNパスを用
 
 CDN固定パスを指定する例：
 
-html
-
-`<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>`
+```html
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>
+```
 
 > [!TIP]
 > 後方互換性を維持するためのCDNパスについて

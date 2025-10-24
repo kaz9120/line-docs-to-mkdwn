@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/nodejs-sample/
-copied_at: 2025-10-24T06:28:28.241Z
+copied_at: 2025-10-24T10:15:18.907Z
 ---
 # チュートリアル - 応答ボットを作る
 
@@ -42,15 +42,18 @@ Messaging APIは、サービスとLINEユーザーとの間で双方向のコミ
 
 ターミナルまたはコマンドラインツールで、以下のコマンドを実行し、Heroku CLIにログインします。
 
-sh
-
-`heroku login`
+```sh
+heroku login
+```
 
 次に、チュートリアル用のディレクトリを作成し、そのディレクトリに移動します。そして、Gitを初期化してHerokuを使ったアプリを作成します。`{Name of your app}`は、`msg-api-tutorial-{YYYYMMDD}`などの一意の名前に置き換えてください。
 
-sh
-
-`mkdir sample-app cd sample-app git init heroku create {Name of your app}`
+```sh
+mkdir sample-app
+cd sample-app
+git init
+heroku create {Name of your app}
+```
 
 アプリが問題なく作成されると、HerokuのURLが`https://{Name of your app}.herokuapp.com/`のような形式で生成されます。このURLはチュートリアルの中で必要になります。生成されたHerokuのURLを、ブラウザで開いてください。ウェルカムページが表示されます。
 
@@ -60,39 +63,62 @@ sh
 
 npmがプロジェクトを識別できるように、`package.json`ファイルを作成する必要があります。このファイルには、プロジェクトのメタデータと依存関係を定義する必要があります。`package.json`は、npmパッケージを初期化するためのコマンド`npm init`で作成します。このチュートリアルでは特別な設定は必要ないので、`-y`コマンドを使用して、パッケージをセットアップするための質問をすべてスキップします。
 
-sh
-
-`npm init -y`
+```sh
+npm init -y
+```
 
 以下のような`package.json`が作成されます。
 
-json
-
-`{   "name": "sample-app",  "version": "1.0.0",  "description": "",  "main": "index.js",  "scripts": {    "test": "echo \"Error: no test specified\" && exit 1"  },  "keywords": [],  "author": "",  "license": "ISC" }`
+```json
+{
+  "name": "sample-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
 
 次に、スタートスクリプトを定義します。スタートスクリプトは、Herokuのようなサーバープラットフォームに、サーバーの起動時にどのファイルを使用するかを知らせるためのものです。このチュートリアルでは、サーバーの設定ファイルとして`index.js`を設定します。テキストエディタで`package.json`を開き、`"start"`プロパティに`"node index.js"`を指定してください。
 
-json
-
-`{   "name": "sample-app",  "version": "1.0.0",  "description": "",  "main": "index.js",  "scripts": {    "start": "node index.js",    "test": "echo \"Error: no test specified\" && exit 1"  },  "keywords": [],  "author": "",  "license": "ISC" }`
+```json
+{
+  "name": "sample-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
 
 以下のコマンドを実行して、[Express.js](https://expressjs.com/)のパッケージをインストールします。Express.jsは軽量なNode.jsのウェブサーバーフレームワークです。
 
-sh
-
-`npm install express`
+```sh
+npm install express
+```
 
 Express.jsをインストールすると、`package.json`にパッケージの依存関係が追加されます。また、同時に`node_modules`というディレクトリが作成されます。このディレクトリには、ローカルでインストールしたパッケージが保存されますが、Herokuにはプッシュされないようにします。このディレクトリを除外するために、`.gitignore`ファイルを作成します。
 
-sh
-
-`touch .gitignore`
+```sh
+touch .gitignore
+```
 
 作成した`.gitignore`ファイルをテキストエディタで開き、以下のように除外したいディレクトリ名をファイルに追加します。
 
-text
-
-`node_modules/`
+```text
+node_modules/
+```
 
 これにより、指定したディレクトリがプッシュされることはありません。
 
@@ -109,23 +135,26 @@ text
 
 サーバー設定のためのJavaScriptファイル`index.js`を作りましょう。
 
-sh
-
-`touch index.js`
+```sh
+touch index.js
+```
 
 作成した`index.js`ファイルには、先ほどインストールした`express`パッケージをインポートするコードと、インスタンス化するコードを追加します。また、ボットがHTTPリクエストを処理できるように`https`パッケージもインポートします。このパッケージは、Node.jsにデフォルトで付属しているので、インストールする必要はありません。
 
 `index.js`をテキストエディタで開き、以下のコードを追加しましょう。
 
-javascript
-
-`const https = require("https"); const express = require("express"); const app = express();`
+```javascript
+const https = require("https");
+const express = require("express");
+const app = express();
+```
 
 続いて、設定プロセスを簡素化する目的と、認証情報を保護する目的で環境変数を追加します。`process.env.PORT`は、サーバーがどのポートでListenするかを指定します。`process.env.LINE_ACCESS_TOKEN`は、Messaging APIを呼び出すために必要な[チャネルアクセストークン](https://developers.line.biz/ja/glossary/#channel-access-token)を指定します。`index.js`で、インポートしたパッケージの下に、以下を追加します。
 
-javascript
-
-`const PORT = process.env.PORT || 3000; const TOKEN = process.env.LINE_ACCESS_TOKEN;`
+```javascript
+const PORT = process.env.PORT || 3000;
+const TOKEN = process.env.LINE_ACCESS_TOKEN;
+```
 
 ### 3-2. ミドルウェアの設定
 
@@ -133,37 +162,71 @@ Express.jsは、ミドルウェアのウェブフレームワークです。ミ�
 
 このチュートリアルでは、Express.jsに付属する関数`express.json()`と`express.urlencoded()`を使用します。これらの関数は、それぞれリクエストオブジェクトをJSON、文字列、配列として扱うためにあらかじめ用意されているミドルウェア関数です。ミドルウェアの機能を使用するために、`app.use()`を呼び出します。`index.js`ファイルに以下のコードを追加します。
 
-javascript
-
-`app.use(express.json()); app.use(   express.urlencoded({    extended: true,  }) );`
+```javascript
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+```
 
 ### 3-3. ルーティングの設定
 
 ボットサーバーに基本的なルーティングロジックを追加しましょう。ヘルスチェック等の失敗を防ぐために、ドメインのルート（`/`）へのHTTP GETリクエストに対して、ステータス`200`を返すようにします。`index.js`ファイルに以下のコードを追加します。
 
-javascript
-
-`app.get("/", (req, res) => {   res.sendStatus(200); });`
+```javascript
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+```
 
 次に、`app.listen()`関数を使って、サーバーにリスナーを設定します。リスナーのポートには、先ほど設定した環境変数`PORT`を指定します。そのため、特に異なる指定がされていない限り、`3000`をListenします。`index.js`に、以下のコードを追加します。
 
-javascript
-
-``app.listen(PORT, () => {   console.log(`Example app listening at http://localhost:${PORT}`); });``
+```javascript
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
+});
+```
 
 Listenする準備ができたので、LINEプラットフォームからWebhook URLに送られてくるリクエストを処理するコードを追加しましょう。ユーザーがボットにメッセージを送信すると、LINEプラットフォームは、ボットサーバーがホストするWebhook URLにHTTP POSTリクエスト（Webhookイベント）を送信します。LINEプラットフォームからのリクエストに応答するために、`app.post()`関数を使って、リクエストをルーティングします。`index.js`の、`app.get()`と`app.listen()`関数の間に、以下のコードを追加します。
 
-javascript
-
-`app.post("/webhook", function (req, res) {   res.send("HTTP POST request sent to the webhook URL!"); });`
+```javascript
+app.post("/webhook", function (req, res) {
+  res.send("HTTP POST request sent to the webhook URL!");
+});
+```
 
 このコードは、`/webhook`エンドポイントにHTTP POSTリクエストが送られてきたときに、`HTTP POST request sent to the webhook URL!`というHTTPレスポンスを返すようにボットサーバーに指示するものです。
 
 ここまでで、`index.js`は以下のようになっているはずです。
 
-javascript
+```javascript
+const https = require("https");
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 3000;
+const TOKEN = process.env.LINE_ACCESS_TOKEN;
 
-``const https = require("https"); const express = require("express"); const app = express(); const PORT = process.env.PORT || 3000; const TOKEN = process.env.LINE_ACCESS_TOKEN; app.use(express.json()); app.use(   express.urlencoded({    extended: true,  }) ); app.get("/", (req, res) => {   res.sendStatus(200); }); app.post("/webhook", function (req, res) {   res.send("HTTP POST request sent to the webhook URL!"); }); app.listen(PORT, () => {   console.log(`Example app listening at http://localhost:${PORT}`); });``
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
+app.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+
+app.post("/webhook", function (req, res) {
+  res.send("HTTP POST request sent to the webhook URL!");
+});
+
+app.listen(PORT, () => {
+  console.log(`Example app listening at http://localhost:${PORT}`);
+});
+```
 
 ### 3-4. 応答メッセージを送る
 
@@ -177,9 +240,67 @@ javascript
 
 ユーザーに応答するには、[応答メッセージを送る](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)エンドポイント（`https://api.line.me/v2/bot/message/reply`）を使います。`index.js`の`app.post`から、応答メッセージを送るエンドポイント（`https://api.line.me/v2/bot/message/reply`）を呼び出します。以下のコードで`app.post`を置き換えてください。それぞれの処理の詳しい説明は、コードコメントで確認してください。
 
-javascript
+```javascript
+app.post("/webhook", function (req, res) {
+  res.send("HTTP POST request sent to the webhook URL!");
+  // ユーザーがボットにメッセージを送った場合、応答メッセージを送る
+  if (req.body.events[0].type === "message") {
+    // APIサーバーに送信する応答トークンとメッセージデータを文字列化する
+    const dataString = JSON.stringify({
+      // 応答トークンを定義
+      replyToken: req.body.events[0].replyToken,
+      // 返信するメッセージを定義
+      messages: [
+        {
+          type: "text",
+          text: "Hello, user",
+        },
+        {
+          type: "text",
+          text: "May I help you?",
+        },
+      ],
+    });
 
-`app.post("/webhook", function (req, res) {   res.send("HTTP POST request sent to the webhook URL!");  // ユーザーがボットにメッセージを送った場合、応答メッセージを送る  if (req.body.events[0].type === "message") {    // APIサーバーに送信する応答トークンとメッセージデータを文字列化する    const dataString = JSON.stringify({      // 応答トークンを定義      replyToken: req.body.events[0].replyToken,      // 返信するメッセージを定義      messages: [        {          type: "text",          text: "Hello, user",        },        {          type: "text",          text: "May I help you?",        },      ],    });     // リクエストヘッダー。仕様についてはMessaging APIリファレンスを参照してください。    const headers = {      "Content-Type": "application/json",      Authorization: "Bearer " + TOKEN,    };     // Node.jsドキュメントのhttps.requestメソッドで定義されている仕様に従ったオプションを指定します。    const webhookOptions = {      hostname: "api.line.me",      path: "/v2/bot/message/reply",      method: "POST",      headers: headers,      body: dataString,    };     // messageタイプのHTTP POSTリクエストが/webhookエンドポイントに送信された場合、    // 変数webhookOptionsで定義したhttps://api.line.me/v2/bot/message/replyに対して    // HTTP POSTリクエストを送信します。     // リクエストの定義    const request = https.request(webhookOptions, (res) => {      res.on("data", (d) => {        process.stdout.write(d);      });    });     // エラーをハンドリング    // request.onは、APIサーバーへのリクエスト送信時に    // エラーが発生した場合にコールバックされる関数です。    request.on("error", (err) => {      console.error(err);    });     // 最後に、定義したリクエストを送信    request.write(dataString);    request.end();  } });`
+    // リクエストヘッダー。仕様についてはMessaging APIリファレンスを参照してください。
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + TOKEN,
+    };
+
+    // Node.jsドキュメントのhttps.requestメソッドで定義されている仕様に従ったオプションを指定します。
+    const webhookOptions = {
+      hostname: "api.line.me",
+      path: "/v2/bot/message/reply",
+      method: "POST",
+      headers: headers,
+      body: dataString,
+    };
+
+    // messageタイプのHTTP POSTリクエストが/webhookエンドポイントに送信された場合、
+    // 変数webhookOptionsで定義したhttps://api.line.me/v2/bot/message/replyに対して
+    // HTTP POSTリクエストを送信します。
+
+    // リクエストの定義
+    const request = https.request(webhookOptions, (res) => {
+      res.on("data", (d) => {
+        process.stdout.write(d);
+      });
+    });
+
+    // エラーをハンドリング
+    // request.onは、APIサーバーへのリクエスト送信時に
+    // エラーが発生した場合にコールバックされる関数です。
+    request.on("error", (err) => {
+      console.error(err);
+    });
+
+    // 最後に、定義したリクエストを送信
+    request.write(dataString);
+    request.end();
+  }
+});
+```
 
 ## 4\. Messaging APIチャネルを準備する
 
@@ -209,15 +330,17 @@ LINE DevelopersコンソールのMessaging APIチャネルの［**Messaging API�
 
 環境変数にチャネルアクセストークンを登録するために、ターミナルまたはコマンドラインツールで、以下のコマンドを実行してください。`LINE_ACCESS_TOKEN`には、「[Messaging APIチャネルを準備する](#prepare-channel)」で取得したチャネルアクセストークンを設定します。
 
-sh
-
-`heroku config:set LINE_ACCESS_TOKEN={チャネルアクセストークンをここに入力してください}`
+```sh
+heroku config:set LINE_ACCESS_TOKEN={チャネルアクセストークンをここに入力してください}
+```
 
 これで、アプリをHerokuにデプロイする準備が整いました。作成したコードをHerokuにプッシュしましょう。ターミナルまたはコマンドラインツールで、以下のコマンドを実行してください。
 
-sh
-
-`git add . git commit -m "First commit" git push heroku main`
+```sh
+git add .
+git commit -m "First commit"
+git push heroku main
+```
 
 ### Webhook URLを検証する
 
@@ -233,9 +356,9 @@ LINEでボットにメッセージを送ってみてください。このよう�
 
 ボットが正常に動作していない場合は、以下のコマンドを実行することでHerokuのログを確認できます。
 
-sh
-
-`heroku logs --tail`
+```sh
+heroku logs --tail
+```
 
 ## 次のステップ
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/generate-json-web-token/
-copied_at: 2025-10-24T06:27:57.859Z
+copied_at: 2025-10-24T10:15:08.234Z
 ---
 # チャネルアクセストークンv2.1を発行する
 
@@ -77,15 +77,18 @@ JWTを生成するには、アサーション署名キーのキーペア（秘�
 
 以下のコマンドを実行し、jwxコマンドラインツールをインストールします。
 
-sh
-
-`$ git clone https://github.com/lestrrat-go/jwx.git $ cd jwx $ make jwx`
+```sh
+$ git clone https://github.com/lestrrat-go/jwx.git
+$ cd jwx
+$ make jwx
+```
 
 インストール完了後、jwxコマンドラインツールがインストールされたパスが表示されます。
 
-text
-
-`// インストールされたパスの表示例 Installed jwx in {インストールされたパス}`
+```text
+// インストールされたパスの表示例
+Installed jwx in {インストールされたパス}
+```
 
 以降の手順でコマンドが実行できるよう、パスの設定を行ってください。
 
@@ -93,29 +96,47 @@ text
 
 以下のコマンドを実行し秘密鍵を生成します。
 
-sh
-
-`$ jwx jwk generate --type RSA --keysize 2048 --template '{"alg":"RS256","use":"sig"}' > private.key`
+```sh
+$ jwx jwk generate --type RSA --keysize 2048 --template '{"alg":"RS256","use":"sig"}' > private.key
+```
 
 秘密鍵をもとに公開鍵を生成します。
 
-sh
-
-`$ jwx jwk format --public-key private.key > public.key`
+```sh
+$ jwx jwk format --public-key private.key > public.key
+```
 
 成功すると以下のような秘密鍵と公開鍵が生成されます。
 
 **秘密鍵の例：**
 
-json
-
-`{   "alg": "RS256",  "d": "JeSJWnvZ......",  "dp": "gBDRXGg7......",  "dq": "MjFJ4xM9......",  "e": "AQ......",  "kty": "RSA",  "n": "pTS2jGso......",  "p": "xQibzkW6......",  "q": "1qWtyQ9s......",  "qi": "sdVGblc......",  "use": "sig" }`
+```json
+{
+  "alg": "RS256",
+  "d": "JeSJWnvZ......",
+  "dp": "gBDRXGg7......",
+  "dq": "MjFJ4xM9......",
+  "e": "AQ......",
+  "kty": "RSA",
+  "n": "pTS2jGso......",
+  "p": "xQibzkW6......",
+  "q": "1qWtyQ9s......",
+  "qi": "sdVGblc......",
+  "use": "sig"
+}
+```
 
 **公開鍵の例：**
 
-json
-
-`{   "alg": "RS256",  "e": "AQ......",  "kty": "RSA",  "n": "pTS2jGso......",  "use": "sig" }`
+```json
+{
+  "alg": "RS256",
+  "e": "AQ......",
+  "kty": "RSA",
+  "n": "pTS2jGso......",
+  "use": "sig"
+}
+```
 
 #### JWCrypto（Pythonのライブラリ）でキーペアを生成する
 
@@ -127,61 +148,140 @@ JWTを実装するためのオープンソースのPythonライブラリであ�
 
 以下のコマンドを実行しJWCryptoをインストールします。
 
-python
-
-`$ pip install jwcrypto`
+```python
+$ pip install jwcrypto
+```
 
 ##### 2\. 秘密鍵と公開鍵を生成するコードを書く
 
 以下のように、`kty`を`RSA`、`alg`を`RS256`、`use`を`sig`、`size`を`2048`として引数に指定して、秘密鍵と公開鍵を生成するpythonファイルを作成します。
 
-python
+```python
+from jwcrypto import jwk
+import json
+key = jwk.JWK.generate(kty='RSA', alg='RS256', use='sig', size=2048)
 
-`from jwcrypto import jwk import json key = jwk.JWK.generate(kty='RSA', alg='RS256', use='sig', size=2048) private_key = key.export_private() public_key = key.export_public() print("=== private key ===\n"+json.dumps(json.loads(private_key),indent=2)) print("=== public key ===\n"+json.dumps(json.loads(public_key),indent=2))`
+private_key = key.export_private()
+public_key = key.export_public()
+
+print("=== private key ===\n"+json.dumps(json.loads(private_key),indent=2))
+print("=== public key ===\n"+json.dumps(json.loads(public_key),indent=2))
+```
 
 pythonファイルは任意のファイル名で保存してください。ここでは、`app.py`とします。
 
 保存したpythonファイルと同じディレクトリで、以下のコマンドを実行し、秘密鍵をもとに公開鍵を生成します。
 
-sh
-
-`$ python app.py`
+```sh
+$ python app.py
+```
 
 成功すると以下のような秘密鍵と公開鍵が標準出力されます。
 
 **秘密鍵の例：**
 
-json
-
-`{   "alg": "RS256",  "d": "zKh7iwIIPXXFKYQS...",  "dp": "u1qKg_43UeuGpZFI...",  "dq": "69AzYgpcg0ckypUrv...",  "e": "AQ..",  "kty": "RSA",  "n": "_RzHf7cgG_i6Pdo_...",  "p": "_20iRavoSrMIwWuRPxo...",  "q": "_a5QodMBbEriAgztXvHi...",  "qi": "JozdjTtK57IFLeVAB...",  "use": "sig" }`
+```json
+{
+  "alg": "RS256",
+  "d": "zKh7iwIIPXXFKYQS...",
+  "dp": "u1qKg_43UeuGpZFI...",
+  "dq": "69AzYgpcg0ckypUrv...",
+  "e": "AQ..",
+  "kty": "RSA",
+  "n": "_RzHf7cgG_i6Pdo_...",
+  "p": "_20iRavoSrMIwWuRPxo...",
+  "q": "_a5QodMBbEriAgztXvHi...",
+  "qi": "JozdjTtK57IFLeVAB...",
+  "use": "sig"
+}
+```
 
 **公開鍵の例：**
 
-json
-
-`{   "alg": "RS256",  "e": "AQAB",  "kty": "RSA",  "n": "_RzHf7cgG_i6Pdo...",  "use": "sig" }`
+```json
+{
+  "alg": "RS256",
+  "e": "AQAB",
+  "kty": "RSA",
+  "n": "_RzHf7cgG_i6Pdo...",
+  "use": "sig"
+}
+```
 
 #### ブラウザでキーペアを生成する
 
 [Web Crypto API](https://developer.mozilla.org/ja/docs/Web/API/Web_Crypto_API)に対応しているウェブブラウザを使用している場合、[`SubtleCrypto.generateKey()`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey)メソッドを使って秘密鍵と公開鍵を生成できます。たとえば、Google Chromeを使用している場合は、Chromeのデベロッパーツールのコンソールから以下のコードを入力して実行します。
 
-javascript
+```javascript
+(async () => {
+  const pair = await crypto.subtle.generateKey(
+    {
+      name: "RSASSA-PKCS1-v1_5",
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: "SHA-256",
+    },
+    true,
+    ["sign", "verify"],
+  );
 
-`(async () => {   const pair = await crypto.subtle.generateKey(    {      name: "RSASSA-PKCS1-v1_5",      modulusLength: 2048,      publicExponent: new Uint8Array([1, 0, 1]),      hash: "SHA-256",    },    true,    ["sign", "verify"],  );   console.log("=== private key ===");  console.log(    JSON.stringify(      await crypto.subtle.exportKey("jwk", pair.privateKey),      null,      "  ",    ),  );   console.log("=== public key ===");  console.log(    JSON.stringify(      await crypto.subtle.exportKey("jwk", pair.publicKey),      null,      "  ",    ),  ); })();`
+  console.log("=== private key ===");
+  console.log(
+    JSON.stringify(
+      await crypto.subtle.exportKey("jwk", pair.privateKey),
+      null,
+      "  ",
+    ),
+  );
+
+  console.log("=== public key ===");
+  console.log(
+    JSON.stringify(
+      await crypto.subtle.exportKey("jwk", pair.publicKey),
+      null,
+      "  ",
+    ),
+  );
+})();
+```
 
 成功すると以下のような秘密鍵と公開鍵が生成されます。
 
 **秘密鍵の例：**
 
-json
-
-`{   "alg": "RS256",  "d": "GaDzOmc4......",  "dp": "WAByrYmh......",  "dq": "WLwjYun0......",  "e": "AQ......",  "ext": true,  "key_ops": [    "sign"  ],  "kty": "RSA",  "n": "vsbOUoFA......",  "p": "5QJitCu9......",  "q": "1ULfGui5......",  "qi": "2cK4apee......" }`
+```json
+{
+  "alg": "RS256",
+  "d": "GaDzOmc4......",
+  "dp": "WAByrYmh......",
+  "dq": "WLwjYun0......",
+  "e": "AQ......",
+  "ext": true,
+  "key_ops": [
+    "sign"
+  ],
+  "kty": "RSA",
+  "n": "vsbOUoFA......",
+  "p": "5QJitCu9......",
+  "q": "1ULfGui5......",
+  "qi": "2cK4apee......"
+}
+```
 
 **公開鍵の例：**
 
-json
-
-`{   "alg": "RS256",  "e": "AQ......",  "ext": true,  "key_ops": [    "verify"  ],  "kty": "RSA",  "n": "vsbOUoFA......" }`
+```json
+{
+  "alg": "RS256",
+  "e": "AQ......",
+  "ext": true,
+  "key_ops": [
+    "verify"
+  ],
+  "kty": "RSA",
+  "n": "vsbOUoFA......"
+}
+```
 
 ### 2\. 公開鍵を登録し、kidを取得する
 
@@ -205,9 +305,13 @@ JWTは、ヘッダー、ペイロード、署名からなる文字列です。�
 
 以下は、ヘッダーの値をデコードした例です。
 
-json
-
-`{   "alg": "RS256",  "typ": "JWT",  "kid": "536e453c-aa93-4449-8e90-add2608783c6" }`
+```json
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "536e453c-aa93-4449-8e90-add2608783c6"
+}
+```
 
 ### ペイロード
 
@@ -223,9 +327,15 @@ json
 
 以下は、デコードされたペイロードの例です。
 
-json
-
-`{   "iss": "1234567890",  "sub": "1234567890",  "aud": "https://api.line.me/",  "exp": 1559702522,  "token_exp": 86400 }`
+```json
+{
+  "iss": "1234567890",
+  "sub": "1234567890",
+  "aud": "https://api.line.me/",
+  "exp": 1559702522,
+  "token_exp": 86400
+}
+```
 
 ### 署名
 
@@ -237,15 +347,56 @@ Node.jsのライブラリであるnode-joseを使って署名を作成し、JWT�
 
 以下は、node-joseを使って**秘密鍵**で署名してJWTを生成するコードの例です。このコードを使って自分のJWTを生成する場合は、`privateKey`を自分のアサーション署名キーの**秘密鍵**の値に変更し、`header`と`payload`の値をそれぞれ変更してから実行します。内容が改ざんされていないことを証明するために、必ず**秘密鍵**で署名します。node-joseの使い方について詳しくは、[node-jose](https://github.com/cisco/node-jose#installing)を参照してください。
 
-javascript
+```javascript
+let jose = require("node-jose");
 
-``let jose = require("node-jose"); let privateKey = ` {     "p": "4h8yEw4q9VkzhXMgXZsIZVkEuZ49EmtWYk9zs0hPTa24ejjRMA6KTYh_va0GlaChO9t0MVQVuduznt-OFZyRAinr4svU4MKD2A3gTHJJCxs0xICva8rkHXqxfPwXngpb5L_xFURbXcSTzMcKckWuOpyPznAgY4XsZxw0t7ewj9E",    "kty": "RSA",    "q": "pVhBdRN5K3MEiZzU4__TsrtSBJDD_stu60m73iIvsHIrvK3Dmfl-J1zhsyOvi3NH9mVXpUimBwP8nTe-BlVM71G7_EotFHeKH1zTmBlx6AOngmrc40W2Hd__OZW0NfC_xOTvI_Ea2BNGoGtcrIGVFLTivJ4y9wAVOKA058zJ0ls",    "d": "ObzE_-TROJazDm-ry-8TKRBMGzwcwTK6lMFSk7n-Xp6h7cDauSdRRYnZivC1lh5plVG3I9aUmPTRbVk7nrPqOlp4WWKQ27lyLd5IogbArpXgnBSkp9Zy0lWzvOsI3gHNnYuehyksHB53FIK93t838JfDQoXUUzalNoNwAGfkTNZxT4GIXGMGzNck2Z_urOATMf8-wdad-u4a5IB2KfHugwH2kw-Zig7fbdcN4_DeKWpuigdesa48Yj_hRJRws-mVFp-xHlGJehumnM_v8FLD85ap8L1hwvBqdJQeurcLXYzZbtdp9a5GpJI7gzOTMoEdxIKlEIIbaOKv4rkkztdhoQ",    "e": "AQAB",    "use": "sig",    "kid": "536e453c-aa93-4449-8e90-add2608783c6",    "qi": "XQ2puK9LT5yimyJXlXb4nHEBzPGe3sYbaZW_gMK4iHuM8cseImwLNP8ZIeGaNx5X_hZ6ZOzkjtYJjY85fvaWa2UDGdGlEw3ZO-Nk0Qu_exBrqZgZAsua75TjpJRw01Yd1TNBx5MYuvhltJLsjW-uSjcE-rZoO74FEe9pYYeQjI4",    "dp": "Qq_wlK4Y_ULRbwoFAZY3Y6xdOGDyofwF_fhwpu8sdDxHq8QV7ZZcM4GOKuJcjsRQyNZv7hxeS_H_h1tnC_igy4KRjtGOdrrnJ1DwVZte72eWqF1LXv73R7pnnfS7AmELuOriruL6Dy1qaXpKGmlyeNazkq5-3tsgXUh0Q7po2AE",    "alg": "RS256",    "dq": "Wj1ovDT8lLIZb-Ggby9YotuJT-SSk6UDzHZZikquLGajaD6N2qNILsOKivKXBEzOobN9uj-EHaAXZtbdZyd27cZ2CqORJvJ299b5xLFecXpNGeio1YFee7-c1BjYWfgjMZqgycT1GairizINSjkO3FY8ySSuPBBXhKgrN7eVDrE",    "n": "kgwP0NPaoAwhSh9iLlRaT7FSRbNsl6T5-j-bB3xAT1UbsxOJ9v06S3_54bpYlEAkjlrO-i1vmSzfSVnqFXnjWThWRvPmBDth3Ka7hQm9UXjiAvTzYxXGFjyhALqa_-DQCtdrqIhi8E4hAuSu--kGgnFKg3G-21KJuqnVzsXrClGkxbmVufx0MJjJxr1YGfkTMG8i0dovS9tnkioDAkt1knupiYk5ir_WiNy4T-70T5s3ktC5_4Uz10hS-rWeUxiihzG8G7ceg84-Kt5jKP_AgUnel-ksRyfgSJCYC9nHyz913a3ALj3Dzt7TBaxwAjlxESrdNz5RE9DNDZfPmNWRSw"  } `; let header = {   alg: "RS256",  typ: "JWT",  kid: "536e453c-aa93-4449-8e90-add2608783c6", }; let payload = {   iss: "1234567890",  sub: "1234567890",  aud: "https://api.line.me/",  exp: Math.floor(new Date().getTime() / 1000) + 60 * 30,  token_exp: 60 * 60 * 24 * 30, }; jose.JWS.createSign(   { format: "compact", fields: header },  JSON.parse(privateKey), )   .update(JSON.stringify(payload))  .final()  .then((result) => {    console.log(result);  });``
+let privateKey = `
+{
+    "p": "4h8yEw4q9VkzhXMgXZsIZVkEuZ49EmtWYk9zs0hPTa24ejjRMA6KTYh_va0GlaChO9t0MVQVuduznt-OFZyRAinr4svU4MKD2A3gTHJJCxs0xICva8rkHXqxfPwXngpb5L_xFURbXcSTzMcKckWuOpyPznAgY4XsZxw0t7ewj9E",
+    "kty": "RSA",
+    "q": "pVhBdRN5K3MEiZzU4__TsrtSBJDD_stu60m73iIvsHIrvK3Dmfl-J1zhsyOvi3NH9mVXpUimBwP8nTe-BlVM71G7_EotFHeKH1zTmBlx6AOngmrc40W2Hd__OZW0NfC_xOTvI_Ea2BNGoGtcrIGVFLTivJ4y9wAVOKA058zJ0ls",
+    "d": "ObzE_-TROJazDm-ry-8TKRBMGzwcwTK6lMFSk7n-Xp6h7cDauSdRRYnZivC1lh5plVG3I9aUmPTRbVk7nrPqOlp4WWKQ27lyLd5IogbArpXgnBSkp9Zy0lWzvOsI3gHNnYuehyksHB53FIK93t838JfDQoXUUzalNoNwAGfkTNZxT4GIXGMGzNck2Z_urOATMf8-wdad-u4a5IB2KfHugwH2kw-Zig7fbdcN4_DeKWpuigdesa48Yj_hRJRws-mVFp-xHlGJehumnM_v8FLD85ap8L1hwvBqdJQeurcLXYzZbtdp9a5GpJI7gzOTMoEdxIKlEIIbaOKv4rkkztdhoQ",
+    "e": "AQAB",
+    "use": "sig",
+    "kid": "536e453c-aa93-4449-8e90-add2608783c6",
+    "qi": "XQ2puK9LT5yimyJXlXb4nHEBzPGe3sYbaZW_gMK4iHuM8cseImwLNP8ZIeGaNx5X_hZ6ZOzkjtYJjY85fvaWa2UDGdGlEw3ZO-Nk0Qu_exBrqZgZAsua75TjpJRw01Yd1TNBx5MYuvhltJLsjW-uSjcE-rZoO74FEe9pYYeQjI4",
+    "dp": "Qq_wlK4Y_ULRbwoFAZY3Y6xdOGDyofwF_fhwpu8sdDxHq8QV7ZZcM4GOKuJcjsRQyNZv7hxeS_H_h1tnC_igy4KRjtGOdrrnJ1DwVZte72eWqF1LXv73R7pnnfS7AmELuOriruL6Dy1qaXpKGmlyeNazkq5-3tsgXUh0Q7po2AE",
+    "alg": "RS256",
+    "dq": "Wj1ovDT8lLIZb-Ggby9YotuJT-SSk6UDzHZZikquLGajaD6N2qNILsOKivKXBEzOobN9uj-EHaAXZtbdZyd27cZ2CqORJvJ299b5xLFecXpNGeio1YFee7-c1BjYWfgjMZqgycT1GairizINSjkO3FY8ySSuPBBXhKgrN7eVDrE",
+    "n": "kgwP0NPaoAwhSh9iLlRaT7FSRbNsl6T5-j-bB3xAT1UbsxOJ9v06S3_54bpYlEAkjlrO-i1vmSzfSVnqFXnjWThWRvPmBDth3Ka7hQm9UXjiAvTzYxXGFjyhALqa_-DQCtdrqIhi8E4hAuSu--kGgnFKg3G-21KJuqnVzsXrClGkxbmVufx0MJjJxr1YGfkTMG8i0dovS9tnkioDAkt1knupiYk5ir_WiNy4T-70T5s3ktC5_4Uz10hS-rWeUxiihzG8G7ceg84-Kt5jKP_AgUnel-ksRyfgSJCYC9nHyz913a3ALj3Dzt7TBaxwAjlxESrdNz5RE9DNDZfPmNWRSw"
+  }
+`;
+
+let header = {
+  alg: "RS256",
+  typ: "JWT",
+  kid: "536e453c-aa93-4449-8e90-add2608783c6",
+};
+
+let payload = {
+  iss: "1234567890",
+  sub: "1234567890",
+  aud: "https://api.line.me/",
+  exp: Math.floor(new Date().getTime() / 1000) + 60 * 30,
+  token_exp: 60 * 60 * 24 * 30,
+};
+
+jose.JWS.createSign(
+  { format: "compact", fields: header },
+  JSON.parse(privateKey),
+)
+  .update(JSON.stringify(payload))
+  .final()
+  .then((result) => {
+    console.log(result);
+  });
+```
 
 Base64形式でエンコードされたヘッダーとクレーム・セット、および秘密鍵（rsa\_private.pemファイルなど）を、ヘッダーで定義したアルゴリズムを使用して署名します。署名後、Base64形式でエンコードされた結果がJWTです。以下はJWTの例です。
 
-sh
-
-`eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJjNjU4NWYzLThkZGQtNDZjNC05YmUyLWI1NGE3MGFhOTRlYSJ9.eyJpc3MiOiIxNjUzOTQ3MTcyIiwic3ViIjoiMTY1Mzk0NzE3MiIsImF1ZCI6Imh0dHBzOi8vYXBpLmxpbmUubWUvIiwiZXhwIjoiMTU4NTIwMDA2MiIsInRva2VuX2V4cCI6IjI1OTIwMDAifQ.UVG6PAEub-OPbZ3nJuVxRRPjY6Sz_eIHJV9DTTAHCR79YsG4yWvoa9AeIctibb6IJQKgTEV7mF7LsUDmXldEDqYwyEmKs38zj_995Ntc9SYBFphHpr09NqfMoqMphwKqms2NOnqgcHreFs27d9Q0Qv8Rtv2t7SB2cVO__KrsjzYNs3miTvDdkqYLXFo5fXwuzNtHOCAJomd6bhMR8Yd1-vJmtMCBPK4hmA98w8fG_NhcyLbw-B9AuxQ6z92zXiRhNyPlK_3ce2T7HtgUluJ4xJl4xdLJ_C6hvTAqtQxmSiJKzbjUiANF6hVBTomU8vkaIjEKjnlT1uPMihfrsA3pzQ`
+```sh
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJjNjU4NWYzLThkZGQtNDZjNC05YmUyLWI1NGE3MGFhOTRlYSJ9.eyJpc3MiOiIxNjUzOTQ3MTcyIiwic3ViIjoiMTY1Mzk0NzE3MiIsImF1ZCI6Imh0dHBzOi8vYXBpLmxpbmUubWUvIiwiZXhwIjoiMTU4NTIwMDA2MiIsInRva2VuX2V4cCI6IjI1OTIwMDAifQ.UVG6PAEub-OPbZ3nJuVxRRPjY6Sz_eIHJV9DTTAHCR79YsG4yWvoa9AeIctibb6IJQKgTEV7mF7LsUDmXldEDqYwyEmKs38zj_995Ntc9SYBFphHpr09NqfMoqMphwKqms2NOnqgcHreFs27d9Q0Qv8Rtv2t7SB2cVO__KrsjzYNs3miTvDdkqYLXFo5fXwuzNtHOCAJomd6bhMR8Yd1-vJmtMCBPK4hmA98w8fG_NhcyLbw-B9AuxQ6z92zXiRhNyPlK_3ce2T7HtgUluJ4xJl4xdLJ_C6hvTAqtQxmSiJKzbjUiANF6hVBTomU8vkaIjEKjnlT1uPMihfrsA3pzQ
+```
 
 #### PyJWT（Pythonのライブラリ）でJWTを生成する
 
@@ -253,15 +404,50 @@ PyJWTを使って署名し、JWTを生成するには、[Python](https://www.pyt
 
 以下は、PyJWTを使って**秘密鍵**で署名してJWTを生成するコードの例です。このコードを使って自分のJWTを作成する場合は、`privateKey`を自分のアサーション署名キーの**秘密鍵**の値に変更し、`headers`の`kid`と`payload`の値をそれぞれ変更してから実行します。コンテンツが改ざんされていないことを証明するために、必ず**秘密鍵**で署名します。PyJWTの使い方について詳しくは、[PyJWT](https://github.com/jpadilla/pyjwt#installing)を参照してください。
 
-python
+```python
+import jwt
+from jwt.algorithms import RSAAlgorithm
+import time
 
-`import jwt from jwt.algorithms import RSAAlgorithm import time privateKey = {   "alg": "RS256",  "d": "dcA-LXLBRecBQbW7a8LKAriFJhnpXzwu2uNoVF_8-QmGVzI5682FWh_CWhl_B6J0fpmA-d7_EP0WCB3AGhxlyTP6ROoYJo7nygb_KMLREM7n64LFGbvNtw4jk7dmISXl_JuEX6CG09BBx4GLh9AGHSaK4v9B-dDvrNZlAo2mIjISHNcAPENbOl_XIOmZpJd56znjjc1gGKaYGbIm8unxHnPhL66IVYGRu8gxKfG6JUP7o370-VDfFOeaAR0HshTycP6M41jcDSjL6z9-J-Sh0zSZXqGS4u82TNtmwtRTzVwd0w30KQ0TTROTiNsz5apVHjpMvmAxRlbvcW41xIq8sQ",  "dp": "PAWBMzwnwgc-yixarV30gemH6Wk15HfSUYpR4wJZUHemGx_LE5GXdnKoyy8G9DAl6XMpm7YVH8cPXgXYNh-JlAggvzUeH5A7KAV4ZPTNak4CI844GSbYIu_dPBcVAg0O6sxQWugYpPbPnMDpE7qf4KilSSVG3JKqEMxkYySjZZE",  "dq": "LBA_q2YYnglCL41-1b3BmzCm-hs7Q-N__otDWO01I03VYnzU-vEQmxy6Fzrh2Y4Fgwp6D8iScu42AOyhE-T-qDNbAsCB0iZeFqm84g6VQAfDbknjIUZtcGvQgzy-zlrl253_QdyJvl2b44KT1hfoF0tDNA1rhOy7WlBM__rH0Pc",  "e": "AQAB",  "kty": "RSA",  "n": "x2glWJ7baQV4vdElnAXA5yu8yFk4LpszkHW3Ey-BKGT3kGVLy3Jk3OvkwjBFOglXWeyTWe_rJkMYkBKuon5syZVjrjb24CmViAXGr6d6IvrYWj8IGZ6ElVABfnjGgZMVywmBb7hIh2p8QR0L8UJEuWjBU5nlwkMBpvnY2HXAVhvir8CN7WRj_GBMxxgg7wSuW1tV-7Qf44grMqJ0Je7zjflS4-TpI8Ox3nhamn0d7NIdQ3jNdTP7IZF61IvETgb_6NdFnfsN-aifJC-Ea3ZwhVcEGJ5z3MMoKSoChJmkJMiV9CldqGRnEDWwBugZHeEtn71eGVE3DAXAzrf525YHYQ",  "p": "7eH8LAzNkITH6t7CWU5tPAmQlGQPkby66Yfq52tSZ43pQRz0CdtDYCQnGoBXvHzAHhzH4MjmNLOSGVimZK_dIRg5lJaPvVe6hgQ3pYud5WzPWsnQTsC7agQ2rfQglyFUtjwd1gWBIY4gwHj4BYG6Up3g0TlX1sf_juZxcLhkOsc",  "q": "1pf-Pj2ZPL1nGqVcMVH_hfziIOBtjxc5vMGyHwTaLAA9y2xKfe_SRU8kUK2q5ZykJ8wMckR9Pduuyn-vp4q2FANVSN69G01pUKM2ppkgXuil2S3REmzniGdajZjkpWKaZ6z1tJ_xSv9ghx06Dbro8n___KnpBq6afb022anRxJc",  "qi": "6L6SgH_pkyqq1Tb6QXPAGmtqVZT58Ljf3QTw6Tx5OdZ9NNvDReHHb64MgbUMLhLzGMeXGqDI5j0WLhtXv4ddCKWkF7OeKLUNuRP7yLpyYMazn8TEOjKHsgLAklenxcSgYaoO_wULh1mze1_ZO2PJNgvkIx_Xzr0XDUAqUp4W0jk",  "use": "sig" } headers = {     "alg": "RS256",    "typ": "JWT",    "kid": "9869e446-3489-4516-a83f-ec9214ad94d0" } payload = {   "iss": "1234567890",  "sub": "1234567890",  "aud": "https://api.line.me/",  "exp":int(time.time())+(60 * 30),  "token_exp": 60 * 60 * 24 * 30 } key = RSAAlgorithm.from_jwk(privateKey) JWT = jwt.encode(payload, key, algorithm="RS256", headers=headers, json_encoder=None) print(JWT)`
+privateKey = {
+  "alg": "RS256",
+  "d": "dcA-LXLBRecBQbW7a8LKAriFJhnpXzwu2uNoVF_8-QmGVzI5682FWh_CWhl_B6J0fpmA-d7_EP0WCB3AGhxlyTP6ROoYJo7nygb_KMLREM7n64LFGbvNtw4jk7dmISXl_JuEX6CG09BBx4GLh9AGHSaK4v9B-dDvrNZlAo2mIjISHNcAPENbOl_XIOmZpJd56znjjc1gGKaYGbIm8unxHnPhL66IVYGRu8gxKfG6JUP7o370-VDfFOeaAR0HshTycP6M41jcDSjL6z9-J-Sh0zSZXqGS4u82TNtmwtRTzVwd0w30KQ0TTROTiNsz5apVHjpMvmAxRlbvcW41xIq8sQ",
+  "dp": "PAWBMzwnwgc-yixarV30gemH6Wk15HfSUYpR4wJZUHemGx_LE5GXdnKoyy8G9DAl6XMpm7YVH8cPXgXYNh-JlAggvzUeH5A7KAV4ZPTNak4CI844GSbYIu_dPBcVAg0O6sxQWugYpPbPnMDpE7qf4KilSSVG3JKqEMxkYySjZZE",
+  "dq": "LBA_q2YYnglCL41-1b3BmzCm-hs7Q-N__otDWO01I03VYnzU-vEQmxy6Fzrh2Y4Fgwp6D8iScu42AOyhE-T-qDNbAsCB0iZeFqm84g6VQAfDbknjIUZtcGvQgzy-zlrl253_QdyJvl2b44KT1hfoF0tDNA1rhOy7WlBM__rH0Pc",
+  "e": "AQAB",
+  "kty": "RSA",
+  "n": "x2glWJ7baQV4vdElnAXA5yu8yFk4LpszkHW3Ey-BKGT3kGVLy3Jk3OvkwjBFOglXWeyTWe_rJkMYkBKuon5syZVjrjb24CmViAXGr6d6IvrYWj8IGZ6ElVABfnjGgZMVywmBb7hIh2p8QR0L8UJEuWjBU5nlwkMBpvnY2HXAVhvir8CN7WRj_GBMxxgg7wSuW1tV-7Qf44grMqJ0Je7zjflS4-TpI8Ox3nhamn0d7NIdQ3jNdTP7IZF61IvETgb_6NdFnfsN-aifJC-Ea3ZwhVcEGJ5z3MMoKSoChJmkJMiV9CldqGRnEDWwBugZHeEtn71eGVE3DAXAzrf525YHYQ",
+  "p": "7eH8LAzNkITH6t7CWU5tPAmQlGQPkby66Yfq52tSZ43pQRz0CdtDYCQnGoBXvHzAHhzH4MjmNLOSGVimZK_dIRg5lJaPvVe6hgQ3pYud5WzPWsnQTsC7agQ2rfQglyFUtjwd1gWBIY4gwHj4BYG6Up3g0TlX1sf_juZxcLhkOsc",
+  "q": "1pf-Pj2ZPL1nGqVcMVH_hfziIOBtjxc5vMGyHwTaLAA9y2xKfe_SRU8kUK2q5ZykJ8wMckR9Pduuyn-vp4q2FANVSN69G01pUKM2ppkgXuil2S3REmzniGdajZjkpWKaZ6z1tJ_xSv9ghx06Dbro8n___KnpBq6afb022anRxJc",
+  "qi": "6L6SgH_pkyqq1Tb6QXPAGmtqVZT58Ljf3QTw6Tx5OdZ9NNvDReHHb64MgbUMLhLzGMeXGqDI5j0WLhtXv4ddCKWkF7OeKLUNuRP7yLpyYMazn8TEOjKHsgLAklenxcSgYaoO_wULh1mze1_ZO2PJNgvkIx_Xzr0XDUAqUp4W0jk",
+  "use": "sig"
+}
+
+headers = {
+    "alg": "RS256",
+    "typ": "JWT",
+    "kid": "9869e446-3489-4516-a83f-ec9214ad94d0"
+}
+
+payload = {
+  "iss": "1234567890",
+  "sub": "1234567890",
+  "aud": "https://api.line.me/",
+  "exp":int(time.time())+(60 * 30),
+  "token_exp": 60 * 60 * 24 * 30
+}
+
+key = RSAAlgorithm.from_jwk(privateKey)
+
+JWT = jwt.encode(payload, key, algorithm="RS256", headers=headers, json_encoder=None)
+print(JWT)
+```
 
 Base64形式でエンコードされたヘッダーとクレーム・セット、および秘密鍵を、ヘッダーで定義したアルゴリズムを使用して署名します。署名後、Base64形式でエンコードされた結果がJWTです。以下はJWTの例です。
 
-sh
-
-`eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ijk4NjllNDQ2LTM0ODktNDUxNi1hODNmLWVjOTIxNGFkOTRkMCJ9.eyJpc3MiOiIxMjM0NTY3ODkwIiwic3ViIjoiMTIzNDU2Nzg5MCIsImF1ZCI6Imh0dHBzOi8vYXBpLmxpbmUubWUvIiwiZXhwIjoxNjIzOTk1NTk5LCJ0b2tlbl9leHAiOjI1OTIwMDB9.Zf32xTqgUHSYw2C2Mlmunqz_AtkaqvGh0msx9XJMX6QYLPT4m4QYF3PsER-zfbhbByNT4rH09JEMRP7bzcNMQ8l4n_WXwTyLkNciZYzF-sTiVHiZu4ucJm4_l8ni5NaqOVEntsCp1wQi8-VLjaMpQlQ7crCdouEMFFeyVwgERfH8ui6UZaJeIlJKRZTnO6iYvKYuLyUsqzowfwZo0hcnnZIXKnjZ81ukjH3_78EHXOD5ivovAT7CtmBoglm3Bvsi0N6PlEONLhHqpCleaYTXRmCykxDLP600JRvi5TYApaN-8n2Bo3FskXJLuxquWLP-LTfMDlkakmfEfcQCiz7daQ`
+```sh
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ijk4NjllNDQ2LTM0ODktNDUxNi1hODNmLWVjOTIxNGFkOTRkMCJ9.eyJpc3MiOiIxMjM0NTY3ODkwIiwic3ViIjoiMTIzNDU2Nzg5MCIsImF1ZCI6Imh0dHBzOi8vYXBpLmxpbmUubWUvIiwiZXhwIjoxNjIzOTk1NTk5LCJ0b2tlbl9leHAiOjI1OTIwMDB9.Zf32xTqgUHSYw2C2Mlmunqz_AtkaqvGh0msx9XJMX6QYLPT4m4QYF3PsER-zfbhbByNT4rH09JEMRP7bzcNMQ8l4n_WXwTyLkNciZYzF-sTiVHiZu4ucJm4_l8ni5NaqOVEntsCp1wQi8-VLjaMpQlQ7crCdouEMFFeyVwgERfH8ui6UZaJeIlJKRZTnO6iYvKYuLyUsqzowfwZo0hcnnZIXKnjZ81ukjH3_78EHXOD5ivovAT7CtmBoglm3Bvsi0N6PlEONLhHqpCleaYTXRmCykxDLP600JRvi5TYApaN-8n2Bo3FskXJLuxquWLP-LTfMDlkakmfEfcQCiz7daQ
+```
 
 ## チャネルアクセストークンv2.1を発行する
 

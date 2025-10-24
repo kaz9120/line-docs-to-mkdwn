@@ -3,6 +3,7 @@ import * as domUtils from "../dom-utils";
 import { convertToMarkdown } from "../markdown-converter";
 import {
   basicContent,
+  codeBlockContent,
   complexContent,
   complexTableContent,
   contentWithAnchorAndButton,
@@ -12,6 +13,7 @@ import {
   linkContent,
   tableContent,
   tableWithBreakTags,
+  vueCommentsContent,
 } from "./fixtures/test-html";
 
 describe("convertToMarkdown", () => {
@@ -209,6 +211,41 @@ describe("convertToMarkdown", () => {
       expect(result).not.toContain("コピーボタン");
       expect(result).toContain("## 見出し");
       expect(result).toContain("コンテンツ");
+    });
+  });
+
+  describe("コードブロック変換", () => {
+    it("div.relative要素をマークダウンのコードブロックとして変換する", () => {
+      document.body.innerHTML = codeBlockContent;
+      const result = convertToMarkdown();
+
+      // コードブロックとして変換されている
+      expect(result).toContain("```bash");
+      expect(result).toContain("$ npm install -g @line/liff-cli");
+      expect(result).toContain("```");
+
+      // 前後のテキストも正しく変換されている
+      expect(result).toContain("次のコマンドを実行します。");
+      expect(result).toContain("コマンドを実行すると、LIFF CLIがインストールされます。");
+
+      // 言語ラベルが独立した段落として出力されていない
+      expect(result).not.toMatch(/^bash$/m);
+    });
+  });
+
+  describe("Vue.jsコメント削除", () => {
+    it("表内のVue.jsコメントマーカーを削除する", () => {
+      document.body.innerHTML = vueCommentsContent;
+      const result = convertToMarkdown();
+
+      // Vue.jsコメントが削除されている
+      expect(result).not.toContain("<!--[-->");
+      expect(result).not.toContain("<!--]-->");
+
+      // リストの内容は保持されている
+      expect(result).toContain("<code>full</code>");
+      expect(result).toContain("<code>tall</code>");
+      expect(result).toContain("<code>compact</code>");
     });
   });
 

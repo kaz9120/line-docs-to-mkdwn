@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/security-checklist/
-copied_at: 2025-10-24T06:28:54.162Z
+copied_at: 2025-10-24T10:15:38.927Z
 ---
 # LINEログインのセキュリティチェックリスト
 
@@ -30,12 +30,12 @@ LINEログインを組み込んだアプリの実装にあたっては、第三�
 
 | チェック内容 | 関連ページ |
 | --- | --- |
-| `redirect_uri`に指定したURLのURLスキーマには、特別な理由がない限りhttpsを使用しているか。 | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2.1" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 3.1.2.1.<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| `redirect_uri`として有効なURLとは、以下に示すいずれかのURLであることを理解しているか。<ul><!--[--><li><!--[-->［<strong><!--[-->コールバックURL<!--]--></strong>］に登録しているURLに完全一致するURL<!--]--></li><li><!--[-->［<strong><!--[-->コールバックURL<!--]--></strong>］に登録しているURLに、任意のクエリパラメータを追加したURL<!--]--></li><!--]--></ul> | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 3.1.2.<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/docs/line-login/integrate-line-login/#making-an-authorization-request" class=""><!--[--><!--[-->ユーザーに認証と認可を要求する<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| ［**コールバックURL**］に登録しているURLで受け取るクエリパラメータに、「任意のURLを受け取ってリダイレクトするようなクエリパラメータ」が存在しないか。あるいはそのようなパラメータが存在する場合、オープンリダイレクトの脆弱性（Open Redirector）が存在しないことを確認したか。 | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.15" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 10.15<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| `state`に指定した値を、SecureRandomなどの暗号学的に安全かつ第三者が予測できない方法で、ランダムかつユニークになるように生成しているか。 | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 10.12.<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/docs/line-login/integrate-line-login/#making-an-authorization-request" class=""><!--[--><!--[-->ユーザーに認証と認可を要求する<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| `state`に指定した値を、以下に示すような、第三者がアクセス不能な場所に保存しているか。<ul><!--[--><li><!--[-->サーバーのセッション情報<!--]--></li><li><!--[-->同一オリジンポリシー（Same-origin policy）などで保護されたcookie<!--]--></li><!--]--></ul> | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 10.12.<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| 同一ユーザーがログインを試行する場合も、ログインをする度に`state`に異なる値を指定しているか。 | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 10.12.<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
+| `redirect_uri`に指定したURLのURLスキーマには、特別な理由がない限りhttpsを使用しているか。 | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2.1" target="_blank" class="" rel="nofollow">RFC6749 3.1.2.1.</a></li></ul> |
+| `redirect_uri`として有効なURLとは、以下に示すいずれかのURLであることを理解しているか。<ul><li>［<strong>コールバックURL</strong>］に登録しているURLに完全一致するURL</li><li>［<strong>コールバックURL</strong>］に登録しているURLに、任意のクエリパラメータを追加したURL</li></ul> | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2" target="_blank" class="" rel="nofollow">RFC6749 3.1.2.</a></li><li><a href="/ja/docs/line-login/integrate-line-login/#making-an-authorization-request" class="">ユーザーに認証と認可を要求する</a></li></ul> |
+| ［**コールバックURL**］に登録しているURLで受け取るクエリパラメータに、「任意のURLを受け取ってリダイレクトするようなクエリパラメータ」が存在しないか。あるいはそのようなパラメータが存在する場合、オープンリダイレクトの脆弱性（Open Redirector）が存在しないことを確認したか。 | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.15" target="_blank" class="" rel="nofollow">RFC6749 10.15</a></li></ul> |
+| `state`に指定した値を、SecureRandomなどの暗号学的に安全かつ第三者が予測できない方法で、ランダムかつユニークになるように生成しているか。 | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow">RFC6749 10.12.</a></li><li><a href="/ja/docs/line-login/integrate-line-login/#making-an-authorization-request" class="">ユーザーに認証と認可を要求する</a></li></ul> |
+| `state`に指定した値を、以下に示すような、第三者がアクセス不能な場所に保存しているか。<ul><li>サーバーのセッション情報</li><li>同一オリジンポリシー（Same-origin policy）などで保護されたcookie</li></ul> | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow">RFC6749 10.12.</a></li></ul> |
+| 同一ユーザーがログインを試行する場合も、ログインをする度に`state`に異なる値を指定しているか。 | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow">RFC6749 10.12.</a></li></ul> |
 
 ## コールバックURLに渡されたクエリパラメータのチェックリスト
 
@@ -43,7 +43,7 @@ LINEログインを組み込んだアプリの実装にあたっては、第三�
 
 | チェック内容 | 関連ページ |
 | --- | --- |
-| `state`の値が、認可URLで指定した`state`と一致していることを確認しているか。 | <ul><!--[--><li><!--[--><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow"><!--[--><!--[-->RFC6749 10.12.<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/docs/line-login/integrate-line-login/#receiving-the-authorization-code-or-error-response-with-a-web-app" class=""><!--[--><!--[-->ウェブアプリで認可レスポンスまたはエラーレスポンスを受け取る<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
+| `state`の値が、認可URLで指定した`state`と一致していることを確認しているか。 | <ul><li><a href="https://datatracker.ietf.org/doc/html/rfc6749#section-10.12" target="_blank" class="" rel="nofollow">RFC6749 10.12.</a></li><li><a href="/ja/docs/line-login/integrate-line-login/#receiving-the-authorization-code-or-error-response-with-a-web-app" class="">ウェブアプリで認可レスポンスまたはエラーレスポンスを受け取る</a></li></ul> |
 
 ## アクセストークンを発行する際のチェックリスト
 
@@ -51,7 +51,7 @@ LINEログインを組み込んだアプリの実装にあたっては、第三�
 
 | チェック内容 | 関連ページ |
 | --- | --- |
-| `client_secret`で指定するチャネルシークレットが秘密情報であることを理解し、かつ第三者に知られないようになっているか。 | <ul><!--[--><li><!--[--><a href="https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.16.19" target="_blank" class="" rel="nofollow"><!--[--><!--[-->OpenID Connect 1.0 16.19<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
+| `client_secret`で指定するチャネルシークレットが秘密情報であることを理解し、かつ第三者に知られないようになっているか。 | <ul><li><a href="https://openid.net/specs/openid-connect-core-1_0.html#rfc.section.16.19" target="_blank" class="" rel="nofollow">OpenID Connect 1.0 16.19</a></li></ul> |
 
 ## IDトークンやアクセストークンを使用する際のチェックリスト
 
@@ -59,8 +59,8 @@ LINEプラットフォームが発行した、IDトークンやアクセスト�
 
 | チェック内容 | 関連ページ |
 | --- | --- |
-| IDトークンやアクセストークンを検証しているか。 | <ul><!--[--><li><!--[--><a href="/ja/reference/line-login/#verify-access-token" class=""><!--[--><!--[-->アクセストークンの有効性を検証する<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/line-login/#verify-id-token" class=""><!--[--><!--[-->IDトークンを検証する<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| アクセストークンの検証に成功後、`client_id`プロパティと`expires_in`プロパティの値が以下の条件を満たすことを確認しているか。<ul><!--[--><li><!--[--><code><!--[-->client_id<!--]--></code>：ログイン機能を提供しているLINEログインチャネルのチャネルIDと同じ値<!--]--></li><li><!--[--><code><!--[-->expires_in<!--]--></code>：正の値<!--]--></li><!--]--></ul> | <ul><!--[--><li><!--[--><a href="/ja/docs/line-login/secure-login-process/#using-access-tokens" class=""><!--[--><!--[-->アクセストークンを使用して新規ユーザーを登録する<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
+| IDトークンやアクセストークンを検証しているか。 | <ul><li><a href="/ja/reference/line-login/#verify-access-token" class="">アクセストークンの有効性を検証する</a></li><li><a href="/ja/reference/line-login/#verify-id-token" class="">IDトークンを検証する</a></li></ul> |
+| アクセストークンの検証に成功後、`client_id`プロパティと`expires_in`プロパティの値が以下の条件を満たすことを確認しているか。<ul><li><code>client_id</code>：ログイン機能を提供しているLINEログインチャネルのチャネルIDと同じ値</li><li><code>expires_in</code>：正の値</li></ul> | <ul><li><a href="/ja/docs/line-login/secure-login-process/#using-access-tokens" class="">アクセストークンを使用して新規ユーザーを登録する</a></li></ul> |
 
 ## バックエンドサーバーに、IDトークンやアクセストークンを送信して処理する際のチェックリスト
 
@@ -68,5 +68,5 @@ LINEプラットフォームから取得したユーザー情報を用いて、�
 
 | チェック内容 | 関連ページ |
 | --- | --- |
-| クライアントからバックエンドサーバーに対して、ユーザーIDなどの情報ではなく、生のIDトークンやアクセストークンを送信しているか。<br/>※ バックエンドサーバーでIDトークンやアクセストークンを検証するAPIを利用することで、ユーザーIDなどの情報を取得できます。 | <ul><!--[--><li><!--[--><a href="/ja/docs/line-login/secure-login-process/#using-access-tokens" class=""><!--[--><!--[-->アクセストークンを使用して新規ユーザーを登録する<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/line-login/#verify-access-token" class=""><!--[--><!--[-->アクセストークンの有効性を検証する<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/line-login/#verify-id-token" class=""><!--[--><!--[-->IDトークンを検証する<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
-| クライアントからバックエンドサーバーに送信されたIDトークンやアクセストークンを検証しているか。 | <ul><!--[--><li><!--[--><a href="/ja/docs/line-login/secure-login-process/#using-access-tokens" class=""><!--[--><!--[-->アクセストークンを使用して新規ユーザーを登録する<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
+| クライアントからバックエンドサーバーに対して、ユーザーIDなどの情報ではなく、生のIDトークンやアクセストークンを送信しているか。<br/>※ バックエンドサーバーでIDトークンやアクセストークンを検証するAPIを利用することで、ユーザーIDなどの情報を取得できます。 | <ul><li><a href="/ja/docs/line-login/secure-login-process/#using-access-tokens" class="">アクセストークンを使用して新規ユーザーを登録する</a></li><li><a href="/ja/reference/line-login/#verify-access-token" class="">アクセストークンの有効性を検証する</a></li><li><a href="/ja/reference/line-login/#verify-id-token" class="">IDトークンを検証する</a></li></ul> |
+| クライアントからバックエンドサーバーに送信されたIDトークンやアクセストークンを検証しているか。 | <ul><li><a href="/ja/docs/line-login/secure-login-process/#using-access-tokens" class="">アクセストークンを使用して新規ユーザーを登録する</a></li></ul> |

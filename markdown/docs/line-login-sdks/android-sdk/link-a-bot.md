@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/link-a-bot/
-copied_at: 2025-10-23T15:59:25.848Z
+copied_at: 2025-10-24T10:16:19.160Z
 ---
 # SDKで友だち追加オプションを利用する
 
@@ -21,15 +21,31 @@ copied_at: 2025-10-23T15:59:25.848Z
 
 以下のサンプルコードは、`LoginButton`ウィジェットを使用する場合に`botPrompt`パラメータを設定する方法を示しています。
 
-java
+```java
+...
+LoginButton loginButton = rootView.findViewById(R.id.line_login_btn);
 
-`... LoginButton loginButton = rootView.findViewById(R.id.line_login_btn); loginButton.setAuthenticationParams(new LineAuthenticationParams.Builder()         .scopes(Arrays.asList(Scope.PROFILE))        .botPrompt(BotPrompt.normal) // configure it here        .build() ); ...`
+loginButton.setAuthenticationParams(new LineAuthenticationParams.Builder()
+        .scopes(Arrays.asList(Scope.PROFILE))
+        .botPrompt(BotPrompt.normal) // configure it here
+        .build()
+);
+...
+```
 
 以下のサンプルコードは、`LoginApi.getLoginIntent()`メソッドを使用する場合に`botPrompt`パラメータを設定する方法を示しています。
 
-java
-
-`Intent loginIntent = LineLoginApi.getLoginIntent(     view.getContext(),    Constants.CHANNEL_ID,    new LineAuthenticationParams.Builder()            .scopes(Arrays.asList(Scope.PROFILE))            .botPrompt(BotPrompt.normal) // configure it here            .build());             startActivityForResult(loginIntent, REQUEST_CODE);`
+```java
+Intent loginIntent = LineLoginApi.getLoginIntent(
+    view.getContext(), 
+    Constants.CHANNEL_ID, 
+    new LineAuthenticationParams.Builder()
+            .scopes(Arrays.asList(Scope.PROFILE))
+            .botPrompt(BotPrompt.normal) // configure it here
+            .build());
+            
+startActivityForResult(loginIntent, REQUEST_CODE);
+```
 
 パラメータ値について詳しくは、『LINE SDK for Androidリファレンス（英語）』の「[LineAuthenticationParams.BotPrompt](https://developers.line.biz/en/reference/android-sdk/reference/com/linecorp/linesdk/auth/LineAuthenticationParams.BotPrompt.html)」を参照してください。
 
@@ -51,9 +67,17 @@ java
 
 以下のサンプルコードは、`LineLoginResult`オブジェクトから友だち関係を取得する方法を示しています。
 
-java
-
-`public void onActivityResult(int requestCode, int resultCode, Intent data) {     ...         LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);         boolean friendshipStatusChanged = result.getFriendshipStatusChanged();         ... }`
+```java
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    ...
+    
+    LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
+    
+    boolean friendshipStatusChanged = result.getFriendshipStatusChanged();
+    
+    ...
+}
+```
 
 戻り値について詳しくは、『LINE SDK for Androidリファレンス（英語）』の「[getFriendshipStatusChanged()](https://developers.line.biz/en/reference/android-sdk/reference/com/linecorp/linesdk/auth/LineLoginResult.html#getFriendshipStatusChanged())」を参照してください。
 
@@ -61,9 +85,9 @@ java
 
 ユーザーがアプリにログインしてアクセストークンが返された後で、`LineApiClient.getFriendshipStatus()`メソッドを呼び出します。
 
-text
-
-`boolean isFriendToTheBot = lineApiClient.getFriendshipStatus();`
+```text
+boolean isFriendToTheBot = lineApiClient.getFriendshipStatus();
+```
 
 戻り値について詳しくは、『LINE SDK for Androidリファレンス（英語）』の「[getFriendshipStatus()](https://developers.line.biz/en/reference/android-sdk/reference/com/linecorp/linesdk/api/LineApiClient.html#getFriendshipStatus())」を参照してください。
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/pluggable-sdk/
-copied_at: 2025-10-23T16:00:29.997Z
+copied_at: 2025-10-24T10:16:39.194Z
 ---
 # プラガブルSDK
 
@@ -35,9 +35,9 @@ LIFF v2.22.0以降のnpmパッケージ版でのみ利用できます。CDN版�
 
 まず、`liff`オブジェクトを`@line/liff/core`からインポートします。
 
-js
-
-`import liff from "@line/liff/core";`
+```js
+import liff from "@line/liff/core";
+```
 
 この`liff`オブジェクトには、以下のプロパティとメソッドのみが含まれています。
 
@@ -49,9 +49,11 @@ js
 
 上記以外のLIFF APIを利用するには、対応するモジュールをインポートします。以下の例では、[`liff.getOS()`](https://developers.line.biz/ja/reference/liff/#get-os)メソッドと[`liff.getAppLanguage()`](https://developers.line.biz/ja/reference/liff/#get-app-language)メソッドに対応するモジュールをインポートしています。
 
-js
-
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; import GetAppLanguage from "@line/liff/get-app-language";`
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
+import GetAppLanguage from "@line/liff/get-app-language";
+```
 
 各LIFF APIに対応するモジュールについては、「[LIFF APIと対応するモジュール一覧](#liff-api-and-module-list)」を参照してください。
 
@@ -59,17 +61,35 @@ js
 
 次に、インポートしたLIFF APIのモジュールを`liff.use()`メソッドに渡し、LIFF APIを有効化します。LIFF APIのモジュールはクラスで定義されているため、`liff.use()`メソッドにインスタンスを渡す必要があります。
 
-js
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
+import GetAppLanguage from "@line/liff/get-app-language";
 
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; import GetAppLanguage from "@line/liff/get-app-language"; liff.use(new GetOS()); liff.use(new GetAppLanguage());`
+liff.use(new GetOS());
+liff.use(new GetAppLanguage());
+```
 
 LIFF APIを有効化すると、LIFF APIを利用できるようになります。
 
 以下の例では、有効化した`liff.getOS()`メソッドと`liff.getAppLanguage()`メソッドは利用できますが、有効化していない`liff.login()`メソッドは利用できません。
 
-js
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
+import GetAppLanguage from "@line/liff/get-app-language";
 
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; import GetAppLanguage from "@line/liff/get-app-language"; liff.use(new GetOS()); liff.use(new GetAppLanguage()); liff.init({   liffId: "123456-abcedfg", }); liff.getOS(); // 利用できる liff.getAppLanguage(); // 利用できる liff.login(); // 利用できない`
+liff.use(new GetOS());
+liff.use(new GetAppLanguage());
+
+liff.init({
+  liffId: "123456-abcedfg",
+});
+
+liff.getOS(); // 利用できる
+liff.getAppLanguage(); // 利用できる
+liff.login(); // 利用できない
+```
 
 ## プラガブルSDKの注意事項
 
@@ -77,15 +97,31 @@ js
 
 ### liff.use()メソッドの正しい実行例
 
-js
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
 
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; // liff.use()メソッドをliff.init()メソッドより前に実行している liff.use(new GetOS()); liff.init({   liffId: "123456-abcedfg", });`
+// liff.use()メソッドをliff.init()メソッドより前に実行している
+liff.use(new GetOS());
+
+liff.init({
+  liffId: "123456-abcedfg",
+});
+```
 
 ### liff.use()メソッドの間違った実行例
 
-js
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
 
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; liff.init({   liffId: "123456-abcedfg", }); // liff.use()メソッドをliff.init()メソッドより後に実行している liff.use(new GetOS());`
+liff.init({
+  liffId: "123456-abcedfg",
+});
+
+// liff.use()メソッドをliff.init()メソッドより後に実行している
+liff.use(new GetOS());
+```
 
 ## LIFF APIと対応するモジュール一覧
 

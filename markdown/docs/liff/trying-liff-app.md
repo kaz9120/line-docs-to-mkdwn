@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/trying-liff-app/
-copied_at: 2025-10-24T06:29:14.835Z
+copied_at: 2025-10-24T10:16:34.062Z
 ---
 # LIFFスターターアプリを試してみる
 
@@ -52,26 +52,24 @@ LIFFスターターアプリはNode.jsで動作します。また、パッケー
 ### ソースコードのダウンロード〜実行
 
 1.  初めに、LIFFスターターアプリのソースコードをダウンロードします。ターミナルまたはコマンドラインツール（以下「ターミナル」といいます）を開いてください。任意のディレクトリ上で、次のコマンドを実行します。
-    
-    bash
-    
-    `$ git clone https://github.com/line/line-liff-v2-starter.git`
+    ```bash
+    $ git clone https://github.com/line/line-liff-v2-starter.git
+    ```
     
 2.  ダウンロードしたソースコード（`line-liff-v2-starter`ディレクトリ）の`src`ディレクトリ内に、vanilla JavaScript、Next.js、Nuxtで実装されたLIFFアプリがあります。あなたが使いたい実装のディレクトリに移動してください。ここではvanilla JavaScriptを用います。
-    
-    bash
-    
-    `$ cd line-liff-v2-starter/src/vanilla`
+    ```bash
+    $ cd line-liff-v2-starter/src/vanilla
+    ```
     
     > [!TIP]
     > Next.jsやNuxtを使いたいときは
     > Next.jsを使いたいときは`cd line-liff-v2-starter/src/nextjs/`、Nuxtを使いたいときは`cd line-liff-v2-starter/src/nuxtjs/`で、それぞれのディレクトリに移動してください。
     
 3.  次に依存パッケージをインストールし、続いてLIFFアプリを起動します。インストールは`yarn install`コマンド、LIFFアプリの起動は`yarn dev`コマンドを実行します。コンパイル成功のメッセージ（`compiled successfully`）が表示されて、ターミナルの画面出力が止まったら、ローカルサーバーでLIFFアプリが起動しています。
-    
-    bash
-    
-    `$ yarn install $ yarn dev`
+    ```bash
+    $ yarn install
+    $ yarn dev
+    ```
     
 4.  ターミナルに表示されたURL（vanilla JavaScriptの場合は`http://localhost:3000`）にブラウザでアクセスすると、次のような画面が表示されます。  
     ![LIFFアプリ](https://developers.line.biz/media/liff/trying-liff-app/screenshot-pc.png)> [!WARNING]
@@ -89,62 +87,60 @@ LIFFスターターアプリはNode.jsで動作します。また、パッケー
 > [Netlify](https://www.netlify.com/)は静的サイトのためのホスティングサービスです。Netlifyにデプロイする際は、あらかじめアカウントを開設してください。このページの内容はNetlifyの無料プランで実行できます。
 
 1.  初めにNetlifyのCLIをインストールします。これはコマンドライン上でNetlifyへのログインやデプロイといった操作を行うためのツールです。
-    
-    bash
-    
-    `$ npm install -g netlify-cli`
+    ```bash
+    $ npm install -g netlify-cli
+    ```
     
 2.  これで`netlify`コマンドを使えるようになりました。次に`netlify login`コマンドでNetlifyアカウントにログインします。コマンドを実行するとブラウザでNetlifyのログイン画面が開くので、ログインします。> [!TIP]
     > netlify loginコマンドを実行する前に
     > 先に[Netlify](https://www.netlify.com/)のサイトでアカウントを開設してから、`netlify login`コマンドを実行してください。
     
-    bash
-    
-    `$ netlify login`
+    ```bash
+    $ netlify login
+    ```
     
 3.  ログイン後、Netlifyの認可画面が表示されたら、［**Authorize**］をクリックします。  
     ![Netlifyの認可画面](https://developers.line.biz/media/liff/trying-liff-app/netlify-authorized.png)
 4.  続いてデプロイするためのファイルを生成します。これは`src/vanilla`ディレクトリ下で次のコマンドを実行します。なお、LIFFスターターアプリでは[webpack](https://webpack.js.org/)を用いてビルドを行なっています。
-    
-    bash
-    
-    `$ yarn build`
+    ```bash
+    $ yarn build
+    ```
     
 5.  これで`src/vanilla/dist`下にHTMLやJavaScriptといったファイルが生成されました。あとはこれらのファイルをNetlifyにデプロイします。  
     Netlifyへのデプロイは、リポジトリのルートディレクトリ（`line-liff-v2-starter`）上で`netlify deploy`コマンドを実行します。`netlify deploy`コマンドは、オプションをつけなければドラフト状態でデプロイされます。まずはドラフト状態でデプロイを試します。
-    
-    bash
-    
-    `$ cd ../../      # リポジトリのルートディレクトリに移動する $ netlify deploy # ドラフト状態でデプロイする`
+    ```bash
+    $ cd ../../      # リポジトリのルートディレクトリに移動する
+    $ netlify deploy # ドラフト状態でデプロイする
+    ```
     
       
     `netlify deploy`コマンドの実行後、次のようにデプロイ先のsiteを聞かれた場合は、`Create & configure a new site`を選択します。上下のキーで選択肢を移動できます。
-    
-    bash
-    
-    `This folder isn't linked to a site yet ? What would you like to do? Link this directory to an existing site ❯ +  Create & configure a new site # 新しいsiteを作って設定する`
+    ```bash
+    This folder isn't linked to a site yet
+    ? What would you like to do?
+    Link this directory to an existing site
+    ❯ +  Create & configure a new site # 新しいsiteを作って設定する
+    ```
     
       
     どのteam配下にsiteを作るかを確認されます。デフォルトのteamのまま進みます。
-    
-    bash
-    
-    `? Team: (Use arrow keys) ❯ testlinedevelopers's team # デフォルトのteamのまま進む`
+    ```bash
+    ? Team: (Use arrow keys)
+    ❯ testlinedevelopers's team # デフォルトのteamのまま進む
+    ```
     
       
     Site nameを何にするか聞かれるので、一意の名前を入力します。
-    
-    bash
-    
-    `? Site name (optional): # 一意の名前を入力する`
+    ```bash
+    ? Site name (optional): # 一意の名前を入力する
+    ```
     
       
     ドラフト状態でのデプロイができました。ターミナルに表示される`Website Draft URL`にブラウザでアクセスすると、ページを表示できます。
 6.  ドラフト状態で試した結果、問題がなければ`netlify deploy`コマンドに`--prod`オプションをつけて本番環境へデプロイします。
-    
-    bash
-    
-    `$ netlify deploy --prod # 本番環境にデプロイする`
+    ```bash
+    $ netlify deploy --prod # 本番環境にデプロイする
+    ```
     
 
 以上でLIFFアプリをNetlifyにデプロイできました。デプロイ時にターミナルに表示される`Website URL`にブラウザでアクセスすると、ページを表示できます。
@@ -164,16 +160,15 @@ LIFFスターターアプリをLIFFアプリとして開くためには、LIFF I
 上記手順でLIFF IDを取得できます。これをサーバー側の環境変数`LIFF_ID`として設定します。
 
 1.  Netlifyで環境変数を設定するには`netlify env:set`コマンドを用います。つまり、`LIFF_ID`を設定するには次のコマンドを実行します。
-    
-    bash
-    
-    `$ netlify env:set LIFF_ID "Your LIFF ID"`
+    ```bash
+    $ netlify env:set LIFF_ID "Your LIFF ID"
+    ```
     
 2.  環境変数を設定したら、再度Netlifyにデプロイします。この理由として、Netlifyでは環境変数はデプロイ時にセットされるためです。
-    
-    bash
-    
-    `$ netlify build $ netlify deploy --prod`
+    ```bash
+    $ netlify build
+    $ netlify deploy --prod
+    ```
     
     > [!TIP]
     > 環境変数の確認方法
@@ -193,9 +188,9 @@ LIFFスターターアプリをLIFFアプリとして開くためには、LIFF I
 > ローカルサーバー上でLIFF_IDを設定するとき
 > ローカルサーバーを起動するときに`LIFF_ID`を設定するには、次のようにサーバーを起動します。
 > 
-> bash
-> 
-> `$ LIFF_ID="Your LIFF ID" yarn dev`
+> ```bash
+> $ LIFF_ID="Your LIFF ID" yarn dev
+> ```
 
 ## 次のステップ
 

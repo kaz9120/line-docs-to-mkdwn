@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/unity-sdk/try-line-login/
-copied_at: 2025-10-24T06:29:06.449Z
+copied_at: 2025-10-24T10:16:24.760Z
 ---
 # スターターアプリを試してみる
 
@@ -15,10 +15,9 @@ Unity向けのLINEログインスターターアプリでは、Unityゲームで
 LINEヤフー株式会社が提供するサンプルチャネルを使ってスターターアプリを試すには、以下の手順に従います。
 
 1.  [LINE SDK for Unityのオープンソースリポジトリ](https://github.com/line/line-sdk-unity)をクローンします。
-    
-    sh
-    
-    `$ git clone https://github.com/line/line-sdk-unity.git`
+    ```sh
+    $ git clone https://github.com/line/line-sdk-unity.git
+    ```
     
 2.  Unityで`LINE_SDK_Unity`フォルダーのプロジェクトを開きます。
 3.  `Assets/LineSDK/Demo/Scenes/Main`にあるシーンをビルドし、iOSまたはAndroidにエクスポートします。

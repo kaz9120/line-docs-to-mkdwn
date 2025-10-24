@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/sending-messages/
-copied_at: 2025-10-24T06:27:59.321Z
+copied_at: 2025-10-24T10:15:10.134Z
 ---
 # メッセージを送信する
 
@@ -8,8 +8,8 @@ Messaging APIを使用すると、ボットからユーザーにメッセージ�
 
 | dummy | dummy |
 | --- | --- |
-| メッセージの送信方法 | <ul><!--[--><li><!--[-->応答メッセージ<!--]--></li><li><!--[-->プッシュメッセージ：1対1<!--]--></li><li><!--[-->マルチキャストメッセージ：1対多（ユーザーID指定）<!--]--></li><li><!--[-->ナローキャストメッセージ：1対多（絞り込み配信）<!--]--></li><li><!--[-->ブロードキャストメッセージ：1対多（すべての友だち）<!--]--></li><!--]--></ul> |
-| メッセージタイプ | <ul><!--[--><li><!--[-->テキストメッセージ<!--]--></li><li><!--[-->テキストメッセージ（v2）<!--]--></li><li><!--[-->スタンプメッセージ<!--]--></li><li><!--[-->画像メッセージ<!--]--></li><li><!--[-->動画メッセージ<!--]--></li><li><!--[-->音声メッセージ<!--]--></li><li><!--[-->位置情報メッセージ<!--]--></li><li><!--[-->イメージマップメッセージ<!--]--></li><li><!--[-->テンプレートメッセージ<!--]--></li><li><!--[-->Flex Message<!--]--></li><!--]--></ul>メッセージタイプについて詳しくは、「[メッセージタイプ](https://developers.line.biz/ja/docs/messaging-api/message-types/)」を参照してください。 |
+| メッセージの送信方法 | <ul><li>応答メッセージ</li><li>プッシュメッセージ：1対1</li><li>マルチキャストメッセージ：1対多（ユーザーID指定）</li><li>ナローキャストメッセージ：1対多（絞り込み配信）</li><li>ブロードキャストメッセージ：1対多（すべての友だち）</li></ul> |
+| メッセージタイプ | <ul><li>テキストメッセージ</li><li>テキストメッセージ（v2）</li><li>スタンプメッセージ</li><li>画像メッセージ</li><li>動画メッセージ</li><li>音声メッセージ</li><li>位置情報メッセージ</li><li>イメージマップメッセージ</li><li>テンプレートメッセージ</li><li>Flex Message</li></ul>メッセージタイプについて詳しくは、「[メッセージタイプ](https://developers.line.biz/ja/docs/messaging-api/message-types/)」を参照してください。 |
 
 ## メッセージの送信方法
 
@@ -28,9 +28,24 @@ Messaging APIでは、大きく分けて2種類の送信方法を利用できま
 
 応答メッセージのリクエスト例は以下のとおりです。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/reply \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",    "messages":[        {            "type":"text",            "text":"Hello, user"        },        {            "type":"text",            "text":"May I help you?"        }    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/reply \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+    "replyToken":"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+    "messages":[
+        {
+            "type":"text",
+            "text":"Hello, user"
+        },
+        {
+            "type":"text",
+            "text":"May I help you?"
+        }
+    ]
+}'
+```
 
 詳しくは、『Messaging APIリファレンス』の「[応答メッセージを送る](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)」を参照してください。
 
@@ -55,9 +70,24 @@ sh
 
 プッシュメッセージのリクエストの例は以下のとおりです。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "to": "U4af4980629...",    "messages":[        {            "type":"text",            "text":"Hello, world1"        },        {            "type":"text",            "text":"Hello, world2"        }    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+    "to": "U4af4980629...",
+    "messages":[
+        {
+            "type":"text",
+            "text":"Hello, world1"
+        },
+        {
+            "type":"text",
+            "text":"Hello, world2"
+        }
+    ]
+}'
+```
 
 ## ナローキャストメッセージを送信する
 
@@ -76,7 +106,7 @@ sh
 | 送信対象 | 準備する情報 |
 | --- | --- |
 | LINE公式アカウントを友だち追加したすべてのユーザー | なし |
-| [ユーザーID](https://developers.line.biz/ja/glossary/#user-id)やIFA（Identifier For Advertisers）で特定できるユーザー | <ul><!--[--><li><!--[--><a href="/ja/reference/messaging-api/#create-upload-audience-group" class=""><!--[--><!--[-->ユーザーIDアップロード用のオーディエンス（JSON指定）<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#create-upload-audience-group-by-file" class=""><!--[--><!--[-->ユーザーIDアップロード用のオーディエンス（ファイル指定）<!--]--><!--]--></a><!--]--></li><!--]--></ul> |
+| [ユーザーID](https://developers.line.biz/ja/glossary/#user-id)やIFA（Identifier For Advertisers）で特定できるユーザー | <ul><li><a href="/ja/reference/messaging-api/#create-upload-audience-group" class="">ユーザーIDアップロード用のオーディエンス（JSON指定）</a></li><li><a href="/ja/reference/messaging-api/#create-upload-audience-group-by-file" class="">ユーザーIDアップロード用のオーディエンス（ファイル指定）</a></li></ul> |
 | 配信したメッセージのURLをクリックしたユーザー | [メッセージクリックオーディエンス](https://developers.line.biz/ja/reference/messaging-api/#create-click-audience-group) |
 | 配信したメッセージを開封したユーザー | [メッセージインプレッションオーディエンス](https://developers.line.biz/ja/reference/messaging-api/#create-imp-audience-group) |
 | ナローキャストメッセージを受信したユーザー | 過去に配信したナローキャストメッセージのリクエストIDを、[レシピエントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#narrowcast-recipient)の再配信オブジェクトで指定します。 |
@@ -114,9 +144,10 @@ sh
 
 オーディエンスのステータスは、以下のエンドポイントで確認できます。
 
-sh
-
-`curl -v -X GET https://api.line.me/v2/bot/audienceGroup/{audienceGroupId} \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -v -X GET https://api.line.me/v2/bot/audienceGroup/{audienceGroupId} \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 レスポンスの`status`プロパティが、`READY`（配信に利用可能）であれば、オーディエンスにナローキャストメッセージを送信できます。
 
@@ -157,9 +188,12 @@ sh
 
 オーディエンスオブジェクトの例は以下のとおりです。
 
-json
-
-`{   "type": "audience",  "audienceGroupId": 5614991017776 }`
+```json
+{
+  "type": "audience",
+  "audienceGroupId": 5614991017776
+}
+```
 
 ##### 再配信オブジェクト
 
@@ -167,9 +201,12 @@ json
 
 再配信オブジェクトの例は以下のとおりです。
 
-json
-
-`{   "type": "redelivery",  "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4" }`
+```json
+{
+  "type": "redelivery",
+  "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4"
+}
+```
 
 ![](https://developers.line.biz/media/news/redeliver-narrowcast.svg)
 
@@ -190,9 +227,12 @@ json
 
 以下は、性別を使用してフィルタリングするデモグラフィックフィルターオブジェクトの例です。
 
-json
-
-`{   "type": "gender",  "oneOf": ["male", "female"] }`
+```json
+{
+  "type": "gender",
+  "oneOf": ["male", "female"]
+}
+```
 
 詳しくは、『Messaging APIリファレンス』の「[デモグラフィックフィルターオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#narrowcast-demographic-filter)」を参照してください。
 
@@ -204,9 +244,24 @@ json
 
 以下は、演算子オブジェクトで指定したレシピエントオブジェクトの例です。
 
-json
-
-`"recipient": {     "type": "operator",    "and": [        {            "type": "audience",            "audienceGroupId": 5614991017776        },        {            "type": "operator",            "not": {                "type": "redelivery",                "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4"            }        }    ] }`
+```json
+"recipient": {
+    "type": "operator",
+    "and": [
+        {
+            "type": "audience",
+            "audienceGroupId": 5614991017776
+        },
+        {
+            "type": "operator",
+            "not": {
+                "type": "redelivery",
+                "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4"
+            }
+        }
+    ]
+}
+```
 
 > [!TIP]
 > 演算子オブジェクトは入れ子（ネスト）構造で送信対象を指定できます
@@ -216,9 +271,41 @@ json
 > 
 > ![](https://developers.line.biz/media/messaging-api/narrowcast-message/operator_object_nest_sample.png)
 > 
-> json
-> 
-> `{     "type": "operator",    "and": [        {            "type": "audience",            "audienceGroupId": AudienceA        },        {            "type": "audience",            "audienceGroupId": AudienceB        },        {            "type": "operator",            "not": {                "type": "operator",                "and": [                    {                       "type": "audience",                       "audienceGroupId": AudienceC                    },                    {                       "type": "audience",                       "audienceGroupId": AudienceD                    },                 ]            }        },        {            "type": "audience",            "audienceGroupId": AudienceE        },    ] }`
+> ```json
+> {
+>     "type": "operator",
+>     "and": [
+>         {
+>             "type": "audience",
+>             "audienceGroupId": AudienceA
+>         },
+>         {
+>             "type": "audience",
+>             "audienceGroupId": AudienceB
+>         },
+>         {
+>             "type": "operator",
+>             "not": {
+>                 "type": "operator",
+>                 "and": [
+>                     {
+>                        "type": "audience",
+>                        "audienceGroupId": AudienceC
+>                     },
+>                     {
+>                        "type": "audience",
+>                        "audienceGroupId": AudienceD
+>                     },
+>                  ]
+>             }
+>         },
+>         {
+>             "type": "audience",
+>             "audienceGroupId": AudienceE
+>         },
+>     ]
+> }
+> ```
 
 #### リミットオブジェクト
 
@@ -226,9 +313,13 @@ json
 
 リミットオブジェクトの例は以下のとおりです。
 
-json
-
-`{   "max": 100,  "upToRemainingQuota": true,  "forbidPartialDelivery": true }`
+```json
+{
+  "max": 100,
+  "upToRemainingQuota": true,
+  "forbidPartialDelivery": true
+}
+```
 
 詳しくは、『Messaging APIリファレンス』の「[リミットオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#send-narrowcast-limit)」を参照してください。
 
@@ -263,9 +354,101 @@ json
 
 上記で指定した送信対象にナローキャストメッセージを送るリクエストの例は以下のとおりです。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/narrowcast \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d '{     "messages": [        {            "type": "text",            "text": "test message"        }    ],    "recipient": {        "type": "operator",        "and": [            {                "type": "audience",                "audienceGroupId": 5614991017776            },            {                "type": "operator",                "not": {                    "type": "redelivery",                    "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4"                }            }        ]    },    "filter": {        "demographic": {            "type": "operator",            "or": [                {                    "type": "operator",                    "and": [                        {                            "type": "gender",                            "oneOf": [                                "male",                                "female"                            ]                        },                        {                            "type": "age",                            "gte": "age_20",                            "lt": "age_25"                        },                        {                            "type": "appType",                            "oneOf": [                                "android",                                "ios"                            ]                        },                        {                            "type": "area",                            "oneOf": [                                "jp_23",                                "jp_05"                            ]                        },                        {                            "type": "subscriptionPeriod",                            "gte": "day_7",                            "lt": "day_30"                        }                    ]                },                {                    "type": "operator",                    "and": [                        {                            "type": "age",                            "gte": "age_35",                            "lt": "age_40"                        },                        {                            "type": "operator",                            "not": {                                "type": "gender",                                "oneOf": [                                    "male"                                ]                            }                        }                    ]                }            ]        }    },    "limit": {        "max": 100,        "upToRemainingQuota": true    } }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/narrowcast \
+-H 'Authorization: Bearer {channel access token}' \
+-H 'Content-Type: application/json' \
+-d '{
+    "messages": [
+        {
+            "type": "text",
+            "text": "test message"
+        }
+    ],
+    "recipient": {
+        "type": "operator",
+        "and": [
+            {
+                "type": "audience",
+                "audienceGroupId": 5614991017776
+            },
+            {
+                "type": "operator",
+                "not": {
+                    "type": "redelivery",
+                    "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4"
+                }
+            }
+        ]
+    },
+    "filter": {
+        "demographic": {
+            "type": "operator",
+            "or": [
+                {
+                    "type": "operator",
+                    "and": [
+                        {
+                            "type": "gender",
+                            "oneOf": [
+                                "male",
+                                "female"
+                            ]
+                        },
+                        {
+                            "type": "age",
+                            "gte": "age_20",
+                            "lt": "age_25"
+                        },
+                        {
+                            "type": "appType",
+                            "oneOf": [
+                                "android",
+                                "ios"
+                            ]
+                        },
+                        {
+                            "type": "area",
+                            "oneOf": [
+                                "jp_23",
+                                "jp_05"
+                            ]
+                        },
+                        {
+                            "type": "subscriptionPeriod",
+                            "gte": "day_7",
+                            "lt": "day_30"
+                        }
+                    ]
+                },
+                {
+                    "type": "operator",
+                    "and": [
+                        {
+                            "type": "age",
+                            "gte": "age_35",
+                            "lt": "age_40"
+                        },
+                        {
+                            "type": "operator",
+                            "not": {
+                                "type": "gender",
+                                "oneOf": [
+                                    "male"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "limit": {
+        "max": 100,
+        "upToRemainingQuota": true
+    }
+}'
+```
 
 詳しくは、『Messaging APIリファレンス』の「[ナローキャストメッセージを送る](https://developers.line.biz/ja/reference/messaging-api/#send-narrowcast-message)」を参照してください。
 
@@ -273,9 +456,10 @@ sh
 
 ナローキャストメッセージは、バックグラウンドで非同期に送信されます。そのため、ナローキャストメッセージが正しく送信できたかどうかを確認するには、以下の例のように「[ナローキャストメッセージの進行状況を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-narrowcast-progress-status)」エンドポイントを実行します。
 
-sh
-
-`curl -v -X GET 'https://api.line.me/v2/bot/message/progress/narrowcast?requestId={request_id}' \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -v -X GET 'https://api.line.me/v2/bot/message/progress/narrowcast?requestId={request_id}' \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 ## 引用メッセージを送信する
 
@@ -287,9 +471,21 @@ Messaging APIを使って、過去のメッセージを引用したメッセー�
 
 **過去のメッセージを引用したプッシュメッセージのリクエストの例**
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{   "to": "U4af4980629...",  "messages": [    {      "type": "text",      "text": "Yes, you can.",      "quoteToken": "yHAz4Ua2wx7..." // 引用対象となるメッセージの引用トークンを指定する    }  ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+  "to": "U4af4980629...",
+  "messages": [
+    {
+      "type": "text",
+      "text": "Yes, you can.",
+      "quoteToken": "yHAz4Ua2wx7..." // 引用対象となるメッセージの引用トークンを指定する
+    }
+  ]
+}'
+```
 
 なお引用対象となるメッセージの送信が取り消されていた場合や、過去のトーク履歴が端末から削除されていた場合、引用されたメッセージは表示されません。
 

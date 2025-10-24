@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/web-to-mini-app/
-copied_at: 2025-10-24T06:29:41.774Z
+copied_at: 2025-10-24T10:17:09.609Z
 ---
 # 運用中のウェブアプリをLINEミニアプリ化する
 
@@ -67,9 +67,9 @@ LINEミニアプリは、[LIFF（LINE Front-end Framework）](https://developers
 
 LIFF SDKを読み込む方法としては、CDNから読み込むか、あるいはnpmパッケージを利用する方法があります。たとえば、LIFF SDKをCDNから読み込むには、以下のようなコードを記述します。
 
-html
-
-`<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>`
+```html
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+```
 
 LIFF SDKの読み込みについて詳しくは、『LIFFドキュメント』の「[LIFFアプリにLIFF SDKを組み込む](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#integrating-sdk)」を参照してください。
 
@@ -79,9 +79,19 @@ LIFF SDKを用いるには、`liff.init()`というメソッドを実行して�
 
 `liff.init()`を用いてLIFFアプリを初期化するには、次のようなコードを実装します。
 
-javascript
-
-`liff   .init({    liffId: "123456-abcdefg", // LIFF IDを指定する  })  .then(() => {    // LIFF APIを使用する  })  .catch((err) => {    // 初期化中にエラーが発生したとき    console.log(err.code, err.message);  });`
+```javascript
+liff
+  .init({
+    liffId: "123456-abcdefg", // LIFF IDを指定する
+  })
+  .then(() => {
+    // LIFF APIを使用する
+  })
+  .catch((err) => {
+    // 初期化中にエラーが発生したとき
+    console.log(err.code, err.message);
+  });
+```
 
 ### 4\. 必要な機能を実装する
 
@@ -97,9 +107,9 @@ javascript
 
 LIFFアプリを初期化したら、LIFF APIを用いて必要な機能を実装します。LIFF APIを用いると、ユーザーのログイン処理をしたり、ユーザーのプロフィールを取得したりできます。たとえば、ユーザーIDを取得するには、まず`liff.getIDToken()`によりIDトークンを取得します。
 
-javascript
-
-`const idToken = liff.getIDToken();`
+```javascript
+const idToken = liff.getIDToken();
+```
 
 この`idToken`をサーバー側に送信し、サーバー側で「[IDトークンを検証する](https://developers.line.biz/ja/reference/line-login/#verify-id-token)」エンドポイントにより検証することで、ユーザーIDを取得できます。取得したユーザーIDと、運用中のウェブアプリの会員情報を紐づけることで、たとえばユーザーに最適化したメッセージの配信などが可能になります。
 

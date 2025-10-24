@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/create-flex-message-including-video/
-copied_at: 2025-10-24T06:28:37.747Z
+copied_at: 2025-10-24T10:16:09.033Z
 ---
 # 動画を含むFlex Messageを作成する
 
@@ -53,9 +53,25 @@ Flex Messageの動画コンポーネントを使うと、ヒーローの[ブロ�
 
 動画を含めるには、`hero`ブロックを使う必要があります。動画コンポーネントをサポートしていないバージョンのLINE向けには、ヒーローのブロックの`altContent`プロパティに、代替コンテンツを指定します。上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "size": "mega",  "hero": {    "type": "video",    "url": "https://example.com/video.mp4",    "previewUrl": "https://example.com/video_preview.jpg",    "altContent": {      "type": "image",      "size": "full",      "aspectRatio": "20:13",      "aspectMode": "cover",      "url": "https://example.com/image.jpg"    },    "aspectRatio": "20:13"  } }`
+```json
+{
+  "type": "bubble",
+  "size": "mega",
+  "hero": {
+    "type": "video",
+    "url": "https://example.com/video.mp4",
+    "previewUrl": "https://example.com/video_preview.jpg",
+    "altContent": {
+      "type": "image",
+      "size": "full",
+      "aspectRatio": "20:13",
+      "aspectMode": "cover",
+      "url": "https://example.com/image.jpg"
+    },
+    "aspectRatio": "20:13"
+  }
+}
+```
 
 また、[動画メッセージ](https://developers.line.biz/ja/reference/messaging-api/#video-message)とは異なり、動画を含む複雑なレイアウトのメッセージを構築できます。
 
@@ -63,9 +79,168 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "size": "mega",  "hero": {    "type": "video",    "url": "https://example.com/video.mp4",    "previewUrl": "https://example.com/video_preview.png",    "altContent": {      "type": "image",      "size": "full",      "aspectRatio": "20:13",      "aspectMode": "cover",      "url": "https://example.com/image.png"    },    "action": {      "type": "uri",      "label": "詳細はこちら",      "uri": "http://example.com/"    },    "aspectRatio": "20:13"  },  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "Brown Cafe",        "weight": "bold",        "size": "xl"      },      {        "type": "box",        "layout": "baseline",        "margin": "md",        "contents": [          {            "type": "icon",            "size": "sm",            "url": "https://example.com/star.png"          },          {            "type": "icon",            "size": "sm",            "url": "https://example.com/star.png"          },          {            "type": "icon",            "size": "sm",            "url": "https://example.com/star.png"          },          {            "type": "icon",            "size": "sm",            "url": "https://example.com/star.png"          },          {            "type": "icon",            "size": "sm",            "url": "https://example.com/gray_star.png"          },          {            "type": "text",            "text": "4.0",            "size": "sm",            "color": "#999999",            "margin": "md",            "flex": 0          }        ]      },      {        "type": "box",        "layout": "vertical",        "margin": "lg",        "spacing": "sm",        "contents": [          {            "type": "box",            "layout": "baseline",            "spacing": "sm",            "contents": [              {                "type": "text",                "text": "Place",                "color": "#aaaaaa",                "size": "sm",                "flex": 1              },              {                "type": "text",                "text": "1-3 Kioicho, Chiyoda-ku, Tokyo",                "wrap": true,                "color": "#666666",                "size": "sm",                "flex": 5              }            ]          },          {            "type": "box",            "layout": "baseline",            "spacing": "sm",            "contents": [              {                "type": "text",                "text": "Time",                "color": "#aaaaaa",                "size": "sm",                "flex": 1              },              {                "type": "text",                "text": "10:00 - 23:00",                "wrap": true,                "color": "#666666",                "size": "sm",                "flex": 5              }            ]          }        ]      }    ]  },  "footer": {    "type": "box",    "layout": "vertical",    "spacing": "sm",    "contents": [      {        "type": "button",        "style": "link",        "height": "sm",        "action": {          "type": "uri",          "label": "CALL",          "uri": "https://example.com"        }      },      {        "type": "button",        "style": "link",        "height": "sm",        "action": {          "type": "uri",          "label": "WEBSITE",          "uri": "https://example.com"        }      },      {        "type": "box",        "layout": "vertical",        "contents": [],        "margin": "sm"      }    ],    "flex": 0  } }`
+```json
+{
+  "type": "bubble",
+  "size": "mega",
+  "hero": {
+    "type": "video",
+    "url": "https://example.com/video.mp4",
+    "previewUrl": "https://example.com/video_preview.png",
+    "altContent": {
+      "type": "image",
+      "size": "full",
+      "aspectRatio": "20:13",
+      "aspectMode": "cover",
+      "url": "https://example.com/image.png"
+    },
+    "action": {
+      "type": "uri",
+      "label": "詳細はこちら",
+      "uri": "http://example.com/"
+    },
+    "aspectRatio": "20:13"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Brown Cafe",
+        "weight": "bold",
+        "size": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "margin": "md",
+        "contents": [
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://example.com/star.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://example.com/star.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://example.com/star.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://example.com/star.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://example.com/gray_star.png"
+          },
+          {
+            "type": "text",
+            "text": "4.0",
+            "size": "sm",
+            "color": "#999999",
+            "margin": "md",
+            "flex": 0
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Place",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "1-3 Kioicho, Chiyoda-ku, Tokyo",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Time",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "10:00 - 23:00",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "CALL",
+          "uri": "https://example.com"
+        }
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "WEBSITE",
+          "uri": "https://example.com"
+        }
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "margin": "sm"
+      }
+    ],
+    "flex": 0
+  }
+}
+```
 
 ## 動画の再生方法
 

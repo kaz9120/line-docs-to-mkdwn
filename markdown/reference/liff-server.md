@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/liff-server/
-copied_at: 2025-10-24T06:29:10.585Z
+copied_at: 2025-10-24T10:16:31.513Z
 ---
 # サーバーAPI
 
@@ -152,7 +152,7 @@ _例_
 
 | ステータスコード | 説明 |
 | --- | --- |
-| 400 | 以下のどちらかです。<ul><!--[--><li><!--[-->リクエストに無効な値が含まれています。<!--]--></li><li><!--[-->チャネルに追加できるLIFFアプリ数の上限に達しています。<!--]--></li><!--]--></ul> |
+| 400 | 以下のどちらかです。<ul><li>リクエストに無効な値が含まれています。</li><li>チャネルに追加できるLIFFアプリ数の上限に達しています。</li></ul> |
 | 401 | 認証に失敗しました。 |
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
@@ -295,7 +295,7 @@ String
 | --- | --- |
 | 400 | リクエストに無効な値が含まれています。 |
 | 401 | 認証に失敗しました。 |
-| 404 | 以下のどちらかです。<ul><!--[--><li><!--[-->指定したLIFFアプリは存在しません。<!--]--></li><li><!--[-->指定したLIFFアプリは別のチャネルに追加されています。<!--]--></li><!--]--></ul> |
+| 404 | 以下のどちらかです。<ul><li>指定したLIFFアプリは存在しません。</li><li>指定したLIFFアプリは別のチャネルに追加されています。</li></ul> |
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}
 
@@ -458,6 +458,6 @@ liffId
 | ステータスコード | 説明 |
 | --- | --- |
 | 401 | 認証に失敗しました。 |
-| 404 | 以下のどちらかです。<ul><!--[--><li><!--[-->指定したLIFFアプリは存在しません。<!--]--></li><li><!--[-->指定したLIFFアプリは別のチャネルに追加されています。<!--]--></li><!--]--></ul> |
+| 404 | 以下のどちらかです。<ul><li>指定したLIFFアプリは存在しません。</li><li>指定したLIFFアプリは別のチャネルに追加されています。</li></ul> |
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

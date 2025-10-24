@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-quick-reply/
-copied_at: 2025-10-24T06:28:01.759Z
+copied_at: 2025-10-24T10:15:12.095Z
 ---
 # クイックリプライを使う
 
@@ -62,9 +62,41 @@ copied_at: 2025-10-24T06:28:01.759Z
 
 以下はクイックリプライボタンが設定されたメッセージの例です。番号がついている行は、上記リストの手順の番号を示しています。
 
-sh
-
-`{   "type": "text", // 1  "text": "Select your favorite food category or send me your location!",  "quickReply": { // 2    "items": [      {        "type": "action", // 3        "imageUrl": "https://example.com/sushi.png",        "action": {          "type": "message",          "label": "Sushi",          "text": "Sushi"        }      },      {        "type": "action",        "imageUrl": "https://example.com/tempura.png",        "action": {          "type": "message",          "label": "Tempura",          "text": "Tempura"        }      },      {        "type": "action", // 4        "action": {          "type": "location",          "label": "Send location"        }      }    ]  } }`
+```sh
+{
+  "type": "text", // 1
+  "text": "Select your favorite food category or send me your location!",
+  "quickReply": { // 2
+    "items": [
+      {
+        "type": "action", // 3
+        "imageUrl": "https://example.com/sushi.png",
+        "action": {
+          "type": "message",
+          "label": "Sushi",
+          "text": "Sushi"
+        }
+      },
+      {
+        "type": "action",
+        "imageUrl": "https://example.com/tempura.png",
+        "action": {
+          "type": "message",
+          "label": "Tempura",
+          "text": "Tempura"
+        }
+      },
+      {
+        "type": "action", // 4
+        "action": {
+          "type": "location",
+          "label": "Send location"
+        }
+      }
+    ]
+  }
+}
+```
 
 上記で指定したメッセージは、トーク上で次のようなクイックリプライボタンとして表示されます。
 

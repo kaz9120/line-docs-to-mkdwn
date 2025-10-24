@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/permanent-links/
-copied_at: 2025-10-24T06:29:38.413Z
+copied_at: 2025-10-24T10:17:05.376Z
 ---
 # パーマネントリンクを作成する
 
@@ -24,9 +24,9 @@ copied_at: 2025-10-24T06:29:38.413Z
 
 この場合、LINEミニアプリページのURLに対応するパーマネントリンクは、以下のとおりです。
 
-text
-
-`https://miniapp.line.me/123456-abcedfg/shop?search=shoes#item10`
+```text
+https://miniapp.line.me/123456-abcedfg/shop?search=shoes#item10
+```
 
 > [!TIP]
 > ヒント

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/line-mini-app/
-copied_at: 2025-10-24T06:29:24.604Z
+copied_at: 2025-10-24T10:16:42.164Z
 ---
 # LINEミニアプリ APIリファレンス
 
@@ -109,8 +109,8 @@ _レスポンスの例_
 
 | ステータスコード | 説明 |
 | --- | --- |
-| 400 Bad request | 以下のいずれかです。<ul><!--[--><li><!--[-->リクエストボディに問題があります。<!--]--></li><li><!--[--><code><!--[-->liffAccessToken<!--]--></code>プロパティに指定したLIFFのアクセストークンを使用して、サービス通知トークンの発行が短時間に連続してリクエストされました。<!--]--></li><!--]--></ul> |
-| 401 Unauthorized | 以下のいずれか、または両方です。<ul><!--[--><li><!--[-->有効なチャネルアクセストークンが指定されていません。<!--]--></li><li><!--[-->有効なLIFFのアクセストークンが指定されていません。<!--]--></li><ul><!--[--><li><!--[-->ユーザーが<a href="/ja/docs/liff/developing-liff-apps/#behavior-when-closing-liff-app" class=""><!--[--><!--[-->LIFFアプリを閉じる<!--]--><!--]--></a>と、有効期限が切れていなくてもアクセストークンは無効化されます。<!--]--></li><!--]--></ul><!--]--></ul> |
+| 400 Bad request | 以下のいずれかです。<ul><li>リクエストボディに問題があります。</li><li><code>liffAccessToken</code>プロパティに指定したLIFFのアクセストークンを使用して、サービス通知トークンの発行が短時間に連続してリクエストされました。</li></ul> |
+| 401 Unauthorized | 以下のいずれか、または両方です。<ul><li>有効なチャネルアクセストークンが指定されていません。</li><li>有効なLIFFのアクセストークンが指定されていません。</li><ul><li>ユーザーが<a href="/ja/docs/liff/developing-liff-apps/#behavior-when-closing-liff-app" class="">LIFFアプリを閉じる</a>と、有効期限が切れていなくてもアクセストークンは無効化されます。</li></ul></ul> |
 | 403 Forbidden | このチャネルには、サービス通知トークンを発行する許可が与えられていません。 |
 | 500 Internal Server Error | 内部サーバーのエラーです。 |
 
@@ -253,9 +253,9 @@ _レスポンスの例_
 
 | ステータスコード | 説明 |
 | --- | --- |
-| 400 Bad request | 以下のいずれかです。<ul><!--[--><li><!--[-->リクエストボディに問題があります。<!--]--></li><li><!--[-->サービスメッセージ送信対象のユーザーが存在しません。<!--]--></li><!--]--></ul> |
-| 401 Unauthorized | 以下のいずれか、または両方です。<ul><!--[--><li><!--[-->有効なチャネルアクセストークンが指定されていません。<!--]--></li><li><!--[-->有効なサービス通知トークンが指定されていません。<!--]--></li><!--]--></ul> |
-| 403 Forbidden | 以下のいずれかです。<ul><!--[--><li><!--[-->このチャネルには、サービスメッセージを送信する許可が与えられていません。<!--]--></li><li><!--[-->指定されたテンプレートが見つかりません。<!--]--></li><!--]--></ul> |
+| 400 Bad request | 以下のいずれかです。<ul><li>リクエストボディに問題があります。</li><li>サービスメッセージ送信対象のユーザーが存在しません。</li></ul> |
+| 401 Unauthorized | 以下のいずれか、または両方です。<ul><li>有効なチャネルアクセストークンが指定されていません。</li><li>有効なサービス通知トークンが指定されていません。</li></ul> |
+| 403 Forbidden | 以下のいずれかです。<ul><li>このチャネルには、サービスメッセージを送信する許可が与えられていません。</li><li>指定されたテンプレートが見つかりません。</li></ul> |
 | 500 Internal Server Error | 内部サーバーのエラーです。 |
 
 _エラーレスポンスの例_
@@ -284,9 +284,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.$commonProfile.get(scopes, options);`
+```javascript
+liff.$commonProfile.get(scopes, options);
+```
 
 #### 引数
 
@@ -396,9 +396,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.$commonProfile.getDummy(scopes, options, caseId);`
+```javascript
+liff.$commonProfile.getDummy(scopes, options, caseId);
+```
 
 #### 引数
 
@@ -483,9 +483,9 @@ _取得した共通プロフィール情報の形式を一部変更して自動�
 
 #### 構文
 
-javascript
-
-`liff.$commonProfile.fill(profile);`
+```javascript
+liff.$commonProfile.fill(profile);
+```
 
 #### 引数
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/use-per-user-rich-menus/
-copied_at: 2025-10-23T15:57:04.717Z
+copied_at: 2025-10-24T10:15:22.527Z
 ---
 # ユーザー単位のリッチメニューを使う
 
@@ -44,15 +44,45 @@ Messaging APIでは、リッチメニューをユーザー単位で設定でき�
 
 以下のコマンドをターミナルで実行して、[リッチメニューを作成](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu)してください。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/richmenu \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "size": {        "width": 2500,        "height": 1686    },    "selected": true,    "name": "ユーザー単位のリッチメニューのテスト",    "chatBarText": "Tap to open",    "areas": [        {            "bounds": {                "x": 0,                "y": 0,                "width": 2500,                "height": 1686            },            "action": {                "type": "uri",                "label": "タップ領域A",                "uri": "https://developers.line.biz/ja/news/"            }        }    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/richmenu \
+-H 'Authorization: Bearer {channel access token}' \
+-H 'Content-Type: application/json' \
+-d \
+'{
+    "size": {
+        "width": 2500,
+        "height": 1686
+    },
+    "selected": true,
+    "name": "ユーザー単位のリッチメニューのテスト",
+    "chatBarText": "Tap to open",
+    "areas": [
+        {
+            "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 2500,
+                "height": 1686
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域A",
+                "uri": "https://developers.line.biz/ja/news/"
+            }
+        }
+    ]
+}'
+```
 
 次に、以下のコマンドをターミナルで実行して、[リッチメニューに画像をアップロードして添付](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image)してください。
 
-sh
-
-`curl -v -X POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content \ -H "Authorization: Bearer {channel access token}" \ -H "Content-Type: image/png" \ -T richmenu-template-guide-07.png`
+```sh
+curl -v -X POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content \
+-H "Authorization: Bearer {channel access token}" \
+-H "Content-Type: image/png" \
+-T richmenu-template-guide-07.png
+```
 
 ### 2\. ユーザーIDを準備する
 
@@ -66,9 +96,10 @@ sh
 
 リッチメニューとユーザーIDが用意できたら、[ユーザーとリッチメニューをリンク](https://developers.line.biz/ja/reference/messaging-api/#link-rich-menu-to-user)します。以下のコマンドをターミナルで実行してください。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId} \ -H "Authorization: Bearer {channel access token}"`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId} \
+-H "Authorization: Bearer {channel access token}"
+```
 
 #### 3-1. リッチメニューの表示を確認する
 
@@ -80,9 +111,10 @@ sh
 
 最後に[リッチメニューとユーザーのリンクを解除](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-user)し、リッチメニューの表示を終了します。手順4.で開いたトーク画面を表示したまま、以下のコマンドをターミナルで実行してください。
 
-sh
-
-`curl -v -X DELETE https://api.line.me/v2/bot/user/{userId}/richmenu \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -v -X DELETE https://api.line.me/v2/bot/user/{userId}/richmenu \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 ユーザー単位のリッチメニューは設定が即時に反映されるため、実行が完了したタイミングで、ユーザー単位のリッチメニューの表示が終了します。
 

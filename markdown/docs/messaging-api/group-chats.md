@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/group-chats/
-copied_at: 2025-10-24T06:28:23.432Z
+copied_at: 2025-10-24T10:15:29.743Z
 ---
 # グループトークと複数人トーク
 
@@ -42,9 +42,13 @@ LINEユーザーは、グループトークや複数人トークにLINE公式ア
 
 [メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event)の`source`プロパティには、送信元グループトークのグループID（`groupId`）または送信元複数人トークのトークルームID（`roomId`）が含まれます。
 
-json
-
-`"source": {     "type": "group",    "groupId": "Ca56f94637c...",    "userId": "U4af4980629..." }`
+```json
+"source": {
+    "type": "group",
+    "groupId": "Ca56f94637c...",
+    "userId": "U4af4980629..."
+}
+```
 
 グループIDおよびトークルームIDについて詳しくは、「[ユーザーID、グループID、トークルームIDとはどのような値ですか？](https://developers.line.biz/ja/faq/#what-are-userid-groupid-and-roomid)」を参照してください。
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/unity-sdk/integrate-line-login/
-copied_at: 2025-10-24T06:29:06.916Z
+copied_at: 2025-10-24T10:16:25.763Z
 ---
 # UnityゲームにLINEログインを組み込む
 
@@ -60,9 +60,25 @@ LINEログインを組み込む前、またはLINE APIをゲームで使用す�
 
 LineSDK (GameObject)が存在するシーンに、LINEを使用するログイン方法を実装できます。例：
 
-csharp
+```csharp
+using Line.LineSDK;
 
-`using Line.LineSDK; public class MyController : MonoBehaviour {     public void LoginButtonClicked() {        var scopes = new string[] {"profile", "openid"};        LineSDK.Instance.Login(scopes, result => {            result.Match(                value => {                    Debug.Log("Login OK. User display name: " + value.UserProfile.DisplayName);                },                error => {                    Debug.Log("Login failed, reason: " + error.Message);                }            );        });    } }`
+public class MyController : MonoBehaviour {
+    public void LoginButtonClicked() {
+        var scopes = new string[] {"profile", "openid"};
+        LineSDK.Instance.Login(scopes, result => {
+            result.Match(
+                value => {
+                    Debug.Log("Login OK. User display name: " + value.UserProfile.DisplayName);
+                },
+                error => {
+                    Debug.Log("Login failed, reason: " + error.Message);
+                }
+            );
+        });
+    }
+}
+```
 
 現在、LINE SDK for Unityでは、iOSおよびAndroidのみがサポートされています。Unityエディターのプレイモードで実行すると、常にエラーが返されます。テストするには、シーンをiOSまたはAndroidデバイスにエクスポートしてください。
 

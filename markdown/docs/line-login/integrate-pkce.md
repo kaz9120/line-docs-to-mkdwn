@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/integrate-pkce/
-copied_at: 2025-10-24T06:28:36.648Z
+copied_at: 2025-10-24T10:15:41.997Z
 ---
 # LINEログインをPKCE対応する
 
@@ -59,9 +59,11 @@ LINEログインにPKCEを実装するには、[通常のLINEログインの組�
 
 以下は、Node.jsを使った`code_verifier`の生成のサンプルコードです。
 
-js
-
-`// randomAlphaNumericString()は、使用可能文字（半角英数字および記号）で構成された // ランダムな文字列を引数に指定した整数分（43〜128）生成して返す関数を想定 const code_verifier = randomAlphaNumericString(43);`
+```js
+// randomAlphaNumericString()は、使用可能文字（半角英数字および記号）で構成された
+// ランダムな文字列を引数に指定した整数分（43〜128）生成して返す関数を想定
+const code_verifier = randomAlphaNumericString(43);
+```
 
 ### 2\. code\_challengeの生成
 
@@ -89,9 +91,25 @@ js
 
 以下は、Node.jsを使った`code_challenge`生成のサンプルコードです。
 
-js
+```js
+// このサンプルコードでは、Node.jsの"crypto"モジュールを使用しています。
+// 参照：https://nodejs.org/api/crypto.html#crypto_crypto
+const crypto = require("crypto");
 
-`// このサンプルコードでは、Node.jsの"crypto"モジュールを使用しています。 // 参照：https://nodejs.org/api/crypto.html#crypto_crypto const crypto = require("crypto"); // BASE64形式をBASE64URL形式にエンコードします。 function base64UrlEncode(str) {     return str        .replace(/\+/g, '-')        .replace(/\//g, '_')        .replace(/=/g, ''); } // code_verifierをSHA256でハッシュ化し、BASE64URL形式にエンコードすることでcode_challengeを生成します。 const code_challenge = base64UrlEncode(crypto     .createHash('sha256')    .update(code_verifier)    .digest('base64'));`
+// BASE64形式をBASE64URL形式にエンコードします。
+function base64UrlEncode(str) {
+    return str
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=/g, '');
+}
+
+// code_verifierをSHA256でハッシュ化し、BASE64URL形式にエンコードすることでcode_challengeを生成します。
+const code_challenge = base64UrlEncode(crypto
+    .createHash('sha256')
+    .update(code_verifier)
+    .digest('base64'));
+```
 
 ### 3\. 認可URLのクエリパラメータにcode\_challengeとcode\_challenge\_methodを含める
 
@@ -106,9 +124,10 @@ js
 
 **認可URLの例**
 
-sh
-
-`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz &code_challenge={手順2で算出したcode_challengeの値}&code_challenge_method=S256`
+```sh
+https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz
+&code_challenge={手順2で算出したcode_challengeの値}&code_challenge_method=S256
+```
 
 認可URLのその他のクエリパラメータについて詳しくは、「[ユーザーに認証と認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」を参照してください。
 
@@ -129,9 +148,16 @@ String
 
 **リクエストの例**
 
-sh
-
-`curl -v -X POST https://api.line.me/oauth2/v2.1/token \ -H 'Content-Type: application/x-www-form-urlencoded' \ -d 'grant_type=authorization_code' \ -d 'code=1234567890abcde' \ --data-urlencode 'redirect_uri=https://example.com/auth?key=value' \ -d 'client_id=1234567890' \ -d 'client_secret=1234567890abcdefghij1234567890ab' \ -d 'code_verifier={手順1で生成したcode_verifier}'`
+```sh
+curl -v -X POST https://api.line.me/oauth2/v2.1/token \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'grant_type=authorization_code' \
+-d 'code=1234567890abcde' \
+--data-urlencode 'redirect_uri=https://example.com/auth?key=value' \
+-d 'client_id=1234567890' \
+-d 'client_secret=1234567890abcdefghij1234567890ab' \
+-d 'code_verifier={手順1で生成したcode_verifier}'
+```
 
 「アクセストークンを発行する」エンドポイントについて詳しくは、『LINEログイン v2.1 APIリファレンス』の「[アクセストークンを発行する](https://developers.line.biz/ja/reference/line-login/#issue-access-token)」を参照してください。
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/building-bot/
-copied_at: 2025-10-24T06:28:16.369Z
+copied_at: 2025-10-24T10:15:09.065Z
 ---
 # ボットを作成する
 
@@ -66,9 +66,9 @@ IPアドレスを登録するには、[LINE Developersコンソール](https://d
 
 ボットサーバーがWebhookイベントを受信しているかを確認するには、まず、[先の手順](#set-up-bot-on-line-developers-console)で追加したLINE公式アカウントをブロックします。そして、ボットサーバーがLINEプラットフォームから[フォロー解除イベント](https://developers.line.biz/ja/reference/messaging-api/#unfollow-event)を受信したことをサーバーのログで確認します。以下はログの例です。
 
-sh
-
-`2017-07-21T09:18:46.755256+00:00 app[web.1]: 2017-07-21 09:18:46.737  INFO 4 --- [io-13386-exec-2] c.e.bot.spring.KitchenSinkController     : unfollowed this bot: UnfollowEvent(source=UserSource(userId=Uxxxxxxxxxx...), timestamp=2017-07-21T09:18:46.031Z)`
+```sh
+2017-07-21T09:18:46.755256+00:00 app[web.1]: 2017-07-21 09:18:46.737  INFO 4 --- [io-13386-exec-2] c.e.bot.spring.KitchenSinkController     : unfollowed this bot: UnfollowEvent(source=UserSource(userId=Uxxxxxxxxxx...), timestamp=2017-07-21T09:18:46.031Z)
+```
 
 同様のログが表示された場合、ボットサーバーはLINEプラットフォームからWebhookイベントを受信しています。ログを確認した後、LINE公式アカウントのブロックを解除してください。
 

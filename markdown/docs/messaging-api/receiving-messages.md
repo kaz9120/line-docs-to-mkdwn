@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/receiving-messages/
-copied_at: 2025-10-24T06:28:10.353Z
+copied_at: 2025-10-24T10:15:19.700Z
 ---
 # メッセージ（Webhook）を受信する
 
@@ -59,9 +59,35 @@ Webhookイベントオブジェクトに含まれるデータに基づいて、�
 
 以下は、ユーザーが過去のメッセージを引用したメッセージを送った際に、ボットサーバーに届くWebhookの例です。
 
-json
-
-`{   "destination": "xxxxxxxxxx",  "events": [    {      "type": "message",      "message": {        "type": "text",        "id": "468789577898262530", // 送られてきたメッセージのID        "quotedMessageId": "468789532432007169", // 引用対象となったメッセージのID        "quoteToken": "q3Plxr4AgKd...",        "text": "Chicken, please." // 送られてきたメッセージのテキスト      },      "webhookEventId": "01H810YECXQQZ37VAXPF6H9E6T",      "deliveryContext": {        "isRedelivery": false      },      "timestamp": 1692251666727,      "source": {        "type": "group",        "groupId": "Ca56f94637c...",        "userId": "U4af4980629..."      },      "replyToken": "38ef843bde154d9b91c21320ffd17a0f",      "mode": "active"    }  ] }`
+```json
+{
+  "destination": "xxxxxxxxxx",
+  "events": [
+    {
+      "type": "message",
+      "message": {
+        "type": "text",
+        "id": "468789577898262530", // 送られてきたメッセージのID
+        "quotedMessageId": "468789532432007169", // 引用対象となったメッセージのID
+        "quoteToken": "q3Plxr4AgKd...",
+        "text": "Chicken, please." // 送られてきたメッセージのテキスト
+      },
+      "webhookEventId": "01H810YECXQQZ37VAXPF6H9E6T",
+      "deliveryContext": {
+        "isRedelivery": false
+      },
+      "timestamp": 1692251666727,
+      "source": {
+        "type": "group",
+        "groupId": "Ca56f94637c...",
+        "userId": "U4af4980629..."
+      },
+      "replyToken": "38ef843bde154d9b91c21320ffd17a0f",
+      "mode": "active"
+    }
+  ]
+}
+```
 
 `quotedMessageId`プロパティについて詳しくは、『Messaging APIリファレンス』の「[メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event)」の「[テキスト](https://developers.line.biz/ja/reference/messaging-api/#wh-text)」および「[スタンプ](https://developers.line.biz/ja/reference/messaging-api/#wh-sticker)」を参照してください。
 
@@ -77,9 +103,25 @@ json
 
 たとえば、次のようなメッセージイベントを含むWebhookイベントオブジェクトがボットサーバーに送信されます。
 
-json
-
-`"message": {   "id": "444573844083572737",  "type": "text",  "quoteToken": "q3Plxr4AgKd...",  "text": "@example_bot Good Morning!!",  "mention": {    "mentionees": [      {        "index": 0,        "length": 12,        "userId": "{ボットのユーザーID}",        "type": "user",        "isSelf": true      }    ]  } }`
+```json
+"message": {
+  "id": "444573844083572737",
+  "type": "text",
+  "quoteToken": "q3Plxr4AgKd...",
+  "text": "@example_bot Good Morning!!",
+  "mention": {
+    "mentionees": [
+      {
+        "index": 0,
+        "length": 12,
+        "userId": "{ボットのユーザーID}",
+        "type": "user",
+        "isSelf": true
+      }
+    ]
+  }
+}
+```
 
 なお、ボットのユーザーIDは、[Webhookのリクエストボディ](https://developers.line.biz/ja/reference/messaging-api/#request-body)にある`destination`プロパティや、「[ボットの情報を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-bot-info)」エンドポイントで取得できる`userId`プロパティで確認できます。
 
@@ -168,9 +210,10 @@ Webhookで受信したメッセージIDを使って、ユーザーが送信し�
 
 リクエストの例
 
-sh
-
-`curl -v -X GET https://api-data.line.me/v2/bot/message/{messageId}/content \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -v -X GET https://api-data.line.me/v2/bot/message/{messageId}/content \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 詳しくは、『Messaging APIリファレンス』の「[コンテンツを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-content)」を参照してください。
 
@@ -180,9 +223,10 @@ Webhookで受信したメッセージIDを使って、ユーザーが送信し�
 
 リクエストの例
 
-sh
-
-`curl -v -X GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -v -X GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 プレビュー画像は、実際のコンテンツよりも軽量なデータサイズに変換された画像データです。
 
@@ -196,15 +240,21 @@ sh
 
 リクエストの例
 
-sh
-
-`curl -v -X GET https://api.line.me/v2/bot/profile/{userId} \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -v -X GET https://api.line.me/v2/bot/profile/{userId} \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 成功した場合、JSONオブジェクトが返されます。
 
-json
-
-`{   "displayName": "LINE Botto",  "userId": "U4af4980629...",  "pictureUrl": "https://profile.line-scdn.net/ch/v2/p/uf9da5ee2b...",  "statusMessage": "Hello world!" }`
+```json
+{
+  "displayName": "LINE Botto",
+  "userId": "U4af4980629...",
+  "pictureUrl": "https://profile.line-scdn.net/ch/v2/p/uf9da5ee2b...",
+  "statusMessage": "Hello world!"
+}
+```
 
 詳しくは、『Messaging APIリファレンス』の「[プロフィールを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-profile)」を参照してください。
 

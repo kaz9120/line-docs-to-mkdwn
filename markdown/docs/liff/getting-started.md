@@ -1,93 +1,185 @@
 ---
-url: https://developers.line.biz/ja/docs/liff/getting-started/
-copied_at: 2025-10-24T06:29:11.782Z
+url: https://developers.line.biz/ja/docs/liff/overview/
+copied_at: 2025-10-24T10:16:32.862Z
 ---
-# チャネルを作成する
+# LINE Front-end Framework (LIFF)
 
-LIFFアプリを開発するには、まず[LINE Developersコンソール](https://developers.line.biz/console/)でプロバイダーとチャネルを作成します。
+LINE Front-end Framework（LIFF）は、LINEヤフー株式会社が提供するウェブアプリのプラットフォームです。このプラットフォームで動作するウェブアプリを、LIFFアプリと呼びます。
 
-## LINE Developersコンソールへログインする
+LIFFアプリを使うと、LINEのユーザーIDなどをLINEプラットフォームから取得できます。LIFFアプリではこれらを利用して、ユーザー情報を活用した機能を提供したり、ユーザーの代わりにメッセージを送信したりできます。
 
-プロバイダーとチャネルを作成するため、まずはLINE Developersコンソールへログインします。ログイン方法について詳しくは、「[LINE Developersコンソールへのログイン](https://developers.line.biz/ja/docs/line-developers-console/login-account/)」を参照してください。
+LIFF v2で追加された機能については、「[リリースノート](https://developers.line.biz/ja/docs/liff/release-notes/)」を参照してください。
 
-## プロバイダーとチャネルを作成する
-
-LINE Developersコンソールへログインできたら、プロバイダーとチャネルを作成します。
-
-### 1\. プロバイダーを作成する
-
-適当なプロバイダーがある場合は、「[2\. チャネルを作成する](#step-two-create-channel)」へ進みます。
-
-1.  ホーム画面の［**新規プロバイダー作成**］をクリックします。> [!WARNING]
-    > [新規プロバイダー作成]が見つからない場合
-    > プロバイダーを作成済みの場合は、ホーム画面に［**新規プロバイダー作成**］は表示されません。別のプロバイダーを作成する場合は、［**プロバイダー**］セクションの［**作成**］をクリックします。
-    > 
-    > ![プロバイダーの作成ボタン](https://developers.line.biz/media/liff/getting-started/providers-section-ja.png)
-    
-2.  ［**新規プロバイダー作成**］画面で任意の［**プロパイダー名**］を入力し、［**作成**］をクリックします。  
-    **プロバイダー**は、LINEプラットフォームを通じてサービスを提供する個人、企業、またはそのほかの組織を意味する情報です。プロバイダー名には、あなたの名前や企業名を入力してください。  
-    ![プロバイダー作成画面](https://developers.line.biz/media/liff/getting-started/create-provider-ja.png)
-
-### 2\. チャネルを作成する
-
-**チャネル**は、LINEプラットフォームが提供する機能を、プロバイダーが開発するサービスで利用するための通信路です。チャネルを作成するには、名前、説明文、およびアイコン画像が必要です。
-
-LIFFアプリを追加できるチャネルタイプは以下の2つです。
-
-| 種類 | 説明 |
-| --- | --- |
-| [LINEログイン](https://developers.line.biz/ja/docs/line-login/) | LIFFアプリを作成する場合や、次のステップで[LIFFスターターアプリを試してみる](https://developers.line.biz/ja/docs/liff/trying-liff-app/)場合、[Create LIFF AppでLIFFアプリの開発環境を構築する](https://developers.line.biz/ja/docs/liff/cli-tool-create-liff-app/)場合は、こちらのチャネルを作成してください。 |
-| [LINEミニアプリ](https://developers.line.biz/ja/docs/line-mini-app/) | [LINEミニアプリ](https://developers.line.biz/ja/docs/line-mini-app/quickstart/)でLIFFのアプリを作成する場合は、こちらのチャネルを作成してください。 |
+今後追加が予定されている機能については、『LINEログインドキュメント』の[ロードマップ](https://developers.line.biz/ja/docs/line-login/roadmap/)を参照してください。
 
 > [!TIP]
-> LINEミニアプリとしての作成を推奨します
-> 今後、LIFFとLINEミニアプリは、ブランド統合を予定しています。この統合により、LIFFはLINEミニアプリに統合されます。そのため、LIFFアプリを新規作成する際は、LINEミニアプリとして作成することを推奨します。詳しくは、「[2025年2月12日のニュース](https://developers.line.biz/ja/news/2025/02/12/line-mini-app/)」を参照してください。
-
-ここでは、次のステップで[LIFFスターターアプリを試してみる](https://developers.line.biz/ja/docs/liff/trying-liff-app/)ことを想定して、LINEログインのチャネルを作成します。チャネルを作成するプロバイダーをクリックし、LINEログインのチャネルを作成してください。既に適当なLINEログインのチャネルが存在していた場合は、そのチャネルを選択しても構いません。チャネルの作成方法について詳しくは、「[チャネルを作成する](https://developers.line.biz/ja/docs/line-developers-console/overview/#creating-a-channel)」を参照してください。
+> LIFFの機能をウェブ上で試せます
+> LINEヤフー株式会社では開発者向けに[LIFFプレイグラウンド](https://liff-playground.netlify.app/)というウェブアプリ（LIFFアプリ）を提供しています。LIFFプレイグラウンドではLIFFの基本的な機能が試せます。LIFFを用いるとどのようなことができるのかを確認したいときに参照してください。なお、[LIFFプレイグラウンドのソースコード](https://github.com/line/liff-playground)をGitHubで公開しています。
 
 > [!WARNING]
-> チャネル名の制限について
-> チャネル名には、「LINE」またはそれに類する文字列は含められません。
+> OpenChatでのLIFFアプリの利用はサポートされていません
+> 現在のところ、OpenChatではLIFFアプリの利用は正式にサポートされていません。たとえば、LIFFアプリからプロフィール情報を取得できない場合があります。
+
+## デモ用のLIFFアプリを体験する
+
+[LINE API Use Case](https://lineapiusecase.com/)では、デモ用のLIFFアプリと、そのソースコードを公開しています。お手持ちのスマートフォンでデモ用のLIFFアプリを開いて、店舗予約やテーブルオーダーを体験してみましょう。
+
+*   [デモ用のLIFFアプリでヘアサロンやレストランの店舗予約を体験する](https://lineapiusecase.com/ja/usecase/reservation.html)
+*   [デモ用のLIFFアプリでデジタル会員証を体験する](https://lineapiusecase.com/ja/usecase/membership.html)
+*   [デモ用のLIFFアプリでテーブルオーダーを体験する](https://lineapiusecase.com/ja/usecase/tableorder.html)
+*   [デモ用のLIFFアプリでスマホレジを体験する](https://lineapiusecase.com/ja/usecase/smartretail.html)
+
+## 推奨環境
+
+LIFFの推奨環境は以下のとおりです。
+
+なお、LIFFアプリを[LIFFブラウザ](#liff-browser)で開いた場合と、[外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)で開いた場合では、使用できる機能が異なります。たとえば、`liff.scanCode()`は、外部ブラウザでは利用できません。詳しくは、「[LIFF v2 APIリファレンス](https://developers.line.biz/ja/reference/liff/)」を参照してください。
+
+### LIFFアプリをLIFFブラウザで開く場合
+
+| 項目 | 推奨環境 | 最低動作環境 |
+| --- | --- | --- |
+| iOS | 最新バージョン。[WKWebView](https://developer.apple.com/documentation/webkit/wkwebview)が使用されます。 | LINEの推奨環境に準ずる。 \* |
+| Android | 最新バージョン。[Android WebView](https://developer.android.com/reference/android/webkit/WebView)が使用されます。 | LINEの推奨環境に準ずる。 \* |
+| LINE | 最新バージョン | LINEの推奨環境に準ずる。 \* |
 
 > [!WARNING]
-> チャネルのアプリタイプについて
-> LIFFアプリを開発する場合、チャネルのアプリタイプは［**ウェブアプリ**］を選択してください。
+> LIFFアプリは、OS、LINEともに最新バージョンの環境での利用を推奨します
+> LIFFアプリは、OS、LINEともに最新バージョンの環境での利用を推奨します。上記の「最低動作環境」以降のバージョンでも、機能や設定によっては動作しない場合や画面が正常に表示されない場合があります。
+
+\* LINEの推奨環境については、ヘルプセンターの「[LINEの推奨環境を教えてください](https://help.line.me/line/ios/pc?lang=ja&contentId=10002433)」を参照してください。
+
+### LIFFアプリを外部ブラウザで開く場合
+
+以下のブラウザの最新バージョンで動作します。
+
+Microsoft Edge、Google Chrome、Firefox、Safari
+
+## LIFFブラウザ
+
+LIFFブラウザはLIFFアプリ専用のブラウザです。ユーザーがLINEでLIFFのURLを開くと、LIFFブラウザでLIFFアプリが開きます。
+
+![LIFF browser](https://developers.line.biz/media/liff/overview/liffBrowser.png)
+
+LIFFブラウザはLINE内で動作するため、LIFFアプリはユーザーにログインを促さなくてもユーザーデータにアクセスすることができます。また、LIFFブラウザはLIFFアプリを共有したり、LIFFアプリから友だちにメッセージを送るなど、LINE特有の機能を提供しています。
+
+## LIFFブラウザの仕様
+
+LIFFブラウザは、iOSでは[WKWebView](https://developer.apple.com/documentation/webkit/wkwebview)、Androidでは[Android WebView](https://developer.android.com/reference/android/webkit/WebView)を利用しています。そのため、LIFFブラウザの仕様および動作についてもこれらの仕組みに準拠します。
+
+なお、LIFFブラウザは、外部ブラウザがサポートしているウェブ技術の一部をサポートしていません。詳しくは、「[LIFFブラウザと外部ブラウザの違い](https://developers.line.biz/ja/docs/liff/differences-between-liff-browser-and-external-browser/)」を参照してください。
+
+## LIFFブラウザのキャッシュ
+
+LIFFブラウザが利用している[WKWebView](https://developer.apple.com/documentation/webkit/wkwebview)や[Android WebView](https://developer.android.com/reference/android/webkit/WebView) は、表示したコンテンツの内容を、[Cache-Control](https://developer.mozilla.org/ja/docs/Web/HTTP/Reference/Headers/Cache-Control) などのHTTPヘッダーの指示に従って、キャッシュとして保存して利用する場合があります。
+
+LIFFブラウザにおけるキャッシュの制御については、[Cache-Control](https://developer.mozilla.org/ja/docs/Web/HTTP/Reference/Headers/Cache-Control) などのHTTPヘッダーを用いて行ってください。
 
 > [!WARNING]
-> LINEログインとLINEミニアプリ以外のチャネルにはLIFFアプリを追加できません
-> 以下のチャネルタイプにはLIFFアプリは追加できません。
-> 
-> *   Messaging API
-> *   ブロックチェーンサービス
-> 
-> 以前は、Messaging APIチャネルやブロックチェーンサービスチャネルに、LIFFアプリを追加することができました。しかし、すでにMessaging APIチャネルやブロックチェーンサービスチャネルに追加したLIFFアプリの場合、今後LIFFに追加される新機能は利用できません。詳しくは、以下のニュースを参照してください。
-> 
-> *   2020年2月5日のニュース「[Messaging APIのチャネルにはLIFFアプリを追加できなくなりました](https://developers.line.biz/ja/news/2020/02/05/liff-channel-type/)」
-> *   2021年7月20日のニュース「[ブロックチェーンサービスのチャネルにはLIFFアプリを追加できなくなりました](https://developers.line.biz/ja/news/2021/07/20/liff-cannot-be-used-with-blockchain-service-channels/)」
+> キャッシュの削除について
+> LIFFブラウザに保存されたキャッシュを明示的に削除することはできません。
 
-#### チャネルとプロバイダーの連携に関する注意点
+## LIFFブラウザの画面サイズ
 
-一度作成したチャネルを、後から他のプロバイダーに移動することはできません。
+LIFFブラウザは、以下の3つの画面サイズで表示できます。
 
-LINEログインチャネルとMessaging APIチャネルを連携するサービスを開発する場合は、これらのチャネルを同じプロバイダーの配下に作成してください。
+![画面サイズ](https://developers.line.biz/media/liff/overview/viewTypes.png)
 
-開発者が提供するサービスを利用するLINEユーザーには、プロバイダーごとに異なるユーザーIDが割り当てられます。異なるプロバイダーに属するチャネル間では、ユーザーIDを利用して同一ユーザーであることを確認できません。
+画面サイズは、LIFFアプリをLINEログインチャネルに追加するときに指定します。詳しくは、「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/#registering-liff-app)」を参照してください。
 
-![](https://developers.line.biz/media/line-developers-console/different-user-ids.png)
+## アクションボタン
 
-> [!CAUTION]
-> チャネル作成時に特に注意が必要なケース
-> たとえば、以下のような場合には特に注意してください。
-> 
-> *   チャネルとプロバイダーを別々の個人または企業が管理している。
-> *   1つのプロバイダー配下に、相互に関係がないサービスや企業のチャネルを作成する。
-> *   チャネルの運用ツール等を運営するサービス（企業）が管理するプロバイダーの配下にチャネルを作成する。
-> 
-> このようなケースでは、後からチャネルをプロバイダー間で移動できないことや、プロバイダーごとに異なるユーザーIDが割り当てられることに起因して、将来的に問題が発生する可能性があります。そのリスクを十分検討した上で、適切なプロバイダーの配下にチャネルを作成してください。
+LIFFアプリの画面サイズを`Full`に指定している場合、ヘッダーには、デフォルトでアクションボタンが表示されます。
 
-## 次のステップ
+![](https://developers.line.biz/media/news/2025/liff-action-button-after.png)
 
-これで、LIFFアプリを追加するチャネルが作成されました。続いて、以下のいずれかを行います。
+> [!TIP]
+> アクションボタンを非表示にする
+> LINE DevelopersコンソールでLIFFアプリの［**モジュールモード**］をオンにすると、アクションボタンを非表示にできます。詳しくは、「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)」を参照してください。
 
-*   [LIFFスターターアプリを試してみる](https://developers.line.biz/ja/docs/liff/trying-liff-app/)
-*   [LIFFアプリを開発する](https://developers.line.biz/ja/docs/liff/developing-liff-apps/)
+アクションボタンを押すと、[マルチタブビュー](#multi-tab-view)または[オプション](#multi-tab-view-option)のどちらかがLINEアプリのバージョンに応じて表示されます。LINEバージョン15.12.0以降ではマルチタブビューが表示され、LINEバージョン15.12.0未満ではオプションが表示されます。
+
+## マルチタブビュー
+
+マルチタブビューには、使用中のLIFFアプリのオプションと最近使用したサービスが表示されます。
+
+1.  [オプション](#multi-tab-view-option)
+2.  [最近使用したサービス](#multi-tab-view-recent-service)
+
+![](https://developers.line.biz/media/liff/overview/liff-multi-tab-view-ja.png)
+
+### オプション
+
+以下のオプションが、ユーザーのLINEアプリの設定言語で表示されます。
+
+| 項目 | 説明 |
+| --- | --- |
+| **シェア** | 現在開いているページの[パーマネントリンク](https://developers.line.biz/ja/glossary/#permanent-link-liff)を、LINEメッセージでシェアします。 |
+| **ページを最小化** | LIFFブラウザを最小化します。詳しくは、「[LIFFブラウザを最小化する](https://developers.line.biz/ja/docs/liff/minimizing-liff-browser/)」を参照してください。 |
+| **更新** | 現在開いているページを再読み込みします。 |
+| **権限設定** | 権限設定画面を開きます。権限設定画面では、現在開いているLIFFアプリのカメラやマイクへのアクセス権を確認できます。変更はできません。LINEバージョン14.6.0以降で利用可能です。 |
+
+> [!WARNING]
+> パーマネントリンクのシェアに失敗する場合があります
+> 現在のページのURLがLINE Developersコンソールの［**エンドポイントURL**］に指定したURLで始まらない場合、パーマネントリンクを取得できずシェアに失敗します。
+
+### 最近使用したサービス
+
+最近使用したサービスには、ユーザーが開いたLIFFアプリが、利用履歴の新しい順に最大50件まで表示されます。
+
+LIFFアプリを閉じたり、別のLIFFアプリを新たに開いたりするとその時点のスクリーンショットが利用履歴として表示されます。ユーザーは利用履歴を使って、LIFFアプリを再度開くことができます。
+
+LIFFアプリが利用履歴から再度開かれた際、LIFFアプリは再開または再読み込みされます。再開、再読み込みの仕様は、以下のとおりです。
+
+| 再度開かれた際の挙動 | 条件 | 仕様 |
+| --- | --- | --- |
+| LIFFアプリが再開される | 
+以下の条件を両方満たすLIFFアプリ
+
+<ul><li>12時間以内に使用したLIFFアプリ</li><li>利用履歴の最新10件に含まれるLIFFアプリ</li></ul> | ユーザーが使用を中断した画面からLIFFアプリが再開します。アクセストークン、ブラウザの閲覧履歴、画面のスクロール位置は保持されています。 |
+| LIFFアプリが再読み込みされる | 再開される条件を満たさない場合 | ユーザーが使用を中断したURLでLIFFアプリが初期化されます。アクセストークン、ブラウザの閲覧履歴、画面のスクロール位置は破棄されます。 |
+
+#### 最近使用したサービスに表示される条件
+
+最近使用したサービスにLIFFアプリが表示されるには、以下の条件をすべて満たす必要があります。
+
+*   LINEアプリのバージョンが15.12.0以降
+*   LIFFアプリの[画面サイズ](#screen-size)に`Full`を指定
+*   LIFFアプリのモジュールモードがオフ
+
+#### 最近使用したサービスに表示される単位
+
+最近使用したサービスでは、LIFFアプリがLIFF ID単位で表示されます。同じLIFFアプリを「最近使用したサービス」以外から再度開いた場合は、新たにLIFFアプリが開かれ、古いLIFFアプリは終了します。
+
+なお、LIFF間遷移で他のLIFFアプリを開いた場合は、異なるLIFF IDであっても1つのLIFFアプリとしてまとめて表示されます。
+
+#### LIFFアプリが再読み込みされた場合liff.sendMessages()メソッドは使用できません
+
+最近使用したサービスから再読み込みされたLIFFアプリで、[`liff.sendMessages()`](https://developers.line.biz/ja/reference/liff/#send-messages)メソッドを使用するとエラーが発生します。このため、LIFFアプリが再読み込みされた場合`liff.sendMessages()`メソッドは使用できません。
+
+LIFFアプリが再読み込みされた後に`liff.sendMessages()`メソッドを使いたい場合は、トークルーム上のLIFF URLをタップするなどしてLIFFアプリを開き直す必要があります。
+
+## 開発上のガイドライン
+
+LIFFアプリを開発する際は、「[LIFFアプリ開発ガイドライン](https://developers.line.biz/ja/docs/liff/development-guidelines/)」に従ってください。
+
+## LIFFアプリの開発をサポートするツール
+
+LINEヤフー株式会社では、開発者の方々がLIFFアプリの開発をより円滑に行えるよう、以下のツールを提供しています。
+
+| ツール名 | このツールでできること |
+| --- | --- |
+| [LIFFスターターアプリ](https://developers.line.biz/ja/docs/liff/trying-liff-app/) | LIFFについて初めて学ぶ人向けのスターターアプリです。LIFFアプリの開発の始め方を理解しやすいよう、LIFFアプリの初期化のデモのみを行っています。まずは動くものを作って、LIFFの概要を大まかに理解したい方にお勧めです。 |
+| [Create LIFF App](https://developers.line.biz/ja/docs/liff/cli-tool-create-liff-app/) | LIFFアプリの開発環境がコマンド1つで構築できるCLIツールです。Reactの[Create React App](https://github.com/facebook/create-react-app)や、Next.jsの[Create Next App](https://nextjs.org/docs/pages/api-reference/cli/create-next-app)のように、Create LIFF Appからの質問に答えていくことで、用途に合わせたLIFFアプリのひな形を含む開発環境が生成され、すぐに開発を始めることができます。 |
+| [LIFF CLI](https://developers.line.biz/ja/docs/liff/liff-cli/) | 
+LIFFアプリの開発を円滑にするCLIツールです。LIFF CLIでできることは次のとおりです。
+
+<ul><li>LIFFアプリを作成、更新、参照、削除する</li><li>LIFFアプリの開発環境を作成する</li><li>LIFFアプリを<a href="/ja/docs/liff/liff-plugin/#liff-inspector" class="">LIFF Inspector</a>でデバッグする</li><li>ローカル開発サーバーをHTTPSで起動する</li></ul>今後のアップデートで[LIFF Mock](https://developers.line.biz/ja/docs/liff/liff-plugin/#liff-mock)の機能も追加される予定です。 |
+| [LIFFプレイグラウンド](https://liff-playground.netlify.app/) | LIFFの機能をオンライン上で試すことができます。[LIFFプレイグラウンドのソースコード](https://github.com/line/liff-playground)はGitHubで公開していますので、開発者は任意のLIFF IDを設定して、独自のLIFFプレイグラウンドをサーバー上にデプロイすることも可能です。 |
+
+## 作業の流れ
+
+LIFFアプリをエンドユーザーが利用できるようにするには、以下の手順を行います。
+
+1.  LIFFアプリを追加する[チャネルを作成する](https://developers.line.biz/ja/docs/liff/getting-started/)
+2.  [LIFFスターターアプリを試してみる](https://developers.line.biz/ja/docs/liff/trying-liff-app/)、または[LIFFアプリを開発する](https://developers.line.biz/ja/docs/liff/developing-liff-apps/)

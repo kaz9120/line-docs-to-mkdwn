@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/link-a-bot/
-copied_at: 2025-10-23T15:59:06.065Z
+copied_at: 2025-10-24T10:16:12.782Z
 ---
 # SDKで友だち追加オプションを利用する
 
@@ -21,9 +21,20 @@ copied_at: 2025-10-23T15:59:06.065Z
 
 以下のサンプルコードは、ログインリクエストにボットプロンプトパラメータとして`.botPromptNormal`または`.botPromptAggressive`を設定する方法を示します。
 
-swift
+```swift
+// Includes an option to add a LINE Official Account as a friend in the consent screen.
+var parameters = LoginManager.Parameters()
+parameters.botPromptStyle = .normal
+LoginManager.shared.login(permissions: [.profile], parameters: parameters) {
+    // ...
+}
 
-`// Includes an option to add a LINE Official Account as a friend in the consent screen. var parameters = LoginManager.Parameters() parameters.botPromptStyle = .normal LoginManager.shared.login(permissions: [.profile], parameters: parameters) {     // ... } // Opens a new screen to add the LINE Official Account as a friend after the user agrees to the permissions in the consent screen. parameters.botPromptStyle = .aggressive LoginManager.shared.login(permissions: [.profile], parameters: parameters) {     // ... }`
+// Opens a new screen to add the LINE Official Account as a friend after the user agrees to the permissions in the consent screen.
+parameters.botPromptStyle = .aggressive
+LoginManager.shared.login(permissions: [.profile], parameters: parameters) {
+    // ...
+}
+```
 
 パラメータ値について詳しくは、『LINE SDK for iOS Swiftリファレンス（英語）』の「[LoginManager.Parameters](https://developers.line.biz/en/reference/ios-sdk-swift/Classes/LoginManager/Parameters.html)」と「[LoginManager.BotPrompt](https://developers.line.biz/en/reference/ios-sdk-swift/Classes/LoginManager/BotPrompt.html)」を参照してください。
 
@@ -45,9 +56,19 @@ swift
 
 以下のサンプルコードは、`friendshipStatusChanged`プロパティを取得する方法を示しています。
 
-swift
-
-`var parameters = LoginManager.Parameters() parameters.botPromptStyle = .normal LoginManager.shared.login(permissions: [.profile], parameters: parameters) {     result in    switch result {    case .success(let value):        print(value.friendshipStatusChanged)    case .failure(let error):        print(error)    } }`
+```swift
+var parameters = LoginManager.Parameters()
+parameters.botPromptStyle = .normal
+LoginManager.shared.login(permissions: [.profile], parameters: parameters) {
+    result in
+    switch result {
+    case .success(let value):
+        print(value.friendshipStatusChanged)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
 
 `friendshipStatusChanged`プロパティについて詳しくは、『LINE SDK for iOS Swiftリファレンス（英語）』の「[friendshipStatusChanged](https://developers.line.biz/en/reference/ios-sdk-swift/Structs/LoginResult.html#/s:7LineSDK11LoginResultV23friendshipStatusChangedSbSgvp)」を参照してください。
 
@@ -55,9 +76,14 @@ swift
 
 ユーザーがアプリにログインしてアクセストークンが返された後で、`getBotFriendshipStatus`メソッドを呼び出します。
 
-swift
-
-`API.getBotFriendshipStatus { result in     switch result {    case .success(let value): print(value.friendFlag)    case .failure(let error): print(error)    } }`
+```swift
+API.getBotFriendshipStatus { result in
+    switch result {
+    case .success(let value): print(value.friendFlag)
+    case .failure(let error): print(error)
+    }
+}
+```
 
 戻り値について詳しくは、『LINE SDK for iOS Swiftリファレンス（英語）』の「[getBotFriendshipStatus](https://developers.line.biz/en/reference/ios-sdk-swift/Enums/API.html#/s:7LineSDK3APIO22getBotFriendshipStatus13callbackQueue17completionHandleryAA08CallbackI0O_ys6ResultOyAA03GetefG7RequestV8ResponseVAA0A8SDKErrorOGctFZ)」を参照してください。
 

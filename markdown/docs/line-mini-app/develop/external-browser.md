@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/external-browser/
-copied_at: 2025-10-24T06:29:40.463Z
+copied_at: 2025-10-24T10:17:09.909Z
 ---
 # 外部ブラウザでLINEミニアプリを開く
 
@@ -30,9 +30,16 @@ LINEミニアプリを外部ブラウザで利用する際には、以下の点�
 
 例：
 
-js
-
-`liff   .init({    liffId: "1234567890-AbcdEfgh", // LIFF IDを指定する    withLoginOnExternalBrowser: true, // 自動ログインを有効にする  })  .then(() => {    // LIFF APIの利用を始める  });`
+```js
+liff
+  .init({
+    liffId: "1234567890-AbcdEfgh", // LIFF IDを指定する
+    withLoginOnExternalBrowser: true, // 自動ログインを有効にする
+  })
+  .then(() => {
+    // LIFF APIの利用を始める
+  });
+```
 
 ### 2\. 未ログインの場合にLINEログインを実行する
 
@@ -42,9 +49,11 @@ js
 
 例：
 
-js
-
-`if (!liff.isLoggedIn()) {   liff.login(); }`
+```js
+if (!liff.isLoggedIn()) {
+  liff.login();
+}
+```
 
 詳しくは、『LIFFドキュメント』の「[外部ブラウザでLINEログインを利用する場合](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#to-use-line-login-in-external-browser)」を参照してください。
 

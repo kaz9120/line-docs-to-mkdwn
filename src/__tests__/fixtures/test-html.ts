@@ -201,3 +201,45 @@ export const emptyContent = `
 `;
 
 export const noContent = null;
+
+export const codeBlockContent = `
+  <main class="markdown-content">
+    <div>
+      <p>次のコマンドを実行します。</p>
+      <div class="relative" code="$ npm install -g @line/liff-cli
+" meta="" style="">
+        <span class="code-language-label absolute top-2 right-2 text-ldsgray-600 text-xs">bash</span>
+        <pre class="language-bash shiki shiki-themes github-dark-default">
+          <code>
+            <span class="line"><span>$</span><span> npm</span><span> install</span><span> -g</span><span> @line/liff-cli</span></span>
+          </code>
+        </pre>
+      </div>
+      <p>コマンドを実行すると、LIFF CLIがインストールされます。</p>
+    </div>
+  </main>
+`;
+
+export const vueCommentsContent = `
+  <main class="markdown-content">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>オプション</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-v</code>、<code>--view-type</code></td>
+            <td>
+              LIFFアプリの画面サイズ。以下のいずれかの値を指定します。
+              <ul><!--[--><li><!--[--><code><!--[-->full<!--]--></code><!--]--></li><li><!--[--><code><!--[-->tall<!--]--></code><!--]--></li><li><!--[--><code><!--[-->compact<!--]--></code><!--]--></li><!--]--></ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+`;

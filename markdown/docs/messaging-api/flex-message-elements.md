@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/flex-message-elements/
-copied_at: 2025-10-24T06:28:19.658Z
+copied_at: 2025-10-24T10:15:26.339Z
 ---
 # Flex Messageの要素
 
@@ -31,9 +31,71 @@ Flex Messageは、3層の階層構造で構成されています。最上位層�
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[カルーセル](https://developers.line.biz/ja/reference/messaging-api/#f-carousel)」を参照してください。
 
-json
-
-`{   "type": "carousel",  "contents": [    {      "type": "bubble",      "body": {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",            "wrap": true          }        ]      },      "footer": {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "button",            "style": "primary",            "action": {              "type": "uri",              "label": "Go",              "uri": "https://example.com"            }          }        ]      }    },    {      "type": "bubble",      "body": {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "text",            "text": "Hello, World!",            "wrap": true          }        ]      },      "footer": {        "type": "box",        "layout": "horizontal",        "contents": [          {            "type": "button",            "style": "primary",            "action": {              "type": "uri",              "label": "Go",              "uri": "https://example.com"            }          }        ]      }    }  ] }`
+```json
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "Go",
+              "uri": "https://example.com"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Hello, World!",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "Go",
+              "uri": "https://example.com"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
 
 ## ブロック
 
@@ -52,9 +114,58 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "styles": {    "header": {      "backgroundColor": "#ffaaaa"    },    "body": {      "backgroundColor": "#aaffaa"    },    "footer": {      "backgroundColor": "#aaaaff"    }  },  "header": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "header"      }    ]  },  "hero": {    "type": "image",    "url": "https://example.com/flex/images/image.jpg",    "size": "full",    "aspectRatio": "2:1"  },  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "body"      }    ]  },  "footer": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "footer"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "styles": {
+    "header": {
+      "backgroundColor": "#ffaaaa"
+    },
+    "body": {
+      "backgroundColor": "#aaffaa"
+    },
+    "footer": {
+      "backgroundColor": "#aaaaff"
+    }
+  },
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "header"
+      }
+    ]
+  },
+  "hero": {
+    "type": "image",
+    "url": "https://example.com/flex/images/image.jpg",
+    "size": "full",
+    "aspectRatio": "2:1"
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "body"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "footer"
+      }
+    ]
+  }
+}
+```
 
 ## コンポーネント
 
@@ -84,9 +195,45 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[ボタン](https://developers.line.biz/ja/reference/messaging-api/#button)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "spacing": "md",    "contents": [      {        "type": "button",        "style": "primary",        "action": {          "type": "uri",          "label": "Primary style button",          "uri": "https://example.com"        }      },      {        "type": "button",        "style": "secondary",        "action": {          "type": "uri",          "label": "Secondary style button",          "uri": "https://example.com"        }      },      {        "type": "button",        "style": "link",        "action": {          "type": "uri",          "label": "Link style button",          "uri": "https://example.com"        }      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "action": {
+          "type": "uri",
+          "label": "Primary style button",
+          "uri": "https://example.com"
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "action": {
+          "type": "uri",
+          "label": "Secondary style button",
+          "uri": "https://example.com"
+        }
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "action": {
+          "type": "uri",
+          "label": "Link style button",
+          "uri": "https://example.com"
+        }
+      }
+    ]
+  }
+}
+```
 
 ### 画像
 
@@ -96,9 +243,22 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[画像](https://developers.line.biz/ja/reference/messaging-api/#f-image)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "image",        "url": "https://example.com/flex/images/image.jpg",        "size": "md"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://example.com/flex/images/image.jpg",
+        "size": "md"
+      }
+    ]
+  }
+}
+```
 
 ### 動画
 
@@ -108,9 +268,25 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[動画](https://developers.line.biz/ja/reference/messaging-api/#f-video)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "size": "mega",  "hero": {    "type": "video",    "url": "https://example.com/video.mp4",    "previewUrl": "https://example.com/video_preview.jpg",    "altContent": {      "type": "image",      "size": "full",      "aspectRatio": "20:13",      "aspectMode": "cover",      "url": "https://example.com/image.jpg"    },    "aspectRatio": "20:13"  } }`
+```json
+{
+  "type": "bubble",
+  "size": "mega",
+  "hero": {
+    "type": "video",
+    "url": "https://example.com/video.mp4",
+    "previewUrl": "https://example.com/video_preview.jpg",
+    "altContent": {
+      "type": "image",
+      "size": "full",
+      "aspectRatio": "20:13",
+      "aspectMode": "cover",
+      "url": "https://example.com/image.jpg"
+    },
+    "aspectRatio": "20:13"
+  }
+}
+```
 
 ### アイコン
 
@@ -120,9 +296,97 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[アイコン](https://developers.line.biz/ja/reference/messaging-api/#icon)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "box",        "layout": "baseline",        "contents": [          {            "type": "icon",            "url": "https://example.com/flex/images/icon.png",            "size": "md"          },          {            "type": "text",            "text": "The quick brown fox jumps over the lazy dog",            "size": "md"          }        ]      },      {        "type": "box",        "layout": "baseline",        "contents": [          {            "type": "icon",            "url": "https://example.com/flex/images/icon.png",            "size": "lg"          },          {            "type": "text",            "text": "The quick brown fox jumps over the lazy dog",            "size": "lg"          }        ]      },      {        "type": "box",        "layout": "baseline",        "contents": [          {            "type": "icon",            "url": "https://example.com/flex/images/icon.png",            "size": "xl"          },          {            "type": "text",            "text": "The quick brown fox jumps over the lazy dog",            "size": "xl"          }        ]      },      {        "type": "box",        "layout": "baseline",        "contents": [          {            "type": "icon",            "url": "https://example.com/flex/images/icon.png",            "size": "xxl"          },          {            "type": "text",            "text": "The quick brown fox jumps over the lazy dog",            "size": "xxl"          }        ]      },      {        "type": "box",        "layout": "baseline",        "contents": [          {            "type": "icon",            "url": "https://example.com/flex/images/icon.png",            "size": "3xl"          },          {            "type": "text",            "text": "The quick brown fox jumps over the lazy dog",            "size": "3xl"          }        ]      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "baseline",
+        "contents": [
+          {
+            "type": "icon",
+            "url": "https://example.com/flex/images/icon.png",
+            "size": "md"
+          },
+          {
+            "type": "text",
+            "text": "The quick brown fox jumps over the lazy dog",
+            "size": "md"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "contents": [
+          {
+            "type": "icon",
+            "url": "https://example.com/flex/images/icon.png",
+            "size": "lg"
+          },
+          {
+            "type": "text",
+            "text": "The quick brown fox jumps over the lazy dog",
+            "size": "lg"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "contents": [
+          {
+            "type": "icon",
+            "url": "https://example.com/flex/images/icon.png",
+            "size": "xl"
+          },
+          {
+            "type": "text",
+            "text": "The quick brown fox jumps over the lazy dog",
+            "size": "xl"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "contents": [
+          {
+            "type": "icon",
+            "url": "https://example.com/flex/images/icon.png",
+            "size": "xxl"
+          },
+          {
+            "type": "text",
+            "text": "The quick brown fox jumps over the lazy dog",
+            "size": "xxl"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "contents": [
+          {
+            "type": "icon",
+            "url": "https://example.com/flex/images/icon.png",
+            "size": "3xl"
+          },
+          {
+            "type": "text",
+            "text": "The quick brown fox jumps over the lazy dog",
+            "size": "3xl"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 ### テキスト
 
@@ -132,9 +396,39 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[テキスト](https://developers.line.biz/ja/reference/messaging-api/#f-text)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "Closing the distance",        "size": "md",        "align": "center",        "color": "#ff0000"      },      {        "type": "text",        "text": "Closing the distance",        "size": "lg",        "align": "center",        "color": "#00ff00"      },      {        "type": "text",        "text": "Closing the distance",        "size": "xl",        "align": "center",        "weight": "bold",        "color": "#0000ff"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Closing the distance",
+        "size": "md",
+        "align": "center",
+        "color": "#ff0000"
+      },
+      {
+        "type": "text",
+        "text": "Closing the distance",
+        "size": "lg",
+        "align": "center",
+        "color": "#00ff00"
+      },
+      {
+        "type": "text",
+        "text": "Closing the distance",
+        "size": "xl",
+        "align": "center",
+        "weight": "bold",
+        "color": "#0000ff"
+      }
+    ]
+  }
+}
+```
 
 #### テキストを折り返す
 
@@ -144,9 +438,21 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ]
+  }
+}
+```
 
 テキストを折り返して表示することで、テキストの省略を避けることができます。テキストを折り返して表示するには、`wrap`プロパティに`true`を指定します。また、改行文字（`\n`）を使って改行できます。以下は、テキストの折り返しと改行を使用したFlex Messageの例です。
 
@@ -158,9 +464,22 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。`wrap`プロパティに`true`を設定しています。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n tempor incididunt ut labore et dolore magna aliqua.",
+        "wrap": true
+      }
+    ]
+  }
+}
+```
 
 ##### テキスト内の行間を広げる
 
@@ -174,9 +493,23 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。`lineSpacing`プロパティに`20px`を設定しています。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "lineSpacing": "20px"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n tempor incididunt ut labore et dolore magna aliqua.",
+        "wrap": true,
+        "lineSpacing": "20px"
+      }
+    ]
+  }
+}
+```
 
 ### スパン
 
@@ -186,9 +519,61 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[スパン](https://developers.line.biz/ja/reference/messaging-api/#span)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "hello, world",        "contents": [          {            "type": "span",            "text": "Hello, world!",            "decoration": "line-through"          },          {            "type": "span",            "text": "\nClosing",            "color": "#ff0000",            "size": "sm",            "weight": "bold",            "decoration": "none"          },          {            "type": "span",            "text": " "          },          {            "type": "span",            "text": "the",            "size": "lg",            "color": "#00ff00",            "decoration": "underline",            "weight": "bold"          },          {            "type": "span",            "text": " "          },          {            "type": "span",            "text": "distance",            "color": "#0000ff",            "weight": "bold",            "size": "xxl"          }        ],        "wrap": true,        "align": "center"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "hello, world",
+        "contents": [
+          {
+            "type": "span",
+            "text": "Hello, world!",
+            "decoration": "line-through"
+          },
+          {
+            "type": "span",
+            "text": "\nClosing",
+            "color": "#ff0000",
+            "size": "sm",
+            "weight": "bold",
+            "decoration": "none"
+          },
+          {
+            "type": "span",
+            "text": " "
+          },
+          {
+            "type": "span",
+            "text": "the",
+            "size": "lg",
+            "color": "#00ff00",
+            "decoration": "underline",
+            "weight": "bold"
+          },
+          {
+            "type": "span",
+            "text": " "
+          },
+          {
+            "type": "span",
+            "text": "distance",
+            "color": "#0000ff",
+            "weight": "bold",
+            "size": "xxl"
+          }
+        ],
+        "wrap": true,
+        "align": "center"
+      }
+    ]
+  }
+}
+```
 
 ### セパレータ
 
@@ -198,9 +583,57 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[セパレータ](https://developers.line.biz/ja/reference/messaging-api/#separator)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "spacing": "md",    "contents": [      {        "type": "box",        "layout": "horizontal",        "spacing": "md",        "contents": [          {            "type": "text",            "text": "orange"          },          {            "type": "separator"          },          {            "type": "text",            "text": "apple"          }        ]      },      {        "type": "separator"      },      {        "type": "box",        "layout": "horizontal",        "spacing": "md",        "contents": [          {            "type": "text",            "text": "grape"          },          {            "type": "separator"          },          {            "type": "text",            "text": "lemon"          }        ]      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "spacing": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "orange"
+          },
+          {
+            "type": "separator"
+          },
+          {
+            "type": "text",
+            "text": "apple"
+          }
+        ]
+      },
+      {
+        "type": "separator"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "spacing": "md",
+        "contents": [
+          {
+            "type": "text",
+            "text": "grape"
+          },
+          {
+            "type": "separator"
+          },
+          {
+            "type": "text",
+            "text": "lemon"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 ### フィラー
 
@@ -214,9 +647,28 @@ json
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。JSONスキーマについて詳しくは、『Messaging APIリファレンス』の「[フィラー](https://developers.line.biz/ja/reference/messaging-api/#filler)」を参照してください。
 
-json
-
-`{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "image",        "url": "https://example.com/flex/images/image.jpg"      },      {        "type": "filler"      },      {        "type": "image",        "url": "https://example.com/flex/images/image.jpg"      }    ]  } }`
+```json
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://example.com/flex/images/image.jpg"
+      },
+      {
+        "type": "filler"
+      },
+      {
+        "type": "image",
+        "url": "https://example.com/flex/images/image.jpg"
+      }
+    ]
+  }
+}
+```
 
 ## 関連ページ
 

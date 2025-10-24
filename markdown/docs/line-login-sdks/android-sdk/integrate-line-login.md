@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/integrate-line-login/
-copied_at: 2025-10-24T06:29:03.634Z
+copied_at: 2025-10-24T10:16:18.149Z
 ---
 # AndroidアプリにLINEログインを組み込む
 
@@ -38,25 +38,41 @@ LINE SDK for Androidを組み込むには、必要なライブラリをプロジ
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.linecorp.linesdk/linesdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.linecorp.linesdk%22%20AND%20a:%22linesdk%22)
 
-groovy
+```groovy
+repositories {
+   ...
+   mavenCentral()
+}
 
-`repositories {    ...   mavenCentral() } dependencies {     ...    implementation 'com.linecorp.linesdk:linesdk:latest.release'    ... }`
+dependencies {
+    ...
+    implementation 'com.linecorp.linesdk:linesdk:latest.release'
+    ...
+}
+```
 
 ### Androidのコンパイルオプションを追加する
 
 Java 1.8のサポートを有効にします。前述の`build.gradle`ファイルに以下の行を追加します。
 
-text
-
-`android { ...   compileOptions {         sourceCompatibility JavaVersion.VERSION_1_8         targetCompatibility JavaVersion.VERSION_1_8     } ... }`
+```text
+android {
+...
+  compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+...
+}
+```
 
 ## Androidマニフェストファイルを設定する
 
 アプリがインターネットに接続する必要があることを明示するために、`AndroidManifest.xml`ファイルに`INTERNET`権限を追加します。
 
-xml
-
-`<uses-permission android:name="android.permission.INTERNET"/>`
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```
 
 > [!WARNING]
 > 注意
@@ -80,17 +96,21 @@ xml
 
 デバッグパッケージ署名は、アプリの実行またはデバッグ時に、Android Studioによって自動生成されるデバッグ証明書から生成されます。
 
-bash
+```bash
+# macOSの場合
+keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -storepass android -keypass android | openssl sha1
 
-`# macOSの場合 keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -storepass android -keypass android | openssl sha1 # Windowsの場合 keytool -exportcert -alias androiddebugkey -keystore %USERPROFILE%\.android\debug.keystore -storepass android -keypass android | openssl sha1`
+# Windowsの場合
+keytool -exportcert -alias androiddebugkey -keystore %USERPROFILE%\.android\debug.keystore -storepass android -keypass android | openssl sha1
+```
 
 #### リリースパッケージ署名
 
 リリースパッケージ署名は、ストアにアプリをリリースする際に使用するリリース証明書から生成されます。`<RELEASE_KEY_ALIAS>`と`<RELEASE_KEY_PATH>`は、実際の値に置き換えてください。
 
-bash
-
-`keytool -exportcert -alias <RELEASE_KEY_ALIAS> -keystore <RELEASE_KEY_PATH> | openssl sha1`
+```bash
+keytool -exportcert -alias <RELEASE_KEY_ALIAS> -keystore <RELEASE_KEY_PATH> | openssl sha1
+```
 
 #### Google Play Consoleを使用してリリースキーハッシュを取得する
 
@@ -112,16 +132,49 @@ Google Play Consoleで、［**設定**］ > ［**アプリ署名**］に移動�
 LINE SDKには定義済みのログインボタンが備わっています。ユーザーが簡単にアプリにログインできるように、以下の手順に従って、アプリのユーザーインターフェイスにログインボタンを追加できます。
 
 1.  レイアウトXMLファイルにログインボタンを追加します。
-    
-    xml
-    
-    `<com.linecorp.linesdk.widget.LoginButton     android:id="@+id/line_login_btn"    android:layout_width="match_parent"    android:layout_height="wrap_content" />`
+    ```xml
+    <com.linecorp.linesdk.widget.LoginButton
+        android:id="@+id/line_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    ```
     
 2.  アクティビティまたはフラグメント内のビューに必要なパラメータを設定し、リスナーを割り当てます。
+    ```java
+    import java.util.Arrays;
     
-    java
+    // A delegate for delegating the login result to the internal login handler.
+    private LoginDelegate loginDelegate = LoginDelegate.Factory.create();
     
-    `import java.util.Arrays; // A delegate for delegating the login result to the internal login handler. private LoginDelegate loginDelegate = LoginDelegate.Factory.create(); LoginButton loginButton = rootView.findViewById(R.id.line_login_btn); // if the button is inside a Fragment, this function should be called. loginButton.setFragment(this); loginButton.setChannelId(channelIdEditText.getText().toString()); // configure whether login process should be done by Line App, or inside WebView. loginButton.enableLineAppAuthentication(true); // set up required scopes and nonce. loginButton.setAuthenticationParams(new LineAuthenticationParams.Builder()         .scopes(Arrays.asList(Scope.PROFILE))        // .nonce("<a randomly-generated string>") // nonce can be used to improve security        .build() ); loginButton.setLoginDelegate(loginDelegate); loginButton.addLoginListener(new LoginListener() {     @Override    public void onLoginSuccess(@NonNull LineLoginResult result) {        Toast.makeText(getContext(), "Login success", Toast.LENGTH_SHORT).show();    }     @Override    public void onLoginFailure(@Nullable LineLoginResult result) {        Toast.makeText(getContext(), "Login failure", Toast.LENGTH_SHORT).show();    } });`
+    LoginButton loginButton = rootView.findViewById(R.id.line_login_btn);
+    
+    // if the button is inside a Fragment, this function should be called.
+    loginButton.setFragment(this);
+    
+    loginButton.setChannelId(channelIdEditText.getText().toString());
+    
+    // configure whether login process should be done by Line App, or inside WebView.
+    loginButton.enableLineAppAuthentication(true);
+    
+    // set up required scopes and nonce.
+    loginButton.setAuthenticationParams(new LineAuthenticationParams.Builder()
+            .scopes(Arrays.asList(Scope.PROFILE))
+            // .nonce("<a randomly-generated string>") // nonce can be used to improve security
+            .build()
+    );
+    loginButton.setLoginDelegate(loginDelegate);
+    loginButton.addLoginListener(new LoginListener() {
+        @Override
+        public void onLoginSuccess(@NonNull LineLoginResult result) {
+            Toast.makeText(getContext(), "Login success", Toast.LENGTH_SHORT).show();
+        }
+    
+        @Override
+        public void onLoginFailure(@Nullable LineLoginResult result) {
+            Toast.makeText(getContext(), "Login failure", Toast.LENGTH_SHORT).show();
+        }
+    });
+    ```
     
 
 ### カスタマイズしたログインボタンを使う
@@ -153,9 +206,32 @@ LINEログインボタンの画像セットには、iOS、Android、デスクト
 
 以下は、ユーザーがログインボタンをタップしたときにログインアクティビティを開始する方法の例です。
 
-java
+```java
+private static final int REQUEST_CODE = 1;
+...
 
-`private static final int REQUEST_CODE = 1; ... final TextView loginButton = (TextView) findViewById(R.id.login_button); loginButton.setOnClickListener(new View.OnClickListener() {     public void onClick(View view) {        try{            // App-to-app login            Intent loginIntent = LineLoginApi.getLoginIntent(                view.getContext(),                Constants.CHANNEL_ID,                new LineAuthenticationParams.Builder()                        .scopes(Arrays.asList(Scope.PROFILE))                        // .nonce("<a randomly-generated string>") // nonce can be used to improve security                        .build());            startActivityForResult(loginIntent, REQUEST_CODE);         }        catch(Exception e) {            Log.e("ERROR", e.toString());        }    } });`
+final TextView loginButton = (TextView) findViewById(R.id.login_button);
+loginButton.setOnClickListener(new View.OnClickListener() {
+
+    public void onClick(View view) {
+        try{
+            // App-to-app login
+            Intent loginIntent = LineLoginApi.getLoginIntent(
+                view.getContext(),
+                Constants.CHANNEL_ID,
+                new LineAuthenticationParams.Builder()
+                        .scopes(Arrays.asList(Scope.PROFILE))
+                        // .nonce("<a randomly-generated string>") // nonce can be used to improve security
+                        .build());
+            startActivityForResult(loginIntent, REQUEST_CODE);
+
+        }
+        catch(Exception e) {
+            Log.e("ERROR", e.toString());
+        }
+    }
+});
+```
 
 > [!WARNING]
 > 注意
@@ -169,25 +245,59 @@ java
 
 アプリによるログイン結果の処理方法については、以下を参考にしてください。
 
-java
+```java
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode != REQUEST_CODE) {
+        Log.e("ERROR", "Unsupported Request");
+        return;
+    }
 
-`public void onActivityResult(int requestCode, int resultCode, Intent data) {     super.onActivityResult(requestCode, resultCode, data);    if (requestCode != REQUEST_CODE) {        Log.e("ERROR", "Unsupported Request");        return;    }     LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);     switch (result.getResponseCode()) {         case SUCCESS:            // Login successful            String accessToken = result.getLineCredential().getAccessToken().getTokenString();             Intent transitionIntent = new Intent(this, PostLoginActivity.class);            transitionIntent.putExtra("line_profile", result.getLineProfile());            transitionIntent.putExtra("line_credential", result.getLineCredential());            startActivity(transitionIntent);            break;         case CANCEL:            // Login canceled by user            Log.e("ERROR", "LINE Login Canceled by user.");            break;         default:            // Login canceled due to other error            Log.e("ERROR", "Login FAILED!");            Log.e("ERROR", result.getErrorData().toString());    } }`
+    LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
+
+    switch (result.getResponseCode()) {
+
+        case SUCCESS:
+            // Login successful
+            String accessToken = result.getLineCredential().getAccessToken().getTokenString();
+
+            Intent transitionIntent = new Intent(this, PostLoginActivity.class);
+            transitionIntent.putExtra("line_profile", result.getLineProfile());
+            transitionIntent.putExtra("line_credential", result.getLineCredential());
+            startActivity(transitionIntent);
+            break;
+
+        case CANCEL:
+            // Login canceled by user
+            Log.e("ERROR", "LINE Login Canceled by user.");
+            break;
+
+        default:
+            // Login canceled due to other error
+            Log.e("ERROR", "Login FAILED!");
+            Log.e("ERROR", result.getErrorData().toString());
+    }
+}
+```
 
 ### アクセストークンを取得する
 
 ログイン結果には、ユーザーのアクセストークンが入った`LineCredential()`オブジェクトが含まれています。上の例に示すとおり、以下のコードを使用してアクセストークンを取得できます。
 
-java
-
-`String accessToken = result.getLineCredential().getAccessToken().getTokenString();`
+```java
+String accessToken = result.getLineCredential().getAccessToken().getTokenString();
+```
 
 ### ログイン直後にユーザープロフィールを取得する
 
 ユーザーがログインすると、LINE SDKによって自動的にユーザーのプロフィール情報が取得されます。ユーザーのプロフィール情報には、表示名、ユーザーID、ステータスメッセージ、およびプロフィールメディアのURLが含まれます。`LineLoginResult`オブジェクトの`getLineProfile()`メソッドを呼び出して、この情報にアクセスします。以下のコードは、上の例から引用したものです。ログイン結果からユーザーのプロフィール情報を取得し、インテントに渡す方法を説明しています。
 
-java
-
-`transitionIntent.putExtra("display_name", result.getLineProfile().getDisplayName()); transitionIntent.putExtra("status_message", result.getLineProfile().getStatusMessage()); transitionIntent.putExtra("user_id", result.getLineProfile().getUserId()); transitionIntent.putExtra("picture_url", result.getLineProfile().getPictureUrl().toString());`
+```java
+transitionIntent.putExtra("display_name", result.getLineProfile().getDisplayName());
+transitionIntent.putExtra("status_message", result.getLineProfile().getStatusMessage());
+transitionIntent.putExtra("user_id", result.getLineProfile().getUserId());
+transitionIntent.putExtra("picture_url", result.getLineProfile().getPictureUrl().toString());
+```
 
 ユーザーIDは各プロバイダーに対してのみ一意です。1人のLINEユーザーは、プロバイダーごとに異なるユーザーIDを持ちます。ユーザーIDでは、異なるプロバイダーを横断してユーザーを識別できません。
 
@@ -213,16 +323,15 @@ java
 `LineApiClient`インターフェイスのメソッドを呼び出して、SDKを使用します。これを行うには、`lineApiClient`のスタティック変数を作成して初期化する必要があります。
 
 1.  さまざまなメソッドを呼び出すオブジェクトのスタティック変数を作成します。
-    
-    java
-    
-    `private static LineApiClient lineApiClient;`
+    ```java
+    private static LineApiClient lineApiClient;
+    ```
     
 2.  アクティビティの`onCreate()`メソッドで、`lineApiClient`変数を以下のとおりに初期化します。初期化にはチャネルIDとコンテキストが必要です。
-    
-    java
-    
-    `LineApiClientBuilder apiClientBuilder = new LineApiClientBuilder(getApplicationContext(), "your channel id here"); lineApiClient = apiClientBuilder.build();`
+    ```java
+    LineApiClientBuilder apiClientBuilder = new LineApiClientBuilder(getApplicationContext(), "your channel id here");
+    lineApiClient = apiClientBuilder.build();
+    ```
     
 
 > [!WARNING]

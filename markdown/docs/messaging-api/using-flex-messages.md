@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-flex-messages/
-copied_at: 2025-10-24T06:28:19.125Z
+copied_at: 2025-10-24T10:15:27.214Z
 ---
 # Flex Messageを送信する
 
@@ -28,8 +28,8 @@ Flex Messageは、すべてのバージョンのLINEでサポートされます�
 
 | 機能 | iOS版LINE<br/>Android版LINE | PC版LINE<br/>（macOS版、Windows版） |
 | --- | :-: | :-: |
-| <ul><!--[--><li><!--[--><a href="/ja/reference/messaging-api/#box" class=""><!--[--><!--[-->ボックス<!--]--><!--]--></a>の<code><!--[-->maxWidth<!--]--></code>プロパティ<!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#box" class=""><!--[--><!--[-->ボックス<!--]--><!--]--></a>の<code><!--[-->maxHeight<!--]--></code>プロパティ<!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#f-text" class=""><!--[--><!--[-->テキスト<!--]--><!--]--></a>の<code><!--[-->lineSpacing<!--]--></code>プロパティ<!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#f-video" class=""><!--[--><!--[-->動画<!--]--><!--]--></a> ※1<!--]--></li><!--]--></ul> | 11.22.0以上 | 7.7.0以上 |
-| <ul><!--[--><li><!--[--><a href="/ja/reference/messaging-api/#bubble" class=""><!--[--><!--[-->バブル<!--]--><!--]--></a>の<code><!--[-->size<!--]--></code>プロパティの<code><!--[-->deca<!--]--></code>と<code><!--[-->hecto<!--]--></code> ※2<!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#button" class=""><!--[--><!--[-->ボタン<!--]--><!--]--></a>、<a href="/ja/reference/messaging-api/#f-text" class=""><!--[--><!--[-->テキスト<!--]--><!--]--></a>、および<a href="/ja/reference/messaging-api/#icon" class=""><!--[--><!--[-->アイコン<!--]--><!--]--></a>の<code><!--[-->scaling<!--]--></code>プロパティ<!--]--></li><!--]--></ul> | 13.6.0以上 | 7.17.0以上 |
+| <ul><li><a href="/ja/reference/messaging-api/#box" class="">ボックス</a>の<code>maxWidth</code>プロパティ</li><li><a href="/ja/reference/messaging-api/#box" class="">ボックス</a>の<code>maxHeight</code>プロパティ</li><li><a href="/ja/reference/messaging-api/#f-text" class="">テキスト</a>の<code>lineSpacing</code>プロパティ</li><li><a href="/ja/reference/messaging-api/#f-video" class="">動画</a> ※1</li></ul> | 11.22.0以上 | 7.7.0以上 |
+| <ul><li><a href="/ja/reference/messaging-api/#bubble" class="">バブル</a>の<code>size</code>プロパティの<code>deca</code>と<code>hecto</code> ※2</li><li><a href="/ja/reference/messaging-api/#button" class="">ボタン</a>、<a href="/ja/reference/messaging-api/#f-text" class="">テキスト</a>、および<a href="/ja/reference/messaging-api/#icon" class="">アイコン</a>の<code>scaling</code>プロパティ</li></ul> | 13.6.0以上 | 7.17.0以上 |
 
 ※1 動画をサポートしていないLINEのバージョンにおいてもコンテンツを適切に表示するには、`altContent`プロパティを指定します。このプロパティで指定した画像が動画の代わりに表示されます。
 
@@ -53,9 +53,27 @@ Flex Messageを始めるにあたり、「Hello, World！」をFlex Messageと�
 
 Messaging APIを呼び出してFlex Messageを送信する前に、Flex MessageをJSONで定義します。以下は、JSONでFlex Messageを定義する方法で、"Hello, World!"というメッセージを作ります。このFlex Messageにはメッセージバブルが1つあればよいので、[バブルコンテナ](https://developers.line.biz/ja/docs/messaging-api/flex-message-elements/#bubble)を使用します。
 
-json
-
-`{   "type": "bubble", // 1  "body": {    // 2    "type": "box", // 3    "layout": "horizontal", // 4    "contents": [      // 5      {        "type": "text", // 6        "text": "Hello,"      },      {        "type": "text", // 6        "text": "World!"      }    ]  } }`
+```json
+{
+  "type": "bubble", // 1
+  "body": {
+    // 2
+    "type": "box", // 3
+    "layout": "horizontal", // 4
+    "contents": [
+      // 5
+      {
+        "type": "text", // 6
+        "text": "Hello,"
+      },
+      {
+        "type": "text", // 6
+        "text": "World!"
+      }
+    ]
+  }
+}
+```
 
 1～6の説明は以下のとおりです。
 
@@ -74,9 +92,37 @@ Flex Messsageは、「[メッセージを送信する](https://developers.line.b
 
 以下は、プッシュメッセージを送信するリクエストの例です。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{   "to": "U4af4980629...",  "messages": [    {      "type": "flex",      "altText": "This is a Flex Message",      "contents": {        "type": "bubble",        "body": {          "type": "box",          "layout": "horizontal",          "contents": [            {              "type": "text",              "text": "Hello,"            },            {              "type": "text",              "text": "World!"            }          ]        }      }    }  ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+  "to": "U4af4980629...",
+  "messages": [
+    {
+      "type": "flex",
+      "altText": "This is a Flex Message",
+      "contents": {
+        "type": "bubble",
+        "body": {
+          "type": "box",
+          "layout": "horizontal",
+          "contents": [
+            {
+              "type": "text",
+              "text": "Hello,"
+            },
+            {
+              "type": "text",
+              "text": "World!"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}'
+```
 
 ## 関連ページ
 

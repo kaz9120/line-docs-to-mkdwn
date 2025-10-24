@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/design/landscape/
-copied_at: 2025-10-23T16:01:01.145Z
+copied_at: 2025-10-24T10:16:46.391Z
 ---
 # LINEミニアプリのセーフエリア
 
@@ -17,9 +17,11 @@ copied_at: 2025-10-23T16:01:01.145Z
 
 paddingの例：
 
-text
-
-`{   padding-bottom: 34px; }`
+```text
+{
+  padding-bottom: 34px;
+}
+```
 
 ![](https://developers.line.biz/media/line-mini-app/mini_design_safearea_normal.png)
 
@@ -30,8 +32,12 @@ text
 
 paddingの例：
 
-text
-
-`{   padding-right: 44px;   padding-bottom: 21px;   padding-left: 44px; }`
+```text
+{
+  padding-right: 44px;
+  padding-bottom: 21px;
+  padding-left: 44px;
+}
+```
 
 ![](https://developers.line.biz/media/line-mini-app/mini_design_safearea_landscape.png)

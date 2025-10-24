@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-rich-menus/
-copied_at: 2025-10-24T06:28:14.971Z
+copied_at: 2025-10-24T10:15:23.327Z
 ---
 # リッチメニューを使う
 
@@ -48,9 +48,62 @@ Messaging APIを使ってデフォルトのリッチメニューを設定する�
 
 リッチメニューを作成するには、[リッチメニューオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-object)を[リッチメニューを作成する](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu)エンドポイントのリクエストに指定します。以下のコマンドをターミナルで実行してください。A、B、Cのそれぞれのタップ領域で、異なるURLが開くように[URIアクション](https://developers.line.biz/ja/reference/messaging-api/#uri-action)を指定しています。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/richmenu \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "size": {        "width": 2500,        "height": 1686    },    "selected": false,    "name": "デフォルトのリッチメニューのテスト",    "chatBarText": "Tap to open",    "areas": [        {            "bounds": {                "x": 0,                "y": 0,                "width": 1666,                "height": 1686            },            "action": {                "type": "uri",                "label": "タップ領域A",                "uri": "https://developers.line.biz/ja/news/"            }        },        {            "bounds": {                "x": 1667,                "y": 0,                "width": 834,                "height": 843            },            "action": {                "type": "uri",                "label": "タップ領域B",                "uri": "https://lineapiusecase.com/"            }        },        {            "bounds": {                "x": 1667,                "y": 844,                "width": 834,                "height": 843            },            "action": {                "type": "uri",                "label": "タップ領域C",                "uri": "https://techblog.lycorp.co.jp/ja/"            }        }    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/richmenu \
+-H 'Authorization: Bearer {channel access token}' \
+-H 'Content-Type: application/json' \
+-d \
+'{
+    "size": {
+        "width": 2500,
+        "height": 1686
+    },
+    "selected": false,
+    "name": "デフォルトのリッチメニューのテスト",
+    "chatBarText": "Tap to open",
+    "areas": [
+        {
+            "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 1666,
+                "height": 1686
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域A",
+                "uri": "https://developers.line.biz/ja/news/"
+            }
+        },
+        {
+            "bounds": {
+                "x": 1667,
+                "y": 0,
+                "width": 834,
+                "height": 843
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域B",
+                "uri": "https://lineapiusecase.com/"
+            }
+        },
+        {
+            "bounds": {
+                "x": 1667,
+                "y": 844,
+                "width": 834,
+                "height": 843
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域C",
+                "uri": "https://techblog.lycorp.co.jp/ja/"
+            }
+        }
+    ]
+}'
+```
 
 > [!TIP]
 > ヒント
@@ -60,9 +113,11 @@ sh
 
 リッチメニューの作成に成功すると、リッチメニューのIDがレスポンスで返されます。リッチメニューのIDは、以降の手順で使用します。
 
-json
-
-`{   "richMenuId": "richmenu-88c05..." }`
+```json
+{
+  "richMenuId": "richmenu-88c05..."
+}
+```
 
 ### 3\. リッチメニューに画像をアップロードして添付する
 
@@ -71,17 +126,21 @@ json
 1.  手順1.で用意した画像があるディレクトリに移動する。
 2.  以下のコマンドの`{richMenuId}`を手順2.で取得したリッチメニューのIDに置き換えて実行する。
 
-sh
-
-`curl -v -X POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content \ -H "Authorization: Bearer {channel access token}" \ -H "Content-Type: image/png" \ -T richmenu-template-guide-04.png`
+```sh
+curl -v -X POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content \
+-H "Authorization: Bearer {channel access token}" \
+-H "Content-Type: image/png" \
+-T richmenu-template-guide-04.png
+```
 
 ### 4\. デフォルトのリッチメニューを設定する
 
 準備が完了したため、リッチメニューを表示するための設定を行います。ここでは、[デフォルトのリッチメニューを設定](https://developers.line.biz/ja/reference/messaging-api/#set-default-rich-menu)します。デフォルトのリッチメニューは、LINE公式アカウントを友だち追加し、ユーザー単位のリッチメニューがリンクされていないすべてのユーザーに表示されます。以下のコマンドをターミナルで実行してください。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/user/all/richmenu/{richMenuId} \ -H "Authorization: Bearer {channel access token}"`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/user/all/richmenu/{richMenuId} \
+-H "Authorization: Bearer {channel access token}"
+```
 
 #### 4-1. リッチメニューの表示を確認する
 
