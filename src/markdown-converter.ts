@@ -3,7 +3,6 @@ import { gfm } from "turndown-plugin-gfm";
 import {
   BASE_URL,
   CSS_CLASSES,
-  NOTE_TYPES,
   PLACEHOLDER_STRINGS,
   SELECTORS,
 } from "./constants";
@@ -40,37 +39,58 @@ function addCustomBlockRule(turndownService: TurndownService): void {
       !!node.classList?.contains(CSS_CLASSES.CUSTOM_BLOCK),
     replacement: (_content: string, node: Node) => {
       const element = node as Element;
-      const title =
-        element
-          .querySelector(SELECTORS.CUSTOM_BLOCK_TITLE)
-          ?.textContent?.trim() || "";
-      const bodyContent = element.querySelector(
-        SELECTORS.CUSTOM_BLOCK_CONTENT,
-      ) as HTMLElement;
-      const body = bodyContent ? turndownService.turndown(bodyContent) : "";
 
-      const noteType = determineNoteType(element);
-      let content = body;
+      // Clone the element to avoid modifying the original
+      const clonedElement = element.cloneNode(true) as HTMLElement;
+
+      // Extract and remove the title element
+      const titleElement = clonedElement.querySelector(
+        SELECTORS.CUSTOM_BLOCK_TITLE,
+      );
+      const title = titleElement?.textContent?.trim() || "";
+      titleElement?.remove();
+
+      // Convert the remaining content (body) to markdown
+      const body = turndownService.turndown(clonedElement).trim();
+
+      // Map note types to GitHub alert types
+      const alertType = mapNoteTypeToGitHubAlert(element);
+
+      // Build the GitHub-style alert
+      const lines: string[] = [`> [!${alertType}]`];
+
+      // Add title if present
       if (title) {
-        content = `${title}\n${body}`;
+        lines.push(`> ${title}`);
       }
 
-      return `:::note ${noteType}\n${content}\n:::\n\n`;
+      // Add body content, prefixing each line with '> '
+      if (body) {
+        const bodyLines = body.split("\n");
+        for (const line of bodyLines) {
+          lines.push(`> ${line}`);
+        }
+      }
+
+      return `${lines.join("\n")}\n\n`;
     },
   });
 }
 
-function determineNoteType(element: Element): string {
+function mapNoteTypeToGitHubAlert(element: Element): string {
   if (
     element.classList.contains(CSS_CLASSES.CUSTOM_BLOCK_DANGER) ||
     element.classList.contains(CSS_CLASSES.CUSTOM_BLOCK_ALERT)
   ) {
-    return NOTE_TYPES.ALERT;
+    return "CAUTION";
   }
   if (element.classList.contains(CSS_CLASSES.CUSTOM_BLOCK_WARNING)) {
-    return NOTE_TYPES.WARN;
+    return "WARNING";
   }
-  return NOTE_TYPES.INFO;
+  if (element.classList.contains(CSS_CLASSES.CUSTOM_BLOCK_TIP)) {
+    return "TIP";
+  }
+  return "NOTE";
 }
 
 function addAbsoluteLinkRule(turndownService: TurndownService): void {
