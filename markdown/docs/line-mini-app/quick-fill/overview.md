@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/quick-fill/overview/
-copied_at: 2025-10-24T06:29:46.002Z
+copied_at: 2025-10-24T10:17:11.181Z
 ---
 # 共通プロフィールのクイック入力の概要
 
@@ -86,9 +86,13 @@ LINEミニアプリには、以下の2種類の方法でLIFF SDKを組み込め�
 
 LIFFアプリにLIFF SDKを組み込んだら、以下のように[`liff.use()`](https://developers.line.biz/ja/reference/liff/#use)メソッドにクイック入力のLIFFプラグインを渡すことで、LIFFプラグインが有効化されます。
 
-javascript
+```javascript
+liff.use(new LiffCommonProfilePlugin());
+await liff.init({ liffId: "xxx" });
 
-`liff.use(new LiffCommonProfilePlugin()); await liff.init({ liffId: "xxx" }); const { data, error } = await liff.$commonProfile.get(); liff.$commonProfile.fill(data);`
+const { data, error } = await liff.$commonProfile.get();
+liff.$commonProfile.fill(data);
+```
 
 これにより`liff`オブジェクトへ`$commonProfile`というプロパティが追加され、以下のようなクイック入力のクライアントAPIが使えるようになります。
 
@@ -100,13 +104,28 @@ javascript
 
 CDNパスを指定する場合、`script`タグを使用してパッケージを読み込むと、windowオブジェクトへ`liffCommonProfile`というプロパティが追加されます。`liffCommonProfile`の内部に存在する`LiffCommonProfilePlugin`というクラスのインスタンスを`liff.use()`の引数に渡します。
 
-html
+```html
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://static.line-scdn.net/5/liff-common-profile/edge/production/1.0.0/index.umd.cjs"></script>
+    <title>LIFF App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.js"></script>
+  </body>
+</html>
+```
 
-`<html lang="en">   <head>    <meta charset="UTF-8" />    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>    <script src="https://static.line-scdn.net/5/liff-common-profile/edge/production/1.0.0/index.umd.cjs"></script>    <title>LIFF App</title>  </head>  <body>    <div id="root"></div>    <script type="module" src="/index.js"></script>  </body> </html>`
+```js
+liff.use(new liffCommonProfile.LiffCommonProfilePlugin());
 
-js
-
-`liff.use(new liffCommonProfile.LiffCommonProfilePlugin()); const { data, error } = await liff.$commonProfile.get(); liff.$commonProfile.fill(data);`
+const { data, error } = await liff.$commonProfile.get();
+liff.$commonProfile.fill(data);
+```
 
 詳しくは、『LIFFドキュメント』の「[CDNパスを指定する](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#specify-cdn-path)」を参照してください。
 
@@ -114,13 +133,18 @@ js
 
 npmパッケージを利用する場合、パッケージから`LiffCommonProfilePlugin`クラスをインポートして、そのインスタンスを`liff.use()`の引数に渡します。
 
-sh
+```sh
+$ npm install @line/liff-common-profile-plugin
+```
 
-`$ npm install @line/liff-common-profile-plugin`
+```js
+import liff from "@line/liff";
+import { LiffCommonProfilePlugin } from "@line/liff-common-profile-plugin";
+liff.use(new LiffCommonProfilePlugin());
 
-js
-
-`import liff from "@line/liff"; import { LiffCommonProfilePlugin } from "@line/liff-common-profile-plugin"; liff.use(new LiffCommonProfilePlugin()); const { data, error } = await liff.$commonProfile.get(); liff.$commonProfile.fill(data);`
+const { data, error } = await liff.$commonProfile.get();
+liff.$commonProfile.fill(data);
+```
 
 詳しくは、『LIFFドキュメント』の「[npmパッケージを利用する](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#use-npm-package)」を参照してください。
 
@@ -176,7 +200,7 @@ LINE Developersコンソールで選択できる、クイック入力のスコ�
 | 2 | `given-name` | 氏名（名） | string | 100 | 50 |  |
 | 3 | `family-name-kana` | フリガナ氏名（姓） | string | 100 | 50 |  |
 | 4 | `given-name-kana` | フリガナ氏名（名） | string | 100 | 50 |  |
-| 5 | `sex-enum` | 性別 | number | 1（固定長） | N/A | <ul><!--[--><li><!--[--><code><!--[-->0<!--]--></code>：男性<!--]--></li><li><!--[--><code><!--[-->1<!--]--></code>：女性<!--]--></li><li><!--[--><code><!--[-->2<!--]--></code>：その他<!--]--></li><li><!--[--><code><!--[-->3<!--]--></code>：無回答<!--]--></li><!--]--></ul> |
+| 5 | `sex-enum` | 性別 | number | 1（固定長） | N/A | <ul><li><code>0</code>：男性</li><li><code>1</code>：女性</li><li><code>2</code>：その他</li><li><code>3</code>：無回答</li></ul> |
 | 6 | `bday-day` | 誕生日 | number | 2 | N/A |  |
 | 7 | `bday-month` | 誕生月 | number | 2 | N/A |  |
 | 8 | `bday-year` | 誕生年 | number | 4 | N/A |  |
@@ -216,9 +240,9 @@ LINE Developersコンソールで選択できる、クイック入力のスコ�
 
 | プロパティ | デフォルト値 | 内容 | 指定可能なスコープ |
 | --- | --- | --- | --- |
-| `excludeEmojis` | true | 文字列内の絵文字を削除するかどうか。 | <ul><!--[--><li><!--[--><code><!--[-->given-name<!--]--></code><!--]--></li><li><!--[--><code><!--[-->family-name<!--]--></code><!--]--></li><!--]--></ul> |
-| `excludeNonJp` | true | 12桁以上の電話番号を排除するかどうか。`true`の場合、電話番号が12桁以上のときは、空文字とエラー情報を返します。 | <ul><!--[--><li><!--[--><code><!--[-->tel<!--]--></code><!--]--></li><!--]--></ul> |
-| `digitsOnly` | true | 数字以外の郵便番号を排除するかどうか。`true`の場合、郵便番号に数字以外が含まれているときは、空文字とエラー情報を返します。 | <ul><!--[--><li><!--[--><code><!--[-->postal-code<!--]--></code><!--]--></li><!--]--></ul> |
+| `excludeEmojis` | true | 文字列内の絵文字を削除するかどうか。 | <ul><li><code>given-name</code></li><li><code>family-name</code></li></ul> |
+| `excludeNonJp` | true | 12桁以上の電話番号を排除するかどうか。`true`の場合、電話番号が12桁以上のときは、空文字とエラー情報を返します。 | <ul><li><code>tel</code></li></ul> |
+| `digitsOnly` | true | 数字以外の郵便番号を排除するかどうか。`true`の場合、郵便番号に数字以外が含まれているときは、空文字とエラー情報を返します。 | <ul><li><code>postal-code</code></li></ul> |
 
 ## APIリファレンス
 

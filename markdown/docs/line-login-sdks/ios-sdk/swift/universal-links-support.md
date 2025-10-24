@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/universal-links-support/
-copied_at: 2025-10-24T06:28:56.495Z
+copied_at: 2025-10-24T10:16:11.126Z
 ---
 # ユニバーサルリンクを利用する
 
@@ -30,9 +30,19 @@ Appleの[ユニバーサルリンク](https://developer.apple.com/library/archiv
 
 `apple-app-site-association`ファイルの`paths`フィールドに`/line-auth/*`を含めます。有効な`apple-app-site-association`ファイルは以下のようになります。
 
-json
-
-`{     "applinks": {        "apps": [],        "details": [            {                "appID": "YOUR_TEAM_ID.com.yourcompany.yourapp",                "paths": [ "/line-auth/*" ]            }        ]    } }`
+```json
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "YOUR_TEAM_ID.com.yourcompany.yourapp",
+                "paths": [ "/line-auth/*" ]
+            }
+        ]
+    }
+}
+```
 
 ユニバーサルリンクは実際のiOSデバイスでのみテストできることに注意してください。アプリのIDとプロファイルを正しく設定する必要があります。ユニバーサルリンクが動作しない場合は、Appleの「[Troubleshooting Universal Links](https://developer.apple.com/library/archive/qa/qa1916/_index.html)」を参照してください。次の手順に進む前に、ユニバーサルリンクが動作することを確認してください。
 
@@ -46,9 +56,10 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 `LoginManager.setup`メソッドを呼び出すときに、ユニバーサルリンクをLINE SDK for iOS Swiftに渡します。これにより、ユニバーサルリンクの不正使用を防ぐため、リンクがLINE Developersコンソールとアプリの両方で正しく設定されていることがLINEログインによって検証されます。以下の例では、ユニバーサルリンクは`https://yourdomain.com/line-auth/`です。
 
-swift
-
-`let link = URL(string: "https://yourdomain.com/line-auth/") LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: link)`
+```swift
+let link = URL(string: "https://yourdomain.com/line-auth/")
+LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: link)
+```
 
 `LoginManager.setup`メソッドについて詳しくは、「[iOSアプリにLINEログインを組み込む](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/integrate-line-login/)」を参照してください。
 
@@ -60,9 +71,18 @@ LINEプラットフォームから返されたログイン結果を制御する�
 
 iOS 12以前では、`UIApplicationDelegate`オブジェクトを呼び出して、URLを開きます。したがって、アプリデリゲートクラスに`application(_:continue:restorationHandler:)`デリゲートメソッドが存在していれば、以下の行を追加します。デリゲートメソッドが存在しない場合は、以下のとおりにデリゲートメソッドを作成してください。
 
-swift
-
-`func application(     _ app: UIApplication,    continue userActivity: NSUserActivity,    restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {     if LoginManager.shared.application(app, open: userActivity.webpageURL) {        return true    }    // Your other code to handle universal links and/or user activities. }`
+```swift
+func application(
+    _ app: UIApplication,
+    continue userActivity: NSUserActivity,
+    restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
+{
+    if LoginManager.shared.application(app, open: userActivity.webpageURL) {
+        return true
+    }
+    // Your other code to handle universal links and/or user activities.
+}
+```
 
 ### シーンデリゲートを変更する
 
@@ -72,9 +92,12 @@ Xcode 11以降でプロジェクトを作成した場合は、デフォルトで
 
 アプリがマルチウィンドウをサポートする場合は、使用するシーンデリゲートクラスに、次の行を追加します。
 
-swift
-
-`// SceneDelegate.swift func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {     _ = LoginManager.shared.application(.shared, open: URLContexts.first?.url) }`
+```swift
+// SceneDelegate.swift
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    _ = LoginManager.shared.application(.shared, open: URLContexts.first?.url)
+}
+```
 
 > [!WARNING]
 > 注意

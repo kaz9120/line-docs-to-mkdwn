@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/
-copied_at: 2025-10-24T06:30:04.082Z
+copied_at: 2025-10-24T10:17:21.949Z
 ---
 # Webhookの配信完了イベント
 
@@ -28,6 +28,50 @@ LINE通知メッセージAPIをリクエストし、ユーザーに対してLINE
 | delivery.data | String | ハッシュ化した電話番号の文字列もしくは、[`X-Line-Delivery-Tag`](https://developers.line.biz/ja/reference/line-notification-messages/#send-line-notification-message-template-request-headers)で指定した文字列 |
 
 _Webhookイベントの例_
+
+JSON
+
+[](#)
+
+```json
+// Webhookの配信完了イベントの例(X-Line-Delivery-Tagヘッダ指定なし)
+{
+  "destination": "Uc7472b39e21dab71c2347e02714630d6",
+  "events": [
+    {
+      "type": "delivery",
+      "delivery": {
+        "data": "68df277462529930889fab80ecffdc0883906320591df93c25efc08300410fc2"
+      },
+      "webhookEventId": "01G17DAF0QJ7A3ERC5EJ9MAMH8",
+      "deliveryContext": {
+        "isRedelivery": false
+      },
+      "timestamp": 1650590038721,
+      "mode": "active"
+    }
+  ]
+}
+
+// Webhookの配信完了イベントの例(X-Line-Delivery-Tagヘッダ指定あり)
+{
+  "destination": "Uc7472b39e21dab71c2347e02714630d6",
+  "events": [
+    {
+      "type": "delivery",
+      "delivery": {
+        "data": "15034552939884E28681A7D668CEA94C147C716C0EC9DFE8B80B44EF3B57F6BD0602366BC3menu01"
+      },
+      "webhookEventId": "01G17EJCGAVV66J5WNA7ZCTF6H",
+      "deliveryContext": {
+        "isRedelivery": false
+      },
+      "timestamp": 1650591346705,
+      "mode": "active"
+    }
+  ]
+}
+```
 
 > [!WARNING]
 > Webhookの配信完了イベントの示す状態について

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/liff-cli/
-copied_at: 2025-10-24T06:29:22.070Z
+copied_at: 2025-10-24T10:16:40.300Z
 ---
 # LIFF CLI
 
@@ -56,9 +56,9 @@ LIFF CLIはNode.jsで動作します。パッケージ管理にはnpmまたはYa
 
 ターミナルまたはコマンドラインツール（以下「ターミナル」と言います）を開き、次のコマンドを実行します。
 
-bash
-
-`$ npm install -g @line/liff-cli`
+```bash
+$ npm install -g @line/liff-cli
+```
 
 コマンドを実行すると、LIFF CLIがインストールされ、`liff-cli`コマンドを実行できるようになります。
 
@@ -70,9 +70,11 @@ bash
 
 `add`サブコマンドを使うと、LIFF CLIで管理するチャネルを追加できます。追加したいチャネルのチャネルIDを`add`サブコマンドに渡すと、チャネルシークレットを入力するプロンプトが表示されます。チャネルシークレットを入力すると、チャネルが追加されます。
 
-bash
-
-`$ liff-cli channel add 1234567890 ? Channel Secret?: ******************************** Channel 1234567890 is now added.`
+```bash
+$ liff-cli channel add 1234567890
+? Channel Secret?: ********************************
+Channel 1234567890 is now added.
+```
 
 LIFF CLIの各コマンドにチャネルIDを渡す際は、上記のように、あらかじめ`add`サブコマンドでそのチャネルIDを持つチャネルを追加しておく必要があります。
 
@@ -80,9 +82,10 @@ LIFF CLIの各コマンドにチャネルIDを渡す際は、上記のように�
 
 `use`サブコマンドを使うと、LIFF CLIのデフォルトのチャネルを設定できます。設定したいチャネルのチャネルIDを`use`サブコマンドに渡します。
 
-bash
-
-`$ liff-cli channel use 1234567890 Channel 1234567890 is now selected.`
+```bash
+$ liff-cli channel use 1234567890
+Channel 1234567890 is now selected.
+```
 
 デフォルトのチャネルは、LIFF CLIの各コマンドでチャネルIDを省略した場合に使われます。
 
@@ -94,9 +97,14 @@ bash
 
 `create`サブコマンドを使うと、LIFFアプリを作成できます。LIFFアプリの作成に成功すると、LIFF IDがターミナルに表示されます。
 
-bash
-
-`$ liff-cli app create \    --channel-id 1234567890 \   --name "Brown Coffee" \   --endpoint-url https://example.com \   --view-type full Successfully created LIFF app: 1234567890-AbcdEfgh`
+```bash
+$ liff-cli app create \
+   --channel-id 1234567890 \
+   --name "Brown Coffee" \
+   --endpoint-url https://example.com \
+   --view-type full
+Successfully created LIFF app: 1234567890-AbcdEfgh
+```
 
 #### オプション
 
@@ -116,15 +124,19 @@ URLスキームは**https**である必要があります。なお、URLフラ�
 
 LIFFアプリの画面サイズ。以下のいずれかの値を指定します。
 
-<ul><!--[--><li><!--[--><code><!--[-->full<!--]--></code><!--]--></li><li><!--[--><code><!--[-->tall<!--]--></code><!--]--></li><li><!--[--><code><!--[-->compact<!--]--></code><!--]--></li><!--]--></ul>詳しくは、「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。 |
+<ul><li><code>full</code></li><li><code>tall</code></li><li><code>compact</code></li></ul>詳しくは、「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。 |
 
 ### LIFFアプリを更新する
 
 `update`サブコマンドを使うと、LIFFアプリの設定を更新できます。
 
-bash
-
-`$ liff-cli app update \    --liff-id 1234567890-AbcdEfgh \   --channel-id 1234567890 \   --name "Brown Cafe" Successfully updated LIFF app: 1234567890-AbcdEfgh`
+```bash
+$ liff-cli app update \
+   --liff-id 1234567890-AbcdEfgh \
+   --channel-id 1234567890 \
+   --name "Brown Cafe"
+Successfully updated LIFF app: 1234567890-AbcdEfgh
+```
 
 #### オプション
 
@@ -145,15 +157,18 @@ URLスキームは**https**である必要があります。なお、URLフラ�
 
 LIFFアプリの画面サイズ。以下のいずれかの値を指定します。
 
-<ul><!--[--><li><!--[--><code><!--[-->full<!--]--></code><!--]--></li><li><!--[--><code><!--[-->tall<!--]--></code><!--]--></li><li><!--[--><code><!--[-->compact<!--]--></code><!--]--></li><!--]--></ul>詳しくは、「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。 |
+<ul><li><code>full</code></li><li><code>tall</code></li><li><code>compact</code></li></ul>詳しくは、「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。 |
 
 ### LIFFアプリを参照する
 
 `list`サブコマンドを使うと、LIFFアプリを参照できます。LIFF IDとLIFFアプリ名が一覧で表示されます。
 
-bash
-
-`$ liff-cli app list --channel-id 1234567890 LIFF apps: 1234567890-AbcdEfgh: Brown Coffee 1234567890-IjklMnop: Brown Cafe`
+```bash
+$ liff-cli app list --channel-id 1234567890
+LIFF apps:
+1234567890-AbcdEfgh: Brown Coffee
+1234567890-IjklMnop: Brown Cafe
+```
 
 #### オプション
 
@@ -167,9 +182,13 @@ bash
 
 `delete`サブコマンドを使うと、LIFFアプリを削除できます。
 
-bash
-
-`$ liff-cli app delete \    --liff-id 1234567890-AbcdEfgh \   --channel-id 1234567890 Deleting LIFF app... Successfully deleted LIFF app: 1234567890-AbcdEfgh`
+```bash
+$ liff-cli app delete \
+   --liff-id 1234567890-AbcdEfgh \
+   --channel-id 1234567890
+Deleting LIFF app...
+Successfully deleted LIFF app: 1234567890-AbcdEfgh
+```
 
 #### オプション
 
@@ -184,9 +203,9 @@ bash
 
 `scaffold`コマンドを使うと、[Create LIFF App](https://developers.line.biz/ja/docs/liff/cli-tool-create-liff-app/)を通じてLIFFアプリのひな形を作成できます。LIFFアプリのプロジェクト名を`scaffold`コマンドに渡すと、そのプロジェクト名を使ってCreate LIFF Appを実行します。
 
-bash
-
-`$ liff-cli scaffold my-app --liff-id 1234567890-AbcdEfgh`
+```bash
+$ liff-cli scaffold my-app --liff-id 1234567890-AbcdEfgh
+```
 
 Create LIFF Appについて詳しくは、「[Create LIFF AppでLIFFアプリの開発環境を構築する](https://developers.line.biz/ja/docs/liff/cli-tool-create-liff-app/)」を参照してください。
 
@@ -206,23 +225,77 @@ Create LIFF Appについて詳しくは、「[Create LIFF AppでLIFFアプリの
 2.  [LIFFアプリの作成](#manage-liff-apps-create)
 3.  [LIFFアプリのひな形を作成する](#scaffold)
 
-bash
-
-`$ liff-cli init \    --channel-id 1234567890 \   --name "Brown Coffee" \   --view-type full \   --endpoint-url https://example.com`
+```bash
+$ liff-cli init \
+   --channel-id 1234567890 \
+   --name "Brown Coffee" \
+   --view-type full \
+   --endpoint-url https://example.com
+```
 
 たとえば、上記のコマンドを実行すると、チャネルIDが「1234567890」のチャネルを追加します。次に、そのチャネルに、LIFFアプリ名が「Brown Coffee」、エンドポイントURLが「https://example.com」、画面サイズが「Full」のLIFFアプリを作成します。最後に、作成したLIFFアプリのLIFF IDを設定したひな形を作成します。
 
-bash
+```bash
+liff-cli init \
+   --channel-id 1234567890 \
+   --name "Brown Coffee" \
+   --view-type full \
+   --endpoint-url https://example.com
 
-``liff-cli init \    --channel-id 1234567890 \   --name "Brown Coffee" \   --view-type full \   --endpoint-url https://example.com ? Channel Secret?: ******************************** Channel 1234567890 is now added. Welcome to the Create LIFF App ? Which template do you want to use? vanilla ? JavaScript or TypeScript? JavaScript ? Which package manager do you want to use? npm Installing dependencies: - @line/liff removed 10 packages in 944ms 22 packages are looking for funding   run `npm fund` for details Installing devDependencies: - vite added 10 packages in 7s 25 packages are looking for funding   run `npm fund` for details Done! Now run:   cd Brown Coffee  npm run dev App 1234567890-AbcdEfgh successfully created. Now do the following:   1. go to app directory: `cd Brown Coffee`  2. create certificate key files (e.g. `mkcert localhost`, see: https://developers.line.biz/en/docs/liff/liff-cli/#serve-operating-conditions )  3. run LIFF app template using command above (e.g. `npm run dev` or `yarn dev`)  4. open new terminal window, navigate to `Brown Coffee` directory  5. run `liff-cli serve -l 1234567890-AbcdEfgh -u http://localhost:${PORT FROM STEP 3.}/`  6. open browser and navigate to http://localhost:${PORT FROM STEP 3.}/``
+? Channel Secret?: ********************************
+Channel 1234567890 is now added.
+Welcome to the Create LIFF App
+? Which template do you want to use? vanilla
+? JavaScript or TypeScript? JavaScript
+? Which package manager do you want to use? npm
+
+Installing dependencies:
+- @line/liff
+
+
+removed 10 packages in 944ms
+
+22 packages are looking for funding
+  run `npm fund` for details
+
+Installing devDependencies:
+- vite
+
+
+added 10 packages in 7s
+
+25 packages are looking for funding
+  run `npm fund` for details
+
+
+Done! Now run:
+
+  cd Brown Coffee
+  npm run dev
+
+
+App 1234567890-AbcdEfgh successfully created.
+
+Now do the following:
+  1. go to app directory: `cd Brown Coffee`
+  2. create certificate key files (e.g. `mkcert localhost`, see: https://developers.line.biz/en/docs/liff/liff-cli/#serve-operating-conditions )
+  3. run LIFF app template using command above (e.g. `npm run dev` or `yarn dev`)
+  4. open new terminal window, navigate to `Brown Coffee` directory
+  5. run `liff-cli serve -l 1234567890-AbcdEfgh -u http://localhost:${PORT FROM STEP 3.}/`
+  6. open browser and navigate to http://localhost:${PORT FROM STEP 3.}/
+```
 
 ### オプション
 
 `init`コマンドでは、以下のオプションを利用できます。なお、オプションを省略すると、`init`コマンドを実行した際に、そのオプションを入力するプロンプトが表示されます。
 
-bash
-
-`$ liff-cli init ? Channel ID? 1234567890 ? App name? Brown Coffee ? View type? full ? Endpoint URL? (leave empty for default 'https://localhost:9000') https://example.com`
+```bash
+$ liff-cli init
+? Channel ID? 1234567890
+? App name? Brown Coffee
+? View type? full
+? Endpoint URL? (leave empty for default 'https://localhost:9000') https://example.com
+```
 
 | オプション | 必須 | 説明 |
 | --- | --- | --- |
@@ -231,7 +304,7 @@ bash
 | `-v`、`--view-type` | ✅ ※2 | 
 LIFFアプリの画面サイズ。以下のいずれかの値を指定します。
 
-<ul><!--[--><li><!--[--><code><!--[-->full<!--]--></code><!--]--></li><li><!--[--><code><!--[-->tall<!--]--></code><!--]--></li><li><!--[--><code><!--[-->compact<!--]--></code><!--]--></li><!--]--></ul>詳しくは、「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。 |
+<ul><li><code>full</code></li><li><code>tall</code></li><li><code>compact</code></li></ul>詳しくは、「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。 |
 | `-e`、`--endpoint-url` |  | 
 
 LIFFアプリのエンドポイントURLを指定します。LIFFアプリのデプロイ先のURLです（例：`https://example.com`）。LIFF URLを利用してLIFFアプリを起動した際に、このURLが利用されます。
@@ -255,13 +328,30 @@ URLスキームは**https**である必要があります。なお、URLフラ�
 > 
 > ![](https://developers.line.biz/media/liff/liff-cli/endpoint-url-ja.png)
 
-bash
+```bash
+# ローカル開発サーバーをURLで指定する場合
+$ liff-cli serve \
+   --liff-id 1234567890-AbcdEfgh \
+   --url http://localhost:3000/
 
-`# ローカル開発サーバーをURLで指定する場合 $ liff-cli serve \    --liff-id 1234567890-AbcdEfgh \   --url http://localhost:3000/ Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh. →  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh →  Proxy server: https://localhost:9000/`
+Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh.
 
-bash
+→  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh
+→  Proxy server: https://localhost:9000/
+```
 
-`# ローカル開発サーバーをホストとポート番号で指定する場合 $ liff-cli serve \    --liff-id 1234567890-AbcdEfgh \   --host localhost \   --port 3000 Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh. →  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh →  Proxy server: https://localhost:9000/`
+```bash
+# ローカル開発サーバーをホストとポート番号で指定する場合
+$ liff-cli serve \
+   --liff-id 1234567890-AbcdEfgh \
+   --host localhost \
+   --port 3000
+
+Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh.
+
+→  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh
+→  Proxy server: https://localhost:9000/
+```
 
 ### LIFFアプリをLIFF Inspectorでデバッグする
 
@@ -269,15 +359,28 @@ bash
 
 `--inspect`オプションは、LIFF InspectorのLIFF Inspector ServerをHTTPSで起動するため、開発者はLIFFアプリにLIFF Inspector PluginをインストールするだけでLIFFアプリをデバッグできます。詳しくは、LIFF Inspectorの[README](https://github.com/line/liff-inspector/blob/main/README_ja.md)を参照してください。
 
-bash
+```bash
+$ liff-cli serve \
+   --liff-id 1234567890-AbcdEfgh \
+   --url http://localhost:3000/ \
+   --inspect
 
-`$ liff-cli serve \    --liff-id 1234567890-AbcdEfgh \   --url http://localhost:3000/ \   --inspect Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh. →  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh →  Proxy server: https://localhost:9000/?li.origin=wss%3A%2F%2Flocalhost%3A9222 Debugger listening on wss://192.168.1.6:9222 You need to serve this server over SSL/TLS For help, see: https://github.com/line/liff-inspector#important-liff-inspector-server-need-to-be-served-over-ssltls`
+Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh.
+
+→  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh
+→  Proxy server: https://localhost:9000/?li.origin=wss%3A%2F%2Flocalhost%3A9222
+Debugger listening on wss://192.168.1.6:9222
+
+You need to serve this server over SSL/TLS
+For help, see: https://github.com/line/liff-inspector#important-liff-inspector-server-need-to-be-served-over-ssltls
+```
 
 LIFF URLにアクセスすると、`serve`コマンドを実行したターミナルに`devtools://devtools/`から始まるURLが表示されます。このURLをGoogle Chromeで開くと、LIFFアプリをGoogle Chrome上でデバッグできます。
 
-bash
-
-`connection from client, id: 1234567890-AbcdEfgh DevTools URL: devtools://devtools/bundled/inspector.html?wss=localhost:9222/?hi_id=1234567890-AbcdEfgh`
+```bash
+connection from client, id: 1234567890-AbcdEfgh
+DevTools URL: devtools://devtools/bundled/inspector.html?wss=localhost:9222/?hi_id=1234567890-AbcdEfgh
+```
 
 ### ローカル開発サーバーを外部に公開する
 
@@ -290,9 +393,17 @@ LIFF CLIでは、プロキシとして[ngrok](https://ngrok.com/)をサポート
 
 `--proxy-type`オプションに`ngrok`を指定すると、ローカルプロキシサーバーの代わりに[ngrok](https://github.com/ngrok/ngrok-javascript)を使うことができます。これにより、ローカルの開発サーバーを外部に公開できます。ngrokを使用する際は、環境変数として`NGROK_AUTHTOKEN`にngrokの認証トークンを設定してください。
 
-bash
+```bash
+$ NGROK_AUTHTOKEN={認証トークン} liff-cli serve \
+  --liff-id 1234567890-AbcdEfgh \
+  --url http://localhost:3000/ \
+  --proxy-type ngrok
 
-`$ NGROK_AUTHTOKEN={認証トークン} liff-cli serve \   --liff-id 1234567890-AbcdEfgh \  --url http://localhost:3000/ \  --proxy-type ngrok Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh. →  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh →  Proxy server: https://1234abcd.ngrok.example.com/`
+Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh.
+
+→  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh
+→  Proxy server: https://1234abcd.ngrok.example.com/
+```
 
 #### プロキシの種類：ngrok-v1（非推奨）
 
@@ -302,9 +413,18 @@ bash
 
 `--proxy-type`オプションに`ngrok-v1`を指定すると、ローカルプロキシサーバーの代わりに[ngrok v1](https://github.com/inconshreveable/ngrok)を使うことができます。これにより、ローカル開発サーバーを外部に公開できます。なお、この機能を使うには、[ngrok v1](https://github.com/inconshreveable/ngrok)と[node-pty](https://www.npmjs.com/package/node-pty)を別途インストールする必要があります。
 
-bash
+```bash
+$ liff-cli serve \
+  --liff-id 1234567890-AbcdEfgh \
+  --url http://127.0.0.1:3000/ \
+  --proxy-type ngrok-v1
 
-`$ liff-cli serve \   --liff-id 1234567890-AbcdEfgh \  --url http://127.0.0.1:3000/ \  --proxy-type ngrok-v1 ngrok-v1 is experimental feature. Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh. →  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh →  Proxy server: https://1234abcd.ngrok.example.com/`
+ngrok-v1 is experimental feature.
+Successfully updated endpoint url for LIFF ID: 1234567890-AbcdEfgh.
+
+→  LIFF URL:     https://liff.line.me/1234567890-AbcdEfgh
+→  Proxy server: https://1234abcd.ngrok.example.com/
+```
 
 ### serveコマンドの動作条件
 
@@ -317,21 +437,32 @@ bash
 
 1.  次のコマンドを実行し、`mkcert`をインストールします。
 
-bash
+```bash
+# macOSの場合（Homebrewを使用）
+$ brew install mkcert
 
-`# macOSの場合（Homebrewを使用） $ brew install mkcert # Windowsの場合（Chocolateyを使用） $ choco install mkcert`
+# Windowsの場合（Chocolateyを使用）
+$ choco install mkcert
+```
 
 2.  `mkcert -install`を実行し、ローカル認証局を作成します。
 
-bash
-
-`$ mkcert -install`
+```bash
+$ mkcert -install
+```
 
 3.  `mkcert localhost`を実行し、localhostに対して有効な証明書（`localhost.pem`）と秘密鍵（`localhost-key.pem`）を作成します。
 
-bash
+```bash
+$ mkcert localhost
+Note: the local CA is not installed in the Firefox trust store.
+Run "mkcert -install" for certificates to be trusted automatically ⚠️
 
-`$ mkcert localhost Note: the local CA is not installed in the Firefox trust store. Run "mkcert -install" for certificates to be trusted automatically ⚠️ Created a new certificate valid for the following names 📜  - "localhost" The certificate is at "./localhost.pem" and the key at "./localhost-key.pem" ✅`
+Created a new certificate valid for the following names 📜
+ - "localhost"
+
+The certificate is at "./localhost.pem" and the key at "./localhost-key.pem" ✅
+```
 
 ### オプション
 
@@ -347,7 +478,7 @@ bash
 | `--proxy-type` |  | 
 使用するプロキシの種類。以下のいずれかの値を指定します。
 
-<ul><!--[--><li><!--[--><code><!--[-->local-proxy<!--]--></code>：ローカルプロキシ<!--]--></li><li><!--[--><code><!--[-->ngrok<!--]--></code>：<a href="https://github.com/ngrok/ngrok-javascript" target="_blank" class="" rel="nofollow"><!--[--><!--[-->ngrok<!--]--><!--]--></a><!--]--></li><li><!--[--><code><!--[-->ngrok-v1<!--]--></code>：<a href="https://github.com/inconshreveable/ngrok" target="_blank" class="" rel="nofollow"><!--[--><!--[-->ngrok v1<!--]--><!--]--></a>（非推奨）<!--]--></li><!--]--></ul>デフォルト値は`local-proxy`です。 |
+<ul><li><code>local-proxy</code>：ローカルプロキシ</li><li><code>ngrok</code>：<a href="https://github.com/ngrok/ngrok-javascript" target="_blank" class="" rel="nofollow">ngrok</a></li><li><code>ngrok-v1</code>：<a href="https://github.com/inconshreveable/ngrok" target="_blank" class="" rel="nofollow">ngrok v1</a>（非推奨）</li></ul>デフォルト値は`local-proxy`です。 |
 | `--ngrok-command` |  | ngrok v1を実行するコマンドを指定します。デフォルト値は`ngrok`です。 |
 | `--local-proxy-port` |  | ローカル開発サーバーを対象とするローカルプロキシサーバーが待ち受けるポート番号を指定します。デフォルト値は`9000`です。 |
 | `--local-proxy-inspector-port` |  | LIFF Inspector Serverを対象とするローカルプロキシサーバーが待ち受けるポート番号を指定します。デフォルト値は`9223`です。 |

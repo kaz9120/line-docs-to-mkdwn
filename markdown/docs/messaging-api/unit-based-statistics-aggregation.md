@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/unit-based-statistics-aggregation/
-copied_at: 2025-10-24T06:28:19.195Z
+copied_at: 2025-10-24T10:15:12.779Z
 ---
 # 送信したメッセージの統計情報を取得する
 
@@ -42,9 +42,23 @@ copied_at: 2025-10-24T06:28:19.195Z
 
 以下の例では、`promotion_a`というユニット名を付与してプッシュメッセージを送信しています。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "to": "U4af4980629...",    "messages":[        {            "type": "text",            "text": "Hello, world1"        }    ],    "customAggregationUnits": [        "promotion_a"    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+    "to": "U4af4980629...",
+    "messages":[
+        {
+            "type": "text",
+            "text": "Hello, world1"
+        }
+    ],
+    "customAggregationUnits": [
+        "promotion_a"
+    ]
+}'
+```
 
 > [!TIP]
 > ユニット名の後付けや変更について
@@ -71,9 +85,14 @@ sh
 
 ユニット名を付与して送信したプッシュメッセージやマルチキャストメッセージの統計情報は、「[ユニットごとの統計情報を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-statistics-per-unit)」エンドポイントで取得できます。以下の例では、`promotion_a`という名前のユニットの統計情報を取得しています。
 
-sh
-
-`curl -v -X GET https://api.line.me/v2/bot/insight/message/event/aggregation \ -H 'Authorization: Bearer {channel access token}' \ --data-urlencode 'customAggregationUnit=promotion_a' \ --data-urlencode 'from=20210301' \ --data-urlencode 'to=20210331' \ -G`
+```sh
+curl -v -X GET https://api.line.me/v2/bot/insight/message/event/aggregation \
+-H 'Authorization: Bearer {channel access token}' \
+--data-urlencode 'customAggregationUnit=promotion_a' \
+--data-urlencode 'from=20210301' \
+--data-urlencode 'to=20210331' \
+-G
+```
 
 なお、当月中に付与したユニット名は、「[当月に付与したユニット名のリストを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-a-list-of-unit-names-assigned-during-this-month)」エンドポイントで取得できます。前月以前に付与したユニット名を確認するためのエンドポイントはありません。
 
@@ -89,23 +108,75 @@ sh
 
 ここでは、マルチキャストメッセージを使って、150人のユーザーにメッセージを送るとします。このとき、`customAggregationUnits`プロパティでユニット名を指定します。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/multicast \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "to": ["U4af4980629...","U0c229f96c4...",...], // 150件のユーザーID    "messages":[        {            "type": "text",            "text": "🆕 新商品が入荷しました！\nhttps://example.com/new-item/"        }    ],    "customAggregationUnits": [        "new-item-message-yyyymmdd"    ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/multicast \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+    "to": ["U4af4980629...","U0c229f96c4...",...], // 150件のユーザーID
+    "messages":[
+        {
+            "type": "text",
+            "text": "🆕 新商品が入荷しました！\nhttps://example.com/new-item/"
+        }
+    ],
+    "customAggregationUnits": [
+        "new-item-message-yyyymmdd"
+    ]
+}'
+```
 
 ### 2.　統計情報を取得して集計する
 
 メッセージを送信してから数日待ち、ユニットごとの統計情報を取得します。
 
-sh
-
-`curl -v -X GET https://api.line.me/v2/bot/insight/message/event/aggregation \ -H 'Authorization: Bearer {channel access token}' \ --data-urlencode 'customAggregationUnit=new-item-message-yyyymmdd' \ --data-urlencode 'from=20210301' \ --data-urlencode 'to=20210331' \ -G`
+```sh
+curl -v -X GET https://api.line.me/v2/bot/insight/message/event/aggregation \
+-H 'Authorization: Bearer {channel access token}' \
+--data-urlencode 'customAggregationUnit=new-item-message-yyyymmdd' \
+--data-urlencode 'from=20210301' \
+--data-urlencode 'to=20210331' \
+-G
+```
 
 この例では、以下のような統計情報が取得できます。
 
-json
-
-`{   "overview": {    "uniqueImpression": 111,    "uniqueClick": 74,    "uniqueMediaPlayed": null,    "uniqueMediaPlayed100Percent": null  },  "messages": [    {      "seq": 1,      "impression": 111,      "uniqueImpression": 111,      "mediaPlayed": null,      "mediaPlayed25Percent": null,      "mediaPlayed50Percent": null,      "mediaPlayed75Percent": null,      "mediaPlayed100Percent": null,      "uniqueMediaPlayed": null,      "uniqueMediaPlayed25Percent": null,      "uniqueMediaPlayed50Percent": null,      "uniqueMediaPlayed75Percent": null,      "uniqueMediaPlayed100Percent": null    }  ],  "clicks": [    {      "seq": 1,      "url": "https://example.com/new-item/",      "click": 74,      "uniqueClick": 74,      "uniqueClickOfRequest": 74    }  ] }`
+```json
+{
+  "overview": {
+    "uniqueImpression": 111,
+    "uniqueClick": 74,
+    "uniqueMediaPlayed": null,
+    "uniqueMediaPlayed100Percent": null
+  },
+  "messages": [
+    {
+      "seq": 1,
+      "impression": 111,
+      "uniqueImpression": 111,
+      "mediaPlayed": null,
+      "mediaPlayed25Percent": null,
+      "mediaPlayed50Percent": null,
+      "mediaPlayed75Percent": null,
+      "mediaPlayed100Percent": null,
+      "uniqueMediaPlayed": null,
+      "uniqueMediaPlayed25Percent": null,
+      "uniqueMediaPlayed50Percent": null,
+      "uniqueMediaPlayed75Percent": null,
+      "uniqueMediaPlayed100Percent": null
+    }
+  ],
+  "clicks": [
+    {
+      "seq": 1,
+      "url": "https://example.com/new-item/",
+      "click": 74,
+      "uniqueClick": 74,
+      "uniqueClickOfRequest": 74
+    }
+  ]
+}
+```
 
 これらの情報を用いて、メッセージの開封率や、URLのタップ率などを確認できます。
 

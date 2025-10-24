@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/retrying-api-request/
-copied_at: 2025-10-24T06:28:07.659Z
+copied_at: 2025-10-24T10:15:17.444Z
 ---
 # 失敗したAPIリクエストを再試行する
 
@@ -47,9 +47,20 @@ copied_at: 2025-10-24T06:28:07.659Z
 
 以下は、リトライキー（`123e4567-e89b-12d3-a456-426614174000`）を指定してプッシュメッセージを送信するリクエストの例です。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {CHANNEL_ACCESS_TOKEN}' \ -H 'X-Line-Retry-Key: 123e4567-e89b-12d3-a456-426614174000' \ -d '{   "messages": [    {      "type": "text",      "text": "Hello, user"    }  ] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {CHANNEL_ACCESS_TOKEN}' \
+-H 'X-Line-Retry-Key: 123e4567-e89b-12d3-a456-426614174000' \
+-d '{
+  "messages": [
+    {
+      "type": "text",
+      "text": "Hello, user"
+    }
+  ]
+}'
+```
 
 ### ステータスコードに応じたAPIリクエストの再試行
 
@@ -85,23 +96,42 @@ APIリクエストを再試行するかどうかは、返されたステータ�
 
 再試行に成功したリクエストには、正常にリクエストが受理された場合と同じレスポンスが返されます。以下はその例です。
 
-sh
-
-`HTTP/1.1 200 OK x-line-request-id: 123e4567-e89b-12d3-a456-426655440001`
+```sh
+HTTP/1.1 200 OK
+x-line-request-id: 123e4567-e89b-12d3-a456-426655440001
+```
 
 ##### 受理されたリクエストを再試行した場合のレスポンス
 
 LINEプラットフォームがHTTPステータスコード200番台を返したAPIリクエストを再試行すると、ステータスコード`409`が返されます。レスポンスには、すでに受理されていたリクエストのリクエストID`x-line-accepted-request-id`が返されます。
 
-sh
+```sh
+HTTP/1.1 409 Conflict
+x-line-request-id: 123e4567-e89b-12d3-a456-426655440002
+x-line-accepted-request-id: 123e4567-e89b-12d3-a456-426655440001
 
-`HTTP/1.1 409 Conflict x-line-request-id: 123e4567-e89b-12d3-a456-426655440002 x-line-accepted-request-id: 123e4567-e89b-12d3-a456-426655440001 {   "message": "The retry key is already accepted" }`
+{
+  "message": "The retry key is already accepted"
+}
+```
 
 さらにプッシュメッセージの場合は、APIリクエストが受理されたときと同じ`sentMessages.id`や`sentMessages.quoteToken`を含むJSONオブジェクトを返します。
 
-sh
+```sh
+HTTP/1.1 409 Conflict
+x-line-request-id: 123e4567-e89b-12d3-a456-426655440002
+x-line-accepted-request-id: 123e4567-e89b-12d3-a456-426655440001
 
-`HTTP/1.1 409 Conflict x-line-request-id: 123e4567-e89b-12d3-a456-426655440002 x-line-accepted-request-id: 123e4567-e89b-12d3-a456-426655440001 {   "message": "The retry key is already accepted",  "sentMessages": [    {      "id": "461230966842064897",      "quoteToken": "IStG5h1Tz7b..."    }  ] }`
+{
+  "message": "The retry key is already accepted",
+  "sentMessages": [
+    {
+      "id": "461230966842064897",
+      "quoteToken": "IStG5h1Tz7b..."
+    }
+  ]
+}
+```
 
 ## 関連ページ
 

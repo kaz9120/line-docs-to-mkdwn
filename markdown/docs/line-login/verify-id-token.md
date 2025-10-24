@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/verify-id-token/
-copied_at: 2025-10-24T06:28:40.201Z
+copied_at: 2025-10-24T10:16:00.195Z
 ---
 # IDトークンからプロフィール情報を取得する
 
@@ -45,15 +45,22 @@ IDトークンを検証するには、検証のためのコードを書くか、
 
 `alg`が`HS256`の場合：
 
-json
-
-`{   "typ": "JWT",  "alg": "HS256" }`
+```json
+{
+  "typ": "JWT",
+  "alg": "HS256"
+}
+```
 
 `alg`が`ES256`の場合：
 
-json
-
-`{   "typ": "JWT",  "alg": "ES256",  "kid": "a2a459aec5b65fa..." }`
+```json
+{
+  "typ": "JWT",
+  "alg": "ES256",
+  "kid": "a2a459aec5b65fa..."
+}
+```
 
 ### ペイロード
 
@@ -68,7 +75,7 @@ json
 | `iat` | Number | IDトークンの生成時間。UNIX時間（秒）で返されます。 |
 | `auth_time` | Number | ユーザー認証時間。UNIX時間（秒）で返されます。認可リクエストに`max_age`の値を指定しなかった場合は含まれません。 |
 | `nonce` | String | 認可URLに指定した`nonce`の値。認可リクエストに`nonce`の値を指定しなかった場合は含まれません。 |
-| `amr` | Stringの配列 | ユーザーが使用した認証方法のリスト。特定の条件下ではペイロードに含まれません。<br/>以下のいずれかの値が含まれます。<ul><!--[--><li><!--[--><code><!--[-->pwd<!--]--></code>：メールアドレスとパスワードによるログイン<!--]--></li><li><!--[--><code><!--[-->lineautologin<!--]--></code>：LINEによる自動ログイン（LINE SDKを使用した場合も含む）<!--]--></li><li><!--[--><code><!--[-->lineqr<!--]--></code>：QRコードによるログイン<!--]--></li><li><!--[--><code><!--[-->linesso<!--]--></code>：シングルサインオンによるログイン<!--]--></li><li><!--[--><code><!--[-->mfa<!--]--></code>：2要素認証によるログイン<!--]--></li><!--]--></ul>ユーザー認証について詳しくは、「[ユーザーがユーザー認証を行う](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#authentication-process)」を参照してください。また、2要素認証について詳しくは、「[2要素認証を必須化する](https://developers.line.biz/ja/docs/line-login/overview/#two-factor-authentication)」を参照してください。 |
+| `amr` | Stringの配列 | ユーザーが使用した認証方法のリスト。特定の条件下ではペイロードに含まれません。<br/>以下のいずれかの値が含まれます。<ul><li><code>pwd</code>：メールアドレスとパスワードによるログイン</li><li><code>lineautologin</code>：LINEによる自動ログイン（LINE SDKを使用した場合も含む）</li><li><code>lineqr</code>：QRコードによるログイン</li><li><code>linesso</code>：シングルサインオンによるログイン</li><li><code>mfa</code>：2要素認証によるログイン</li></ul>ユーザー認証について詳しくは、「[ユーザーがユーザー認証を行う](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#authentication-process)」を参照してください。また、2要素認証について詳しくは、「[2要素認証を必須化する](https://developers.line.biz/ja/docs/line-login/overview/#two-factor-authentication)」を参照してください。 |
 | `name` | String | ユーザーの表示名。認可リクエストに`profile`スコープを指定しなかった場合は含まれません。 |
 | `picture` | String | ユーザープロフィールの画像URL。認可リクエストに`profile`スコープを指定しなかった場合は含まれません。 |
 | `email` | String | ユーザーのメールアドレス。認可リクエストに`email`スコープを指定しなかった場合は含まれません。 |
@@ -76,9 +83,19 @@ json
 
 以下はデコードしたペイロード部分の例です。
 
-json
-
-`{   "iss": "https://access.line.me",  "sub": "U1234567890abcdef1234567890abcdef",  "aud": "1234567890",  "exp": 1504169092,  "iat": 1504263657,  "nonce": "0987654asdf",  "amr": ["pwd"],  "name": "Taro Line",  "picture": "https://sample_line.me/aBcdefg123456" }`
+```json
+{
+  "iss": "https://access.line.me",
+  "sub": "U1234567890abcdef1234567890abcdef",
+  "aud": "1234567890",
+  "exp": 1504169092,
+  "iat": 1504263657,
+  "nonce": "0987654asdf",
+  "amr": ["pwd"],
+  "name": "Taro Line",
+  "picture": "https://sample_line.me/aBcdefg123456"
+}
+```
 
 ### 署名
 
@@ -103,15 +120,28 @@ IDトークンを検証するエンドポイントを利用する場合、アク
 
 リクエストの例：
 
-sh
-
-`curl -v -X POST 'https://api.line.me/oauth2/v2.1/verify' \  -d 'id_token=eyJraWQiOiIxNmUwNGQ0ZTU2NzgzYTc5MmRjYjQ2ODRkOD...' \ -d 'client_id=1234567890'`
+```sh
+curl -v -X POST 'https://api.line.me/oauth2/v2.1/verify' \
+ -d 'id_token=eyJraWQiOiIxNmUwNGQ0ZTU2NzgzYTc5MmRjYjQ2ODRkOD...' \
+ -d 'client_id=1234567890'
+```
 
 レスポンスの例：
 
-json
-
-`{   "iss": "https://access.line.me",  "sub": "U1234567890abcdef1234567890abcdef",  "aud": "1234567890",  "exp": 1504169092,  "iat": 1504263657,  "nonce": "0987654asdf",  "amr": ["pwd"],  "name": "Taro Line",  "picture": "https://sample_line.me/aBcdefg123456",  "email": "taro.line@example.com" }`
+```json
+{
+  "iss": "https://access.line.me",
+  "sub": "U1234567890abcdef1234567890abcdef",
+  "aud": "1234567890",
+  "exp": 1504169092,
+  "iat": 1504263657,
+  "nonce": "0987654asdf",
+  "amr": ["pwd"],
+  "name": "Taro Line",
+  "picture": "https://sample_line.me/aBcdefg123456",
+  "email": "taro.line@example.com"
+}
+```
 
 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[IDトークンを検証する](https://developers.line.biz/ja/reference/line-login/#verify-id-token)」を参照してください。
 

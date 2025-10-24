@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/getting-user-ids/
-copied_at: 2025-10-24T06:28:00.521Z
+copied_at: 2025-10-24T10:15:10.329Z
 ---
 # ユーザーIDを取得する
 
@@ -48,9 +48,28 @@ Messaging APIで特定のユーザーに対してメッセージを送信する�
 
 以下は、LINE公式アカウントを友だち追加したときに送られる[Webhookイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)の例です。
 
-json
-
-`{   "destination": "xxxxxxxxxx",  "events": [    {      "type": "follow",      "timestamp": 1462629479859,      "source": {        // ユーザーIDはsourceオブジェクトのuserIdプロパティから取得できる        "type": "user",        "userId": "U8189cf6745fc0d808977bdb0b9f22995"      },      "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",      "mode": "active",      "webhookEventId": "01FZ74A0TDDPYRVKNK77XKC3ZR",      "deliveryContext": {        "isRedelivery": false      }    }  ] }`
+```json
+{
+  "destination": "xxxxxxxxxx",
+  "events": [
+    {
+      "type": "follow",
+      "timestamp": 1462629479859,
+      "source": {
+        // ユーザーIDはsourceオブジェクトのuserIdプロパティから取得できる
+        "type": "user",
+        "userId": "U8189cf6745fc0d808977bdb0b9f22995"
+      },
+      "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+      "mode": "active",
+      "webhookEventId": "01FZ74A0TDDPYRVKNK77XKC3ZR",
+      "deliveryContext": {
+        "isRedelivery": false
+      }
+    }
+  ]
+}
+```
 
 ただし、ユーザーがプロフィール情報の取得に同意していない場合、WebhookにユーザーIDは含まれません。詳しくは、「[ユーザーのプロフィール情報取得の同意](https://developers.line.biz/ja/docs/messaging-api/user-consent/)」を参照してください。
 

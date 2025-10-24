@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/cli-tool-create-liff-app/
-copied_at: 2025-10-24T06:29:50.005Z
+copied_at: 2025-10-24T10:16:34.128Z
 ---
 # Create LIFF AppでLIFFアプリの開発環境を構築する
 
@@ -58,60 +58,78 @@ Create LIFF Appの実行時にはLIFF IDが必要となります。まず「[チ
 ### Create LIFF Appを使って開発環境を作る
 
 1.  Create LIFF Appを実行します。ターミナルまたはコマンドラインツール（以下「ターミナル」といいます）を開いてください。任意のディレクトリ上で、次のコマンドを実行します。
-    
-    bash
-    
-    `$ npx @line/create-liff-app`
+    ```bash
+    $ npx @line/create-liff-app
+    ```
     
       
     なお、コマンド実行時には[オプション](#options)の指定が可能です。
 2.  ここからはCreate LIFF Appの質問に答えていきます。質問の途中でやめたくなった場合は、WindowsならCtrl+c、macOSならcontrol+cで中断できます。
 3.  プロジェクト名を入力します。何も入力せずにそのまま進んだ場合、プロジェクト名はデフォルトの`my-app`になります。プロジェクト名は、Create LIFF Appによって生成されるディレクトリの名前等に用いられます。
-    
-    bash
-    
-    `? Enter your project name:  (my-app)`
+    ```bash
+    ? Enter your project name:  (my-app)
+    ```
     
       
     以降の手順では、プロジェクト名に`my-app`を入力したものとして説明します。
 4.  使用するライブラリやフレームワークを選択します。
-    
-    bash
-    
-    `? Which template do you want to use? (Use arrow keys) ❯ vanilla   react  vue  svelte  nextjs  nuxtjs`
+    ```bash
+    ? Which template do you want to use? (Use arrow keys)
+    ❯ vanilla
+      react
+      vue
+      svelte
+      nextjs
+      nuxtjs
+    ```
     
 5.  使用する言語を選択します。
-    
-    bash
-    
-    `? JavaScript or TypeScript? (Use arrow keys) ❯ JavaScript   TypeScript`
+    ```bash
+    ? JavaScript or TypeScript? (Use arrow keys)
+    ❯ JavaScript
+      TypeScript
+    ```
     
 6.  LIFF IDを入力します。未入力で進むこともできます。後からLIFF IDを入力、変更したい場合は、生成された`my-app`ディレクトリ内にある`.env`ファイルを直接編集してください。
-    
-    bash
-    
-    `? Please enter your LIFF ID: Don't you have LIFF ID? Check out https://developers.line.biz/ja/docs/liff/getting-started/ (liffId)`
+    ```bash
+    ? Please enter your LIFF ID:
+    Don't you have LIFF ID? Check out https://developers.line.biz/ja/docs/liff/getting-started/ (liffId)
+    ```
     
 7.  どのパッケージマネージャを使用するかを選択します。パッケージ管理にはYarnまたはnpmが使用できますが、ここではYarnを選択します。
-    
-    bash
-    
-    `? Which package manager do you want to use? (Use arrow keys) ❯ yarn   npm`
+    ```bash
+    ? Which package manager do you want to use? (Use arrow keys)
+    ❯ yarn
+      npm
+    ```
     
 8.  すべての質問が終わると、LIFFアプリのひな形を含む開発環境が`my-app`ディレクトリ以下に生成されます。
+    ```bash
+    yarn install v1.22.19
+    warning package.json: No license field
+    info No lockfile found.
+    warning my-app@0.0.0: No license field
+    [1/4] 🔍  Resolving packages...
+    [2/4] 🚚  Fetching packages...
+    [3/4] 🔗  Linking dependencies...
+    [4/4] 🔨  Building fresh packages...
+    success Saved lockfile.
+    ✨  Done in 25.06s.
     
-    bash
     
-    `yarn install v1.22.19 warning package.json: No license field info No lockfile found. warning my-app@0.0.0: No license field [1/4] 🔍  Resolving packages... [2/4] 🚚  Fetching packages... [3/4] 🔗  Linking dependencies... [4/4] 🔨  Building fresh packages... success Saved lockfile. ✨  Done in 25.06s. Done! Now run:   cd my-app  yarn dev`
+    Done! Now run:
+    
+      cd my-app
+      yarn dev
+    ```
     
     #### オプション一覧
     
       
     Create LIFF Appは、以下の表に示すオプションを受け付けています。たとえば、TypeScriptで記述されたNext.jsのソースコードを生成するには、次のコマンドを実行します。なお、オプションで指定した項目については、Create LIFF Appからの質問が省略されます。
-    
-    bash
-    
-    `$ npx @line/create-liff-app -t nextjs --ts`
+    ```bash
+    $ npx @line/create-liff-app -t nextjs --ts
+    ```
     
     | 短いオプション | 長いオプション | 引数 | 動作 |
     | --- | --- | --- | --- |
@@ -128,10 +146,19 @@ Create LIFF Appの実行時にはLIFF IDが必要となります。まず「[チ
 ### LIFFアプリをローカルホストで起動する
 
 1.  生成されたLIFFアプリを早速ローカルホストで起動してみましょう。LIFFアプリを起動するには、`yarn dev`コマンドを実行します。以下のようなメッセージが表示されて、ターミナルの画面出力が止まったら、ローカルサーバーでLIFFアプリが起動しています。
+    ```bash
+    $ yarn dev
+    yarn run v1.22.19
+    warning package.json: No license field
+    $ vite
     
-    bash
+      vite v2.9.13 dev server running at:
     
-    ``$ yarn dev yarn run v1.22.19 warning package.json: No license field $ vite   vite v2.9.13 dev server running at:   > Local: http://localhost:3000/  > Network: use `--host` to expose   ready in 170ms.``
+      > Local: http://localhost:3000/
+      > Network: use `--host` to expose
+    
+      ready in 170ms.
+    ```
     
 2.  ターミナルに表示されたURL（vanilla JavaScriptの場合は`http://localhost:3000`）にブラウザでアクセスすると、次のように`LIFF init succeeded.`というメッセージを含む画面が表示されます。  
     ![成功](https://developers.line.biz/media/liff/cli-tool-create-liff-app/create-liff-app-success.png)  

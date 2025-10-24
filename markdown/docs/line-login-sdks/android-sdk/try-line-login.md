@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/try-line-login/
-copied_at: 2025-10-24T06:29:00.487Z
+copied_at: 2025-10-24T10:16:34.762Z
 ---
 # サンプルアプリを試してみる
 
@@ -17,10 +17,9 @@ Android向けのLINEログインサンプルアプリを実行すると、Androi
 LINEヤフー株式会社が提供するサンプルチャネルを使ってサンプルアプリを試すには、以下の手順に従います。
 
 1.  [LINE SDK for Androidのオープンソースリポジトリ](https://github.com/line/line-sdk-android)をクローンします。
-    
-    sh
-    
-    `$ git clone https://github.com/line/line-sdk-android.git`
+    ```sh
+    $ git clone https://github.com/line/line-sdk-android.git
+    ```
     
 2.  Android StudioでLINE SDKプロジェクトを開きます。
 3.  プロジェクトをビルドし、AndroidデバイスまたはAndroid Emulatorを使用してアプリを実行します。

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/
-copied_at: 2025-10-24T06:30:04.235Z
+copied_at: 2025-10-24T10:17:24.444Z
 ---
 # LINE通知メッセージAPIの技術仕様
 
@@ -35,9 +35,15 @@ LINE通知メッセージ（フレキシブル）では、すべての[メッセ
 
 LINE通知メッセージAPIで宛先`to`を指定する際には、[E.164](https://developers.line.biz/ja/glossary/#e164)形式に正規化された電話番号、例：`+818000001234`をSHA256でハッシュ化した文字列を指定します。ハイフンは含まないでください。以下はPython3を用いた電話番号のハッシュ化の例です。
 
-python
+```python
+import hashlib
 
-`import hashlib phone_number = "+818000001234" hashed_phone_number = hashlib.sha256(phone_number.encode()).hexdigest() print(hashed_phone_number) # d41e0ad70dddfeb68f149ad6fc61574b9c5780ab7bcb2fba5517771ffbb2409c`
+phone_number = "+818000001234"
+hashed_phone_number = hashlib.sha256(phone_number.encode()).hexdigest()
+print(hashed_phone_number)
+
+# d41e0ad70dddfeb68f149ad6fc61574b9c5780ab7bcb2fba5517771ffbb2409c
+```
 
 ### メッセージの送信通知を受信する
 
@@ -121,7 +127,7 @@ LINE通知メッセージの送信時に「LINE」という名前のLINE公式�
 > | --- | --- |
 > | 同意（オン） | LINE通知メッセージを受信します。 |
 > | 拒否（オフ） | LINE通知メッセージの受信を拒否しています。LINE通知メッセージは送信されません。 |
-> | 未設定 | 同意も拒否もしていない状態です。LINE通知メッセージ受信時に、LINE通知メッセージの受信への同意を求めるメッセージが送信されます。<ul><!--[--><li><!--[-->バージョン8.0.0以前のLINEアプリにおいてLINEアカウントを新規作成した場合などに、LINE通知メッセージの受信同意状態は「未設定」となります。<!--]--></li><li><!--[-->1度でも「未設定」以外の状態に変更した場合、「未設定」状態に戻すことはできません。<!--]--></li><!--]--></ul> |
+> | 未設定 | 同意も拒否もしていない状態です。LINE通知メッセージ受信時に、LINE通知メッセージの受信への同意を求めるメッセージが送信されます。<ul><li>バージョン8.0.0以前のLINEアプリにおいてLINEアカウントを新規作成した場合などに、LINE通知メッセージの受信同意状態は「未設定」となります。</li><li>1度でも「未設定」以外の状態に変更した場合、「未設定」状態に戻すことはできません。</li></ul> |
 
 ### LINE通知メッセージの受信への同意を行っていない際に送信されたメッセージについて
 

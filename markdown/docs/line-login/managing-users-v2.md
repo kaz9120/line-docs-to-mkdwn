@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/managing-users-v2/
-copied_at: 2025-10-24T06:28:46.129Z
+copied_at: 2025-10-24T10:16:08.665Z
 ---
 # ユーザーを管理する（LINEログイン v2.0）
 
@@ -28,9 +28,11 @@ copied_at: 2025-10-24T06:28:46.129Z
 
 アクセストークンを取り消すリクエストの例：
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/oauth/revoke \ -H 'Content-Type: application/x-www-form-urlencoded' \ --data-urlencode 'refresh_token={refresh token}'`
+```sh
+curl -v -X POST https://api.line.me/v2/oauth/revoke \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'refresh_token={refresh token}'
+```
 
 詳しくは、『LINEログイン v2.0 APIリファレンス』の「[アクセストークンを取り消す](https://developers.line.biz/ja/reference/line-login-v2/#revoke-access-token)」を参照してください。
 

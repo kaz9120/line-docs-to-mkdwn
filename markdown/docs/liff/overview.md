@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/overview/
-copied_at: 2025-10-24T06:29:12.566Z
+copied_at: 2025-10-24T10:16:32.862Z
 ---
 # LINE Front-end Framework (LIFF)
 
@@ -136,7 +136,7 @@ LIFFアプリが利用履歴から再度開かれた際、LIFFアプリは再開
 | LIFFアプリが再開される | 
 以下の条件を両方満たすLIFFアプリ
 
-<ul><!--[--><li><!--[-->12時間以内に使用したLIFFアプリ<!--]--></li><li><!--[-->利用履歴の最新10件に含まれるLIFFアプリ<!--]--></li><!--]--></ul> | ユーザーが使用を中断した画面からLIFFアプリが再開します。アクセストークン、ブラウザの閲覧履歴、画面のスクロール位置は保持されています。 |
+<ul><li>12時間以内に使用したLIFFアプリ</li><li>利用履歴の最新10件に含まれるLIFFアプリ</li></ul> | ユーザーが使用を中断した画面からLIFFアプリが再開します。アクセストークン、ブラウザの閲覧履歴、画面のスクロール位置は保持されています。 |
 | LIFFアプリが再読み込みされる | 再開される条件を満たさない場合 | ユーザーが使用を中断したURLでLIFFアプリが初期化されます。アクセストークン、ブラウザの閲覧履歴、画面のスクロール位置は破棄されます。 |
 
 #### 最近使用したサービスに表示される条件
@@ -174,7 +174,7 @@ LINEヤフー株式会社では、開発者の方々がLIFFアプリの開発を
 | [LIFF CLI](https://developers.line.biz/ja/docs/liff/liff-cli/) | 
 LIFFアプリの開発を円滑にするCLIツールです。LIFF CLIでできることは次のとおりです。
 
-<ul><!--[--><li><!--[-->LIFFアプリを作成、更新、参照、削除する<!--]--></li><li><!--[-->LIFFアプリの開発環境を作成する<!--]--></li><li><!--[-->LIFFアプリを<a href="/ja/docs/liff/liff-plugin/#liff-inspector" class=""><!--[--><!--[-->LIFF Inspector<!--]--><!--]--></a>でデバッグする<!--]--></li><li><!--[-->ローカル開発サーバーをHTTPSで起動する<!--]--></li><!--]--></ul>今後のアップデートで[LIFF Mock](https://developers.line.biz/ja/docs/liff/liff-plugin/#liff-mock)の機能も追加される予定です。 |
+<ul><li>LIFFアプリを作成、更新、参照、削除する</li><li>LIFFアプリの開発環境を作成する</li><li>LIFFアプリを<a href="/ja/docs/liff/liff-plugin/#liff-inspector" class="">LIFF Inspector</a>でデバッグする</li><li>ローカル開発サーバーをHTTPSで起動する</li></ul>今後のアップデートで[LIFF Mock](https://developers.line.biz/ja/docs/liff/liff-plugin/#liff-mock)の機能も追加される予定です。 |
 | [LIFFプレイグラウンド](https://liff-playground.netlify.app/) | LIFFの機能をオンライン上で試すことができます。[LIFFプレイグラウンドのソースコード](https://github.com/line/liff-playground)はGitHubで公開していますので、開発者は任意のLIFF IDを設定して、独自のLIFFプレイグラウンドをサーバー上にデプロイすることも可能です。 |
 
 ## 作業の流れ

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/opening-liff-app/
-copied_at: 2025-10-24T06:29:17.349Z
+copied_at: 2025-10-24T10:16:36.445Z
 ---
 # LIFFアプリを開く
 
@@ -96,7 +96,7 @@ LINE Developersコンソールの［**エンドポイントURL**］に指定し�
 | ユーザーがアクセスするURL | 2次リダイレクト先URL |
 | --- | --- |
 | LIFF URL（1）<br/>例：`https://liff.line.me/{liffId}` | LINE Developersコンソールの［**エンドポイントURL**］に指定したURLです。<br/>例：`https://example.com/2020campaign/?key=value` |
-| LIFF URLに追加情報を指定したURL（2）<br/>例：`https://liff.line.me/{liffId}/path_A/?key1=value1#URL-fragment` | 図の(2)のように3種類の情報を組み合わせたURLです。<ul><!--[--><li><!--[-->［<strong><!--[-->エンドポイントURL<!--]--></strong>］に指定したドメイン名（<code><!--[-->https://example.com<!--]--></code>）<!--]--></li><li><!--[-->［<strong><!--[-->エンドポイントURL<!--]--></strong>］に指定したパスやクエリパラメータ（<code><!--[-->/2020campaign/?key=value<!--]--></code>）<!--]--></li><li><!--[-->LIFF URLに指定した追加情報（<code><!--[-->/path_A/?key1=value1#URL-fragment<!--]--></code>）<!--]--></li><!--]--></ul>例：`https://example.com/2020campaign/path_A/?key=value&key1=value1#URL-fragment` |
+| LIFF URLに追加情報を指定したURL（2）<br/>例：`https://liff.line.me/{liffId}/path_A/?key1=value1#URL-fragment` | 図の(2)のように3種類の情報を組み合わせたURLです。<ul><li>［<strong>エンドポイントURL</strong>］に指定したドメイン名（<code>https://example.com</code>）</li><li>［<strong>エンドポイントURL</strong>］に指定したパスやクエリパラメータ（<code>/2020campaign/?key=value</code>）</li><li>LIFF URLに指定した追加情報（<code>/path_A/?key1=value1#URL-fragment</code>）</li></ul>例：`https://example.com/2020campaign/path_A/?key=value&key1=value1#URL-fragment` |
 
 ![エンドポイントURL](https://developers.line.biz/media/liff/endpoint-url.png)
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/text-character-count/
-copied_at: 2025-10-23T15:56:07.681Z
+copied_at: 2025-10-24T10:15:10.377Z
 ---
 # テキストの文字数のカウント
 
@@ -12,10 +12,10 @@ Messaging APIでは、テキストの文字数は、UTF-16の符号単位（16�
 
 | 種別 | プロパティ |
 | --- | --- |
-| すべての[アクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#action-objects) | <ul><!--[--><li><!--[--><code><!--[-->label<!--]--></code><!--]--></li><!--]--></ul> |
-| [ポストバックアクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#postback-action) | <ul><!--[--><li><!--[--><code><!--[-->displayText<!--]--></code><!--]--></li><li><!--[--><code><!--[-->fillInText<!--]--></code><!--]--></li><li><!--[--><code><!--[-->label<!--]--></code><!--]--></li><li><!--[--><code><!--[-->text<!--]--></code><!--]--></li><!--]--></ul> |
-| [メッセージアクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#message-action) | <ul><!--[--><li><!--[--><code><!--[-->label<!--]--></code><!--]--></li><li><!--[--><code><!--[-->text<!--]--></code><!--]--></li><!--]--></ul> |
-| [ボタンテンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#buttons) | <ul><!--[--><li><!--[--><code><!--[-->text<!--]--></code><!--]--></li><li><!--[--><code><!--[-->title<!--]--></code><!--]--></li><!--]--></ul> |
-| [確認テンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#confirm) | <ul><!--[--><li><!--[--><code><!--[-->text<!--]--></code><!--]--></li><!--]--></ul> |
-| [カルーセルテンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#carousel) | <ul><!--[--><li><!--[--><code><!--[-->text<!--]--></code><!--]--></li><li><!--[--><code><!--[-->title<!--]--></code><!--]--></li><!--]--></ul> |
-| [リッチメニューオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-object) | <ul><!--[--><li><!--[--><code><!--[-->chatBarText<!--]--></code><!--]--></li><li><!--[--><code><!--[-->name<!--]--></code><!--]--></li><!--]--></ul> |
+| すべての[アクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#action-objects) | <ul><li><code>label</code></li></ul> |
+| [ポストバックアクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#postback-action) | <ul><li><code>displayText</code></li><li><code>fillInText</code></li><li><code>label</code></li><li><code>text</code></li></ul> |
+| [メッセージアクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#message-action) | <ul><li><code>label</code></li><li><code>text</code></li></ul> |
+| [ボタンテンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#buttons) | <ul><li><code>text</code></li><li><code>title</code></li></ul> |
+| [確認テンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#confirm) | <ul><li><code>text</code></li></ul> |
+| [カルーセルテンプレートメッセージ](https://developers.line.biz/ja/reference/messaging-api/#carousel) | <ul><li><code>text</code></li><li><code>title</code></li></ul> |
+| [リッチメニューオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-object) | <ul><li><code>chatBarText</code></li><li><code>name</code></li></ul> |

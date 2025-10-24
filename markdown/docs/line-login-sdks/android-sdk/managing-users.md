@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/managing-users/
-copied_at: 2025-10-24T06:29:01.542Z
+copied_at: 2025-10-24T10:16:20.228Z
 ---
 # ユーザーを管理する
 
@@ -20,9 +20,13 @@ copied_at: 2025-10-24T06:29:01.542Z
 
 `LineApiClient.getProfile()`メソッドを以下のように呼び出します。
 
-java
-
-`LineProfile profile = lineApiClient.getProfile().getResponseData() Log.i(TAG, profile.getDisplayName()); Log.i(TAG, profile.getUserId()); Log.i(TAG, profile.getStatusMessage()); Log.i(TAG, profile.getPictureUrl().toString());`
+```java
+LineProfile profile = lineApiClient.getProfile().getResponseData()
+Log.i(TAG, profile.getDisplayName());
+Log.i(TAG, profile.getUserId());
+Log.i(TAG, profile.getStatusMessage());
+Log.i(TAG, profile.getPictureUrl().toString());
+```
 
 `getDisplayName()`メソッド、`getPictureURL()`メソッド、および`getStatusMessage()`メソッドでは、ログイン時の値が取得されますが、ユーザーはLINEに設定したこれらの値をいつでも変更できます。ユーザーを識別するには、`getUserId()`メソッドを使用します。このメソッドでは、変更できないユーザーIDが返されます。
 
@@ -45,15 +49,44 @@ LINEログインを使ってログインするユーザーに、メールアド�
 
 メールアドレス取得権限を付加したチャネルでは、以下のように、`Scope.OPENID_CONNECT`スコープと`Scope.OC_EMAIL`スコープを指定してユーザーにログインさせ、IDトークンからユーザーのメールアドレスを取得できます。
 
-java
+```java
+import java.util.Arrays;
 
-`import java.util.Arrays; private static final int REQUEST_CODE = 1; LineAuthenticationParams params = new LineAuthenticationParams.Builder()                         .scopes(Arrays.asList(Scope.OPENID_CONNECT, Scope.OC_EMAIL))                        .build(); Intent loginIntent = LineLoginApi.getLoginIntent(                 view.getContext(),                Constants.CHANNEL_ID,                params); startActivityForResult(loginIntent, REQUEST_CODE);`
+private static final int REQUEST_CODE = 1;
+
+LineAuthenticationParams params = new LineAuthenticationParams.Builder()
+                        .scopes(Arrays.asList(Scope.OPENID_CONNECT, Scope.OC_EMAIL))
+                        .build();
+
+Intent loginIntent = LineLoginApi.getLoginIntent(
+                view.getContext(),
+                Constants.CHANNEL_ID,
+                params);
+
+startActivityForResult(loginIntent, REQUEST_CODE);
+```
 
 IDトークンは署名付きの[JSONウェブトークン](https://datatracker.ietf.org/doc/html/rfc7519)です。不正なデータを防ぐため、LINE SDKによってIDトークンの署名と有効期間が検証されます。検証が成功すると、以下のように`onActivityResult()`コールバックで`LineIdToken`インスタンスを取得できます。
 
-java
+```java
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode != REQUEST_CODE) {
+        Log.e("ERROR", "Unsupported Request");
+        return;
+    }
 
-`public void onActivityResult(int requestCode, int resultCode, Intent data) {     super.onActivityResult(requestCode, resultCode, data);    if (requestCode != REQUEST_CODE) {        Log.e("ERROR", "Unsupported Request");        return;    }     LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);     switch (result.getResponseCode()) {        case SUCCESS:            // Login successful            LineIdToken lineIdToken = result.getLineIdToken();            Log.v("INFO", lineIdToken.getEmail());    ...    } }`
+    LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
+
+    switch (result.getResponseCode()) {
+        case SUCCESS:     
+            // Login successful
+            LineIdToken lineIdToken = result.getLineIdToken();
+            Log.v("INFO", lineIdToken.getEmail());
+    ...
+    }
+}    
+```
 
 ### IDトークンをバックエンドサーバーで利用する
 
@@ -67,17 +100,44 @@ java
 
 `Scope.OPENID_CONNECT`スコープを指定してLINEログインする場合は、`nonce`パラメータに任意の値を指定できます：
 
-java
+```java
+private static final int REQUEST_CODE = 1;
+...
+LineAuthenticationParams params = new LineAuthenticationParams.Builder()
+                                  ...
+                                  .nonce("<a randomly-generated string>")
+                                  .build();
 
-`private static final int REQUEST_CODE = 1; ... LineAuthenticationParams params = new LineAuthenticationParams.Builder()                                   ...                                  .nonce("<a randomly-generated string>")                                  .build(); Intent loginIntent = LineLoginApi.getLoginIntent(                         view.getContext(),                        Constants.CHANNEL_ID,                        params); startActivityForResult(loginIntent, REQUEST_CODE);`
+Intent loginIntent = LineLoginApi.getLoginIntent(
+                        view.getContext(),
+                        Constants.CHANNEL_ID,
+                        params);
+
+startActivityForResult(loginIntent, REQUEST_CODE);
+```
 
 `nonce`を省略した場合は、LINE SDKによって自動的に値が指定されますが、ランダムに生成した`nonce`を`nonce`パラメータに指定することをお勧めします。ここで指定した`nonce`は、LINEログインAPIを使用して[IDトークンを検証する](#verify-id-token-on-server)ときに使用します。`nonce`を利用してIDトークンを検証することは、[リプレイアタック](https://en.wikipedia.org/wiki/Replay_attack)の防止に役に立ちます。
 
 `Scope.OPENID_CONNECT`スコープを指定したLINEログインに成功すると、以下のコードで、IDトークンの元になった生のIDトークンを取得できます：
 
-java
+```java
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    ...
+    LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
 
-``public void onActivityResult(int requestCode, int resultCode, Intent data) {     ...    LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);     switch (result.getResponseCode()) {        case SUCCESS:            // Login successful            LineIdToken lineIdToken = result.getLineIdToken();            String idTokenStr = lineIdToken.getRawString();            if (idTokenStr != null) {                // Send `idTokenStr` to your server.            } else {                // Something went wrong. You should fail the login.            }    ... }``
+    switch (result.getResponseCode()) {
+        case SUCCESS:     
+            // Login successful
+            LineIdToken lineIdToken = result.getLineIdToken();
+            String idTokenStr = lineIdToken.getRawString();
+            if (idTokenStr != null) {
+                // Send `idTokenStr` to your server.
+            } else {
+                // Something went wrong. You should fail the login.
+            }
+    ...
+}
+```
 
 [IDトークンを検証する](#verify-id-token-on-server)ために、このコードで取得した`idTokenStr`をバックエンドサーバーに送信してください。
 
@@ -93,9 +153,9 @@ java
 
 ユーザーの機密情報をプレーンテキストでアプリやサーバーに保存したり、セキュリティで保護されていないHTTP通信で転送したりしないでください。アクセストークン、ユーザーID、ユーザー名など、IDトークンに含まれるデータは機密情報に該当します。LINE SDKではユーザーのアクセストークンが保存されます。必要に応じて、認可後に以下のコードでアクセストークンを取得できます。
 
-java
-
-`LineAccessToken accessToken = lineApiClient.getCurrentAccessToken().getResponseData();`
+```java
+LineAccessToken accessToken = lineApiClient.getCurrentAccessToken().getResponseData();
+```
 
 IDトークンはログイン時にのみ発行されます。IDトークンを更新するには、ユーザーに再ログインさせる必要があります。ただし、ログインリクエストに`Scope.PROFILE`スコープを指定する場合は、`LineApiClient.getProfile()`メソッドを呼び出してユーザーのプロフィール情報を取得できます。
 
@@ -105,8 +165,8 @@ IDトークンはログイン時にのみ発行されます。IDトークンを�
 
 アクセストークンを無効化してユーザーをアプリからログアウトするには、`logout()`メソッドを呼び出します。アクセストークンを無効にすると、ユーザーはアプリからログアウトされます。ログアウトした後に再度ログインするには、ユーザーは再度ログインプロセスを行う必要があります。
 
-java
-
-`lineApiClient.logout();`
+```java
+lineApiClient.logout();
+```
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}

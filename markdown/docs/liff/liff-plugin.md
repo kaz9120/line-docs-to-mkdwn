@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/liff-plugin/
-copied_at: 2025-10-23T16:00:28.011Z
+copied_at: 2025-10-24T10:16:39.050Z
 ---
 # LIFFプラグイン
 
@@ -43,15 +43,64 @@ LIFFプラグインは、[`liff.use()`](https://developers.line.biz/ja/reference
 
 LIFFプラグインがクラスの場合、[`liff.use()`](https://developers.line.biz/ja/reference/liff/#use)メソッドにインスタンスを渡す必要があります。
 
-js
+```js
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+  }
 
-`class GreetPlugin {   constructor() {    this.name = "greet";  }   install() {    return {      hello: this.hello,    };  }   hello() {    console.log("Hello, World!");  } } liff.use(new GreetPlugin()); liff.$greet.hello(); // Hello, World! liff   .init({    liffId: "123456-abcedfg", // Use own liffId  })  .then(() => {    // ...  });`
+  install() {
+    return {
+      hello: this.hello,
+    };
+  }
+
+  hello() {
+    console.log("Hello, World!");
+  }
+}
+
+liff.use(new GreetPlugin());
+
+liff.$greet.hello(); // Hello, World!
+
+liff
+  .init({
+    liffId: "123456-abcedfg", // Use own liffId
+  })
+  .then(() => {
+    // ...
+  });
+```
 
 ### LIFFプラグインがオブジェクトの場合
 
-js
+```js
+const hello = () => {
+  console.log("Hello, World!");
+};
 
-`const hello = () => {   console.log("Hello, World!"); }; const greetPlugin = {   name: "greet",  install() {    return {      hello,    };  }, }; liff.use(greetPlugin); liff.$greet.hello(); // Hello, World! liff   .init({    liffId: "123456-abcedfg", // Use own liffId  })  .then(() => {    // ...  });`
+const greetPlugin = {
+  name: "greet",
+  install() {
+    return {
+      hello,
+    };
+  },
+};
+
+liff.use(greetPlugin);
+
+liff.$greet.hello(); // Hello, World!
+
+liff
+  .init({
+    liffId: "123456-abcedfg", // Use own liffId
+  })
+  .then(() => {
+    // ...
+  });
+```
 
 このように、LIFFプラグインを有効化すると、`name`プロパティの値に`$`の接頭語がついたプロパティが`liff`オブジェクトに追加されます。これにより、LIFFプラグインのAPIを`liff.${LIFFプラグインのnameプロパティの値}.{プロパティ}`や`liff.${LIFFプラグインのnameプロパティの値}.{メソッド}()`の形式で利用できます。
 
@@ -63,15 +112,60 @@ LIFFプラグインは、[`name`](#name)プロパティと[`install()`](#install
 
 ### LIFFプラグインがクラスの場合
 
-js
+```js
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+  }
 
-`class GreetPlugin {   constructor() {    this.name = "greet";  }   install() {    return {      hello: this.hello,      goodbye: this.goodbye,    };  }   hello() {    console.log("Hello, World!");  }   goodbye() {    console.log("Goodbye, World!");  } } liff.use(new GreetPlugin()); liff.$greet.hello(); // Hello, World! liff.$greet.goodbye(); // Goodbye, World!`
+  install() {
+    return {
+      hello: this.hello,
+      goodbye: this.goodbye,
+    };
+  }
+
+  hello() {
+    console.log("Hello, World!");
+  }
+
+  goodbye() {
+    console.log("Goodbye, World!");
+  }
+}
+
+liff.use(new GreetPlugin());
+
+liff.$greet.hello(); // Hello, World!
+liff.$greet.goodbye(); // Goodbye, World!
+```
 
 ### LIFFプラグインがオブジェクトの場合
 
-js
+```js
+const hello = () => {
+  console.log("Hello, World!");
+};
 
-`const hello = () => {   console.log("Hello, World!"); }; const goodbye = () => {   console.log("Goodbye, World!"); }; const greetPlugin = {   name: "greet",  install() {    return {      hello,      goodbye,    };  }, }; liff.use(greetPlugin); liff.$greet.hello(); // Hello, World! liff.$greet.goodbye(); // Goodbye, World!`
+const goodbye = () => {
+  console.log("Goodbye, World!");
+};
+
+const greetPlugin = {
+  name: "greet",
+  install() {
+    return {
+      hello,
+      goodbye,
+    };
+  },
+};
+
+liff.use(greetPlugin);
+
+liff.$greet.hello(); // Hello, World!
+liff.$greet.goodbye(); // Goodbye, World!
+```
 
 ### nameプロパティ
 
@@ -96,17 +190,39 @@ LIFFプラグインのAPIは、`install()`メソッドの返り値として定�
 
 なお、LIFFプラグインのAPIが1つのみの場合、そのAPIを返り値とすることも可能です。以下は、`install()`メソッドの返り値として、オブジェクトではなく関数を返す例です。
 
-js
+```js
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+  }
 
-`class GreetPlugin {   constructor() {    this.name = "greet";  }   install() {    return this.hello;  }   hello() {    console.log("Hello, World!");  } } liff.use(new GreetPlugin()); liff.$greet(); // Hello, World!`
+  install() {
+    return this.hello;
+  }
+
+  hello() {
+    console.log("Hello, World!");
+  }
+}
+
+liff.use(new GreetPlugin());
+
+liff.$greet(); // Hello, World!
+```
 
 #### install()メソッドの引数
 
 `install()`メソッドは、第1引数に[`context`](#context)オブジェクト、第2引数に[`option`](#option)を取ります。
 
-js
+```js
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+  }
 
-`class GreetPlugin {   constructor() {    this.name = "greet";  }   install(context, option) {} }`
+  install(context, option) {}
+}
+```
 
 ##### `context`オブジェクト
 
@@ -158,9 +274,50 @@ LIFF APIが提供するフックを利用するだけでなく、LIFFプラグ�
 
 `before`フックと`after`フックは[非同期フック](#async-hook)のため、`Promise`オブジェクトを返す必要がある点に注意してください。
 
-js
+```js
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+  }
 
-`class GreetPlugin {   constructor() {    this.name = "greet";  }   install(context) {    context.hooks.init.before(this.initBefore);    context.hooks.init.after(this.initAfter);    return {      hello: this.hello,      goodbye: this.goodbye,    };  }   hello() {    console.log("Hello, World!");  }   goodbye() {    console.log("Goodbye, World!");  }   initBefore() {    console.log("before hook is called");    return Promise.resolve();  }   initAfter() {    console.log("after hook is called");    return Promise.resolve();  } } liff.use(new GreetPlugin()); liff   .init({    liffId: "123456-abcedfg", // Use own liffId  })  .then(() => {    // ...  });`
+  install(context) {
+    context.hooks.init.before(this.initBefore);
+    context.hooks.init.after(this.initAfter);
+    return {
+      hello: this.hello,
+      goodbye: this.goodbye,
+    };
+  }
+
+  hello() {
+    console.log("Hello, World!");
+  }
+
+  goodbye() {
+    console.log("Goodbye, World!");
+  }
+
+  initBefore() {
+    console.log("before hook is called");
+    return Promise.resolve();
+  }
+
+  initAfter() {
+    console.log("after hook is called");
+    return Promise.resolve();
+  }
+}
+
+liff.use(new GreetPlugin());
+
+liff
+  .init({
+    liffId: "123456-abcedfg", // Use own liffId
+  })
+  .then(() => {
+    // ...
+  });
+```
 
 ### フックを作成する
 
@@ -175,15 +332,96 @@ js
 
 作成したフックを発火するには、`SyncHook`クラスのインスタンスや`AsyncHook`クラスのインスタンスの[`call()`](#call)メソッドを実行します。
 
-js
+```js
+import { SyncHook, AsyncHook } from "@liff/hooks";
 
-`import { SyncHook, AsyncHook } from "@liff/hooks"; class GreetPlugin {   constructor() {    this.name = "greet";    this.hooks = {      helloBefore: new SyncHook(),      helloAfter: new AsyncHook(),    };  }   install(context) {    return {      hello: this.hello.bind(this),      goodbye: this.goodbye,    };  }   hello() {    this.hooks.helloBefore.call();    console.log("Hello, World!");    this.hooks.helloAfter.call();  }   goodbye() {    console.log("Goodbye, World!");  } }`
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+    this.hooks = {
+      helloBefore: new SyncHook(),
+      helloAfter: new AsyncHook(),
+    };
+  }
+
+  install(context) {
+    return {
+      hello: this.hello.bind(this),
+      goodbye: this.goodbye,
+    };
+  }
+
+  hello() {
+    this.hooks.helloBefore.call();
+    console.log("Hello, World!");
+    this.hooks.helloAfter.call();
+  }
+
+  goodbye() {
+    console.log("Goodbye, World!");
+  }
+}
+```
 
 作成したフックは、別のLIFFプラグインがコールバックを登録するのに利用できます。以下は、LIFFプラグイン`GreetPlugin`の`helloBefore`フックと`helloAfter`フックにコールバックを登録する例です。
 
-js
+```js
+import { SyncHook, AsyncHook } from "@liff/hooks";
 
-`import { SyncHook, AsyncHook } from "@liff/hooks"; class GreetPlugin {   constructor() {    this.name = "greet";    this.hooks = {      helloBefore: new SyncHook(),      helloAfter: new AsyncHook(),    };  }   install(context) {    return {      hello: this.hello.bind(this),      goodbye: this.goodbye,    };  }   hello() {    this.hooks.helloBefore.call();    console.log("Hello, World!");    this.hooks.helloAfter.call();  }   goodbye() {    console.log("Goodbye, World!");  } } class OtherPlugin {   constructor() {    this.name = "other";  }   install(context) {    context.hooks.$greet.helloBefore(this.greetBefore);    context.hooks.$greet.helloAfter(this.greetAfter);  }   greetBefore() {    console.log("helloBefore hook is called");  }   greetAfter() {    console.log("helloAfter hook is called");    return Promise.resolve();  } } liff.use(new GreetPlugin()); liff.use(new OtherPlugin()); liff.$greet.hello(); // helloBefore hook is called // Hello, World! // helloAfter hook is called`
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+    this.hooks = {
+      helloBefore: new SyncHook(),
+      helloAfter: new AsyncHook(),
+    };
+  }
+
+  install(context) {
+    return {
+      hello: this.hello.bind(this),
+      goodbye: this.goodbye,
+    };
+  }
+
+  hello() {
+    this.hooks.helloBefore.call();
+    console.log("Hello, World!");
+    this.hooks.helloAfter.call();
+  }
+
+  goodbye() {
+    console.log("Goodbye, World!");
+  }
+}
+
+class OtherPlugin {
+  constructor() {
+    this.name = "other";
+  }
+
+  install(context) {
+    context.hooks.$greet.helloBefore(this.greetBefore);
+    context.hooks.$greet.helloAfter(this.greetAfter);
+  }
+
+  greetBefore() {
+    console.log("helloBefore hook is called");
+  }
+
+  greetAfter() {
+    console.log("helloAfter hook is called");
+    return Promise.resolve();
+  }
+}
+
+liff.use(new GreetPlugin());
+liff.use(new OtherPlugin());
+liff.$greet.hello();
+// helloBefore hook is called
+// Hello, World!
+// helloAfter hook is called
+```
 
 #### call()メソッド
 
@@ -191,9 +429,60 @@ js
 
 以下は、フックの`call()`メソッドに引数を渡し、それをコールバックが受け取る例です。
 
-js
+```js
+import { SyncHook, AsyncHook } from "@liff/hooks";
 
-`import { SyncHook, AsyncHook } from "@liff/hooks"; class GreetPlugin {   constructor() {    this.name = "greet";    this.hooks = {      helloBefore: new SyncHook(),      helloAfter: new AsyncHook(),    };  }   install(context) {    return {      hello: this.hello.bind(this),      goodbye: this.goodbye,    };  }   hello() {    this.hooks.helloBefore.call("foo");    console.log("Hello, World!");    this.hooks.helloAfter.call("foo", 0);  }   goodbye() {    console.log("Goodbye, World!");  } } class OtherPlugin {   constructor() {    this.name = "other";  }   install(context) {    context.hooks.$greet.helloBefore(this.greetBefore);    context.hooks.$greet.helloAfter(this.greetAfter);  }   greetBefore(foo) {    console.log(foo); // foo  }   greetAfter(foo, bar) {    console.log(foo, bar); // foo 0    return Promise.resolve();  } } liff.use(new GreetPlugin()); liff.use(new OtherPlugin()); liff.$greet.hello(); // Hello, World!`
+class GreetPlugin {
+  constructor() {
+    this.name = "greet";
+    this.hooks = {
+      helloBefore: new SyncHook(),
+      helloAfter: new AsyncHook(),
+    };
+  }
+
+  install(context) {
+    return {
+      hello: this.hello.bind(this),
+      goodbye: this.goodbye,
+    };
+  }
+
+  hello() {
+    this.hooks.helloBefore.call("foo");
+    console.log("Hello, World!");
+    this.hooks.helloAfter.call("foo", 0);
+  }
+
+  goodbye() {
+    console.log("Goodbye, World!");
+  }
+}
+
+class OtherPlugin {
+  constructor() {
+    this.name = "other";
+  }
+
+  install(context) {
+    context.hooks.$greet.helloBefore(this.greetBefore);
+    context.hooks.$greet.helloAfter(this.greetAfter);
+  }
+
+  greetBefore(foo) {
+    console.log(foo); // foo
+  }
+
+  greetAfter(foo, bar) {
+    console.log(foo, bar); // foo 0
+    return Promise.resolve();
+  }
+}
+
+liff.use(new GreetPlugin());
+liff.use(new OtherPlugin());
+liff.$greet.hello(); // Hello, World!
+```
 
 ## 公式LIFFプラグイン
 

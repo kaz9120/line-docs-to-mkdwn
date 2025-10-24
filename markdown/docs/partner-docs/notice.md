@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/notice/
-copied_at: 2025-10-24T06:29:54.210Z
+copied_at: 2025-10-24T10:17:21.481Z
 ---
 # 法人ユーザー向けのお知らせ
 
@@ -54,9 +54,30 @@ LINE通知メッセージに、用意されたテンプレートやアイテム�
 
 これまでは、LINE通知メッセージAPIをリクエストし、ユーザーに対するLINE通知メッセージの配信が完了したときに、以下のようなWebhookイベントがLINEプラットフォームからボットサーバーに送信されていました。
 
-json
-
-`{   "destination": "Uc7472b39e21dab71c2347e02714630d6",  "events": [    {      "type": "delivery",      "delivery": {        "data": "68df277462529930889fab80ecffdc0883906320591df93c25efc08300410fc2"      },      "webhookEventId": "01G17DAF0QJ7A3ERC5EJ9MAMH8",      "deliveryContext": {        "isRedelivery": false      },      "timestamp": 1650590038721,      // 以下のsourceプロパティが削除されました      "source": {        "type": "user",        "userId": "U8189cf6745fc0d808977bdb0b9f22995"      },      "mode": "active"    }  ] }`
+```json
+{
+  "destination": "Uc7472b39e21dab71c2347e02714630d6",
+  "events": [
+    {
+      "type": "delivery",
+      "delivery": {
+        "data": "68df277462529930889fab80ecffdc0883906320591df93c25efc08300410fc2"
+      },
+      "webhookEventId": "01G17DAF0QJ7A3ERC5EJ9MAMH8",
+      "deliveryContext": {
+        "isRedelivery": false
+      },
+      "timestamp": 1650590038721,
+      // 以下のsourceプロパティが削除されました
+      "source": {
+        "type": "user",
+        "userId": "U8189cf6745fc0d808977bdb0b9f22995"
+      },
+      "mode": "active"
+    }
+  ]
+}
+```
 
 このWebhookイベントに含まれる`source`プロパティが、2025年1月28日をもって削除されました。
 
@@ -84,9 +105,30 @@ LINEミニアプリでクイック入力を組み込む方法について詳し�
 
 LINE通知メッセージAPIをリクエストし、ユーザーに対するLINE通知メッセージの配信が完了したときに、以下のようなWebhookイベントがLINEプラットフォームからボットサーバーに送信されます。
 
-json
-
-`{   "destination": "Uc7472b39e21dab71c2347e02714630d6",  "events": [    {      "type": "delivery",      "delivery": {        "data": "68df277462529930889fab80ecffdc0883906320591df93c25efc08300410fc2"      },      "webhookEventId": "01G17DAF0QJ7A3ERC5EJ9MAMH8",      "deliveryContext": {        "isRedelivery": false      },      "timestamp": 1650590038721,      // 以下のsourceプロパティが削除されます      "source": {        "type": "user",        "userId": "U8189cf6745fc0d808977bdb0b9f22995"      },      "mode": "active"    }  ] }`
+```json
+{
+  "destination": "Uc7472b39e21dab71c2347e02714630d6",
+  "events": [
+    {
+      "type": "delivery",
+      "delivery": {
+        "data": "68df277462529930889fab80ecffdc0883906320591df93c25efc08300410fc2"
+      },
+      "webhookEventId": "01G17DAF0QJ7A3ERC5EJ9MAMH8",
+      "deliveryContext": {
+        "isRedelivery": false
+      },
+      "timestamp": 1650590038721,
+      // 以下のsourceプロパティが削除されます
+      "source": {
+        "type": "user",
+        "userId": "U8189cf6745fc0d808977bdb0b9f22995"
+      },
+      "mode": "active"
+    }
+  ]
+}
+```
 
 このWebhookイベントに含まれる`source`プロパティが、2025年1月28日をもって削除されます。なお、プロパティを削除する日時は、予告なく変更される可能性があります。
 

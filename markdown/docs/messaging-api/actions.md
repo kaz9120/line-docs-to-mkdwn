@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/actions/
-copied_at: 2025-10-23T15:57:43.245Z
+copied_at: 2025-10-24T10:15:29.929Z
 ---
 # アクション
 
@@ -43,9 +43,44 @@ LINE内ブラウザで指定のURLを開くアクションです。URIアクシ�
 
 上記の例で示した、クイックリプライボタンにURIアクションを設定したリクエストボディは以下のようになります。詳しくは、『Messaging APIリファレンス』の「[URIアクション](https://developers.line.biz/ja/reference/messaging-api/#uri-action)」を参照してください。
 
-json
-
-`{   "messages": [    {      "type": "text",      "text": "ご注文はお決まりですか？",      "quickReply": {        "items": [          {            "type": "action",            "action": {              "type": "uri",              "label": "メニューを見る",              "uri": "https://example.com/menu"            }          },          {            "type": "action",            "action": {              "type": "uri",              "label": "電話注文",              "uri": "tel:09001234567"            }          },          {            "type": "action",            "action": {              "type": "uri",              "label": "友だちに勧める",              "uri": "https://line.me/R/nv/recommendOA/%40linedevelopers"            }          }        ]      }    }  ] }`
+```json
+{
+  "messages": [
+    {
+      "type": "text",
+      "text": "ご注文はお決まりですか？",
+      "quickReply": {
+        "items": [
+          {
+            "type": "action",
+            "action": {
+              "type": "uri",
+              "label": "メニューを見る",
+              "uri": "https://example.com/menu"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+              "type": "uri",
+              "label": "電話注文",
+              "uri": "tel:09001234567"
+            }
+          },
+          {
+            "type": "action",
+            "action": {
+              "type": "uri",
+              "label": "友だちに勧める",
+              "uri": "https://line.me/R/nv/recommendOA/%40linedevelopers"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
 
 ## 日時選択アクション
 
@@ -77,8 +112,31 @@ LINEの位置情報画面を開くアクションです。このアクション�
 
 上記の例で示した、メッセージにクリップボードアクションを設定したリクエストボディは以下のようになります。詳しくは、『Messaging APIリファレンス』の「[クリップボードアクション](https://developers.line.biz/ja/reference/messaging-api/#clipboard-action)」を参照してください。
 
-json
-
-`{   "messages": [    {      "type": "template",      "altText": "クーポンコードをお送りします。",      "template": {        "type": "buttons",        "thumbnailImageUrl": "{your coupon image}",        "imageAspectRatio": "rectangle",        "imageSize": "cover",        "imageBackgroundColor": "#FFFFFF",        "title": "限定クーポン配布中！",        "text": "有効期限：2024年2月末日\nクーポンコード（3B48740B）を下記のボタンからコピーしてお使いください。",        "actions": [          {            "type": "clipboard",            "label": "コピー",            "clipboardText": "3B48740B"          }        ]      }    }  ] }`
+```json
+{
+  "messages": [
+    {
+      "type": "template",
+      "altText": "クーポンコードをお送りします。",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": "{your coupon image}",
+        "imageAspectRatio": "rectangle",
+        "imageSize": "cover",
+        "imageBackgroundColor": "#FFFFFF",
+        "title": "限定クーポン配布中！",
+        "text": "有効期限：2024年2月末日\nクーポンコード（3B48740B）を下記のボタンからコピーしてお使いください。",
+        "actions": [
+          {
+            "type": "clipboard",
+            "label": "コピー",
+            "clipboardText": "3B48740B"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}

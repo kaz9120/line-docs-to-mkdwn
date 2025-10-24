@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/ssl-tls-spec-of-the-webhook-source/
-copied_at: 2025-10-24T06:28:12.662Z
+copied_at: 2025-10-24T10:15:21.094Z
 ---
 # Webhook送信元のSSL/TLS仕様
 
@@ -22,20 +22,20 @@ Webhookを受け取るボットサーバーは、以下の仕様に基づくHTTP
 
 | IANA | OpenSSL | Hex code | ステータス | SSL/TLSの対応プロトコルバージョン | 対応HTTPバージョン |
 | --- | --- | --- | --- | --- | --- |
-| TLS\_AES\_256\_GCM\_SHA384 | TLS\_AES\_256\_GCM\_SHA384 | 0x13, 0x02 |  | TLS 1.3 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_CHACHA20\_POLY1305\_SHA256 | TLS\_CHACHA20\_POLY1305\_SHA256 | 0x13, 0x03 |  | TLS 1.3 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_AES\_128\_GCM\_SHA256 | TLS\_AES\_128\_GCM\_SHA256 | 0x13, 0x01 |  | TLS 1.3 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_ECDSA\_WITH\_AES\_128\_GCM\_SHA256 | ECDHE-ECDSA-AES128-GCM-SHA256 | 0xc0, 0x2b |  | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256 | ECDHE-RSA-AES128-GCM-SHA256 | 0xc0,0x2f |  | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_GCM\_SHA384 | ECDHE-ECDSA-AES256-GCM-SHA384 | 0xc0, 0x2c |  | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384 | ECDHE-RSA-AES256-GCM-SHA384 | 0xc0, 0x30 |  | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_ECDSA\_WITH\_CHACHA20\_POLY1305\_SHA256 | ECDHE-ECDSA-CHACHA20-POLY1305 | 0xcc, 0xa9 |  | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_RSA\_WITH\_CHACHA20\_POLY1305\_SHA256 | ECDHE-RSA-CHACHA20-POLY1305 | 0xcc, 0xa8 |  | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><li><!--[-->HTTP/2<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA | ECDHE-RSA-AES128-SHA | 0xc0, 0x13 | 非推奨 | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><!--]--></ul> |
-| TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA | ECDHE-RSA-AES256-SHA | 0xc0, 0x14 | 非推奨 | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><!--]--></ul> |
-| TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256 | AES128-GCM-SHA256 | 0x00, 0x9c | 非推奨 | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><!--]--></ul> |
-| TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA | AES128-SHA | 0x00, 0x2f | 非推奨 | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><!--]--></ul> |
-| TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA | AES256-SHA | 0x00, 0x35 | 非推奨 | TLS 1.2 | <ul><!--[--><li><!--[-->HTTP/1.0<!--]--></li><li><!--[-->HTTP/1.1<!--]--></li><!--]--></ul> |
+| TLS\_AES\_256\_GCM\_SHA384 | TLS\_AES\_256\_GCM\_SHA384 | 0x13, 0x02 |  | TLS 1.3 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_CHACHA20\_POLY1305\_SHA256 | TLS\_CHACHA20\_POLY1305\_SHA256 | 0x13, 0x03 |  | TLS 1.3 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_AES\_128\_GCM\_SHA256 | TLS\_AES\_128\_GCM\_SHA256 | 0x13, 0x01 |  | TLS 1.3 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_ECDSA\_WITH\_AES\_128\_GCM\_SHA256 | ECDHE-ECDSA-AES128-GCM-SHA256 | 0xc0, 0x2b |  | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256 | ECDHE-RSA-AES128-GCM-SHA256 | 0xc0,0x2f |  | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_GCM\_SHA384 | ECDHE-ECDSA-AES256-GCM-SHA384 | 0xc0, 0x2c |  | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384 | ECDHE-RSA-AES256-GCM-SHA384 | 0xc0, 0x30 |  | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_ECDSA\_WITH\_CHACHA20\_POLY1305\_SHA256 | ECDHE-ECDSA-CHACHA20-POLY1305 | 0xcc, 0xa9 |  | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_RSA\_WITH\_CHACHA20\_POLY1305\_SHA256 | ECDHE-RSA-CHACHA20-POLY1305 | 0xcc, 0xa8 |  | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li><li>HTTP/2</li></ul> |
+| TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA | ECDHE-RSA-AES128-SHA | 0xc0, 0x13 | 非推奨 | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li></ul> |
+| TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA | ECDHE-RSA-AES256-SHA | 0xc0, 0x14 | 非推奨 | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li></ul> |
+| TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256 | AES128-GCM-SHA256 | 0x00, 0x9c | 非推奨 | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li></ul> |
+| TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA | AES128-SHA | 0x00, 0x2f | 非推奨 | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li></ul> |
+| TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA | AES256-SHA | 0x00, 0x35 | 非推奨 | TLS 1.2 | <ul><li>HTTP/1.0</li><li>HTTP/1.1</li></ul> |
 
 ## SSL/TLSの対応プロトコルバージョン
 

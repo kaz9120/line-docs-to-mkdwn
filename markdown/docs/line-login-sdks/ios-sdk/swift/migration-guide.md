@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/migration-guide/
-copied_at: 2025-10-24T06:28:59.259Z
+copied_at: 2025-10-24T10:16:16.981Z
 ---
 # SDKをアップグレードする
 
@@ -21,17 +21,22 @@ SDKをアップグレードするには、プロジェクトの言語を問わ�
 3.  LINE SDK for iOS Swiftをインストールする。詳しい手順については、「[プロジェクトを設定する](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/setting-up-project/)」を参照してください。
 4.  チャネルIDとコールバックの制御処理を`AppDelegate`ファイルに設定する。  
     アプリの起動直後に、以下のように`LoginManager.setup`メソッドを呼び出します。
-    
-    swift
-    
-    `func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {     // Add this to your "didFinishLaunching" delegate method.    LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: nil)         return true }`
+    ```swift
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Add this to your "didFinishLaunching" delegate method.
+        LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: nil)
+        
+        return true
+    }
+    ```
     
       
     URLを開く制御を、以下のように更新します。
-    
-    swift
-    
-    `func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {     return LoginManager.shared.application(app, open: url, options: options) }`
+    ```swift
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return LoginManager.shared.application(app, open: url, options: options)
+    }
+    ```
     
 
 ## コードを更新して最新のSDKを使用する
@@ -48,70 +53,154 @@ SDKをアップグレードするには、プロジェクトの言語を問わ�
 
 #### 以前
 
-swift
+```swift
+// First set the delegate to the current object
+LineSDKLogin.sharedInstance().delegate = self
+LineSDKLogin.sharedInstance().start()
 
-`// First set the delegate to the current object LineSDKLogin.sharedInstance().delegate = self LineSDKLogin.sharedInstance().start() // MARK: LineSDKLoginDelegate func didLogin(_ login: LineSDKLogin, credential: LineSDKCredential?, profile: LineSDKProfile?, error: Error?) {          if let error = error {        print("LINE Login Failed with Error: \(error.localizedDescription) ")        return    }     print("LINE Login Succeeded") }`
+// MARK: LineSDKLoginDelegate
+
+func didLogin(_ login: LineSDKLogin, credential: LineSDKCredential?, profile: LineSDKProfile?, error: Error?) {
+    
+    if let error = error {
+        print("LINE Login Failed with Error: \(error.localizedDescription) ")
+        return
+    }
+
+    print("LINE Login Succeeded")
+}
+```
 
 #### 現在
 
-swift
-
-`LoginManager.shared.login(permissions: [.profile]) {     result in    switch result {    case .success(let loginResult):        print("User name: \(loginResult.userProfile?.displayName ?? "nil")")    case .failure(let error):        print("Error: \(error)")    } }`
+```swift
+LoginManager.shared.login(permissions: [.profile]) {
+    result in
+    switch result {
+    case .success(let loginResult):
+        print("User name: \(loginResult.userProfile?.displayName ?? "nil")")
+    case .failure(let error):
+        print("Error: \(error)")
+    }
+}
+```
 
 ### ユーザープロフィールを取得する
 
 #### 以前
 
-swift
+```swift
+var apiClient: LineSDKAPI
+apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig())
 
-`var apiClient: LineSDKAPI apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig()) apiClient.getProfile(queue: .main) {     (profile, error) in         if let error = error {        print("Error getting profile \(error.localizedDescription)")    }         print(profile?.displayName ?? "none")    print(profile?.pictureURL ?? "none")    print(profile?.statusMessage ?? "none")    print(profile?.userID ?? "none") }`
+apiClient.getProfile(queue: .main) {
+    (profile, error) in
+    
+    if let error = error {
+        print("Error getting profile \(error.localizedDescription)")
+    }
+    
+    print(profile?.displayName ?? "none")
+    print(profile?.pictureURL ?? "none")
+    print(profile?.statusMessage ?? "none")
+    print(profile?.userID ?? "none")
+}
+```
 
 #### 現在
 
-swift
-
-`API.getProfile { result in     switch result {    case .success(let profile):        print("User name: \(profile.displayName)")    case .failure(let error):        print("Error: \(error)")    } }`
+```swift
+API.getProfile { result in
+    switch result {
+    case .success(let profile):
+        print("User name: \(profile.displayName)")
+    case .failure(let error):
+        print("Error: \(error)")
+    }
+}
+```
 
 ### ユーザーをログアウトする
 
 #### 以前
 
-swift
+```swift
+var apiClient: LineSDKAPI
+apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig())
 
-`var apiClient: LineSDKAPI apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig()) apiClient.logout(queue: .main) {     (success, error) in         if success {        print("Logout Succeeded")    }    else {        print("Logout Failed \(error?.localizedDescription as String?)")    } }`
+apiClient.logout(queue: .main) {
+    (success, error) in
+    
+    if success {
+        print("Logout Succeeded")
+    }
+    else {
+        print("Logout Failed \(error?.localizedDescription as String?)")
+    }
+}
+```
 
 #### 現在
 
-swift
-
-`LoginManager.shared.logout { result in     switch result {    case .success:            print("Logout Succeeded")    case .failure(let error): print("Logout Failed: \(error)")    } }`
+```swift
+LoginManager.shared.logout { result in
+    switch result {
+    case .success:            print("Logout Succeeded")
+    case .failure(let error): print("Logout Failed: \(error)")
+    }
+}
+```
 
 ### 現在のアクセストークンを取得する
 
 #### 以前
 
-swift
+```swift
+var apiClient: LineSDKAPI
+apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig())
 
-`var apiClient: LineSDKAPI apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig()) let myToken = apiClient.currentAccessToken()`
+let myToken = apiClient.currentAccessToken()
+```
 
 #### 現在
 
-swift
-
-`let token = AccessTokenStore.shared.current?.value`
+```swift
+let token = AccessTokenStore.shared.current?.value
+```
 
 ### アクセストークンを検証する
 
 #### 以前
 
-swift
+```swift
+var apiClient: LineSDKAPI
+apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig())
 
-`var apiClient: LineSDKAPI apiClient = LineSDKAPI(configuration: LineSDKConfiguration.defaultConfig()) apiClient.verifyToken(queue: .main) {     (result, error) in         if let error = error {        print("Token is Invalid: \(error.localizedDescription)")        return    }         guard let result = result, let permissions = result.permissions else {        print("Response result is null")        return    }    print("Token is Valid") }`
+apiClient.verifyToken(queue: .main) {
+    (result, error) in
+    
+    if let error = error {
+        print("Token is Invalid: \(error.localizedDescription)")
+        return
+    }
+    
+    guard let result = result, let permissions = result.permissions else {
+        print("Response result is null")
+        return
+    }
+    print("Token is Valid")
+}
+```
 
 #### 現在
 
-swift
-
-`API.Auth.verifyAccessToken { result in     switch result {    case .success: print("Token is valid.")    case .failure(let error): print("Error: \(error)")    } }`
+```swift
+API.Auth.verifyAccessToken { result in
+    switch result {
+    case .success: print("Token is valid.")
+    case .failure(let error): print("Error: \(error)")
+    }
+}
+```
 
 html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}
