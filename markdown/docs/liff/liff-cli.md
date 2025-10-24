@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/liff-cli/
-copied_at: 2025-10-23T16:00:32.459Z
+copied_at: 2025-10-24T06:29:22.070Z
 ---
 # LIFF CLI
 
@@ -249,10 +249,11 @@ URLスキームは**https**である必要があります。なお、URLフラ�
 
 `serve`コマンドにLIFFアプリが動いているローカル開発サーバーを指定すると、ローカル開発サーバーを対象とするローカルプロキシサーバーをHTTPSで起動し、LIFFアプリのエンドポイントURLをローカルプロキシサーバーのURLで書き換えます。これにより、開発者はより簡単にローカル開発サーバーをHTTPSで起動できます。
 
-:::note warn
-公開済みのLIFFアプリではserveコマンドを実行しないでください
-
-:::
+> [!WARNING]
+> 公開済みのLIFFアプリではserveコマンドを実行しないでください
+> `serve`コマンドを実行すると、LIFFアプリのエンドポイントURLがローカルプロキシサーバーのURLで書き換えられるため、ユーザーがLIFFアプリにアクセスできなくなります。そのため、公開済みのLIFFアプリでは`serve`コマンドを実行しないでください。
+> 
+> ![](https://developers.line.biz/media/liff/liff-cli/endpoint-url-ja.png)
 
 bash
 
@@ -295,10 +296,9 @@ bash
 
 #### プロキシの種類：ngrok-v1（非推奨）
 
-:::note warn
-ngrok-v1は非推奨です
-
-:::
+> [!WARNING]
+> ngrok-v1は非推奨です
+> ngrok v1はすでに開発やメンテナンスを終了しているため、`ngrok-v1`は非推奨です。ngrokを使用する際は、プロキシの種類に[`ngrok`](#serve-proxy-type-ngrok)を指定してください。
 
 `--proxy-type`オプションに`ngrok-v1`を指定すると、ローカルプロキシサーバーの代わりに[ngrok v1](https://github.com/inconshreveable/ngrok)を使うことができます。これにより、ローカル開発サーバーを外部に公開できます。なお、この機能を使うには、[ngrok v1](https://github.com/inconshreveable/ngrok)と[node-pty](https://www.npmjs.com/package/node-pty)を別途インストールする必要があります。
 

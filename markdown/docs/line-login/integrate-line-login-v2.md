@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/integrate-line-login-v2/
-copied_at: 2025-10-23T15:58:48.914Z
+copied_at: 2025-10-24T06:28:45.303Z
 ---
 # ウェブアプリにLINEログインを組み込む（LINEログイン v2.0）
 
-:::note alert
-LINEログイン v2.0は非推奨です
-
-:::
+> [!CAUTION]
+> LINEログイン v2.0は非推奨です
+> このページは旧バージョンのLINEログイン v2.0に関するドキュメントです。LINEログイン v2.0は[非推奨](https://developers.line.biz/ja/glossary/#deprecated)であり、時期は未定ですが[廃止](https://developers.line.biz/ja/glossary/#end-of-life)を予定しているため、現行バージョン（LINEログイン v2.1）の利用を推奨します。なお廃止時期の告知から、実際の廃止までは一定の猶予期間を置く予定です。詳しくは、「[LINEログインのバージョンについて](https://developers.line.biz/ja/docs/line-login/overview/#versions)」を参照してください。
 
 このページでは、ウェブアプリにLINEログインを組み込む方法について説明します。LINEログインを組み込めるアプリがない場合は、サンプルアプリを利用できます。「[LINEログインを利用するには](https://developers.line.biz/ja/docs/line-login/getting-started/)」を参照してください。
 
@@ -33,19 +32,19 @@ LINEログイン v2.0は非推奨です
 
 ![リダイレクト設定](https://developers.line.biz/media/line-login/integrate-login-web/redirect-settings.png)
 
-:::note warn
-メールアドレスの取得権限について
-
-:::
+> [!WARNING]
+> メールアドレスの取得権限について
+> LINEログイン v2.0を使用する場合は、LINEログインを使ってログインしたユーザーのメールアドレスを取得できません。
 
 ## ユーザーに認証と認可を要求する
 
 LINEプラットフォームとユーザーの間で、認証と認可のプロセスを開始させます。ユーザーがLINEログインボタンをクリックしたときに、認可URLにユーザーをリダイレクトしてください。
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> *   ウェブアプリにLINEログインボタンを追加する際は、「[LINEログインボタン デザインガイドライン](https://developers.line.biz/ja/docs/line-login/login-button/)」に従ってください。
+> *   LINEログインボタンを表示せず、認可URLに直接リンクすることもできます。
+> *   ユーザーの認証情報は、ウェブアプリには通知されません。
 
 認可URLの例：
 
@@ -65,10 +64,9 @@ text
 
 ### ユーザーがユーザー認証と認可を行う
 
-:::note info
-ユーザー認証と認可はユーザーとLINEプラットフォームの間で直接行われます
-
-:::
+> [!TIP]
+> ユーザー認証と認可はユーザーとLINEプラットフォームの間で直接行われます
+> LINEログインを組み込むウェブアプリ側で、認可の機能を実装する必要はありません。
 
 認可URLにリダイレクトされたユーザーは、自分のLINE認証情報を使ってログインし、ウェブアプリが要求するアクセス権を認可します。
 

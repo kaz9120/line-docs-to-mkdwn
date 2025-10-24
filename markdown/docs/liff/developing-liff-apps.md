@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/developing-liff-apps/
-copied_at: 2025-10-23T16:00:12.711Z
+copied_at: 2025-10-24T06:29:19.214Z
 ---
 # LIFFアプリを開発する
 
@@ -56,10 +56,9 @@ LIFF SDKで提供する機能を利用するには、LIFFアプリのHTMLソー�
 | CDNエッジパス | メジャーバージョンのみを含むCDNパスです。常に最新の機能を使用する場合は、このCDNパスを使用します。メジャーバージョンがアップデートされたときのみURLを更新する必要があります。<br/>例：https://static.line-scdn.net/liff/edge/**2**/sdk.js |
 | CDN固定パス | パッチバージョンまで含むCDNパスです。特定のバージョンの機能を使用する場合は、このCDNパスを使用します。LIFFアプリを更新しない限り、指定したパッチバージョンを使い続けることができます。LIFFの新機能や、セキュリティ改善、バグ修正を反映したいときのみURLを更新してください。自動的に更新されないため、LIFF SDKのアップデートの影響を受けません。<br/>例：https://static.line-scdn.net/liff/edge/**versions/2.22.3**/sdk.js |
 
-:::note warn
-どのバージョンを使うべきか
-
-:::
+> [!WARNING]
+> どのバージョンを使うべきか
+> CDN固定パスを使用している開発者は、LIFFアプリを更新するタイミングを決める必要があります。アップデートの内容を正しく理解し、自分のLIFFアプリに適しているか判断するために、『LIFFドキュメント』の「[リリースノート](https://developers.line.biz/ja/docs/liff/release-notes/)」をこまめに確認してください。
 
 CDN固定パスを指定する例：
 
@@ -67,24 +66,21 @@ html
 
 `<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>`
 
-:::note warn
-LIFF SDKはUTF-8で書かれています
-
-:::
+> [!WARNING]
+> LIFF SDKはUTF-8で書かれています
+> LIFF SDKはUTF-8で書かれているため、HTMLソースをUTF-8以外の文字コードで作成する場合は、`charset="utf-8"`をあわせて指定してください。
 
 ### npmパッケージを利用する
 
 LIFFでは、npmパッケージも公開しています。npmを利用して、LIFF SDKをインストールすることもできます。
 
-:::note warn
-SDKバージョンを管理してください
+> [!WARNING]
+> SDKバージョンを管理してください
+> 適切なSDKバージョンを使用することは開発者の責任です。SDKバージョンを最新の状態に保つために、[LIFFリリースノート](https://developers.line.biz/ja/docs/liff/release-notes/)を定期的に確認し、ローカルのSDKを頻繁に更新してください。LIFFのバージョニングポリシーの詳細は『[LIFF SDK（sdk.js）のアップデートポリシー](https://developers.line.biz/ja/docs/liff/versioning-policy/#update-policy)』を参照してください。
 
-:::
-
-:::note warn
-webpack v5を使ったプロジェクトでLIFF v2.16.0以前のnpm版を使用すると、ビルド時にエラーが発生します
-
-:::
+> [!WARNING]
+> webpack v5を使ったプロジェクトでLIFF v2.16.0以前のnpm版を使用すると、ビルド時にエラーが発生します
+> [webpack v5から、Node.jsのポリフィルが削除されました。](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-nodejs-polyfills-removed)その影響により、webpack v5を使ったプロジェクトでLIFF v2.16.0以前のnpm版を使用すると、ビルド時にエラーが発生します。詳しくは、2021年10月26日のニュース、「[LIFF v2.16.1をリリースしました](https://developers.line.biz/ja/news/2021/10/26/release-liff-2-16-1/)」を参照してください。
 
 LIFF SDKをnpmでインストールし、アプリに組み込むための手順は、以下のとおりです。
 
@@ -109,18 +105,16 @@ LIFF SDKをnpmでインストールし、アプリに組み込むための手順
     `import liff from "@line/liff"; liff.init({   liffId: "1234567890-AbcdEfgh", // Use own liffId });`
     
       
-    TypeScriptの型の定義は`@line/liff`パッケージに含まれています。:::note warn
-    window.liff を宣言および編集しないでください
-    
-    :::
+    TypeScriptの型の定義は`@line/liff`パッケージに含まれています。> [!WARNING]
+    > window.liff を宣言および編集しないでください
+    > 下位互換性を維持するため、グローバルLIFFインスタンスの`window.liff`を宣言および編集しないでください。LINEが正常に動作しなくなる可能性があります。
     
 
 関連ページ：[https://www.npmjs.com/package/@line/liff](https://www.npmjs.com/package/@line/liff)
 
-:::note info
-LIFF SDKのファイルサイズを削減する
-
-:::
+> [!TIP]
+> LIFF SDKのファイルサイズを削減する
+> プラガブルSDKを使うと、LIFF SDKのファイルサイズを削減できます。詳しくは、「[プラガブルSDK](https://developers.line.biz/ja/docs/liff/pluggable-sdk/)」を参照してください。
 
 ## LIFFアプリを初期化する
 
@@ -134,20 +128,41 @@ LIFFアプリが正しく初期化されていない状態でLIFFの機能を使
 
 詳しくは、「[LIFF URLにアクセスしてからLIFFアプリが開くまでの動作について](https://developers.line.biz/ja/docs/liff/opening-liff-app/#redirect-flow)」を参照してください。
 
-:::note warn
-LIFFアプリのクエリパラメータについて
+> [!WARNING]
+> LIFFアプリのクエリパラメータについて
+> LIFF URLへのアクセス時やLIFF間遷移時などに、URLに `liff.*` のようなクエリパラメータが付与されることがあります。
+> 
+> 例：
+> 
+> *   `liff.state`（LIFF URLに指定した追加情報を示す）
+> *   `liff.referrer`（LIFF間遷移前のURLを示す。詳しくは、「[LIFF間遷移前のURLを取得する](https://developers.line.biz/ja/docs/liff/opening-liff-app/#using-liff-referrer)」を参照してください）
+> 
+> 上記は、LIFFアプリを正常に動作させるために、SDK側から付与されるクエリパラメータです。LIFFアプリのURLに独自の処理を行う場合は、LIFFアプリの起動やLIFF間遷移などLIFFアプリの正常な動作を保証するため、`liff.init`がresolveされるまで`liff.*`のクエリパラメータを変更しないように設計してください。
 
-:::
+> [!TIP]
+> LIFFアプリを初期化する前でも実行できるメソッド
+> 以下のプロパティおよびメソッドは、`liff.init()`メソッドを実行する前でも利用できます。たとえば、LIFFアプリを初期化する前にLIFFアプリを動作させている環境を取得できます。
+> 
+> *   [liff.ready](https://developers.line.biz/ja/reference/liff/#ready)
+> *   [liff.getOS()](https://developers.line.biz/ja/reference/liff/#get-os)
+> *   [liff.getAppLanguage()](https://developers.line.biz/ja/reference/liff/#get-app-language)
+> *   [liff.getLanguage()](https://developers.line.biz/ja/reference/liff/#get-language)（非推奨）
+> *   [liff.getVersion()](https://developers.line.biz/ja/reference/liff/#get-version)
+> *   [liff.getLineVersion()](https://developers.line.biz/ja/reference/liff/#get-line-version)
+> *   [liff.isInClient()](https://developers.line.biz/ja/reference/liff/#is-in-client)
+> *   [liff.closeWindow()](https://developers.line.biz/ja/reference/liff/#close-window)
+> *   [liff.use()](https://developers.line.biz/ja/reference/liff/#use)
+> *   [liff.i18n.setLang()](https://developers.line.biz/ja/reference/liff/#i18n-set-lang)
+> 
+> `liff.closeWindow()`メソッドは、LIFF SDKバージョンが2.4.0以上の場合のみ、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
-:::note info
-LIFFアプリを初期化する前でも実行できるメソッド
-
-:::
-
-:::note info
-外部ブラウザでのLIFFアプリ初期化時にliff.login()メソッドを自動で実行するには
-
-:::
+> [!TIP]
+> 外部ブラウザでのLIFFアプリ初期化時にliff.login()メソッドを自動で実行するには
+> `liff.init()`メソッドの`config`オブジェクトの`withLoginOnExternalBrowser`プロパティに`true`を指定することで、外部ブラウザでのLIFFアプリ初期化時に、`liff.login()`メソッドを自動で実行できます。
+> 
+> js
+> 
+> `liff   .init({    liffId: "1234567890-AbcdEfgh", // Use own liffId    withLoginOnExternalBrowser: true, // Enable automatic login process  })  .then(() => {    // Start to use liff's api  });`
 
 `liffId`に指定するLIFFアプリIDは、LIFFアプリをチャネルに追加すると取得できます。詳しくは、「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)」を参照してください。
 
@@ -181,10 +196,17 @@ LIFFアプリを初期化する際の注意事項は以下のとおりです。�
 | `https://example.com/path1/language/` | ✅ |
 | `https://example.com/path2/` | ❌ |
 
-:::note warn
-liff.init()メソッドの実行時に、コンソールに「liff.init() was called with a current URL that is not related to the endpoint URL.」という警告メッセージが表示される
-
-:::
+> [!WARNING]
+> liff.init()メソッドの実行時に、コンソールに「liff.init() was called with a current URL that is not related to the endpoint URL.」という警告メッセージが表示される
+> LIFF v2.27.2以降では、動作が保証されないURLで`liff.init()`メソッドを実行すると、コンソールに警告メッセージが表示されます。
+> 
+> たとえば、LIFFアプリのエンドポイントURLが`https://example.com/path1/path2/`で、`liff.init()`メソッドを実行するURLが`https://example.com/path1/`の場合、表示される警告メッセージは次のとおりです。
+> 
+> text
+> 
+> `liff.init() was called with a current URL that is not related to the endpoint URL. https://example.com/path1/ is not under https://example.com/path1/path2/`
+> 
+> 上記の警告メッセージが表示された場合、エンドポイントURLを`https://example.com/`や`https://example.com/path1/`に変更できないか検討してください。これらのURLに変更することで、`liff.init()`メソッドの動作が保証されます。
 
 #### liff.init()を1次リダイレクト先URLと2次リダイレクト先URLで1回ずつ実行する
 
@@ -224,10 +246,9 @@ javascript
 
 ![フロー図](https://developers.line.biz/media/liff/initializing-liff-app-flow.png)
 
-:::note warn
-LIFFブラウザ内での認可リクエストについて
-
-:::
+> [!WARNING]
+> LIFFブラウザ内での認可リクエストについて
+> LIFFブラウザ内でLINEログインによる認可リクエストを行った際の動作は保証されません。また、LIFFアプリを外部ブラウザやLINE内ブラウザで開く場合には、必ず[`liff.login()`](https://developers.line.biz/ja/reference/liff/#login)メソッドでログイン処理を行い、[LINEログインによる認可リクエスト](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)は行わないでください。
 
 ## LIFF APIを呼び出す
 
@@ -266,15 +287,13 @@ javascript
 
 [外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)および[LINE内ブラウザ](https://developers.line.biz/ja/glossary/#line-iab)の場合、`liff.login()`メソッドを実行して、ログイン処理を行います。
 
-:::note warn
-注意
+> [!WARNING]
+> 注意
+> LIFFブラウザの場合、`liff.init()`実行時に自動でログイン処理が実行されるため、`liff.login()`は利用できません。
 
-:::
-
-:::note info
-liff.init()メソッド実行時にwithLoginOnExternalBrowserプロパティをtrueにした場合
-
-:::
+> [!TIP]
+> liff.init()メソッド実行時にwithLoginOnExternalBrowserプロパティをtrueにした場合
+> `liff.init()`メソッドの`withLoginOnExternalBrowser`プロパティを`true`に指定した場合、外部ブラウザでもLIFFアプリ初期化時に`liff.login()`メソッドを自動で実行することができます。詳しくは、『LIFF APIリファレンス』の「[liff.init()](https://developers.line.biz/ja/reference/liff/#initialize-liff-app)」を参照してください。
 
 javascript
 
@@ -310,20 +329,32 @@ javascript
 
 詳しくは、『LIFF APIリファレンス』の「[liff.scanCodeV2()](https://developers.line.biz/ja/reference/liff/#scan-code-v2)」を参照してください。
 
-:::note warn
-liff.scanCode()メソッドは非推奨です
+> [!WARNING]
+> liff.scanCode()メソッドは非推奨です
+> 従来の`liff.scanCode()`メソッドは[非推奨](https://developers.line.biz/ja/glossary/#deprecated)になります。二次元コードリーダーを実装する場合は、`liff.scanCodeV2()`メソッドを使用することをお勧めします。
 
-:::
+> [!WARNING]
+> liff.scanCode2()メソッドの動作環境
+> `liff.scanCodeV2()`メソッドは以下の環境で動作します。
+> 
+> *   iOS：iOS14.3以降
+> *   Android：すべてのバージョン
+> *   外部ブラウザ：[WebRTC API](https://developer.mozilla.org/ja/docs/Web/API/WebRTC_API) をサポートするウェブブラウザ
+> 
+> | OS | バージョン | LIFFブラウザ | 外部ブラウザ |
+> | --- | --- | --- | --- |
+> | iOS | 11〜14.2 | ❌ | ✅ ※1 |
+> | 14.3以降 | ✅ ※2 | ✅ ※1 |
+> | Android | すべてのバージョン | ✅ ※2 | ✅ ※1 |
+> | PC | すべてのバージョン | ❌ | ✅ ※1 |
+> 
+> ※1 [WebRTC API](https://developer.mozilla.org/ja/docs/Web/API/WebRTC_API)をサポートするウェブブラウザのみ利用できます。
+> 
+> ※2 LIFFブラウザの画面サイズが`Full`の場合のみ利用できます。詳しくは、『LIFFドキュメント』の「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。
 
-:::note warn
-liff.scanCode2()メソッドの動作環境
-
-:::
-
-:::note warn
-二次元コードリーダーを起動するには［Scan QR］をオンにしてください
-
-:::
+> [!WARNING]
+> 二次元コードリーダーを起動するには［Scan QR］をオンにしてください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、［**Scan QR**］をオンにしてください。［**Scan QR**］の設定は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 ### LIFFアプリが起動された画面を取得する
 
@@ -342,15 +373,13 @@ LIFFアプリでIDトークンを取得して、ユーザーのプロフィー�
 *   [サーバーに送信するために取得する](#getting-tokens)
 *   [LIFFアプリで使用するために取得する](#getting-decoded-id-token)
 
-:::note warn
-スコープを選択してください
+> [!WARNING]
+> スコープを選択してください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`openid`スコープを選択してください。スコープを選択しなかった場合やユーザーが認可しなかった場合は、IDトークンを取得できません。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
-:::
-
-:::note info
-メールアドレスを取得できます
-
-:::
+> [!TIP]
+> メールアドレスを取得できます
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`email`スコープを選択し、ユーザーが認可すると、メールアドレスも取得できます。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 #### サーバーに送信するために取得する
 
@@ -379,10 +408,9 @@ LIFFアプリからサーバーにユーザー情報を送信する場合は、�
 
 LIFFアプリでユーザーの表示名などを利用する場合に、このAPIを利用してください。
 
-:::note alert
-ユーザー情報をサーバーに送信しないでください
-
-:::
+> [!CAUTION]
+> ユーザー情報をサーバーに送信しないでください
+> `liff.getDecodedIDToken()`で取得したユーザー情報をサーバーに送信しないでください。代わりに、[`liff.getIDToken()`](#getting-tokens)で取得したIDトークンを送信します。
 
 javascript
 
@@ -402,10 +430,9 @@ javascript
 
 詳しくは、『LIFF v2 APIリファレンス』の「[liff.getFriendship()](https://developers.line.biz/ja/reference/liff/#get-friendship)」を参照してください。
 
-:::note warn
-スコープを選択してください
-
-:::
+> [!WARNING]
+> スコープを選択してください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`profile`スコープを選択してください。スコープを選択しなかった場合やユーザーが認可しなかった場合は、友だち関係を取得できません。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 ### LIFFアプリの任意のページのパーマネントリンクを取得する
 
@@ -463,10 +490,9 @@ javascript
 
 詳しくは、『LIFF v2 APIリファレンス』の「[liff.closeWindow()](https://developers.line.biz/ja/reference/liff/#close-window)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `liff.closeWindow()`の外部ブラウザでの動作は、保証対象外です。
 
 ## OGPタグを設定する
 
@@ -478,10 +504,9 @@ html
 
 ``<html lang="ja" prefix="og: http://ogp.me/ns#"> <meta property="og:title" content="タイトル"> <meta property="og:type" content="`website`、`blog`、または`article`"> <meta property="og:description" content="ページの簡単な説明"> <meta property="og:url" content="ページのURL"> <meta property="og:site_name" content="サイト全体を表す名前"> <meta property="og:image" content="サムネイル画像のURL">``
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LIFFアプリのURLを、`line://app/{liffId}`（非推奨）の形式でシェアしたときは、OGPタグは無視されます。
 
 ## LIFFアプリではない外部のサイトに遷移した場合
 
@@ -491,10 +516,9 @@ LIFFブラウザでは、LIFFアプリからLIFFアプリでない外部サイ�
 
 ポップアップは、同じウィンドウで外部サイトを開いた場合にのみ表示されます。別のウィンドウで外部サイトを開いた場合は、ポップアップは表示されません。
 
-:::note warn
-LIFFアプリのエンドポイントURLより上の階層への遷移
-
-:::
+> [!WARNING]
+> LIFFアプリのエンドポイントURLより上の階層への遷移
+> LIFFアプリで、エンドポイントURL（例：`https://example.com/path`）より上の階層（例：`https://example.com/`）へ遷移した際の動作は保証されません。
 
 ## LIFFアプリを閉じたときの挙動
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/ssl-tls-spec-of-the-webhook-source/
-copied_at: 2025-10-23T15:56:58.729Z
+copied_at: 2025-10-24T06:28:12.662Z
 ---
 # Webhook送信元のSSL/TLS仕様
 
@@ -16,10 +16,9 @@ Webhookを受け取るボットサーバーは、以下の仕様に基づくHTTP
 
 ステータスが[非推奨](https://developers.line.biz/ja/glossary/#deprecated)になっている暗号スイートは、互換性のために維持されていますが、近い将来に予告なく廃止される可能性があります。また暗号スイートによって、対応しているSSL/TLSのプロトコルバージョンやHTTPバージョンが異なります。
 
-:::note info
-表は左右にスクロールできます
-
-:::
+> [!TIP]
+> 表は左右にスクロールできます
+> 表を右にスクロールすると、それぞれの暗号スイートのステータスや、対応しているSSL/TLSのプロトコルバージョンやHTTPバージョンが確認できます。
 
 | IANA | OpenSSL | Hex code | ステータス | SSL/TLSの対応プロトコルバージョン | 対応HTTPバージョン |
 | --- | --- | --- | --- | --- | --- |

@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/release-notes/
-copied_at: 2025-10-23T15:59:47.091Z
+copied_at: 2025-10-24T06:29:07.583Z
 ---
 # リリースノート
 
-:::note warn
-バージョン5.0.0以降のリリースノートはGitHubリポジトリで公開しています
-
-:::
+> [!WARNING]
+> バージョン5.0.0以降のリリースノートはGitHubリポジトリで公開しています
+> バージョン5.0.0以降のLINE SDK for iOSのリリースノートは、GitHubリポジトリで公開しています。詳しくは、[Releases](https://github.com/line/line-sdk-ios-swift/releases)を参照してください。
 
 2018/12/13
 

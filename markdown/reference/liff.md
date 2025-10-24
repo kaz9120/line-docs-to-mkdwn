@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/liff/
-copied_at: 2025-10-23T15:59:55.785Z
+copied_at: 2025-10-24T06:29:10.295Z
 ---
 # LIFF v2 APIリファレンス
 
@@ -12,19 +12,19 @@ LIFF v2の動作環境については、『LIFFドキュメント』の「[概�
 
 なお、LIFFアプリをLIFFブラウザで開いた場合と、外部ブラウザで開いた場合では、使用できる機能が異なります。たとえば、`liff.scanCode()`は、外部ブラウザでは利用できません。詳しくは、各クライアントAPIの説明をご覧ください。
 
-:::note warn
-OpenChatでのLIFFアプリの利用はサポートされていません
-
-:::
+> [!WARNING]
+> OpenChatでのLIFFアプリの利用はサポートされていません
+> 現在のところ、OpenChatではLIFFアプリの利用は正式にサポートされていません。たとえば、LIFFアプリからプロフィール情報を取得できない場合があります。
 
 ### LIFF SDKのエラー
 
 LIFF SDKのエラーはLiffErrorオブジェクトで返されます。
 
-:::note warn
-エラーを識別する際は、エラーコードとエラーメッセージの両方を参照してください
-
-:::
+> [!WARNING]
+> エラーを識別する際は、エラーコードとエラーメッセージの両方を参照してください
+> エラーメッセージは予告なく変更されることがあるため、エラーをエラーメッセージの完全一致で識別すると、LIFFアプリが正常に動作しなくなる可能性があります。エラーを識別する際は、エラーメッセージが変更されてもLIFFアプリが正常に動作するよう、エラーコードとエラーメッセージの両方を参照してください。
+> 
+> なお、エラーコードによってエラーを一意に識別できるよう、将来的に改善する予定です。
 
 _例_
 
@@ -90,17 +90,15 @@ LIFFアプリ起動後、[`liff.init()`](#initialize-liff-app)の実行が初め
 
 `liff.ready`を利用すると、`liff.init()`の終了を待って、任意の処理を実行できます。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> `liff.ready`は、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 _例_
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `liff.init()`実行中に何か問題が起きても、`liff.ready`はrejectしません。また、[`LiffError`オブジェクト](#liff-errors)を返すこともありません。
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}
 
@@ -141,10 +139,17 @@ LIFFアプリを初期化する際の注意事項は以下のとおりです。�
 | `https://example.com/path1/language/` | ✅ |
 | `https://example.com/path2/` | ❌ |
 
-:::note warn
-liff.init()メソッドの実行時に、コンソールに「liff.init() was called with a current URL that is not related to the endpoint URL.」という警告メッセージが表示される
-
-:::
+> [!WARNING]
+> liff.init()メソッドの実行時に、コンソールに「liff.init() was called with a current URL that is not related to the endpoint URL.」という警告メッセージが表示される
+> LIFF v2.27.2以降では、動作が保証されないURLで`liff.init()`メソッドを実行すると、コンソールに警告メッセージが表示されます。
+> 
+> たとえば、LIFFアプリのエンドポイントURLが`https://example.com/path1/path2/`で、`liff.init()`メソッドを実行するURLが`https://example.com/path1/`の場合、表示される警告メッセージは次のとおりです。
+> 
+> text
+> 
+> `liff.init() was called with a current URL that is not related to the endpoint URL. https://example.com/path1/ is not under https://example.com/path1/path2/`
+> 
+> 上記の警告メッセージが表示された場合、エンドポイントURLを`https://example.com/`や`https://example.com/path1/`に変更できないか検討してください。これらのURLに変更することで、`liff.init()`メソッドの動作が保証されます。
 
 ##### `liff.init()`を1次リダイレクト先URLと2次リダイレクト先URLで1回ずつ実行する
 
@@ -174,15 +179,34 @@ javascript
 
 `liff   .init({    liffId: "1234567890-AbcdEfgh", // Use own liffId  })  .then(() => {    ga("send", "pageview");  });`
 
-:::note warn
-LIFFアプリのクエリパラメータについて
+> [!WARNING]
+> LIFFアプリのクエリパラメータについて
+> LIFF URLへのアクセス時やLIFF間遷移時などに、URLに `liff.*` のようなクエリパラメータが付与されることがあります。
+> 
+> 例：
+> 
+> *   `liff.state`（LIFF URLに指定した追加情報を示す）
+> *   `liff.referrer`（LIFF間遷移前のURLを示す。詳しくは、「[LIFF間遷移前のURLを取得する](https://developers.line.biz/ja/docs/liff/opening-liff-app/#using-liff-referrer)」を参照してください。）
+> 
+> 上記は、LIFFアプリを正常に動作させるために、SDK側から付与されるクエリパラメータです。 LIFFアプリのURLに独自の処理を行う場合は、LIFFアプリの起動やLIFF間遷移などLIFFアプリの正常な動作を保証するため、`liff.init`がresolveされるまで`liff.*`のクエリパラメータを変更しないように設計してください。
 
-:::
-
-:::note info
-LIFFアプリを初期化する前でも実行できるメソッド
-
-:::
+> [!TIP]
+> LIFFアプリを初期化する前でも実行できるメソッド
+> 以下のプロパティおよびメソッドは、`liff.init()`メソッドを実行する前でも利用できます。  
+> LIFFアプリを初期化する前にLIFFアプリを動作させている環境を取得したり、LIFFアプリ初期化に失敗した際にLIFFアプリを閉じたりできます。
+> 
+> *   [liff.ready](https://developers.line.biz/ja/reference/liff/#ready)
+> *   [liff.getOS()](https://developers.line.biz/ja/reference/liff/#get-os)
+> *   [liff.getAppLanguage()](https://developers.line.biz/ja/reference/liff/#get-app-language)
+> *   [liff.getLanguage()](https://developers.line.biz/ja/reference/liff/#get-language)（非推奨）
+> *   [liff.getVersion()](https://developers.line.biz/ja/reference/liff/#get-version)
+> *   [liff.getLineVersion()](https://developers.line.biz/ja/reference/liff/#get-line-version)
+> *   [liff.isInClient()](https://developers.line.biz/ja/reference/liff/#is-in-client)
+> *   [liff.closeWindow()](https://developers.line.biz/ja/reference/liff/#close-window)
+> *   [liff.use()](https://developers.line.biz/ja/reference/liff/#use)
+> *   [liff.i18n.setLang()](https://developers.line.biz/ja/reference/liff/#i18n-set-lang)
+> 
+> `liff.closeWindow()`メソッドは、LIFF SDKバージョンが2.4.0以上の場合のみ、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 _例_
 
@@ -230,10 +254,9 @@ Function
 
 LIFFアプリの初期化に成功したときにデータオブジェクトを返すコールバック
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> successCallbackは、戻り値の`Promise`オブジェクトのresolveと同じタイミングで処理されます。ただし、処理の順番は保証されません。
 
 errorCallback
 
@@ -243,10 +266,9 @@ Function
 
 LIFFアプリの初期化に失敗したときにエラーオブジェクトを返すコールバック
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> errorCallbackは、戻り値の`Promise`オブジェクトのrejectと同じタイミングで処理されます。ただし、処理の順番は保証されません。
 
 #### 戻り値
 
@@ -264,10 +286,9 @@ html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html 
 
 ユーザーがLIFFアプリを動作させている環境を取得します。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 #### 構文
 
@@ -299,10 +320,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 LIFFアプリが動作しているLINEアプリの言語設定を取得します。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 #### 使用条件
 
@@ -335,17 +355,15 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 ### liff.getLanguage()
 
-:::note warn
-liff.getLanguage()メソッドは非推奨です
-
-:::
+> [!WARNING]
+> liff.getLanguage()メソッドは非推奨です
+> `liff.getLanguage()`メソッドは非推奨になりました。LIFFアプリを動作させている環境の言語設定を取得するには、[`liff.getAppLanguage()`](#get-app-language)メソッドを使用してください。詳しくは、[2024年7月23日のニュース](https://developers.line.biz/ja/news/2024/07/23/release-liff-2-24-0/)を参照してください。
 
 LIFFアプリを動作させている環境の言語設定を取得します。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 #### 構文
 
@@ -367,10 +385,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 LIFF SDKのバージョンを取得します。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 #### 構文
 
@@ -392,10 +409,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 ユーザーのLINEバージョンを取得します。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 #### 構文
 
@@ -417,10 +433,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 LIFFアプリが起動された画面（1対1のトーク、グループトーク、複数人トーク、または外部ブラウザ）に関する情報を取得します。
 
-:::note alert
-トークルームの内部識別子の提供は廃止されました
-
-:::
+> [!CAUTION]
+> トークルームの内部識別子の提供は廃止されました
+> LIFFアプリに対するトークルームの内部識別子（1対1トークID、グループID、トークルームID）の提供は廃止されました。詳しくは、2023年2月6日のニュース、「[2023年2月6日をもってLIFFアプリに対するトークルームの内部識別子の提供を廃止しました](https://developers.line.biz/ja/news/2023/02/06/liff-spec-change/)」を参照してください。
 
 _例_
 
@@ -507,10 +522,13 @@ LIFF SDKの一部のメソッドを利用するために必要なスコープの
 
 スコープについて詳しくは、『LIFFドキュメント』の「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/#registering-liff-app)」を参照してください。
 
-:::note info
-liff.getContext()メソッドとliff.permission.getGrantedAll()メソッドの違い
-
-:::
+> [!TIP]
+> liff.getContext()メソッドとliff.permission.getGrantedAll()メソッドの違い
+> `liff.getContext()`メソッドでは、LIFFアプリのスコープ（※）の一覧を取得します。
+> 
+> 一方、[`liff.permission.getGrantedAll()`](#permission-get-granted-all)メソッドでは、LIFFアプリのスコープのうち、ユーザーが権限の付与に同意したスコープの一覧を取得します。
+> 
+> ※ LINEログインチャネルの［**LIFF**］タブにある「Scope」セクションで指定したスコープ
 
 menuColorSetting
 
@@ -805,10 +823,9 @@ html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html 
 
 LIFFアプリをLIFFブラウザで動作させているかどうかを取得します。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
-
-:::
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
 #### 構文
 
@@ -876,10 +893,9 @@ LIFFのクライアントAPIの名前。以下のAPI名を指定できます。
 *   [createShortcutOnHomeScreen](#create-shortcut-on-home-screen)
 *   [multipleLiffTransition](https://developers.line.biz/ja/docs/liff/opening-liff-app/#move-liff-to-liff)
 
-:::note warn
-multipleLiffTransitionについて
-
-:::
+> [!WARNING]
+> multipleLiffTransitionについて
+> `multipleLiffTransition`は、LIFFアプリを閉じずに別のLIFFアプリを開くこと（LIFF間遷移）が可能かどうか、という状態を表すプロパティで、APIの名前ではありません。詳しくは、『LIFFドキュメント』の「[LIFFアプリから別のLIFFアプリを開いた場合の動作について（LIFF間遷移）](https://developers.line.biz/ja/docs/liff/opening-liff-app/#move-liff-to-liff)」を参照してください。
 
 #### 戻り値
 
@@ -899,15 +915,13 @@ html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html 
 
 [外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)および[LINE内ブラウザ](https://developers.line.biz/ja/glossary/#line-iab)上で、ログイン処理を行います。
 
-:::note warn
-注意
+> [!WARNING]
+> 注意
+> LIFFブラウザの場合、`liff.init()`実行時に自動でログイン処理が実行されるため、`liff.login()`は利用できません。
 
-:::
-
-:::note warn
-LIFFブラウザ内での認可リクエストについて
-
-:::
+> [!WARNING]
+> LIFFブラウザ内での認可リクエストについて
+> LIFFブラウザ内でLINEログインによる認可リクエストを行った際の動作は保証されません。また、LIFFアプリを外部ブラウザやLINE内ブラウザで開く場合には、必ず本メソッドでログイン処理を行い、[LINEログインによる認可リクエスト](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)は行わないでください。
 
 _例_
 
@@ -980,15 +994,17 @@ LIFF SDKが取得した「現在のユーザーのアクセストークン」を
 
 LIFFアプリからサーバーにユーザー情報を送信するときに、このAPIで取得したアクセストークンを利用できます。サーバーでユーザー情報を使用する方法について詳しくは、『LIFFドキュメント』の「[LIFFアプリおよびサーバーでユーザー情報を使用する](https://developers.line.biz/ja/docs/liff/using-user-profile/)」を参照してください。
 
-:::note warn
-アクセストークンの有効期間
+> [!WARNING]
+> アクセストークンの有効期間
+> アクセストークンの有効期間は、発行後12時間です。なお、ユーザーが[LIFFアプリを閉じる](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#behavior-when-closing-liff-app)と、有効期限が切れていなくてもアクセストークンは無効化されます。
 
-:::
-
-:::note info
-LIFF SDKがアクセストークンを取得するタイミング
-
-:::
+> [!TIP]
+> LIFF SDKがアクセストークンを取得するタイミング
+> *   LIFFブラウザでLIFFアプリを起動した場合は、[`liff.init()`](#initialize-liff-app)を呼び出したときに、LIFF SDKがアクセストークンを取得します。
+> *   外部ブラウザでLIFFアプリを起動した場合は、以下の手順を行ったのちに、LIFF SDKがアクセストークンを取得します。
+>     1.  LIFFアプリで、[`liff.login()`](#login)を呼び出す。
+>     2.  ユーザーがログインする。
+>     3.  LIFFアプリで、再度[`liff.init()`](#initialize-liff-app)を呼び出す。
 
 _例_
 
@@ -1014,20 +1030,21 @@ LIFF SDKが取得した「現在のユーザーのIDトークン」を取得し�
 
 LIFFアプリからサーバーにユーザー情報を送信するときに、このAPIで取得したIDトークンを利用できます。サーバーでユーザー情報を使用する方法について詳しくは、『LIFFドキュメント』の「[LIFFアプリおよびサーバーでユーザー情報を使用する](https://developers.line.biz/ja/docs/liff/using-user-profile/)」を参照してください。
 
-:::note warn
-スコープを選択してください
+> [!WARNING]
+> スコープを選択してください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`openid`スコープを選択してください。スコープを選択しなかった場合やユーザーが認可しなかった場合は、IDトークンを取得できません。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
-:::
+> [!TIP]
+> LIFF SDKがIDトークンを取得するタイミング
+> *   LIFFブラウザでLIFFアプリを起動した場合は、[`liff.init()`](#initialize-liff-app)を呼び出したときに、LIFF SDKがIDトークンを取得します。
+> *   外部ブラウザでLIFFアプリを起動した場合は、以下の手順を行ったのちに、LIFF SDKがIDトークンを取得します。
+>     1.  LIFFアプリで、[`liff.login()`](#login)を呼び出す。
+>     2.  ユーザーがログインする。
+>     3.  LIFFアプリで、再度[`liff.init()`](#initialize-liff-app)を呼び出す。
 
-:::note info
-LIFF SDKがIDトークンを取得するタイミング
-
-:::
-
-:::note info
-メールアドレスを取得できます
-
-:::
+> [!TIP]
+> メールアドレスを取得できます
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`email`スコープを選択し、ユーザーが認可すると、メールアドレスも取得できます。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 _例_
 
@@ -1055,25 +1072,25 @@ LIFFアプリでユーザーの表示名などを利用する場合に、この�
 
 なお取得できる情報はメインプロフィールのみです。ユーザーの[サブプロフィール](https://developers.line.biz/ja/glossary/#subprofile)は取得できません。
 
-:::note alert
-ユーザー情報をサーバーに送信しないでください
+> [!CAUTION]
+> ユーザー情報をサーバーに送信しないでください
+> このメソッドで取得したユーザー情報をサーバーに送信しないでください。サーバーでユーザー情報を使用する方法について詳しくは、『LIFFドキュメント』の「[LIFFアプリおよびサーバーでユーザー情報を使用する](https://developers.line.biz/ja/docs/liff/using-user-profile/)」を参照してください。
 
-:::
+> [!WARNING]
+> スコープを選択してください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`openid`スコープを選択してください。スコープを選択しなかった場合やユーザーが認可しなかった場合は、IDトークンを取得できません。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
-:::note warn
-スコープを選択してください
+> [!TIP]
+> LIFF SDKがIDトークンを取得するタイミング
+> *   LIFFブラウザでLIFFアプリを起動した場合は、[`liff.init()`](#initialize-liff-app)を呼び出したときに、LIFF SDKがIDトークンを取得します。
+> *   外部ブラウザでLIFFアプリを起動した場合は、以下の手順を行ったのちに、LIFF SDKがIDトークンを取得します。
+>     1.  LIFFアプリで、[`liff.login()`](#login)を呼び出す。
+>     2.  ユーザーがログインする。
+>     3.  LIFFアプリで、再度[`liff.init()`](#initialize-liff-app)を呼び出す。
 
-:::
-
-:::note info
-LIFF SDKがIDトークンを取得するタイミング
-
-:::
-
-:::note info
-メールアドレスを取得できます
-
-:::
+> [!TIP]
+> メールアドレスを取得できます
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`email`スコープを選択し、ユーザーが認可すると、メールアドレスも取得できます。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 _例_
 
@@ -1108,10 +1125,13 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 *   [`openid`](https://developers.line.biz/ja/docs/liff/registering-liff-apps/#registering-liff-app)
 *   [`email`](https://developers.line.biz/ja/docs/liff/registering-liff-apps/#registering-liff-app)
 
-:::note info
-liff.getContext()メソッドとliff.permission.getGrantedAll()メソッドの違い
-
-:::
+> [!TIP]
+> liff.getContext()メソッドとliff.permission.getGrantedAll()メソッドの違い
+> [`liff.getContext()`](#get-context)メソッドでは、LIFFアプリのスコープ（※）の一覧を取得します。
+> 
+> 一方、`liff.permission.getGrantedAll()`メソッドでは、LIFFアプリのスコープのうち、ユーザーが権限の付与に同意したスコープの一覧を取得します。
+> 
+> ※ LINEログインチャネルの［**LIFF**］タブにある「Scope」セクションで指定したスコープ
 
 _例_
 
@@ -1182,15 +1202,15 @@ LINEミニアプリが要求する権限の「アクセス許可要求画面」�
 
 ![アクセス許可要求画面](https://developers.line.biz/media/line-mini-app/verification-screen-ja.png)
 
-:::note warn
-liff.permission.requestAll()の動作環境
+> [!WARNING]
+> liff.permission.requestAll()の動作環境
+> `liff.permission.requestAll()`は[LINEミニアプリ](https://developers.line.biz/ja/docs/line-mini-app/)でのみ動作します。
+> 
+> このメソッドを実行するには、あらかじめ[LINE Developersコンソール](https://developers.line.biz/console/)で、［**チャネル同意の簡略化**］をオンにする必要があります。チャネル同意の簡略化の設定方法について詳しくは、『LINEミニアプリドキュメント』の「[「チャネル同意の簡略化」の設定方法](https://developers.line.biz/ja/docs/line-mini-app/develop/channel-consent-simplification/#simplification-feature-setup)」を参照してください。
 
-:::
-
-:::note warn
-ユーザーが未同意の権限があるかどうか確認してから実行してください
-
-:::
+> [!WARNING]
+> ユーザーが未同意の権限があるかどうか確認してから実行してください
+> 権限付与にユーザーがすべて同意済みの場合、`liff.permission.requestAll()`を実行すると、`Promise`がrejectされ、[`LiffError`](https://developers.line.biz/ja/reference/liff/#liff-errors)が渡されます。そのため、[`liff.permission.query()`](https://developers.line.biz/ja/reference/liff/#permission-query)を使って、ユーザーが未同意の権限があるかどうかを確認してください。未同意の権限がある場合にのみ、`liff.permission.requestAll()`を実行するようにしてください。
 
 _例_
 
@@ -1222,15 +1242,13 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 なお取得できる情報はメインプロフィールのみです。ユーザーの[サブプロフィール](https://developers.line.biz/ja/glossary/#subprofile)は取得できません。
 
-:::note alert
-ユーザー情報をサーバーに送信しないでください
+> [!CAUTION]
+> ユーザー情報をサーバーに送信しないでください
+> このメソッドで取得したユーザー情報をサーバーに送信しないでください。サーバーでユーザー情報を使用する方法について詳しくは、『LIFFドキュメント』の「[LIFFアプリおよびサーバーでユーザー情報を使用する](https://developers.line.biz/ja/docs/liff/using-user-profile/)」を参照してください。
 
-:::
-
-:::note warn
-スコープを選択してください
-
-:::
+> [!WARNING]
+> スコープを選択してください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`profile`スコープを選択してください。スコープを選択しなかった場合やユーザーが認可しなかった場合は、プロフィール情報を取得できません。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 _例_
 
@@ -1288,10 +1306,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 ただし、LIFFアプリが追加されているLINEログインのチャネルに、LINE公式アカウントがリンクされている場合に、そのLINE公式アカウントとの友だち関係のみを取得できます。LINEログインのチャネルに、LINE公式アカウントをリンクする方法については、『LINEログインドキュメント』の「[LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）](https://developers.line.biz/ja/docs/line-login/link-a-bot/)」を参照してください。
 
-:::note warn
-スコープを選択してください
-
-:::
+> [!WARNING]
+> スコープを選択してください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、`profile`スコープを選択してください。スコープを選択しなかった場合やユーザーが認可しなかった場合は、友だち関係を取得できません。スコープの選択は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
 _例_
 
@@ -1332,15 +1349,20 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 指定したURLをLINE内ブラウザまたは外部ブラウザで開きます。
 
-:::note warn
-liff.openWindow()の動作環境
+> [!WARNING]
+> liff.openWindow()の動作環境
+> `liff.openWindow()`の外部ブラウザでの利用は、保証対象外です。
 
-:::
-
-:::note warn
-iOS版LINEかつLIFF v2.16.1以前でliff.openWindow()を実行すると、URLフラグメントの末尾に意図しないクエリパラメータが追加されたURLが開かれます
-
-:::
+> [!WARNING]
+> iOS版LINEかつLIFF v2.16.1以前でliff.openWindow()を実行すると、URLフラグメントの末尾に意図しないクエリパラメータが追加されたURLが開かれます
+> iOS版LINEかつLIFF v2.16.1以前で、`url`プロパティにクエリパラメータ（`?key=value`）が含まれず、かつURLフラグメント（`#URL-fragment`）が含まれていると、URLフラグメントの末尾に意図しないクエリパラメータが追加されたURLが開かれます。
+> 
+> 以下は、`liff.openWindow()`実行時に開かれるURLの例です。
+> 
+> | LIFF SDKバージョン | `url`プロパティ | 開かれるURL |
+> | --- | --- | --- |
+> | v2.16.1 | `https://example.com#URL-fragment` | `https://example.com#URL-fragment?is_liff_external_open_window=false` |
+> | v2.17.0 | `https://example.com#URL-fragment` | `https://example.com#URL-fragment` |
 
 _例_
 
@@ -1391,15 +1413,13 @@ LIFFアプリを閉じます。
 
 LIFFアプリを閉じたときの挙動は、LINEアプリのバージョンやLIFFアプリの設定によって異なります。詳しくは、『LIFFドキュメント』の「[LIFFアプリを閉じたときの挙動](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#behavior-when-closing-liff-app)」を参照してください。
 
-:::note info
-LIFFアプリ初期化前でも実行できます
+> [!TIP]
+> LIFFアプリ初期化前でも実行できます
+> このメソッドは、LIFF SDKバージョンが2.4.0以上の場合のみ、`liff.init()`によるLIFFアプリの初期化が終了する前でも実行できます。
 
-:::
-
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `liff.closeWindow()`の外部ブラウザでの動作は、保証対象外です。
 
 _例_
 
@@ -1491,15 +1511,17 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 *   ユーザーがログインしている。
 *   [LINE Developersコンソール](https://developers.line.biz/console/)でシェアターゲットピッカーがオンになっている。詳しくは、『LIFFドキュメント』の「[シェアターゲットピッカーを利用するには](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#using-share-target-picker)」を参照してください。
 
-:::note warn
-スマートフォンの外部ブラウザでliff.shareTargetPicker()メソッドを実行した際に、メールアドレスログインの画面が表示されることがあります
+> [!WARNING]
+> スマートフォンの外部ブラウザでliff.shareTargetPicker()メソッドを実行した際に、メールアドレスログインの画面が表示されることがあります
+> [外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)でターゲットピッカーを表示するには、[シングルサインオン（SSO）によるログイン](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-sso-login)セッションが必要です。
+> 
+> [自動ログイン](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-auto-login)によるログイン処理では、SSOによるログインセッションが発行されないため、`liff.shareTargetPicker()`メソッドの実行時にターゲットピッカーが表示されず、代わりに[メールアドレスログイン](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#mail-or-qrcode-login)の画面が表示されることがあります。
+> 
+> メールアドレスとパスワードを入力してログインすると、SSOによるログインセッションが発行され、ターゲットピッカーが表示されるようになります。
 
-:::
-
-:::note warn
-ユーザーがシェアターゲットピッカーでメッセージを送信した人数は、取得できません
-
-:::
+> [!WARNING]
+> ユーザーがシェアターゲットピッカーでメッセージを送信した人数は、取得できません
+> ユーザーのプライバシーを保護するため、シェアターゲットピッカーで、何人にメッセージが送信されたかの情報は取得できません。また、提供も行なっておりません。
 
 _例_
 
@@ -1548,10 +1570,14 @@ Boolean
 *   `true`：ユーザーはグループ、友だち、トークの中から、複数の送信先を選択できます。
 *   `false`：ユーザーは友だちの中から、1人のみを送信先として選択できます。
 
-:::note warn
-isMultipleにfalseを設定しても、1人の友だちのみにメッセージが送信されることは保証できません
-
-:::
+> [!WARNING]
+> isMultipleにfalseを設定しても、1人の友だちのみにメッセージが送信されることは保証できません
+> `isMultiple`プロパティに`false`を設定しても、シェアターゲットピッカーを複数回呼び出すことや、シェア後のメッセージをユーザー側で再度シェアすることで、複数のユーザーへのメッセージ送信が可能です。厳密にユーザーから1人の友だちに対して、一度しかメッセージを送信できないようにする場合には、LIFFアプリ実装時に制限をかける必要があります。
+> 
+> URLを含むメッセージを送信し、URLへのアクセスを制限する場合の例を紹介します。
+> 
+> 1.  URLにユニークなトークンを付与し、メッセージを送信します。
+> 2.  メッセージ内のURLへアクセスされた際にサーバー側でトークンを検証し、複数のユーザーからのアクセスを制限します。
 
 #### 戻り値
 
@@ -1568,10 +1594,9 @@ isMultipleにfalseを設定しても、1人の友だちのみにメッセージ�
 *   メッセージを送信する前に、ユーザーがキャンセルしてターゲットピッカーを閉じると、`Promise`がresolveされますが、オブジェクトは渡されません。
 *   ターゲットピッカーが表示される前に問題が発生した場合は、`Promise`がrejectされ、`LiffError`が渡されます。LiffErrorオブジェクトについては、「[LIFF SDKのエラー](#liff-errors)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `Promise`がresolveした場合とrejectした場合のコールバック関数内で、`alert()`を実行すると一部端末で正しく動作しません。
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}
 
@@ -1581,20 +1606,32 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 二次元コードリーダーを起動し、読み取った文字列を取得します。二次元コードリーダーを起動するには、あらかじめ[LINE Developersコンソール](https://developers.line.biz/console/)で、 **Scan QR** をオンにする必要があります。
 
-:::note warn
-liff.scanCodeV2()の動作環境
+> [!WARNING]
+> liff.scanCodeV2()の動作環境
+> `liff.scanCodeV2()`は以下の環境で動作します。
+> 
+> *   iOS：iOS14.3以降
+> *   Android：すべてのバージョン
+> *   外部ブラウザ：[WebRTC API](https://developer.mozilla.org/ja/docs/Web/API/WebRTC_API) をサポートするウェブブラウザ
+> 
+> | OS | バージョン | LIFFブラウザ | 外部ブラウザ |
+> | --- | --- | --- | --- |
+> | iOS | 11〜14.2 | ❌ | ✅ ※1 |
+> | 14.3以降 | ✅ ※2 | ✅ ※1 |
+> | Android | すべてのバージョン | ✅ ※2 | ✅ ※1 |
+> | PC | すべてのバージョン | ❌ | ✅ ※1 |
+> 
+> ※1 [WebRTC API](https://developer.mozilla.org/ja/docs/Web/API/WebRTC_API)をサポートするウェブブラウザのみ利用できます。
+> 
+> ※2 LIFFブラウザの画面サイズが`Full`の場合のみ利用できます。詳しくは、『LIFFドキュメント』の「[LIFFブラウザの画面サイズ](https://developers.line.biz/ja/docs/liff/overview/#screen-size)」を参照してください。
 
-:::
+> [!WARNING]
+> 二次元コードリーダーを起動するには［Scan QR］をオンにしてください
+> [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、［**Scan QR**］をオンにしてください。［**Scan QR**］の設定は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
 
-:::note warn
-二次元コードリーダーを起動するには［Scan QR］をオンにしてください
-
-:::
-
-:::note warn
-liff.scanCodeV2()の動作仕様
-
-:::
+> [!WARNING]
+> liff.scanCodeV2()の動作仕様
+> `liff.scanCodeV2()`は、内部で[jsQR](https://github.com/cozmo/jsQR)という外部ライブラリを使用しています。そのため、`liff.scanCodeV2()`メソッド実行時に起動する二次元コードリーダーは、[jsQR](https://github.com/cozmo/jsQR)の動作仕様に依存します。なお、使用ライブラリは予告なく更新、変更される可能性があります。
 
 _例_
 
@@ -1628,24 +1665,30 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 ### liff.scanCode()
 
-:::note warn
-liff.scanCode()メソッドは非推奨です
-
-:::
+> [!WARNING]
+> liff.scanCode()メソッドは非推奨です
+> 従来の`liff.scanCode()`メソッドは[非推奨](https://developers.line.biz/ja/glossary/#deprecated)になります。二次元コードリーダーを実装する場合は、[`liff.scanCodeV2()`](#scan-code-v2)メソッドを使用することをお勧めします。
 
   
 
 LINEの二次元コードリーダーを起動し、読み取った文字列を取得します。二次元コードリーダーを起動するには、あらかじめ[LINE Developersコンソール](https://developers.line.biz/console/)で、 **Scan QR** をオンにする必要があります。
 
-:::note warn
-iOS版LINEでは使用できません
+> [!WARNING]
+> iOS版LINEでは使用できません
+> `liff.scanCode()`は以下の環境で動作します。
+> 
+> | OS | バージョン | LIFFブラウザ | 外部ブラウザ |
+> | --- | --- | --- | --- |
+> | iOS | すべてのバージョン | ❌ | ❌ |
+> | Android | すべてのバージョン | ✅ | ❌ |
+> | PC | すべてのバージョン | ❌ | ❌ |
+> 
+> 技術的な問題があり、iOS版LINEでは、`liff.scanCode`は`undefined`になります。サンプルコードのように、関数の存在を確認してから、使用してください。iOS版LINEや外部ブラウザでも二次元コードリーダーをお使いになりたい場合は、「[`liff.scanCodeV2()`](https://developers.line.biz/ja/reference/liff/#scan-code-v2)」を参照してください。
 
-:::
-
-:::note warn
-二次元コードリーダーを起動するには［Scan QR］をオンにしてください
-
-:::
+> [!WARNING]
+> 二次元コードリーダーを起動するには［Scan QR］をオンにしてください
+> *   [LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)ときに、［**Scan QR**］をオンにしてください。［**Scan QR**］の設定は、LIFFアプリ追加後も[LINE Developersコンソール](https://developers.line.biz/console/)のLIFFタブで変更できます。
+> *   `liff.scanCode()`は、外部ブラウザでは利用できません。
 
 _例_
 
@@ -1719,10 +1762,9 @@ html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html 
 
 ### liff.permanentLink.createUrl()
 
-:::note warn
-liff.permanentLink.createUrl()は次回メジャーバージョン以降に非推奨になる可能性があります
-
-:::
+> [!WARNING]
+> liff.permanentLink.createUrl()は次回メジャーバージョン以降に非推奨になる可能性があります
+> 技術的な問題があり、`liff.permanentLink.createUrl()`は、次回メジャーバージョン以降に非推奨になる可能性があります。現在のページのパーマネントリンクを取得するには、[`liff.permanentLink.createUrlBy()`](#permanent-link-create-url-by)を使用することをお勧めします。
 
 現在のページのパーマネントリンクを取得します。
 
@@ -1754,19 +1796,18 @@ html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html 
 
 ### liff.permanentLink.setExtraQueryParam()
 
-:::note warn
-liff.permanentLink.setExtraQueryParam()は次回メジャーバージョン以降に非推奨になる可能性があります
-
-:::
+> [!WARNING]
+> liff.permanentLink.setExtraQueryParam()は次回メジャーバージョン以降に非推奨になる可能性があります
+> 技術的な問題があり、`liff.permanentLink.setExtraQueryParam()`は、次回メジャーバージョン以降に非推奨になる可能性があります。現在のページのパーマネントリンクに、任意のクエリパラメータを追加するには、[`liff.permanentLink.createUrlBy()`](#permanent-link-create-url-by)を使用することをお勧めします。
 
 現在のページのパーマネントリンクに、任意のクエリパラメータを追加できます。
 
 `liff.permanentLink.setExtraQueryParam()`を実行するたびに、前回追加したクエリパラメータは破棄されます。
 
-:::note info
-追加したクエリパラメータの削除について
-
-:::
+> [!TIP]
+> 追加したクエリパラメータの削除について
+> *   追加したクエリパラメータを削除するには、`liff.permanentLink.setExtraQueryParam("")`を実行します。
+> *   追加したクエリパラメータは、ユーザーが別のページに移動すると破棄されます。
 
 _例_
 
@@ -1874,10 +1915,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 ### liff.createShortcutOnHomeScreen()
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> この機能は、認証済ミニアプリでのみ利用できます。未認証ミニアプリの場合、開発用の内部チャネルではテストできますが、公開用の内部チャネルでは利用できません。
 
 [LINEミニアプリ](https://developers.line.biz/ja/docs/line-mini-app/)へのショートカットを、ユーザー端末のホーム画面に追加する画面を表示します。
 
@@ -1885,10 +1925,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 詳しくは、『LINEミニアプリドキュメント』の「[ユーザー端末のホーム画面にLINEミニアプリへのショートカットを追加する](https://developers.line.biz/ja/docs/line-mini-app/develop/add-to-home-screen/)」を参照してください。
 
-:::note warn
-liff.createShortcutOnHomeScreen()メソッドを実行するタイミング
-
-:::
+> [!WARNING]
+> liff.createShortcutOnHomeScreen()メソッドを実行するタイミング
+> `liff.createShortcutOnHomeScreen()`メソッドは、ユーザー体験を損なわないよう、LINEミニアプリ上でのユーザー操作（例：タップ）に対する応答として実行してください。
 
 _例_
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/minimizing-liff-browser/
-copied_at: 2025-10-23T16:00:18.824Z
+copied_at: 2025-10-24T06:29:18.020Z
 ---
 # LIFFブラウザを最小化する
 
@@ -29,10 +29,9 @@ LIFFブラウザは、最小化するとアイコンで表示されます。
 
 ![LIFFブラウザの最小化](https://developers.line.biz/media/liff/minimizing-liff-app/liff-minimize-ja.png)
 
-:::note info
-LINE内ブラウザを最小化する
-
-:::
+> [!TIP]
+> LINE内ブラウザを最小化する
+> LIFFブラウザと同様に、[LINE内ブラウザ](https://developers.line.biz/ja/glossary/#line-iab)も最小化に対応しています。詳しくは、『LINEみんなの使い方ガイド』の「[閲覧中のWEBページを最小化する](https://guide.line.me/ja/chats-calls-notifications/chats/minimizebrowser.html)」を参照してください。
 
 ## LIFFブラウザの最小化の使用条件
 
@@ -44,10 +43,11 @@ LIFFブラウザを最小化するには、以下の条件をすべて満たす�
 *   LIFFアプリの[`chat_message.write`スコープ](https://developers.line.biz/ja/docs/liff/registering-liff-apps/#registering-liff-app)がオフ
 *   LIFFブラウザがモーダルの上に重なっていない
 
-:::note warn
-LIFF間遷移後のLIFFアプリが使用条件を満たす必要があります
-
-:::
+> [!WARNING]
+> LIFF間遷移後のLIFFアプリが使用条件を満たす必要があります
+> [LIFF間遷移](https://developers.line.biz/ja/docs/liff/opening-liff-app/#move-liff-to-liff)後のLIFFブラウザを最小化するには、遷移後のLIFFアプリが使用条件を満たす必要があります。
+> 
+> たとえば、「[LIFFアプリの画面サイズによる動作](https://developers.line.biz/ja/docs/liff/opening-liff-app/#behavior-by-screen-size)」にあるように、遷移後のLIFFアプリは画面サイズの指定にかかわらず`Full`で表示されます。しかし、遷移後のLIFFアプリの画面サイズに`Tall`や`Compact`を指定している場合、遷移後のLIFFアプリはLIFFブラウザの最小化の使用条件を満たしません。
 
 なお、iPadOS版LINEについては、LIFFブラウザの最小化に対応予定ですが、時期は未定です。
 

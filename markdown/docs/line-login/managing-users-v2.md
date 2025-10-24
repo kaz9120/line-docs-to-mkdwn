@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/managing-users-v2/
-copied_at: 2025-10-23T15:58:53.245Z
+copied_at: 2025-10-24T06:28:46.129Z
 ---
 # ユーザーを管理する（LINEログイン v2.0）
 
-:::note alert
-LINEログイン v2.0は非推奨です
-
-:::
+> [!CAUTION]
+> LINEログイン v2.0は非推奨です
+> このページは旧バージョンのLINEログイン v2.0に関するドキュメントです。LINEログイン v2.0は[非推奨](https://developers.line.biz/ja/glossary/#deprecated)であり、時期は未定ですが[廃止](https://developers.line.biz/ja/glossary/#end-of-life)を予定しているため、現行バージョン（LINEログイン v2.1）の利用を推奨します。なお廃止時期の告知から、実際の廃止までは一定の猶予期間を置く予定です。詳しくは、「[LINEログインのバージョンについて](https://developers.line.biz/ja/docs/line-login/overview/#versions)」を参照してください。
 
 ここでは、[LINEログイン v2.0](https://developers.line.biz/ja/docs/line-login/overview/#versions)のエンドポイントを使って、LINEログインしたユーザーを管理する方法を説明します。
 
@@ -19,10 +18,9 @@ LINEログイン v2.0は非推奨です
 
 ## ユーザーをログアウトする
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ここでは、LINEログイン v2.0のエンドポイントを使ってユーザーをログアウトする方法について説明します。最新のLINEログイン v2.1を使う方法については、「[ユーザーをログアウトする](https://developers.line.biz/ja/docs/line-login/managing-users/#logout)」を参照してください。
 
 より良いユーザー体験のために、ユーザーがアプリからログアウトする操作を提供することをお勧めします。
 

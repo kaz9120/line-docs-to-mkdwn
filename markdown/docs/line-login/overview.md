@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/overview/
-copied_at: 2025-10-23T15:58:18.232Z
+copied_at: 2025-10-24T06:28:53.653Z
 ---
 # LINEログインの概要
 
-:::note info
-開発者用ドキュメント
-
-:::
+> [!TIP]
+> 開発者用ドキュメント
+> これは、開発者用ドキュメントです。LINEアプリの使いかたや、ログイン方法については、[ヘルプセンター](https://help.line.me/)を参照してください。
 
 ## LINEログインとは
 
@@ -20,10 +19,11 @@ LINEログインをあなたのウェブサイトやアプリに組み込むこ�
 
 LINEログインは、ウェブアプリ（ウェブサイト）、iOSアプリ、Androidアプリ、またはUnityゲームに組み込むことができます。
 
-:::note info
-LINEログインを組み込んだウェブサイトの例
-
-:::
+> [!TIP]
+> LINEログインを組み込んだウェブサイトの例
+> たとえば、電子書籍ストア「[BOOK☆WALKER](https://bookwalker.jp/top/)」では、ユーザーが簡単に会員登録、継続利用できるように、LINEログインをはじめとするさまざまなソーシャルログインが組み込まれています。
+> 
+> ![電子書籍ストアのログイン画面](https://developers.line.biz/media/line-login/overview/line-login-bookwalker-01-ja.png)
 
 ## デモサイトでLINEログインを体験する
 
@@ -111,10 +111,11 @@ LINEログインでは、LINEアカウントによるパスワード認証と、
 
 また、同じブラウザですでにログイン済みだった場合も、2要素認証はスキップされます。
 
-:::note info
-LINEログイン v2.1の使用を推奨します
-
-:::
+> [!TIP]
+> LINEログイン v2.1の使用を推奨します
+> 2要素認証は、LINEログイン v2.1で利用できます。LINEログイン v1.0（[廃止](https://developers.line.biz/ja/glossary/#end-of-life)）またはLINEログイン v2.0（[非推奨](https://developers.line.biz/ja/glossary/#deprecated)）を使用している場合は、LINEログイン v2.1へのアップデートを推奨します。
+> 
+> バージョンの違いについて詳しくは、「[LINEログインのバージョンについて](https://developers.line.biz/ja/docs/line-login/overview/#versions)」を参照してください。
 
 ### LINE Developersコンソールで2要素認証の必須化を設定する
 

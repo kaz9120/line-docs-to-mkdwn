@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/unity-sdk/try-line-login/
-copied_at: 2025-10-23T15:59:38.860Z
+copied_at: 2025-10-24T06:29:06.449Z
 ---
 # スターターアプリを試してみる
 
@@ -24,9 +24,52 @@ LINEヤフー株式会社が提供するサンプルチャネルを使ってス�
 3.  `Assets/LineSDK/Demo/Scenes/Main`にあるシーンをビルドし、iOSまたはAndroidにエクスポートします。
 4.  エクスポートしたプロジェクト/バイナリファイルをデバイスにインストールします。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> サンプルアプリをiOSデバイスにインストールするために、証明書を変更する必要がある可能性があります。証明書がない場合は、［**Player Settings］ > ［Settings for iOS］ > ［Other Settings**］を選択して、［**Target SDK**］を［**Simulator SDK**］に設定し、サンプリアプリをiOS simulatorで実行します。
+> 
+> ::
+> 
+> ### 自分のチャネルを使ってスターターアプリを試してみる
+> 
+> スターターアプリを、自分のチャネルにリンクすることもできます。チャネルを作成していない場合は、LINE Developersコンソールで[作成します](https://developers.line.biz/console/register/line-login/channel/)。チャネルを作るときは、[プロバイダー](https://developers.line.biz/ja/glossary/#provider)を選択または作成してください。
+> 
+> 作成したチャネルに、スターターアプリをリンクするには、Unityプロジェクトで以下の設定を行います。
+> 
+> 1.  ［**File**］ > ［**Build Settings**］を選択します。
+> 2.  ［**Player Settings**］をクリックします。
+> 3.  ［![iPhone, iPod Touch and iPad settingsタブ](https://developers.line.biz/media/unity-sdk/ios-settings-tab.png)］ > ［**Other Settings**］を選択して、［**Bundle Identifier**］に、LINE DevelopersコンソールのLINEログインのチャネルの［**LINEログイン設定**］タブにある［**iOS bundle ID**］と同じ値を入力します。  
+>     ![Bundle Identifier](https://developers.line.biz/media/unity-sdk/bundle-identifier-settings.png)
+> 4.  次の2か所に、LINE DevelopersコンソールのLINEログインのチャネルの［**LINEログイン設定**］タブにあるAndroidの［**パッケージ名**］と同じ値を入力します。
+>     
+>     *   ［**Product Name**］
+>     *   ［![Android settingsタブ](https://developers.line.biz/media/unity-sdk/android-settings-tab.png)］ > ［**Other Settings**］ > ［**Package Name**］
+>     
+>       
+>     ![Package Name](https://developers.line.biz/media/unity-sdk/package-name-settings.png)
+> 5.  メインシーンで**LineSDK**オブジェクトを選択します。
+> 6.  ［**Line SDK（Script）**］の［**Channel ID**］に、LINEログインのチャネルIDを設定します。  
+>     ![Channel ID](https://developers.line.biz/media/unity-sdk/channel-id-settings.png)
+> 
+> ## スターターアプリを実行する
+> 
+> iOS/AndroidデバイスまたはSimulatorを使用してアプリを実行します。初回ログイン時に、アプリがプロフィール情報にアクセスすることを許可する必要があります。
+> 
+> ［**Log in with LINE**］をタップし、アプリ連携ログインを使ってログインします。
+> 
+> デバイスにLINEがインストールされていて、ログイン済みである場合は、LINE認証情報を入力せずに自動的にスターターアプリにログインできます。そうでない場合は、ブラウザを使ってログインするように求められます。2番目のシナリオの場合は、LINE認証情報を入力する必要があります。
+> 
+> ### LINE SDKの機能を試す
+> 
+> アプリにログインした後でメニュー項目をタップして、LINE SDKの以下の機能を試すことができます。
+> 
+> 一般ユーザーが使用できる機能は以下のとおりです。
+> 
+> *   ユーザーをログアウトする
+> *   ユーザープロフィールを取得する
+> *   アクセストークンを検証する
+> *   チャネルにリンクされたLINE公式アカウントとユーザーの間の友だち関係を取得する
+> 
+> 表示されるその他の機能は、限られたユーザーのみが実行できます。
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

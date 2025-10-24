@@ -1,20 +1,24 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/emoji-list/
-copied_at: 2025-10-23T15:56:13.961Z
+copied_at: 2025-10-24T06:28:00.778Z
 ---
 # LINE絵文字
 
 Messaging APIを使うと、テキストのメッセージでLINE絵文字を使うことができます。テキストのメッセージの送信方法について詳しくは、「[メッセージを送信する](https://developers.line.biz/ja/docs/messaging-api/sending-messages/)」を参照してください。
 
-:::note alert
-「LINE独自のUnicode絵文字」は2022年3月31日をもって廃止されました
+> [!CAUTION]
+> 「LINE独自のUnicode絵文字」は2022年3月31日をもって廃止されました
+> 「LINE独自のUnicode絵文字」の代わりに`emojis`プロパティを使ったLINE絵文字を利用してください。詳しくは、2022年4月1日のニュース、「[2022年3月31日をもって、Messaging APIの「LINE独自のUnicode絵文字」を廃止しました](https://developers.line.biz/ja/news/2022/04/01/line-original-unicode-emojis-has-been-discontinued/)」を参照してください。
 
-:::
-
-:::note warn
-テキストメッセージに対応している絵文字の種類
-
-:::
+> [!WARNING]
+> テキストメッセージに対応している絵文字の種類
+> [テキストメッセージ](https://developers.line.biz/ja/reference/messaging-api/#text-message)や[テキストメッセージ（v2）](https://developers.line.biz/ja/docs/messaging-api/message-types/#text-messages-v2)では、LINE絵文字に加えてUnicode絵文字も利用できます。
+> 
+> | 絵文字の種類 | オブジェクトの種類 | 利用方法 |
+> | --- | --- | --- |
+> | LINE絵文字 | テキストメッセージ | `emojis`プロパティに、プロダクトIDおよび絵文字IDを指定します。 |
+> | LINE絵文字 | テキストメッセージ（v2） | [絵文字オブジェクト](https://developers.line.biz/ja/reference/messaging-api/#text-message-v2-emoji-object)に、プロダクトIDおよび絵文字IDを指定します。 |
+> | Unicode絵文字 | <ul><!--[--><li><!--[-->テキストメッセージ<!--]--></li><li><!--[-->テキストメッセージ（v2）<!--]--></li><!--]--></ul> | `text`プロパティ内に、絵文字を直接入力するか、Unicodeコードポイントを入力します。 |
 
 ## メッセージオブジェクトにLINE絵文字を指定する
 

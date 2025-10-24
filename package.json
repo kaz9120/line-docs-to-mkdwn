@@ -1,7 +1,7 @@
 {
   "name": "line-docs-to-mkdwn",
   "private": true,
-  "version": "1.7.0",
+  "version": "1.7.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,8 +19,9 @@
     "report": "playwright show-report",
     "generate-html-report": "node scripts/generate-report.js",
     "generate:markdown": "npm run build && playwright test --config=playwright-generate.config.ts e2e/tests/generate-markdown.spec.ts",
-    "validate:markdown": "tsx scripts/validate-markdown.ts",
-    "validate:markdown:strict": "tsx scripts/validate-markdown.ts --strict",
+    "validate:markdown": "npx tsx scripts/validate-markdown.ts",
+    "validate:markdown:strict": "npx tsx scripts/validate-markdown.ts --strict",
+    "restore:copied-at-only": "npx tsx scripts/restore-copied-at-only-changes.ts",
     "package": "npm run build && cd dist && zip -r ../line-docs-to-mkdwn.zip ."
   },
   "devDependencies": {

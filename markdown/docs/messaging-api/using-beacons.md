@@ -1,20 +1,18 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-beacons/
-copied_at: 2025-10-23T15:56:23.850Z
+copied_at: 2025-10-24T06:28:03.200Z
 ---
 # LINEでビーコンを使う
 
 LINE Beaconを使うと、ユーザーがビーコンの電波の受信圏に入ったときに[Webhookビーコンイベント](https://developers.line.biz/ja/reference/messaging-api/#beacon-event)を受け取ることができます。ビーコンを使用して、ビジネスニーズに合ったコンテキストでユーザーとやりとりするようにボットアプリをカスタマイズできます。
 
-:::note warn
-注意
+> [!WARNING]
+> 注意
+> LINE Beaconは、日本、台湾、およびタイで利用できます。
 
-:::
-
-:::note info
-LINEビーコンは最新バージョンのLINEで利用してください
-
-:::
+> [!TIP]
+> LINEビーコンは最新バージョンのLINEで利用してください
+> LINE Beaconは、最新バージョンのLINEでの利用を推奨します。
 
 ## ビーコン端末を準備する
 
@@ -29,10 +27,9 @@ LINE Beaconを使用するには、LINE公式アカウントとリンクするBl
 
 LINE公式アカウントをビーコンとリンクするには、[LINE Official Account Manager](https://manager.line.biz/beacon/register)のビーコン登録ページを開きます。登録ページでは、LINE Beacon対応端末とLINE公式アカウントをリンクできます。また、**LINE Simple BeaconハードウェアID**を端末に発行できます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 1つのLINE公式アカウントに複数のビーコンをリンクできます。しかし、1つのビーコンがリンクできるLINE公式アカウントは1つまでです。
 
 ## Webhookイベントを受け取る
 
@@ -62,10 +59,9 @@ json
 
 ユーザーがバナーをタップすると、LINE公式アカウントが指定したウェブページが開きます。LINE公式アカウントが友だち追加されている場合は、ユーザーがバナーをタップしたその場でLINE公式アカウントからのメッセージを受信させることができます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ビーコンバナーは法人ユーザー向けの機能です。詳しくは、担当営業までご連絡いただくか、[LINEヤフー for Business](https://www.lycbiz.com/jp/)ウェブサイトからお問い合わせください。
 
 ![](https://developers.line.biz/media/messaging-api/using-beacons/beacon-banner_ja.png)
 

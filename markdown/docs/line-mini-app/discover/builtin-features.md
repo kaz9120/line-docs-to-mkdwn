@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/discover/builtin-features/
-copied_at: 2025-10-23T16:00:52.781Z
+copied_at: 2025-10-24T06:29:28.828Z
 ---
 # ビルトイン機能
 
@@ -20,10 +20,11 @@ LINEミニアプリのすべてのページに表示される[ヘッダー](http
 
 アクションボタンを押すと、[マルチタブビュー](#multi-tab-view)または[オプション](#multi-tab-view-option)のどちらかがLINEアプリのバージョンに応じて表示されます。LINEバージョン15.12.0以降ではマルチタブビューが表示され、LINEバージョン15.12.0未満ではオプションが表示されます。
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> *   [カスタムアクションボタン](https://developers.line.biz/ja/docs/line-mini-app/discover/custom-features/#custom-action-button)を実装すれば、LINEミニアプリの好きな場所に、好きな形式のシェア機能を実装できます。
+> *   LINEミニアプリを閉じずに複数のトークルームを行き来するための機能など、新しい機能を追加する予定です。
+> *   LINEミニアプリでは、アクションボタンを非表示にすることはできません。LINEミニアプリチャネルに追加されているLIFFアプリでは、［**モジュールモード**］は設定できません。
 
 ## マルチタブビュー
 
@@ -52,10 +53,9 @@ LINEミニアプリのすべてのページに表示される[ヘッダー](http
 
  |
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 現在開いているページをシェアするには、LINEミニアプリに対応するLINEバージョンでアクションボタンをタップする必要があります。ユーザーが使用しているLINEのバージョンが、LINEミニアプリの[対応バージョン](https://developers.line.biz/ja/docs/line-mini-app/discover/specifications/#supported-platforms-and-versions)未満の場合は、アクションボタンをタップしたページに関わらず、LINEミニアプリのトップページがシェアされます。
 
 ### 最近使用したサービス
 
@@ -76,7 +76,6 @@ LINEミニアプリが認証済ミニアプリの場合は、LINEミニアプリ
 *   ユーザーのプロフィール情報を取得する権限
 *   トークへのメッセージを送信する権限
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> チャネル同意画面では、LINEヤフー株式会社によって承認された権限のみを、ユーザーに要求できます。 [LINE Developersコンソール](https://developers.line.biz/console/)のLINEミニアプリチャネルの設定で、ユーザーに権限を要求する項目を指定できます。

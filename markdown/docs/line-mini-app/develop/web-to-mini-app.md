@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/web-to-mini-app/
-copied_at: 2025-10-23T16:01:27.518Z
+copied_at: 2025-10-24T06:29:41.774Z
 ---
 # 運用中のウェブアプリをLINEミニアプリ化する
 
@@ -27,10 +27,9 @@ copied_at: 2025-10-23T16:01:27.518Z
 
 このように、ウェブアプリをLINEミニアプリにすることで、面倒なログインやプロフィールの入力などによるユーザーの離脱を防げます。LINEミニアプリの利用もLINEアプリからすぐに開始でき、またLINEアプリ上ですべての操作が完結するため、ユーザー体験を向上させることができます。
 
-:::note info
-LINEミニアプリとネイティブアプリの比較について
-
-:::
+> [!TIP]
+> LINEミニアプリとネイティブアプリの比較について
+> ネイティブアプリに対するLINEミニアプリのメリットについては、『LINE API Use Case』の[ネイティブアプリとLINEミニアプリの比較記事](https://lineapiusecase.com/ja/api/native-mini.html)を参照してください。
 
 ## 前提条件
 

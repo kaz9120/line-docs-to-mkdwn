@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/module-technical-using-messaging-api/
-copied_at: 2025-10-23T16:02:49.416Z
+copied_at: 2025-10-24T06:30:07.119Z
 ---
 # モジュールチャネルからMessaging APIを利用する
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。モジュールを利用した拡張機能の公開を希望するお客様は、担当営業までご連絡いただくか、[LINEマーケットプレイス お問い合わせ](https://line-marketplace.com/jp/inquiry)よりお問い合わせください。
 
 モジュールチャネルではMessaging APIチャネルと同様にMessaging APIを使ってメッセージを送信や、リッチメニューの切り替えが可能です。
 
@@ -47,10 +46,9 @@ text
 
 チャネルアクセストークンを発行する際に必要な情報は、[LINE Developersコンソール](https://developers.line.biz/console/)のモジュールチャネルの［**チャネル基本設定**］タブで確認できます。
 
-:::note warn
-長期のチャネルアクセストークンは使用できません
-
-:::
+> [!WARNING]
+> 長期のチャネルアクセストークンは使用できません
+> モジュールチャネルでは、長期のチャネルアクセストークンは使用できません。
 
 ### Messaging APIのエンドポイントを呼び出す
 
@@ -84,10 +82,9 @@ Authorization
 
 ボットのユーザーIDは、「[モジュールチャネルの提供者の操作で連携（アタッチ）する](https://developers.line.biz/ja/reference/partner-docs/#link-attach-by-operation-module-channel-provider)」のレスポンスや[Attachedイベント](https://developers.line.biz/ja/reference/partner-docs/#attached-event)で取得できます。
 
-:::note warn
-ヘッダーの詳細については参画される際に別途提供いたします
-
-:::
+> [!WARNING]
+> ヘッダーの詳細については参画される際に別途提供いたします
+> 本ヘッダーの名前（パラメーター名）は、実際に[LINEマーケットプレイス](https://line-marketplace.com/jp/inquiry)に参画するお客様に限定して公開しています。
 
 以下は、モジュールチャネルからMessaging APIで[プッシュメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-push-message)を送信する場合の例です。
 
@@ -119,10 +116,14 @@ sh
 
 モジュールチャネルに登録したWebhook URLサーバーでWebhookイベントを受信した際は、`mode`プロパティと`destination`プロパティの値を確認してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> モジュールチャネルのWebhook URLサーバーでWebhookイベントを受信できない場合は、以下の点を確認してください。
+> 
+> *   モジュールチャネルをLINE公式アカウントにアタッチしていること。モジュールチャネルから、LINE公式アカウントを友だち追加しているユーザーにプッシュメッセージを送信できることを確認してください。
+> *   モジュールチャネルをアタッチするために、LINE公式アカウントの管理者に認可を要求する際、認可URLの`scope`クエリパラメータに`message%3Areceive`（message:receive）を指定していること。
+> 
+> スコープについて詳しくは、「[LINE公式アカウントの管理者に認可を要求する](https://developers.line.biz/ja/docs/partner-docs/module-technical-attach-channel/#request-auth-from-line-oa-admin)」を参照してください。
 
 *   [`mode`プロパティ](#mode-property)
 *   [`destination`プロパティ](#destination-property)
@@ -186,15 +187,25 @@ sh
 | [botSuspendイベント](https://developers.line.biz/ja/reference/partner-docs/#botsuspend-event) | LINE公式アカウントが一時停止状態（Suspend）になったことを示すイベント |
 | [botResumedイベント](https://developers.line.biz/ja/reference/partner-docs/#botresumed-event) | LINE公式アカウントが一時停止状態（Suspend）から復帰したことを示すイベント |
 
-:::note info
-主導権（Chat Control）の変化を検知するには
+> [!TIP]
+> 主導権（Chat Control）の変化を検知するには
+> モジュールチャネルがActive Channelになっているときに、Release Control APIを呼び出さなくても、自動的に主導権（Chat Control）が変わる場合があります。主導権（Chat Control）が変化した場合、以下のWebhookイベントがWebhook URLサーバーに送信されます。
+> 
+> | イベントタイプ | 説明 |
+> | --- | --- |
+> | <ul><!--[--><li><!--[--><a href="/ja/reference/partner-docs/#activated-event" class=""><!--[--><!--[-->Activatedイベント<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/partner-docs/#deactivated-event" class=""><!--[--><!--[-->Deactivatedイベント<!--]--><!--]--></a><!--]--></li><!--]--></ul> | LINE公式アカウントにアタッチされているモジュールチャネルが、Acquire Control APIまたはRelease Control APIを呼び出し、チャットの主導権（Chat Control）が切り替わった際に送信されるイベント |
+> | <ul><!--[--><li><!--[--><a href="/ja/reference/messaging-api/#follow-event" class=""><!--[--><!--[-->フォローイベント<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#unfollow-event" class=""><!--[--><!--[-->フォロー解除イベント<!--]--><!--]--></a><!--]--></li><!--]--></ul> | エンドユーザーがLINE公式アカウントを友だち追加したり、ブロックしたりすると送信されるイベント。<br/>LINE公式アカウントをブロックして再度友だち追加すると、主導権（Chat Control）は自動的にデフォルト状態にリセットされます。「[Default Active](https://developers.line.biz/ja/docs/partner-docs/module-technical-chat-control/#default-active)」の機能が付与されたモジュールチャネルの場合は、自動的にActive Channelになります。 |
 
-:::
-
-:::note info
-LINE公式アカウントの一時停止状態（Suspend）について
-
-:::
+> [!TIP]
+> LINE公式アカウントの一時停止状態（Suspend）について
+> モジュールチャネルの設定やサービスの提供状況に関わらず、LINE公式アカウントの運営者の都合で、一時停止状態（Suspend）になる場合があります。具体的には、以下の状態になるとLINE公式アカウントが一時停止状態になります。
+> 
+> *   LINE公式アカウントを削除したとき
+> *   何らかの理由でLINE公式アカウントの利用が停止されたとき
+> 
+> また、LINE公式アカウントが一時停止状態から復帰する場合もあります。LINE公式アカウントが一時停止状態になったり、復帰したりしたときに、Webhookイベントが送信されます。
+> 
+> モジュールチャネル側で管理している情報に齟齬が発生しないように実装してください。
 
 ## モジュールチャネルからLINE公式アカウントの情報を取得する
 
@@ -221,10 +232,9 @@ Bearer `{channel access token}`
 
 ボットのユーザーIDは、「[モジュールチャネルの提供者の操作で連携（アタッチ）する](https://developers.line.biz/ja/reference/partner-docs/#link-attach-by-operation-module-channel-provider)」のレスポンスや[Attachedイベント](https://developers.line.biz/ja/reference/partner-docs/#attached-event)で取得できます。
 
-:::note warn
-ヘッダーの詳細については参画される際に別途提供いたします
-
-:::
+> [!WARNING]
+> ヘッダーの詳細については参画される際に別途提供いたします
+> 本ヘッダーの名前（パラメーター名）は、実際に[LINEマーケットプレイス](https://line-marketplace.com/jp/inquiry)に参画するお客様に限定して公開しています。
 
 ### モジュールをアタッチしたボットのリストを取得する
 

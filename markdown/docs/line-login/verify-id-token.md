@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/verify-id-token/
-copied_at: 2025-10-23T15:58:36.285Z
+copied_at: 2025-10-24T06:28:40.201Z
 ---
 # IDトークンからプロフィール情報を取得する
 
@@ -19,10 +19,9 @@ LINEプラットフォームは、[OpenID Connect](https://openid.net/developers
 
 [アクセストークンを取得する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#get-access-token)ときに、IDトークンも取得できます。
 
-:::note info
-LIFFアプリでIDトークンを取得することもできます
-
-:::
+> [!TIP]
+> LIFFアプリでIDトークンを取得することもできます
+> [liff.getIDToken()](https://developers.line.biz/ja/reference/liff/#get-id-token)を利用してIDトークンを取得することもできます。
 
 ## IDトークンについて
 

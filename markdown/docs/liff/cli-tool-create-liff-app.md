@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/cli-tool-create-liff-app/
-copied_at: 2025-10-23T16:00:10.310Z
+copied_at: 2025-10-24T06:29:50.005Z
 ---
 # Create LIFF AppでLIFFアプリの開発環境を構築する
 
@@ -44,10 +44,9 @@ Create LIFF AppはNode.jsで動作します。パッケージ管理にはYarnま
 
 Create LIFF Appの実行時にはLIFF IDが必要となります。まず「[チャネルを作成する](https://developers.line.biz/ja/docs/liff/getting-started/)」と「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)」を読み、LIFF IDを取得してください。
 
-:::note info
-エンドポイントURLを入力する
-
-:::
+> [!TIP]
+> エンドポイントURLを入力する
+> LIFFアプリをチャネルに追加する際に［**エンドポイントURL**］を入力する必要があります。［**エンドポイントURL**］は後から修正できますので、この時点では仮のURL（`https://example.com/`など）を入力しても構いません。
 
 ## Create LIFF Appを使う
 

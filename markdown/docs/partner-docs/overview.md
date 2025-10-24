@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/overview/
-copied_at: 2025-10-23T16:02:16.111Z
+copied_at: 2025-10-24T06:29:56.998Z
 ---
 # 概要
 
@@ -19,7 +19,6 @@ copied_at: 2025-10-23T16:02:16.111Z
 | [LINE Beacon](https://developers.line.biz/ja/docs/partner-docs/line-beacon/) | LINE Beaconを受信するための条件について説明します。 |
 | [モジュール](https://developers.line.biz/ja/docs/partner-docs/module/) | LINEマーケットプレイスで提供する拡張機能について説明します。モジュールを利用することで、Messaging APIチャネルを開設していないLINE公式アカウントにおいても、Messaging APIの高度な機能を拡張機能として利用できます。 |
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/permanent-links/
-copied_at: 2025-10-23T16:01:18.749Z
+copied_at: 2025-10-24T06:29:38.413Z
 ---
 # パーマネントリンクを作成する
 
@@ -28,15 +28,15 @@ text
 
 `https://miniapp.line.me/123456-abcedfg/shop?search=shoes#item10`
 
-:::note info
-ヒント
+> [!TIP]
+> ヒント
+> LINEミニアプリページのURLには、ページパス、クエリパラメータおよびフラグメントを使用できます。
 
-:::
-
-:::note warn
-LINEミニアプリのLIFF URLが変更されました
-
-:::
+> [!WARNING]
+> LINEミニアプリのLIFF URLが変更されました
+> [2023年12月13日](https://developers.line.biz/ja/news/2023/12/13/change-of-liff-url-for-line-mini-app/)より、LINEミニアプリのLIFF URLが`https://miniapp.line.me/{liffId}`に変更されました。
+> 
+> 従来の`https://liff.line.me/{liffId}`にアクセスした場合も、引き続き当該のLINEミニアプリが開きます。そのため、発行済みのQRコードも引き続き利用可能です。
 
 ## LINEアプリのバージョンによるドメイン名の違い
 

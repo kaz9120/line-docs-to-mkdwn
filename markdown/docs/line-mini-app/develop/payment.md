@@ -1,20 +1,20 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/payment/
-copied_at: 2025-10-23T16:01:16.234Z
+copied_at: 2025-10-24T06:29:37.221Z
 ---
 # 決済システムを利用する
 
 ユーザーに決済システムを提供するために、LINEミニアプリにLINE Payや他の決済システムを利用できます。
 
-:::note warn
-日本国内におけるLINE Payのサービスを終了しました
+> [!WARNING]
+> 日本国内におけるLINE Payのサービスを終了しました
+> 2025年4月30日をもって、日本国内におけるLINE Payのサービスを終了しました。詳しくは、「[LINE Payサービス終了に関するお知らせ](https://line-pay-info.landpress.line.me/payment-info/)」を参照してください。
+> 
+> なお、台湾、タイ現地のLINE Payのサービスは引き続き利用できます。
 
-:::
-
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> クレジットカードの情報などをLINEミニアプリで入力することを避けるために、決済はLINE Payで処理することをお勧めします。
 
 ## LINE Pay
 

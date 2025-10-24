@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/basics/line-api-status/
-copied_at: 2025-10-23T15:55:18.698Z
+copied_at: 2025-10-24T06:27:54.775Z
 ---
 # LINEプラットフォームの稼働状況を確認する（LINE API Status）
 
@@ -17,10 +17,9 @@ LINEヤフー株式会社では、LINEプラットフォームの稼働状況や
 
 LINE API Statusは、LINEプラットフォームの稼働状況や障害状況を確認できるサイトです。稼働状況や障害状況の情報は英語で提供されます。
 
-:::note warn
-LINE API Statusの情報について
-
-:::
+> [!WARNING]
+> LINE API Statusの情報について
+> LINEヤフー株式会社は、LINE API Statusにおいて障害状況の情報を提供しますが、即時性、正確性、確実な情報提供を保証するものではありません。また原因や影響範囲など、障害の詳細についてはLINE Developersサイトの[ニュース](https://developers.line.biz/ja/news/tags/outage-report/)にてお知らせします。
 
 *   [LINE API Status](https://api.line-status.info/)  
     ![](https://developers.line.biz/media/basics/line-api-status.png)

@@ -172,32 +172,31 @@ describe("convertToMarkdown", () => {
   });
 
   describe("カスタムブロック変換", () => {
-    it("infoブロックを正しく変換する", () => {
+    it("infoブロックをGitHub NOTEアラートとして変換する", () => {
       document.body.innerHTML = customBlockContent;
       const result = convertToMarkdown();
 
-      expect(result).toContain(":::note info");
-      expect(result).toContain("情報");
-      expect(result).toContain("これは情報ブロックです。");
-      expect(result).toContain(":::");
+      expect(result).toContain("> [!NOTE]");
+      expect(result).toContain("> 情報");
+      expect(result).toContain("> これは情報ブロックです。");
     });
 
-    it("warningブロックを正しく変換する", () => {
+    it("warningブロックをGitHub WARNINGアラートとして変換する", () => {
       document.body.innerHTML = customBlockContent;
       const result = convertToMarkdown();
 
-      expect(result).toContain(":::note warn");
-      expect(result).toContain("警告");
-      expect(result).toContain("これは警告ブロックです。");
+      expect(result).toContain("> [!WARNING]");
+      expect(result).toContain("> 警告");
+      expect(result).toContain("> これは警告ブロックです。");
     });
 
-    it("dangerブロックをalertとして変換する", () => {
+    it("dangerブロックをGitHub CAUTIONアラートとして変換する", () => {
       document.body.innerHTML = customBlockContent;
       const result = convertToMarkdown();
 
-      expect(result).toContain(":::note alert");
-      expect(result).toContain("危険");
-      expect(result).toContain("これは危険ブロックです。");
+      expect(result).toContain("> [!CAUTION]");
+      expect(result).toContain("> 危険");
+      expect(result).toContain("> これは危険ブロックです。");
     });
   });
 
@@ -228,9 +227,9 @@ describe("convertToMarkdown", () => {
       );
       expect(result).toContain("[外部リンク](https://external.com)");
 
-      // カスタムブロック
-      expect(result).toContain(":::note info");
-      expect(result).toContain("ヒント");
+      // カスタムブロック（GitHub alert形式）
+      expect(result).toContain("> [!TIP]");
+      expect(result).toContain("> ヒント");
 
       // 画像（相対パス→絶対URL）
       expect(result).toContain(

@@ -2,25 +2,25 @@ import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Playwright configuration for Markdown generation
- * Optimized for stability over speed - runs tests serially to avoid timeouts
+ * Optimized for parallel execution with retry safety
  */
 export default defineConfig({
   testDir: "./e2e",
 
-  /* Maximum time one test can run for - increased for stability */
+  /* Maximum time one test can run for */
   timeout: 60 * 1000, // 60 seconds per test
 
-  /* Run tests serially (not in parallel) for stability */
-  fullyParallel: false,
+  /* Run tests in parallel for better performance */
+  fullyParallel: true,
 
   /* Fail the build on CI if you accidentally left test.only in the source code */
   forbidOnly: !!process.env.CI,
 
-  /* Retry failed tests for stability */
-  retries: 2,
+  /* Retry failed tests multiple times for reliability */
+  retries: 4,
 
-  /* Run with 1 worker (serial execution) for maximum stability */
-  workers: 1,
+  /* Let Playwright decide optimal worker count based on CPU cores */
+  // workers: undefined (default behavior),
 
   /* Reporter to use - simplified for generation task */
   reporter: [["list"], ["json", { outputFile: "test-results/results.json" }]],

@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/reference/line-login-v2/
-copied_at: 2025-10-23T15:58:11.729Z
+copied_at: 2025-10-24T06:28:47.573Z
 ---
 # LINEログイン v2.0 APIリファレンス
 
-:::note alert
-LINEログイン v2.0は非推奨です
-
-:::
+> [!CAUTION]
+> LINEログイン v2.0は非推奨です
+> このページは旧バージョンのLINEログイン v2.0のAPIリファレンスです。LINEログイン v2.0は[非推奨](https://developers.line.biz/ja/glossary/#deprecated)であり、時期は未定ですが[廃止](https://developers.line.biz/ja/glossary/#end-of-life)を予定しているため、現行バージョン（LINEログイン v2.1）の利用を推奨します。なお廃止時期の告知から、実際の廃止までは一定の猶予期間を置く予定です。LINEログイン v2.1のAPIリファレンスは、「[LINEログイン v2.1 APIリファレンス](https://developers.line.biz/ja/reference/line-login/)」を参照してください。
 
 ## 共通仕様
 
@@ -15,10 +14,9 @@ LINEログイン v2.0は非推奨です
 
 LINEログインのAPIに対して短時間に大量のリクエストを送信し、LINEプラットフォームの動作に影響を与えると判断された場合、一時的にリクエストを制限することがあります。負荷テストを含め、いかなる目的でも大量のリクエストを送信しないでください。
 
-:::note info
-レート制限のしきい値について
-
-:::
+> [!TIP]
+> レート制限のしきい値について
+> LINEログインのAPIにおけるレート制限のしきい値は開示していません。
 
 ### ステータスコード
 
@@ -44,20 +42,11 @@ LINEログインAPIで管理するアクセストークンは、LINEプラット
 
 レスポンスに含まれるアクセストークンとリフレッシュトークンは、LINEログインAPIを呼び出す際に必要です。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ここでは、LINEログイン v2.0のエンドポイントについて解説します。v2.1については、v2.1の「[アクセストークンを発行する](https://developers.line.biz/ja/reference/line-login/#issue-access-token)」を参照してください。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/oauth/accessToken \ -H 'Content-Type: application/x-www-form-urlencoded' \ -d 'grant_type=authorization_code' \ -d 'code=b5fd32eacc791df' \ -d 'redirect_uri=https%3A%2F%2Fexample.com%2Fauth' \ -d 'client_id=12345' \ -d 'client_secret=d6524edacc8742aeedf98f'`
 
 #### HTTPリクエスト
 
@@ -153,14 +142,6 @@ String
 
 _レスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`{     "access_token": "bNl4YEFPI/hjFWhTqexp4MuEw5YPs7qhr6dJDXKwNPuLka...",    "expires_in": 2591977,    "refresh_token": "8iFFRdyxNVNLWYeteMMJ",    "scope": "P",    "token_type": "Bearer" }`
-
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
 
 ### アクセストークンの有効性を検証する
@@ -169,20 +150,11 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 アクセストークンを利用して、安全にユーザー登録およびログインを処理する方法については、『LINEログインドキュメント』の「[アクセストークンを検証する](https://developers.line.biz/ja/docs/line-login/managing-access-tokens-v2/#verify-access-token)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ここでは、LINEログイン v2.0のエンドポイントについて解説します。v2.1については、v2.1の「[アクセストークンの有効性を検証する](https://developers.line.biz/ja/reference/line-login/#verify-access-token)」を参照してください。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/oauth/verify \ -H 'Content-Type: application/x-www-form-urlencoded' \ --data-urlencode 'access_token=bNl4YEFPI/hjFWhTqexp4MuEw5YPs7qhr6dJDXKwNPuLka...'`
 
 #### HTTPリクエスト
 
@@ -230,27 +202,11 @@ Number
 
 _レスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`{    "scope":"P",   "client_id":"1350031035",   "expires_in":2591965 }`
-
 #### エラーレスポンス
 
 アクセストークンの有効期限が切れている場合は、HTTPステータスコード `400 Bad Request` と、JSONオブジェクトが返されます。
 
 _エラーレスポンスの例_
-
-JSON
-
-[](#)
-
-json
-
-`{     "error": "invalid_request",    "error_description": "access_token invalid" }`
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
 
@@ -258,20 +214,12 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 リフレッシュトークンを使って新しいアクセストークンを取得できます。 ユーザーの認証が終わったときに、アクセストークンと共にリフレッシュトークンが返されます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ここでは、LINEログイン v2.0のエンドポイントについて解説します。v2.1については、v2.1の「[アクセストークンを更新する](https://developers.line.biz/ja/reference/line-login/#refresh-access-token)」を参照してください。
+> *   Messaging APIで使用されるチャネルアクセストークンの更新には使用できません。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/oauth/accessToken \ -H 'Content-Type: application/x-www-form-urlencoded' \ --data-urlencode 'grant_type=refresh_token' \ --data-urlencode 'client_id={channel ID}' \ --data-urlencode 'client_secret={channel secret}' \ --data-urlencode 'refresh_token={refresh token}'`
 
 #### HTTPリクエスト
 
@@ -349,27 +297,11 @@ String
 
 _レスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`{    "token_type":"Bearer",   "scope":"P",   "access_token":"bNl4YEFPI/hjFWhTqexp4MuEw...",   "expires_in":2591977,   "refresh_token":"8iFFRdyxNVNLWYeteMMJ" }`
-
 #### エラーレスポンス
 
 リフレッシュトークンの有効期限が切れている場合は、HTTPステータスコード `400 Bad Request` と、JSONオブジェクトが返されます。
 
 _エラーレスポンスの例_
-
-JSON
-
-[](#)
-
-json
-
-`{     "error": "invalid_grant",    "error_description": "invalid refresh_token" }`
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
 
@@ -377,20 +309,12 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 ユーザーのアクセストークンを無効にします。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ここでは、LINEログイン v2.0のエンドポイントについて解説します。v2.1については、v2.1の「[アクセストークンを取り消す](https://developers.line.biz/ja/reference/line-login/#revoke-access-token)」を参照してください。
+> *   Messaging APIで使用されるチャネルアクセストークンの無効化には使用できません。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/oauth/revoke \ -H 'Content-Type: application/x-www-form-urlencoded' \ --data-urlencode 'refresh_token={refresh token}'`
 
 #### HTTP request
 
@@ -427,14 +351,6 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 ユーザーのユーザーID、表示名、プロフィール画像、およびステータスメッセージを取得します。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X GET https://api.line.me/v2/profile \ -H 'Authorization: Bearer {access token}'`
 
 #### HTTPリクエスト
 
@@ -486,13 +402,5 @@ String
 ユーザーのステータスメッセージ。ユーザーがステータスメッセージを設定していない場合はレスポンスに含まれません。
 
 _レスポンスの例_
-
-JSON
-
-[](#)
-
-json
-
-`{   "userId":"U4af4980629...",  "displayName":"Brown",  "pictureUrl":"https://profile.line-scdn.net/abcdefghijklmn",  "statusMessage":"Hello, LINE!" }`
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/migration-guide/
-copied_at: 2025-10-23T15:59:17.317Z
+copied_at: 2025-10-24T06:28:59.259Z
 ---
 # SDKをアップグレードする
 
@@ -8,10 +8,9 @@ copied_at: 2025-10-23T15:59:17.317Z
 
 LINE SDK for iOS Swiftの最初のバージョンは5.0.0です。このバージョンは[以前のObjective-Cで書かれたSDK](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/deprecated/objective-c-v41/overview/)とは互換性がありません。LINE SDK for iOS Swiftにアップグレードする場合は、コードの一部を変更する必要があります。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 新しいLINE SDK for iOS Swiftは、Swiftのプロジェクトで使用する前提で設計されています。ただし、新しいSDKはObjective-Cのコードと共に使用できます。SDKをObjective-Cのコードと共に使用する方法については、「[Objective-CのコードでSDKを使用する](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/using-objc/)」を参照してください。
 
 SDKをアップグレードするには、プロジェクトの言語を問わず以前のSDKに関連するすべてのコードを削除し、「[プロジェクトを設定する](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/setting-up-project/)」の手順に従ってクリーンインストールを実行することをお勧めします。 ただし、現在の実装に基づいて変更する場合の一般的な手順は以下のとおりです。
 
@@ -43,10 +42,9 @@ SDKをアップグレードするには、プロジェクトの言語を問わ�
 
 最新のLINE SDK for iOS Swiftに対応するサンプルアプリを提供しています。SDKの[オープンソースリポジトリ](https://github.com/line/line-sdk-ios-swift)にアクセスして、基本的な組み込み方法と使い方を確認してください。
 
-:::note warn
-LINEを介してユーザーをアプリにログインさせる
-
-:::
+> [!WARNING]
+> LINEを介してユーザーをアプリにログインさせる
+> **LINE SDK 4.xで発行されるアクセストークンは、バージョン5以降ではサポートされません**。 LINE SDKをアップグレードする場合は、ユーザーが再ログインするまで、アプリからLINEプラットフォームにアクセスできません。
 
 #### 以前
 

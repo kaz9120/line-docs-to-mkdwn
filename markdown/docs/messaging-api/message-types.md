@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/message-types/
-copied_at: 2025-10-23T15:55:55.102Z
+copied_at: 2025-10-24T06:27:58.250Z
 ---
 # メッセージタイプ
 
@@ -28,10 +28,9 @@ Messaging APIを使うことで、ボットから以下のようなメッセー�
 
 ![](https://developers.line.biz/media/messaging-api/messages/emoji.png)
 
-:::note info
-テキストの装飾とサイズの変更
-
-:::
+> [!TIP]
+> テキストの装飾とサイズの変更
+> テキストの装飾やサイズの変更には、[Flex Message](https://developers.line.biz/ja/reference/messaging-api/#flex-message)を使用してください。
 
 ## テキストメッセージ（v2）
 

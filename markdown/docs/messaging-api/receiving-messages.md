@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/receiving-messages/
-copied_at: 2025-10-23T15:56:49.802Z
+copied_at: 2025-10-24T06:28:10.353Z
 ---
 # メッセージ（Webhook）を受信する
 
@@ -8,15 +8,13 @@ copied_at: 2025-10-23T15:56:49.802Z
 
 ボットサーバーがWebhookイベントオブジェクトを適切に処理していることを確認してください。なお、ボットサーバーがWebhookの受信に長期間失敗している場合、LINEプラットフォームからボットサーバーへのWebhookの送信を停止する可能性があります。
 
-:::note alert
-セキュリティ上の警告
+> [!CAUTION]
+> セキュリティ上の警告
+> ボットサーバーが受信したHTTP POSTリクエストは、LINEプラットフォームから送信されていない危険なリクエストの可能性があります。必ず署名を検証してから、Webhookイベントオブジェクトを処理してください。
 
-:::
-
-:::note info
-イベントは非同期で処理することを推奨します
-
-:::
+> [!TIP]
+> イベントは非同期で処理することを推奨します
+> 現在のリクエストが処理されるまで後続のリクエストが待たされるのを防ぐため、Webhookイベントは非同期で処理することを推奨します。
 
 ## 署名を検証する
 
@@ -113,10 +111,10 @@ Messaging APIでは、ボットサーバー側が受け取りに失敗したWebh
 
 Webhookの再送は、すべてのMessaging APIチャネルで利用可能です。
 
-:::note warn
-Webhookの再送を有効にする前に確認してください
-
-:::
+> [!WARNING]
+> Webhookの再送を有効にする前に確認してください
+> *   ネットワーク経路上の問題等により、同じWebhookイベントが重複して送信される可能性があります。これが問題になる場合は、Webhookイベントオブジェクトの`webhookEventId`を利用し、重複の検出を行ってください。
+> *   Webhookが再送されることにより、Webhookを受信する順序がイベントの発生順序と異なる可能性があります。これが問題になる場合は、Webhookイベントオブジェクトの`timestamp`を確認することによって、前後関係を確認してください。
 
 ### 再送されるWebhook
 
@@ -144,10 +142,9 @@ LINEプラットフォームから送信されたWebhookは、次の2つの条�
 *   [Webhookの再送を有効にしている](#enable-webhook-redelivery)。
 *   Webhookに対して、ボットサーバーがステータスコード`200`番台を返さなかった。
 
-:::note warn
-Webhookを再送できない場合があります
-
-:::
+> [!WARNING]
+> Webhookを再送できない場合があります
+> Webhookの再送は、Webhookの確実な再送を保証するものではありません。また、Webhook再送の件数が急激に増加し、LINEプラットフォームの動作に影響を与えると判断された場合、Webhookの再送設定が強制的に無効になる可能性があります。
 
 ## Webhookの送信におけるエラーの統計情報を確認する
 
@@ -160,10 +157,10 @@ Webhookを再送できない場合があります
 *   [画像、動画、音声、ファイル](#getting-content-file-sent-by-users)
 *   [画像または動画のプレビュー画像](#getting-content-preview-image)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ユーザーが送ったコンテンツは一定期間後、自動的に削除されます。
+> *   ユーザーが送ったテキストは、Webhookの[テキスト](https://developers.line.biz/ja/reference/messaging-api/#wh-text)メッセージオブジェクトで受信できます。Webhookを受信した後で、あらためてテキストを取得するためのAPIはありません。
 
 ### 画像、動画、音声、ファイルを取得する
 

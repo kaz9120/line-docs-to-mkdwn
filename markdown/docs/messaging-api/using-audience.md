@@ -1,20 +1,18 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-audience/
-copied_at: 2025-10-23T15:56:16.018Z
+copied_at: 2025-10-24T06:28:02.303Z
 ---
 # オーディエンスを使う
 
 オーディエンス機能を使うと、高度なターゲティングができます。たとえば、メッセージを開封したユーザーや、メッセージのURLをクリックしたユーザーのグループをターゲットにできます。
 
-:::note warn
-注意
+> [!WARNING]
+> 注意
+> 日本、タイ、台湾のユーザーが作成したLINE公式アカウントの場合のみ、オーディエンスを作成できます。
 
-:::
-
-:::note warn
-Identifier for Advertisers（IFA）を使用するには
-
-:::
+> [!WARNING]
+> Identifier for Advertisers（IFA）を使用するには
+> 送信対象アカウントをIFAで指定することもできますが、この機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## オーディエンスを作成する
 
@@ -39,10 +37,9 @@ Identifier for Advertisers（IFA）を使用するには
 *   画像クリックオーディエンス
 *   LINE Beacon Networkインプレッションオーディエンス
 
-:::note warn
-同時処理数の制限があります
-
-:::
+> [!WARNING]
+> 同時処理数の制限があります
+> ユーザーIDアップロード用のオーディエンス作成およびオーディエンスへのユーザーID追加のエンドポイントでは、オーディエンスID（`audienceGroupId`）単位での同時処理数の制限があります。詳しくは、「[同時処理数の制限](https://developers.line.biz/ja/reference/messaging-api/#limit-on-the-number-of-concurrent-operations)」を参照してください。
 
 ## オーディエンスを使う
 

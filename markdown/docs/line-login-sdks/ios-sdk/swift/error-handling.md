@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/error-handling/
-copied_at: 2025-10-23T15:59:13.050Z
+copied_at: 2025-10-24T06:28:58.757Z
 ---
 # エラーを制御する
 
@@ -33,10 +33,9 @@ swift
 
 ``public enum ResponseErrorReason {     // Error happens in the underlying `URLSession`. Code 2001.    case URLSessionError(Error)    // The response is not a valid `HTTPURLResponse`. Code 2002.    case nonHTTPURLResponse    // Cannot parse received data to an instance of target type. Code 2003.    case dataParsingFailed(Any.Type, Data, Error)    // Received response contains an invalid HTTP status code. Code 2004.    case invalidHTTPStatusAPIError(detail: APIErrorDetail) }``
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> これは説明を目的としています。最終的なコードは上記とは異なる可能性があります。
 
 ## エラーデータを取得する
 

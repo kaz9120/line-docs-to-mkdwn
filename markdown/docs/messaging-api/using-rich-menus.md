@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-rich-menus/
-copied_at: 2025-10-23T15:57:02.669Z
+copied_at: 2025-10-24T06:28:14.971Z
 ---
 # リッチメニューを使う
 
 このページでは、LINE公式アカウントを友だち追加しているすべてのユーザーに表示される「デフォルトのリッチメニュー」を、Messaging APIを使って設定する方法について説明します。
 
-:::note info
-LINE Official Account Managerでも設定できます
-
-:::
+> [!TIP]
+> LINE Official Account Managerでも設定できます
+> デフォルトのリッチメニューは、[LINE Official Account Manager](https://manager.line.biz/)でも設定できます。詳しくは、「[LINE Official Account Managerでリッチメニューを設定する](https://developers.line.biz/ja/docs/messaging-api/rich-menus-overview/#creating-a-rich-menu-with-the-line-manager)」を参照してください。
 
 *   [デフォルトのリッチメニューを設定する](#set-default-rich-menu)
     *   [1\. リッチメニューの画像を準備する](#prepare-a-rich-menu-image)
@@ -37,10 +36,9 @@ Messaging APIを使ってデフォルトのリッチメニューを設定する�
 
 この画像の場合、A、B、Cの3つのタップ領域を定義することが想定されています。
 
-:::note info
-リッチメニュー用のテンプレート画像について
-
-:::
+> [!TIP]
+> リッチメニュー用のテンプレート画像について
+> [LINE Official Account Manager](https://manager.line.biz)からリッチメニュー用のテンプレート画像をダウンロードできます。リッチメニュー新規作成画面を開いて、［**デザインガイド**］をクリックしてください。LINE Official Account Managerには、[LINE Developersコンソール](https://developers.line.biz/console/)と同じアカウントでログインできます。
 
 画像の要件について詳しくは、『Messaging APIリファレンス』の「[リッチメニューの画像の要件](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image-requirements)」を参照してください。
 
@@ -54,10 +52,11 @@ sh
 
 `curl -v -X POST https://api.line.me/v2/bot/richmenu \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "size": {        "width": 2500,        "height": 1686    },    "selected": false,    "name": "デフォルトのリッチメニューのテスト",    "chatBarText": "Tap to open",    "areas": [        {            "bounds": {                "x": 0,                "y": 0,                "width": 1666,                "height": 1686            },            "action": {                "type": "uri",                "label": "タップ領域A",                "uri": "https://developers.line.biz/ja/news/"            }        },        {            "bounds": {                "x": 1667,                "y": 0,                "width": 834,                "height": 843            },            "action": {                "type": "uri",                "label": "タップ領域B",                "uri": "https://lineapiusecase.com/"            }        },        {            "bounds": {                "x": 1667,                "y": 844,                "width": 834,                "height": 843            },            "action": {                "type": "uri",                "label": "タップ領域C",                "uri": "https://techblog.lycorp.co.jp/ja/"            }        }    ] }'`
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> *   リクエストの`selected`プロパティを`true`に変更すると、ユーザーにリンクしたときにリッチメニューが自動的に表示されます。
+> *   トークルームメニューのテキストを変更するには、リクエストの`chatBarText`プロパティを指定します。
+> *   指定した[リッチメニューオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-object)に不備がないか、リッチメニューを作成する前に、[リッチメニューオブジェクトを検証する](https://developers.line.biz/ja/reference/messaging-api/#validate-rich-menu-object)ことも可能です。
 
 リッチメニューの作成に成功すると、リッチメニューのIDがレスポンスで返されます。リッチメニューのIDは、以降の手順で使用します。
 

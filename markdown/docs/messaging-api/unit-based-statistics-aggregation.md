@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/unit-based-statistics-aggregation/
-copied_at: 2025-10-23T15:56:20.002Z
+copied_at: 2025-10-24T06:28:19.195Z
 ---
 # 送信したメッセージの統計情報を取得する
 
@@ -46,10 +46,9 @@ sh
 
 `curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "to": "U4af4980629...",    "messages":[        {            "type": "text",            "text": "Hello, world1"        }    ],    "customAggregationUnits": [        "promotion_a"    ] }'`
 
-:::note info
-ユニット名の後付けや変更について
-
-:::
+> [!TIP]
+> ユニット名の後付けや変更について
+> 既に送信したメッセージに後からユニット名を付与したり、ユニット名を変更したりすることはできません。
 
 ### ユニット名の種類数の上限
 
@@ -64,10 +63,9 @@ sh
 *   当月のユニット名がまだ1,000種類に達していないことを、メッセージの送信前に「[当月中に付与したユニット名の種類数を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-the-number-of-unit-name-types-assigned-during-this-month)」エンドポイントで確認する
 *   メッセージの送信後に「[当月中に付与したユニット名のリストを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-a-list-of-unit-names-assigned-during-this-month)」エンドポイントで、付与したユニット名が存在することを確認する
 
-:::note info
-ユニット名の制限について
-
-:::
+> [!TIP]
+> ユニット名の制限について
+> ユニット名を付与する際には「当月中に最大で1,000種類まで」という制限がありますが、メッセージの送信後に[ユニットごとの統計情報を取得する](#get-statistics-per-unit)際には、`from`から`to`までの集計対象期間に存在するすべてのユニットの統計情報が取得できます。
 
 ## ユニットごとの統計情報を取得する
 

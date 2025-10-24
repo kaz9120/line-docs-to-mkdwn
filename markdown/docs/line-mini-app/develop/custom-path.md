@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/custom-path/
-copied_at: 2025-10-23T16:01:11.920Z
+copied_at: 2025-10-24T06:29:35.520Z
 ---
 # Custom Pathを設定する
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> この機能は、認証済ミニアプリでのみ利用できます。
 
 Custom Pathとは、本番用のLIFF URLに設定する独自の文字列のことをいいます。Custom Path機能を用いると、以下のように、LIFF URLに独自の文字列を設定できます。
 

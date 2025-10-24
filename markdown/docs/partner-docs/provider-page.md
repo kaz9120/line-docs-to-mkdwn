@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/provider-page/
-copied_at: 2025-10-23T16:02:20.272Z
+copied_at: 2025-10-24T06:29:59.232Z
 ---
 # プロバイダーページ
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## 概要
 
@@ -23,10 +22,9 @@ copied_at: 2025-10-23T16:02:20.272Z
 
 ［**プロバイダーページ**］タブでプライバシーポリシーURLを登録して、プロバイダーページで表示したいサービスを追加してください。サービスはプロバイダーページに最大100個追加することができます。プライバシーポリシーURLが登録されていない場合、サービスを追加してもプロバイダーページには表示されません。
 
-:::note info
-プロバイダーページに追加できるLINE公式アカウントについて
-
-:::
+> [!TIP]
+> プロバイダーページに追加できるLINE公式アカウントについて
+> プロバイダーページに追加できるLINE公式アカウントは、認証済アカウントと[プレミアムアカウント](https://developers.line.biz/ja/glossary/#premium-account)のみです。未認証アカウントはプロバイダーページには追加できません。アカウント種別について詳しくは、『LINEヤフー for Business』の「[LINE公式アカウント アカウント種別](https://www.lycbiz.com/jp/service/line-official-account/account-type/)」を参照してください。
 
 ![プロバイダーページの設定画面](https://developers.line.biz/media/partner-docs/provider-page-settings-ja.png)
 

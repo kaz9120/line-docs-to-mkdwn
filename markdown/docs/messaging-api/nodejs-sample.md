@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/nodejs-sample/
-copied_at: 2025-10-23T15:56:47.421Z
+copied_at: 2025-10-24T06:28:28.241Z
 ---
 # チュートリアル - 応答ボットを作る
 
@@ -16,10 +16,9 @@ Messaging APIは、サービスとLINEユーザーとの間で双方向のコミ
 
 このチュートリアルは、JavaScriptとNode.jsの基本的な知識を必要とします。また、チュートリアルをスムーズに進めるために、「[Messaging APIの概要](https://developers.line.biz/ja/docs/messaging-api/overview/)」を読んでおくことをお勧めします。
 
-:::note info
-このチュートリアルではSDKを使用しません
-
-:::
+> [!TIP]
+> このチュートリアルではSDKを使用しません
+> このチュートリアルでは、Messaging APIの仕様を理解するために、LINEプラットフォームのSDKを使わずにNode.jsでMessaging APIを使用する方法を説明します。Node.jsを使ったプロジェクトで、Messaging APIをより少ないコード行数で素早く利用したい場合は、[LINE Messaging API SDK for nodejs](https://line.github.io/line-bot-sdk-nodejs/)を利用してください。
 
 ### 準備
 
@@ -28,10 +27,9 @@ Messaging APIは、サービスとLINEユーザーとの間で双方向のコミ
 アカウントを登録するもの：
 
 *   [LINE Developersコンソール](https://developers.line.biz/console/)のアカウント：LINE DevelopersコンソールにLINEアカウントまたはビジネスアカウントでログインし、まだお持ちでなければ[開発者アカウントを作成](https://developers.line.biz/ja/docs/line-developers-console/login-account/#register-as-developer)してください。
-*   [Heroku](https://www.heroku.com/)アカウント:::note warn
-    Herokuの無料プランは廃止されました
-    
-    :::
+*   [Heroku](https://www.heroku.com/)アカウント> [!WARNING]
+    > Herokuの無料プランは廃止されました
+    > Herokuの無料プランは、2022年11月27日をもって廃止されました。このチュートリアルを無料で試したい場合は、他のプラットフォームを利用してください。詳しくは、「[Heroku’s Next Chapter](https://www.heroku.com/blog/next-chapter/)」を参照してください。
     
 
 インストールするもの：
@@ -171,10 +169,11 @@ javascript
 
 応答ボットのコア機能である、ユーザーのメッセージに応答する機能を実装します。まず、ユーザーからメッセージを受信したことを識別する必要があります。Webhook URLで、`type`プロパティの値が`message`になっている[メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event)オブジェクトを受信したら、ユーザーからメッセージが送信されたと識別します。
 
-:::note alert
-ボットを本番用として公開する場合は署名を検証してください
-
-:::
+> [!CAUTION]
+> ボットを本番用として公開する場合は署名を検証してください
+> 本番用として、不特定多数のユーザー向けにボットを公開する場合には署名の検証が必要です。HTTPリクエストがLINEプラットフォームから送られたことを確認するために、リクエストヘッダーの`x-line-signature`に含まれる署名を検証してください。
+> 
+> 署名の検証方法について詳しくは、「[署名を検証する](https://developers.line.biz/ja/docs/messaging-api/receiving-messages/#verify-signature)」を参照してください。
 
 ユーザーに応答するには、[応答メッセージを送る](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)エンドポイント（`https://api.line.me/v2/bot/message/reply`）を使います。`index.js`の`app.post`から、応答メッセージを送るエンドポイント（`https://api.line.me/v2/bot/message/reply`）を呼び出します。以下のコードで`app.post`を置き換えてください。それぞれの処理の詳しい説明は、コードコメントで確認してください。
 
@@ -192,10 +191,9 @@ LINE DevelopersコンソールのMessaging APIチャネルの［**Messaging API�
 
 次にWebhook URLを登録します。［**Messaging API設定**］タブで、［**Webhook URL**］に、「[Herokuの設定](#set-up-heroku)」で取得したHerokuのURLを元に、サーバーがWebhookをListenするURLを入力します。URLは`https://{Name of your app}.herokuapp.com/webhook`という形式になっています。［**Webhook URL**］は`https://{Name of your app}.herokuapp.com/`ではないので注意してください。
 
-:::note info
-HerokuのURLを忘れてしまったら
-
-:::
+> [!TIP]
+> HerokuのURLを忘れてしまったら
+> HerokuのURLを忘れてしまった場合は、[Heroku Dashboard](https://dashboard.heroku.com/)で確認できます。
 
 ［**Webhookの利用**］を有効にします。
 

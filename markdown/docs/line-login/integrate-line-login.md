@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/integrate-line-login/
-copied_at: 2025-10-23T15:58:23.503Z
+copied_at: 2025-10-24T06:28:34.518Z
 ---
 # ウェブアプリにLINEログインを組み込む
 
@@ -8,10 +8,10 @@ copied_at: 2025-10-23T15:58:23.503Z
 
 LINEログインを組み込めるアプリがない場合は、サンプルアプリを利用できます。「[LINEログインを始めよう](https://developers.line.biz/ja/docs/line-login/getting-started/)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ウェブアプリにLINEログイン v2.0を組み込む場合は、「[ウェブアプリにLINEログインを組み込む（LINEログイン v2.0）](https://developers.line.biz/ja/docs/line-login/integrate-line-login-v2/)」を参照してください。
+> *   LINE SDKが提供されている環境では、LINE SDKを使用してLINEログインを組み込んでください。ネイティブアプリにLINEログインを組み込むために、このページで説明している仕組みを利用しないでください。LINE SDKを組み込む方法については、「[ネイティブアプリにLINEログインを組み込む](https://developers.line.biz/ja/docs/line-login/overview/#native-app)」を参照してください。
 
 ## ログインのフロー
 
@@ -85,15 +85,15 @@ text
 <ul><!--[--><li><!--[--><code><!--[-->query<!--]--></code>：認可レスポンスの各パラメータをコールバックURLのクエリパラメータとして返します。*1<!--]--></li><li><!--[--><code><!--[-->form_post<!--]--></code>：認可レスポンスの各パラメータをHTTP POSTリクエストのリクエストボディとして返します。*2<!--]--></li><li><!--[--><code><!--[-->query.jwt<!--]--></code>：認可レスポンスの各パラメータをJWTにまとめ、コールバックURLのクエリパラメータとして返します。<code><!--[-->jwt<!--]--></code>を設定した場合と同じです。*3<!--]--></li><li><!--[--><code><!--[-->form_post.jwt<!--]--></code>：認可レスポンスの各パラメータをJWTにまとめ、HTTP POSTリクエストのリクエストボディとして返します。*3<!--]--></li><li><!--[--><code><!--[-->jwt<!--]--></code>：認可レスポンスの各パラメータをJWTにまとめ、コールバックURLのクエリパラメータとして返します。<code><!--[-->query.jwt<!--]--></code>を設定した場合と同じです。*3<!--]--></li><!--]--></ul>\*1 [OAuth 2.0 Multiple Response Type Encoding Practices](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html)の「[2.1. Response Modes](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#ResponseModes)」セクションで定義されている`query`に相当します。<br/>\*2 [OAuth 2.0 Form Post Response Mode](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html)の「[2\. Form Post Response Mode](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html#FormPostResponseMode)」セクションで定義されている`form_post`に相当します。<br/>\*3 [Financial-grade API: JWT Secured Authorization Response Mode for OAuth 2.0 (JARM)](https://openid.net/specs/openid-financial-api-jarm.html)の「[4.3. Response Encoding](https://openid.net/specs/openid-financial-api-jarm.html#response-encoding)」セクションで定義されている`query.jwt`、`form_post.jwt`、`jwt`に相当します。 |
 |  |  |  |  |
 
-:::note info
-ヒント
+> [!TIP]
+> ヒント
+> *   ウェブアプリにLINEログインボタンを追加する際は、「[LINEログインボタン デザインガイドライン](https://developers.line.biz/ja/docs/line-login/login-button/)」に従ってください。
+> *   LINEログインボタンを表示せず、認可URLに直接リンクすることもできます。
+> *   ユーザーの認証情報は、ウェブアプリには通知されません。
 
-:::
-
-:::note warn
-LIFFブラウザ内での認可リクエストについて
-
-:::
+> [!WARNING]
+> LIFFブラウザ内での認可リクエストについて
+> LIFFブラウザ内でLINEログインによる認可リクエストを行う際の動作は保証されません。また、LIFFアプリを外部ブラウザで開く場合には、LINEログインによる認可リクエストではなく、[liff.login()](https://developers.line.biz/ja/reference/liff/#login)を利用してください。
 
 ### スコープ
 
@@ -109,17 +109,16 @@ LIFFブラウザ内での認可リクエストについて
 
 ※`email`を指定してユーザーにメールアドレスの取得権限を要求するには、あらかじめ[メールアドレス取得権限を申請](#applying-for-email-permission)してください。
 
-:::note info
-その他の権限を利用したい
-
-:::
+> [!TIP]
+> その他の権限を利用したい
+> *   ユーザーがLINE Profile+に登録した情報（氏名、性別、誕生日、電話番号、住所）を取得するには、所定の申請等が必要です。詳しくは『法人ユーザー向けオプションドキュメント』の「[LINE Profile+](https://developers.line.biz/ja/docs/partner-docs/line-profile-plus/)」を参照してください。
+> *   [LINE公式アカウントとユーザーの友だち関係を取得する](https://developers.line.biz/ja/docs/line-login/link-a-bot/#use-line-login-api)には、`profile`のスコープを持つアクセストークンが必要です。
 
 ### ユーザーがユーザー認証を行う
 
-:::note info
-ユーザー認証はユーザーとLINEプラットフォームの間で直接行われます
-
-:::
+> [!TIP]
+> ユーザー認証はユーザーとLINEプラットフォームの間で直接行われます
+> LINEログインを組み込むウェブアプリ側で、認証の機能を実装する必要はありません。
 
 認可URLにリダイレクトされたユーザーは、以下のいずれかの認証方法でログインできます。
 
@@ -132,20 +131,19 @@ LIFFブラウザ内での認可リクエストについて
 
 自動ログインが利用できる環境では、自動ログインが優先して動作します。自動ログインが利用できないとき、SSOが利用できる場合は[シングルサインオン（SSO）によるログイン](#line-sso-login)が表示され、利用できない場合は[メールアドレスログイン](#mail-or-qrcode-login)が表示されます。
 
-:::note warn
-自動ログインとSSOによるログインでは自動ログインの方が優先して動作します
+> [!WARNING]
+> 自動ログインとSSOによるログインでは自動ログインの方が優先して動作します
+> 自動ログインとSSOによるログインが両方利用できる環境では、自動ログインの方が優先して動作します。詳しくは、2021年7月12日のニュース、「[LINEログインにおいてSSOによるログインより自動ログインが優先されるようになります](https://developers.line.biz/ja/news/2021/07/12/auto-login-takes-precedence-over-sso/)」を参照してください。
+> 
+> 自動ログインではなく、SSOによるログインを動作させたい場合は、[ユーザーに認証と認可を要求する](#making-an-authorization-request)際、認可URLに特定のクエリパラメータ（`disable_auto_login`）を付与することで自動ログインを無効にできます。
 
-:::
+> [!WARNING]
+> ログイン通知について
+> ログインするとLINE公式アカウントからログイン通知が送信されます。ログイン通知についてはヘルプセンターの「[\[◯◯で◯◯にログインしました\]というトークが届いた](https://help.line.me/line/android/pc?lang=ja&contentId=20014794)」を参照してください。
 
-:::note warn
-ログイン通知について
-
-:::
-
-:::note info
-ユーザーが選択した認証方法
-
-:::
+> [!TIP]
+> ユーザーが選択した認証方法
+> ユーザーが選択した認証方法は、IDトークンで確認できます。IDトークンについては、「[アクセストークンを取得する](#get-access-token)」の「レスポンス」を参照してください。
 
 #### 自動ログイン
 
@@ -160,20 +158,21 @@ LIFFブラウザ内での認可リクエストについて
 
 ![](https://developers.line.biz/media/line-login/integrate-login-web/auto-ligin-animation.gif)
 
-:::note warn
-自動ログインはPC版LINEでは動作しません
+> [!WARNING]
+> 自動ログインはPC版LINEでは動作しません
+> 自動ログインが利用可能な環境について詳しくは、FAQの「[自動ログインについて教えてください。](https://developers.line.biz/ja/faq/#how-does-auto-login-work)」を参照してください。
 
-:::
+> [!WARNING]
+> 自動ログインに失敗する場合があります
+> ユーザーがプライベートブラウジングを有効にしてウェブアプリにアクセスすると、自動ログインに失敗する場合があります。
+> 
+> その他にも、ユーザーが利用するOSの仕様によって、自動ログインに失敗する場合があります。OSの仕様は完全には公開されていないため、自動ログインに失敗する条件をLINEプラットフォームが回避することが難しい場合があります。
+> 
+> 詳しくは、「[自動ログインに失敗した時の対応方法](https://developers.line.biz/ja/docs/line-login/how-to-handle-auto-login-failure/)」を参照してください。
 
-:::note warn
-自動ログインに失敗する場合があります
-
-:::
-
-:::note info
-Yahoo! JAPANアプリからの自動ログインについて
-
-:::
+> [!TIP]
+> Yahoo! JAPANアプリからの自動ログインについて
+> Yahoo! JAPANアプリからPKCEを実装したLINEログインを組み込んだウェブアプリにアクセスした際に、自動ログインが有効になります。LINEログインのPKCE対応について詳しくは、「[LINEログインをPKCE対応する](https://developers.line.biz/ja/docs/line-login/integrate-pkce/)」を参照してください。
 
 #### メールアドレスログイン、QRコードログイン
 
@@ -194,22 +193,21 @@ Yahoo! JAPANアプリからの自動ログインについて
 
 SSOは、過去にLINEログインをしたことがある外部ブラウザで認可URLにアクセスした場合に使用できます。
 
-:::note warn
-SSOはCookieを利用している機能です
+> [!WARNING]
+> SSOはCookieを利用している機能です
+> 一度ウェブアプリからLINEログインをすると `access.line.me` というドメイン名でCookieが保存されます。以降もそのCookieが有効な限り、同じブラウザでログインする際にSSOの画面が表示されます。
 
-:::
-
-:::note warn
-自動ログインとSSOによるログインでは自動ログインの方が優先して動作します
-
-:::
+> [!WARNING]
+> 自動ログインとSSOによるログインでは自動ログインの方が優先して動作します
+> 自動ログインとSSOによるログインが両方利用できる環境では、自動ログインの方が優先して動作します。詳しくは、2021年7月12日のニュース、「[LINEログインにおいてSSOによるログインより自動ログインが優先されるようになります](https://developers.line.biz/ja/news/2021/07/12/auto-login-takes-precedence-over-sso/)」を参照してください。
+> 
+> 自動ログインではなく、SSOによるログインを動作させたい場合は、[ユーザーに認証と認可を要求する](#making-an-authorization-request)際、認可URLに特定のクエリパラメータ（`disable_auto_login`）を付与することで自動ログインを無効にできます。
 
 ### ユーザーが認可を行う
 
-:::note info
-認可はユーザーとLINEプラットフォームの間で直接行われます
-
-:::
+> [!TIP]
+> 認可はユーザーとLINEプラットフォームの間で直接行われます
+> LINEログインを組み込むウェブアプリ側で、認可の機能を実装する必要はありません。
 
 開発者が`scope`パラメータで指定した情報へのアクセス権を、ユーザーが認可します。
 
@@ -219,10 +217,10 @@ SSOはCookieを利用している機能です
 
 ![同意画面](https://developers.line.biz/media/line-login/integrate-login-web/consent-screen-ja.png)
 
-:::note warn
-同意画面が表示されない場合があります
-
-:::
+> [!WARNING]
+> 同意画面が表示されない場合があります
+> *   `scope`パラメータで指定した権限が`profile`または`openid`の場合は、ユーザーが既に権限を付与していると同意画面は表示されません。
+> *   権限に`email`が含まれる場合は、メールアドレスが変わらない限り、ユーザーが同意してから一定の期間は同意画面が表示されません。
 
 ## ウェブアプリで認可レスポンスまたはエラーレスポンスを受け取る
 
@@ -305,10 +303,9 @@ sh
 
 LINEプラットフォームがアプリからのリクエストを検証し、以下の表に示すアクセストークンなどのデータをアプリに返します。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINEログイン機能に追加または変更があったときに、レスポンスやIDトークンのJSONオブジェクトの構造が変更される場合があります。この変更には、プロパティの追加、順序の変更、データの要素間の空白や改行の有無、データ長の変化が含まれます。将来、従来と異なる構造のペイロードを受信しても不具合が発生しないように、サーバーを実装してください。
 
 | プロパティ | タイプ | 説明 |
 | --- | --- | --- |

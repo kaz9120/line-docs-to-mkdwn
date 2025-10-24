@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/development-guidelines/
-copied_at: 2025-10-23T15:55:50.415Z
+copied_at: 2025-10-24T06:27:56.599Z
 ---
 # Messaging API開発ガイドライン
 
@@ -22,10 +22,9 @@ copied_at: 2025-10-23T15:55:50.415Z
 *   [非破壊的な変更を想定した実装の推奨](#assume-non-breaking-changes)
 *   [ログ保存の推奨](#save-logs)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ボット開発における基本ルールは[規約とポリシー](https://developers.line.biz/ja/terms-and-policies/)に基づきます。
 
 ## 禁止事項
 
@@ -33,10 +32,12 @@ copied_at: 2025-10-23T15:55:50.415Z
 
 負荷テストや動作テストを目的に、LINEプラットフォームへ、大量のリクエストを送信しないでください。いかなる場合でも、リクエスト数は指定された[レート制限](https://developers.line.biz/ja/reference/messaging-api/#rate-limits)以下に抑えてください。レート制限を超えて送信を行った場合、`429 Too Many Requests`エラーとなります。
 
-:::note warn
-レート制限内の動作テスト
-
-:::
+> [!WARNING]
+> レート制限内の動作テスト
+> レート制限内であっても以下のようなリクエストを高頻度で行わないでください。
+> 
+> *   実際にナローキャスト配信に利用しないにもかかわらず[オーディエンスの作成](https://developers.line.biz/ja/docs/messaging-api/using-audience/#create-audience)と削除を高頻度で繰り返し行う行為
+> *   Messaging APIの機能を利用しないリクエストを高頻度で繰り返し行う行為
 
 ### LINEプラットフォームを経由した負荷テストの禁止
 
@@ -92,15 +93,18 @@ Messaging APIでは、非破壊的な機能追加が行われることがあり�
 
 送信した[Messaging APIに対するリクエスト](#messaging-api-logs)や受信した[Webhook](#webhook-logs)のログを一定期間保存することを推奨します。これらのログは問題の原因を調査する際に役立ちます。
 
-:::note info
-ログに保存しておくと有用な情報
+> [!TIP]
+> ログに保存しておくと有用な情報
+> このセクションで推奨している基本的なログ情報に加えて、以下の情報も役に立ちます。ボットの要件に応じて、以下の情報の保存を検討してください。
+> 
+> *   呼び出したMessaging APIのリクエストボディ
+> *   APIリクエストに対してLINEプラットフォームから返却されたレスポンスボディ
+> *   LINEプラットフォームからWebhookが送信された際の[リクエストヘッダー](https://developers.line.biz/ja/reference/messaging-api/#request-headers)の署名（`x-line-signature`）
+> *   LINEプラットフォームから送信された[Webhookイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)
 
-:::
-
-:::note warn
-ログの提供は行っておりません
-
-:::
+> [!WARNING]
+> ログの提供は行っておりません
+> Messaging APIに対するリクエストのログや、LINEプラットフォームからボットサーバーへのWebhook送信時のログ等は、お問い合わせいただいても提供は行っておりません。ログの保存は、開発者自身の責任で行ってください。
 
 #### Messaging APIに対するリクエストのログ保存
 

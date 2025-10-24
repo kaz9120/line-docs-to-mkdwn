@@ -1,18 +1,16 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/module-technical-chat-control/
-copied_at: 2025-10-23T16:02:47.324Z
+copied_at: 2025-10-24T06:30:06.215Z
 ---
 # チャットの主導権を制御する（Chat Control）
 
-:::note alert
-警告
+> [!CAUTION]
+> 警告
+> 現在提供しているモジュールチャネルは、LINE公式アカウントにアタッチすると自動的にチャットの主導権を取得します（[Default Active](#default-active)）。そのため、チャットの主導権を制御する必要はありません。
 
-:::
-
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。モジュールを利用した拡張機能の公開を希望するお客様は、担当営業までご連絡いただくか、[LINEマーケットプレイス お問い合わせ](https://line-marketplace.com/jp/inquiry)よりお問い合わせください。
 
 ## チャットの主導権（Chat Control）とは
 
@@ -25,15 +23,15 @@ copied_at: 2025-10-23T16:02:47.324Z
 | Active Channel | 主導権（Chat Control）を持つチャネルです。デフォルトでは、Primary CH（LINE公式アカウントに紐づいた標準のMessaging APIチャネル）が「Active Channel」です。<br/>このチャネルから、返信メッセージやプッシュメッセージなどを送信できます。<br/>1つのLINE公式アカウントに対して、「Active Channel」は1つのみ存在できます。 |
 | Standby Channel | 主導権（Chat Control）を持たないチャネルです。<br/>このチャネルからは、メッセージの送信を控えてください。<br/>Active Channel以外のチャネルは、すべて「Standby Channel」です。 |
 
-:::note warn
-主導権（Chat Control）はモジュールチャネルごとに、一括して設定するものではありません
+> [!WARNING]
+> 主導権（Chat Control）はモジュールチャネルごとに、一括して設定するものではありません
+> 主導権（Chat Control）は、ユーザー、トークルーム、またはグループごとに管理されています。
 
-:::
-
-:::note warn
-「Default Active」の機能が付与されたモジュールチャネル
-
-:::
+> [!WARNING]
+> 「Default Active」の機能が付与されたモジュールチャネル
+> 「Default Active」の機能が付与されたモジュールチャネルは、LINE公式アカウントにアタッチすると自動的にActive Channelになるモジュールチャネルです。
+> 
+> 詳しくは、「[Default Active](#default-active)」を参照してください。
 
 ## API reference
 
@@ -44,10 +42,9 @@ copied_at: 2025-10-23T16:02:47.324Z
 
 LINEマーケットプレイスで提供するモジュールチャネルには、「Default Active」の機能が付与されています。
 
-:::note warn
-LINEマーケットプレイス専用の機能です
-
-:::
+> [!WARNING]
+> LINEマーケットプレイス専用の機能です
+> 「Default Active」の機能は、[LINEマーケットプレイス](https://line-marketplace.com/jp/inquiry)で公開するモジュールチャネルでのみ利用できます。
 
 「Default Active」の機能が付与されたモジュールチャネルの特徴は、以下のとおりです。
 

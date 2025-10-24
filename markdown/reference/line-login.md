@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/line-login/
-copied_at: 2025-10-23T15:58:09.338Z
+copied_at: 2025-10-24T06:28:29.376Z
 ---
 # LINEログイン v2.1 APIリファレンス
 
@@ -10,10 +10,9 @@ copied_at: 2025-10-23T15:58:09.338Z
 
 LINEログインのAPIに対して短時間に大量のリクエストを送信し、LINEプラットフォームの動作に影響を与えると判断された場合、一時的にリクエストを制限することがあります。負荷テストを含め、いかなる目的でも大量のリクエストを送信しないでください。
 
-:::note info
-レート制限のしきい値について
-
-:::
+> [!TIP]
+> レート制限のしきい値について
+> LINEログインのAPIにおけるレート制限のしきい値は開示していません。
 
 ### ステータスコード
 
@@ -51,10 +50,10 @@ LINEログインAPIで管理するアクセストークンは、LINEプラット
 
 レスポンスに含まれるアクセストークンとリフレッシュトークンは、LINEログインAPIを呼び出す際に必要です。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ここでは、LINEログイン v2.1のエンドポイントについて解説します。v2.0については、v2.0の「[アクセストークンを発行する](https://developers.line.biz/ja/reference/line-login-v2/#issue-access-token)」を参照してください。
+> *   LINEログイン機能に追加または変更があったときに、レスポンスやIDトークンのJSONオブジェクトの構造が変更される場合があります。この変更には、プロパティの追加、順序の変更、データの要素間の空白や改行の有無、データ長の変化が含まれます。将来、従来と異なる構造のペイロードを受信しても不具合が発生しないように、サーバーを実装してください。
 
 _リクエストの例_
 
@@ -172,10 +171,9 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 アクセストークンを利用して、安全にユーザー登録およびログインを処理する方法については、『LINEログインドキュメント』の「[アプリとサーバーの間で安全なログインプロセスを構築する](https://developers.line.biz/ja/docs/line-login/secure-login-process/)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ここでは、LINEログイン v2.1のエンドポイントについて解説します。v2.0については、v2.0の「[アクセストークンの有効性を検証する](https://developers.line.biz/ja/reference/line-login-v2/#verify-access-token)」を参照してください。
 
 _リクエストの例_
 
@@ -229,10 +227,10 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 ユーザーの認証が終わったときに、アクセストークンと共にリフレッシュトークンが返されます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ここでは、LINEログイン v2.1のエンドポイントについて解説します。v2.0については、v2.0の「[アクセストークンを更新する](https://developers.line.biz/ja/reference/line-login-v2/#refresh-access-token)」を参照してください。
+> *   Messaging APIで使用されるチャネルアクセストークンの更新には使用できません。
 
 _リクエストの例_
 
@@ -334,10 +332,10 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 ユーザーのアクセストークンを無効にします。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   ここでは、LINEログイン v2.1のエンドポイントについて解説します。v2.0については、v2.0の「[アクセストークンを取り消す](https://developers.line.biz/ja/reference/line-login-v2/#revoke-access-token)」を参照してください。
+> *   Messaging APIで使用されるチャネルアクセストークンの無効化には使用できません。
 
 _リクエストの例_
 
@@ -599,10 +597,9 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 なお取得できる情報はメインプロフィールのみです。ユーザーの[サブプロフィール](https://developers.line.biz/ja/glossary/#subprofile)は取得できません。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `openid`のスコープを持つアクセストークンが必要です。詳しくは、『LINEログインドキュメント』の「[ユーザーに認証と認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」と「[スコープ](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#scopes)」を参照してください。
 
 _リクエストの例_
 
@@ -652,10 +649,9 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 なお取得できる情報はメインプロフィールのみです。ユーザーの[サブプロフィール](https://developers.line.biz/ja/glossary/#subprofile)は取得できません。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `profile`のスコープを持つアクセストークンが必要です。詳しくは、『LINEログインドキュメント』の「[ユーザーに認証と認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」と「[スコープ](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#scopes)」を参照してください。
 
 _リクエストの例_
 
@@ -734,10 +730,9 @@ Authorization
 
 Bearer `{access token}`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `profile`のスコープを持つアクセストークンが必要です。詳しくは、『LINEログインドキュメント』の「[ユーザーに認証と認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」と「[スコープ](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#scopes)」を参照してください。
 
 #### レスポンス
 

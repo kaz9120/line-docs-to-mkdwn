@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/opening-liff-app/
-copied_at: 2025-10-23T16:00:16.883Z
+copied_at: 2025-10-24T06:29:17.349Z
 ---
 # LIFFアプリを開く
 
@@ -68,19 +68,24 @@ LIFF URLの例：`https://liff.line.me/1234567890-AbcdEfgh`
 *   `https://liff.line.me/{liffId}` 
 *   `https://miniapp.line.me/{liffId}` (LINEミニアプリのみ)
 
-:::note warn
-「https://line.me/R/app/{liffId}」および「line://app/{liffId}」は非推奨です
-
-:::
+> [!WARNING]
+> 「https://line.me/R/app/{liffId}」および「line://app/{liffId}」は非推奨です
+> [LIFF v1](https://developers.line.biz/ja/docs/liff/versioning-policy/#life-cycle-schedule)向けに提供されていた以下の形式のLIFF URLは、[非推奨](https://developers.line.biz/ja/glossary/#deprecated)です。
+> 
+> *   `https://line.me/R/app/{liffId}` 
+> *   `line://app/{liffId}`
 
 ### 1次リダイレクト先URLを作成する
 
 1次リダイレクト先URLは、常にLINE Developersコンソールの［**エンドポイントURL**］に指定したURLです。
 
-:::note warn
-LIFF URLに指定した追加情報の扱い
-
-:::
+> [!WARNING]
+> LIFF URLに指定した追加情報の扱い
+> 1次リダイレクト先URLではLIFF URLに指定した追加情報（例：`path_A/?key1=value1#URL-fragment`）はすべて`liff.state`クエリパラメータに含まれています。
+> 
+> 例：`https://example.com/2020campaign/?key=value&liff.state=urlencoded(path_A/?key1=value1#URL-fragment)`
+> 
+> なお、LIFF URLに追加情報を指定しない場合は、`liff.state`クエリパラメータは省略されます。
 
 ### 2次リダイレクト先URLを作成する
 
@@ -107,10 +112,15 @@ LIFFブラウザでLIFFアプリを開いているときに、別のLIFFアプ�
 
 ![LIFF-apps-transition](https://developers.line.biz/media/liff/liff_transition.png)
 
-:::note warn
-意図しない動作
-
-:::
+> [!WARNING]
+> 意図しない動作
+> 古いバージョンのLIFF SDKを使っている場合、以下のような意図しない動作になることがあります。
+> 
+> *   パス（`/path`）が指定されたLIFF URLから別のLIFFアプリへ遷移したにもかかわらず、LINE Developersコンソールの［**エンドポイントURL**］に指定したURLへ遷移してしまう
+> *   ユーザーに権限の認可を求める[同意画面](https://developers.line.biz/ja/docs/line-login/link-a-bot/)で［**キャンセル**］をクリックした場合、一度LIFFブラウザを閉じなくてはならない
+> *   遷移先がLINEミニアプリの場合、LIFFブラウザヘッダのデザインが自動で変化しない
+> 
+> 複数のLIFFアプリ間を遷移するように設計する際は、最新版のLIFF SDKを使うことをお勧めします。
 
 ### LIFF間遷移が可能な条件
 
@@ -142,10 +152,9 @@ LIFF間遷移後の`chat_message.write`スコープは、遷移先のURLによ�
 
 LIFF間遷移でLIFFアプリを開いた場合、遷移後のLIFFアプリのURLには`liff.referrer`というクエリパラメータが付与されます。`liff.referrer`の値には、LIFF間遷移時にLIFFサーバーが受信した`Referer`リクエストヘッダーのアドレスを、[パーセントエンコード](https://ja.wikipedia.org/wiki/%E3%83%91%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0)したURLが設定されます。`liff.referrer`の値を確認することで、遷移前のURLを取得できます。
 
-:::note warn
-LINEバージョン12.13.0〜13.19.xでは、LIFF間遷移後のLIFFアプリのURLにliff.referrerが付与されません
-
-:::
+> [!WARNING]
+> LINEバージョン12.13.0〜13.19.xでは、LIFF間遷移後のLIFFアプリのURLにliff.referrerが付与されません
+> 詳しくは、2023年11月30日のニュース、「[LINEバージョン12.13.0以降でLIFF間遷移後にliff.referrerが付与されない不具合を修正しました](https://developers.line.biz/ja/news/2023/11/30/liff-update-line-13-20-0/)」を参照してください。
 
 以下は、LIFF間遷移時に`liff.referrer`が付与される例です。
 

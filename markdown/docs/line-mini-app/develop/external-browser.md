@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/external-browser/
-copied_at: 2025-10-23T16:01:25.091Z
+copied_at: 2025-10-24T06:29:40.463Z
 ---
 # 外部ブラウザでLINEミニアプリを開く
 
-:::note info
-2025年10月1日より外部ブラウザでLINEミニアプリを利用できるようになりました
-
-:::
+> [!TIP]
+> 2025年10月1日より外部ブラウザでLINEミニアプリを利用できるようになりました
+> 詳しくは、2025年9月26日のニュース、「[LINEミニアプリにおいて、2025年10月1日よりすべてのユーザーがウェブブラウザでサービスを利用できるようになります](https://developers.line.biz/ja/news/2025/09/26/mini-app-browser/)」を参照してください。
 
 LINEミニアプリを開発する際は、ユーザーが[外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)でエンドポイントURLにアクセスした場合にも、LINEミニアプリのサービスを利用できるようにしてください。
 

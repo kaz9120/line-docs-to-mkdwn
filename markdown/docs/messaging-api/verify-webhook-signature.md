@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/verify-webhook-signature/
-copied_at: 2025-10-23T15:56:52.033Z
+copied_at: 2025-10-24T06:28:10.575Z
 ---
 # Webhookの署名を検証する
 
@@ -8,15 +8,13 @@ copied_at: 2025-10-23T15:56:52.033Z
 
 ![署名の検証のイメージ](https://developers.line.biz/media/partner-docs/webbhook-signature-verification-ja.png)
 
-:::note info
-Webhookの署名を検証を行うことを推奨します
+> [!TIP]
+> Webhookの署名を検証を行うことを推奨します
+> Webhookの署名を検証は、セキュリティ担保のための重要な手段のひとつです。Webhookの署名を検証を行うことは、[Messaging API開発ガイドライン](https://developers.line.biz/ja/docs/messaging-api/development-guidelines/#verify-webhook-signature)でも推奨しています。
 
-:::
-
-:::note info
-LINEプラットフォームのIPアドレスは開示していません
-
-:::
+> [!TIP]
+> LINEプラットフォームのIPアドレスは開示していません
+> Webhookの送信元であるLINEプラットフォームのIPアドレスは開示していません。IPアドレスによるアクセス制御ではなく、署名の検証によってセキュリティを担保してください。
 
 ## 署名検証に必要な事前準備
 
@@ -66,10 +64,9 @@ LINEプラットフォームは、Webhookを送信する際に、以下の手順
 
 受信したWebhookの[リクエストヘッダー](https://developers.line.biz/ja/reference/messaging-api/#request-headers)に含まれる署名（`x-line-signature`）、およびリクエストボディの文字列には変更を加えず、そのままメモリやデータベースに保存してください。
 
-:::note warn
-署名の検証を行う前にデータの変更をしないでください
-
-:::
+> [!WARNING]
+> 署名の検証を行う前にデータの変更をしないでください
+> 署名の検証を行う前に、署名やリクエストボディの文字列に何らかの変更（文字列の置換、デシリアライズ、エスケープ処理など）をしてしまうと、第三者によって改ざんされたリクエストと区別ができなくなり、署名の検証に失敗します。リクエストボディの文字列にバックスラッシュ（`\`）や改行（`\n`）といった特殊なエスケープ文字が含まれているか否かは関係ありません。どのようなリクエストであっても署名の検証を行うより前にデータを変更しないでください。
 
 ### ボットサーバーでWebhookの署名を検証する
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/development-guidelines/
-copied_at: 2025-10-23T16:02:09.604Z
+copied_at: 2025-10-24T06:29:57.242Z
 ---
 # 法人ユーザー向け開発ガイドライン
 
@@ -122,10 +122,9 @@ LINEボットのリリース前には、以下を必ず確認してください�
 
 署名の計算鍵にはチャネルシークレットを利用します。そのため、チャネルシークレットのお取り扱いにはご注意ください。詳細とコードサンプルについては、『Messaging APIリファレンス』の「[署名を検証する](https://developers.line.biz/ja/reference/messaging-api/#signature-validation)」を参照してください。
 
-:::note warn
-LINEプラットフォームのIPアドレスは開示していません
-
-:::
+> [!WARNING]
+> LINEプラットフォームのIPアドレスは開示していません
+> Webhookリクエスト送信元のLINEプラットフォームのIPアドレスについては開示していません。セキュリティの担保はIPアドレスによるアクセス制御ではなく、[署名の検証](https://developers.line.biz/ja/reference/messaging-api/#signature-validation)にて実施いただきますようお願いします。
 
 ![署名の検証のイメージ](https://developers.line.biz/media/partner-docs/webbhook-signature-verification-ja.png)
 
@@ -133,29 +132,31 @@ LINEプラットフォームのIPアドレスは開示していません
 
 LINE公式アカウントの特性上、突発的に大量のアクセス（Webhookイベント送信）が発生する場合があります。ボットサーバーの処理能力を超えるWebhookリクエストが送信された場合、ユーザーへのメッセージの遅延や不達が発生する場合があります。
 
-:::note info
-アクセスが集中しやすいケースの例
+> [!TIP]
+> アクセスが集中しやすいケースの例
+> *   LINE公式アカウントの[検索結果での表示](https://www.lycbiz.com/jp/manual/OfficialAccountManager/tutorial-step5/)を「表示」設定にした直後
+> *   [スポンサードスタンプ](https://www.lycbiz.com/jp/service/line-promotion-sticker/)などの施策の実施直後
+> *   [ブロードキャストメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-broadcast-message)などですべての友だちへの一斉送信でメッセージを送信した直後（特にキャンペーン等の施策を含む場合）
+> *   ニュースやテレビなどのメディアに取り上げられた直後
+> 
+> なお時間帯としては、昼12時台、または17時〜24時までの間は特にアクセスが集中する可能性があります。
 
-:::
-
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   LINEヤフー株式会社では、ボットサーバーの負荷テストを実施するための環境は提供していません。LINEプラットフォームを含む形での負荷テストは実施しないでください。
+> *   非常に友だち数が多い（100万人〜）LINE公式アカウントにおいて、ユーザーの反応が大きいと考えられるキャンペーン等の告知メッセージの送信が行われると、LINEプラットフォーム全体のパフォーマンスに影響する可能性があります。このような場合はメッセージの一斉配信は避け、ユーザーからのアクセスが集中しないように段階的に配信を行うなどの対応を行ってください。
 
 ### WebhookのON/OFF設定
 
 LINE Developersコンソールの［**Messaging API設定**］ > ［**Webhook設定**］から［**Webhookの利用**］のオン/オフの設定が可能です。また、LINE Official Account Managerの［**設定**］ > ［**応答設定**］からも［**Webhook**］のオン/オフの設定が可能です。
 
-:::note warn
-Webhook利用開始時の注意
+> [!WARNING]
+> Webhook利用開始時の注意
+> Webhookの設定を有効にする際には、必ず検証用のアカウント等を用いてテスト環境で動作の検証等を実施した上で、目的のLINE公式アカウントへ設定を適用してください。
 
-:::
-
-:::note info
-Webhookの設定の同期
-
-:::
+> [!TIP]
+> Webhookの設定の同期
+> LINE DevelopersコンソールとLINE Official Account Managerで行ったWebhookの設定はそれぞれ同期しています。
 
 ### WebhookのON/OFFおよび自動応答メッセージの設定について
 
@@ -168,15 +169,13 @@ Webhookの設定の同期
 | 利用しない（OFF） | 利用する | ✅ |
 | 利用しない（OFF） | 利用しない | ❌ |
 
-:::note warn
-許可されていない設定の組み合わせ
+> [!WARNING]
+> 許可されていない設定の組み合わせ
+> ［**Webhook**］を利用せず、LINE Official Account Managerの［**応答メッセージ**］および［**あいさつメッセージ**］を利用しない設定は、ユーザーに対してLINE公式アカウントからメッセージが送信されない設定となるため、ユーザーエクスペリエンスの観点から許可していません。
 
-:::
-
-:::note warn
-［あいさつメッセージ］が送信されるタイミング
-
-:::
+> [!WARNING]
+> ［あいさつメッセージ］が送信されるタイミング
+> LINE Official Account Managerの［**あいさつメッセージ**］は、LINE公式アカウントが友だち追加されたときに自動で送信されるメッセージです。［**あいさつメッセージ**］は、ブロック解除した際にも送信されます。
 
 ### Webhookリクエスト受信時の処理フロー
 
@@ -192,10 +191,9 @@ Webhookリクエストの処理が後続の処理に遅延を与えないよう�
 
 認証プロバイダー配下に存在するMessaging APIチャネルにおいては、Webhookイベントを受信してから2秒以内にHTTPステータスコード`200`番台がレスポンスされなかった場合、チャネルの管理者に対し、[`request_timeout`](https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/#check-error-reason)の[エラー通知](https://developers.line.biz/ja/docs/partner-docs/error-notification/)が送信されます。
 
-:::note warn
-エラー通知機能の利用
-
-:::
+> [!WARNING]
+> エラー通知機能の利用
+> エラー通知機能は、認証プロバイダー配下に存在するMessaging APIチャネルでのみ利用できます。
 
 ### その他注意事項
 
@@ -223,10 +221,9 @@ Messaging APIの機能に追加または変更があったときに、Webhookイ
 
 Messaging APIのリクエストにおいて、チャネルを使用する権限を持っているかどうかを確認するために、[チャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/)を利用します。現在、有効期間や発行方法が異なる[4種類のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#channel-access-token-types)を提供しています。
 
-:::note warn
-長期のチャネルアクセストークンについて
-
-:::
+> [!WARNING]
+> 長期のチャネルアクセストークンについて
+> LINE Developersコンソールから有効期間が非常に長い長期のチャネルアクセストークンの発行が可能ですが、セキュリティの観点から長期のチャネルアクセストークンの発行は推奨しておりません。チャネルアクセストークンを発行する際には、有効期間30日の短期のチャネルアクセストークン、任意の有効期間を指定できるチャネルアクセストークン（チャネルアクセストークンv2.1）、ステートレスチャネルアクセストークンのいずれかを利用いただくことを推奨しています。
 
 ### チャネルアクセストークンの再発行
 
@@ -253,15 +250,13 @@ Messaging APIのリクエストにおいて、チャネルを使用する権限�
 
 メッセージの送信に失敗した際には、[エラーレスポンス](https://developers.line.biz/ja/reference/messaging-api/#error-responses)として、エラーメッセージなどのJSONデータを含むレスポンスボディが返されます。
 
-:::note warn
-エラーレスポンスについて
+> [!WARNING]
+> エラーレスポンスについて
+> エラーレスポンス中に含まれるエラーメッセージについては保証されておらず、予告なく変更される場合があります。エラー発生時の例外処理は受信したHTTPステータスコードによって行ってください。
 
-:::
-
-:::note info
-ログの保存
-
-:::
+> [!TIP]
+> ログの保存
+> Messaging APIに対するリクエストを行った際は、リクエストしたAPIのログや、受信したレスポンスのログは、一定期間保存してください。ログの保存について詳しくは、『Messaging APIドキュメント』の「[ログ保存の推奨](https://developers.line.biz/ja/docs/messaging-api/development-guidelines/#save-logs)」を参照してください。
 
 ### メッセージ送信リクエストのリトライ
 
@@ -299,10 +294,9 @@ Messaging APIでは、エンドポイントごとに[レート制限](https://de
 *   [ユーザーからのメッセージやアクションに応答する（応答メッセージ）](https://developers.line.biz/ja/docs/messaging-api/sending-messages/#reply-messages)
 *   [任意のタイミングでメッセージを送信する](https://developers.line.biz/ja/docs/messaging-api/sending-messages/#send-messages-at-any-time)
 
-:::note info
-応答トークンの有効期間
-
-:::
+> [!TIP]
+> 応答トークンの有効期間
+> [応答メッセージ](https://developers.line.biz/ja/docs/messaging-api/sending-messages/#reply-messages)で利用する応答トークンの有効期間について詳しくは、『Messaging APIリファレンス』の「[応答トークン](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message-reply-token)」を参照してください。
 
 ### HTTPS（TLS 1.2以上）の利用
 
@@ -334,10 +328,12 @@ LINEログインについて詳しくは、[LINEログインの概要](https://d
 
 コールバックURLについて詳しくは、『LINEログインドキュメント』の「[コールバックURLを設定する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#setting-callback-url)」を参照してください。
 
-:::note warn
-コールバックURL設定時の注意
-
-:::
+> [!WARNING]
+> コールバックURL設定時の注意
+> *   コールバックURLには最大400個のURLを登録できます。
+> *   コールバックURLにはクエリパラメータを含んだURLを登録できます。
+> *   認可リクエスト時に指定する`redirect_uri`は、コールバックURLに登録したURLをURLエンコードした文字列。任意のクエリパラメータを付与できます。
+>     *   コールバックURLに`https://example.com`を登録し、認可リクエスト時に指定する`redirect_uri`に`https://example.com?key=value`といった指定が可能です。
 
 ### ウェブアプリで認可レスポンスまたはエラーレスポンスを受け取る
 
@@ -349,10 +345,10 @@ LINEログインについて詳しくは、[LINEログインの概要](https://d
 
 LINEログインの認可リクエストにより取得した認可コードを用いてアクセストークンを発行します。アクセストークンの発行について詳しくは、『LINEログインv2.1 APIリファレンス』の「[アクセストークンを発行する](https://developers.line.biz/ja/reference/line-login/#issue-access-token)」を参照してください。
 
-:::note warn
-アクセストークンを発行する際の注意
-
-:::
+> [!WARNING]
+> アクセストークンを発行する際の注意
+> *   アクセストークンを発行する際に指定する`redirect_uri`パラメータは、認可リクエスト時に指定したものと同じ値にする必要があります。
+> *   認可コードは、アクセストークン発行の成功の有無に関係なく1度のみ利用可能です。
 
 ### IDトークンを検証する
 
@@ -368,19 +364,24 @@ LINEログインを行い取得したユーザーの情報（ユーザーIDな�
 
 ![ID連携の流れ](https://developers.line.biz/media/partner-docs/flow-for-linking-ids-ja.png)
 
-:::note warn
-会員情報などとの紐づけと管理について
-
-:::
+> [!WARNING]
+> 会員情報などとの紐づけと管理について
+> *   LINEログインで取得したユーザー情報と、自社で管理する会員情報などを紐づけの仕組みはLINEヤフー株式会社からは提供していません。
+> *   会員情報などを紐づけを行う際には、なりすましによる紐づけ等が行われないようにセキュリティを考慮した設計にしてください。
+> *   LINEプラットフォームのユーザー情報と、会員情報などを紐づけを解除する動線を設けてください。
+> *   LINEアプリの［**設定**］ > ［**アカウント**］ > ［**連動アプリ**］より［**連動を解除**］した場合、LINEログインの[チャネルの同意](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#authorization-process)が取り下げられますが、ユーザー情報の紐づけは解除されません。LINEログインで取得した情報と自社で管理する情報の紐づけ処理は、別途お客様で行う必要があります。
+> 
+> ![unlink](https://developers.line.biz/media/partner-docs/unlink.png)
 
 ### 友だち追加オプション
 
 LINEログインでは、LINEログインしたときにLINE公式アカウントを友だち追加するオプションを利用できます。これを、友だち追加オプションと呼びます。友だち追加オプションで使用するLINE公式アカウントは、LINE Developersコンソールで設定できます。詳しくは、『LINEログインドキュメント』の「[LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）](https://developers.line.biz/ja/docs/line-login/link-a-bot/)」を参照してください。
 
-:::note warn
-友だち追加オプションを利用する際の注意事項
-
-:::
+> [!WARNING]
+> 友だち追加オプションを利用する際の注意事項
+> *   リンクするLINE公式アカウントは、LINEログインチャネルと関係するものに限定されます。例えば、企業AのLINE公式アカウントを、企業Aと関係がない企業BのLINEログインチャネルにリンクしないでください。
+> *   設定の変更は即時に反映されるため、誤って意図しないLINE公式アカウント（テスト用など）を設定することがないよう、操作には十分にご注意ください。
+> *   LINEログインチャネルが認証プロバイダー配下に存在する場合、LINEログインの同意画面に表示される［**友だち追加（ブロック解除）**］はデフォルトで選択（チェック）された状態となります。
 
 ### stateの検証
 
@@ -434,7 +435,7 @@ Messaging APIで送信できるスタンプについて詳しくは、『Messagi
 
 ユーザーからLINE公式アカウントにLINE絵文字が送信された場合、メッセージイベントのテキストオブジェクト内の[emojisオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#wh-text)に配列として格納されます。
 
-:::note warn
-送信されたLINE絵文字がemojisオブジェクトに含まれないことがあります
-
-:::
+> [!WARNING]
+> 送信されたLINE絵文字がemojisオブジェクトに含まれないことがあります
+> *   Android版LINEから送信されたデフォルトのLINE絵文字は、含まれません。
+> *   Unicodeで定義された絵文字や古いバージョンのLINE絵文字は、含まれないことがあります。

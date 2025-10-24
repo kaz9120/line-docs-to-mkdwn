@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/performance-guidelines/
-copied_at: 2025-10-23T16:01:29.684Z
+copied_at: 2025-10-24T06:29:44.623Z
 ---
 # パフォーマンスガイドライン
 
@@ -16,7 +16,7 @@ LINEヤフー株式会社では、以下のスコアを満たすことを推奨�
 | --- | --- |
 | [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) | Performance: 50以上 |
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   LINEログインが実行されない状態で計測してください。LINEログインが実行されると、LINEログインのページのパフォーマンスが計測され、LINEミニアプリのパフォーマンスは計測されません。
+> *   プロダクション環境（本番環境）で計測してください。スコアは、ネットワーク環境などの影響を受ける場合があります。

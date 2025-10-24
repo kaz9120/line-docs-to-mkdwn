@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/managing-access-tokens/
-copied_at: 2025-10-23T15:59:30.176Z
+copied_at: 2025-10-24T06:29:01.918Z
 ---
 # アクセストークンを管理する
 
@@ -10,10 +10,9 @@ copied_at: 2025-10-23T15:59:30.176Z
 *   [現在のアクセストークンを取得する](#get-current-token)
 *   [アクセストークンを検証する](#verify-access-token)
 
-:::note info
-安全にログインを処理する
-
-:::
+> [!TIP]
+> 安全にログインを処理する
+> 安全にユーザー登録およびログインを処理する方法については、「[アプリとサーバーの間で安全なログインプロセスを構築する](https://developers.line.biz/ja/docs/line-login/secure-login-process/)」を参照してください。
 
 ## アクセストークンを更新する
 
@@ -41,10 +40,9 @@ java
 
 `String accessToken = lineApiClient.getCurrentAccessToken().getResponseData().getTokenString();`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> サーバーにアクセストークンを送信するときは、トークンを暗号化し、暗号化したデータをSSLで送信することをお勧めします。サーバーで受信したアクセストークンと、LINEログインの呼び出しに使用するアクセストークンが一致すること、さらにLINEログインの呼び出しに使用するチャネルIDが自分のチャネルのIDと一致することも、検証する必要があります。
 
 ## アクセストークンを検証する
 

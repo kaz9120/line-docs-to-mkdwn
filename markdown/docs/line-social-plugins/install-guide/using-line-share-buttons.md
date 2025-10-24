@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-line-share-buttons/
-copied_at: 2025-10-23T15:57:59.230Z
+copied_at: 2025-10-24T06:28:26.657Z
 ---
 # 「LINEで送る」ボタンを設置する
 
@@ -20,10 +20,11 @@ LINE公式デザインの「LINEで送る」ボタンは、以下の手順で作
 
 LINE Social Plugins[ガイドライン](https://developers.line.biz/ja/docs/line-social-plugins/general/guidelines/)に同意します
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> 例 (URL: `https://line.me/en`), (Text: `text`)
+> 
+> `https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fline.me%2Fen&text=text`
 
 WebサイトでDOMツリーが構築されてコンテンツが作成されたら、`LineIt.loadButton()`を呼び出してLINEで送るボタンを有効にしてください。
 

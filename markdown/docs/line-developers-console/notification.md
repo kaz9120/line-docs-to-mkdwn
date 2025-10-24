@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-developers-console/notification/
-copied_at: 2025-10-23T15:55:46.271Z
+copied_at: 2025-10-24T06:27:56.582Z
 ---
 # メールや通知センターでお知らせを受け取る
 
@@ -59,10 +59,11 @@ LINE Developersサイトからのお知らせを通知します。[ニュース]
 
 ![LINE Developersコンソールのプロフィールの設定セクション](https://developers.line.biz/media/line-developers-console/console-notification-center-settings-ja.png)
 
-:::note warn
-通知メール
-
-:::
+> [!WARNING]
+> 通知メール
+> 通知メールを受信するには、LINE Developersコンソールのプロフィールに登録されているメールアドレスが認証済みである必要があります。プロフィールのメールアドレスに［**未認証**］と表示されていた場合は、［**認証用のリンクを取得**］をクリックして、メールアドレスの認証を行ってください。
+> 
+> 通知センターの設定で有効にした通知のみがメールで届きます。
 
 ## 通知を確認する
 

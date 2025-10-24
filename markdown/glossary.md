@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/glossary/
-copied_at: 2025-10-23T16:02:58.143Z
+copied_at: 2025-10-24T06:30:07.467Z
 ---
 # LINEプラットフォーム用語集
 

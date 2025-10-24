@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/create-flex-message-including-video/
-copied_at: 2025-10-23T15:57:39.167Z
+copied_at: 2025-10-24T06:28:37.747Z
 ---
 # 動画を含むFlex Messageを作成する
 
@@ -71,10 +71,9 @@ json
 
 Flex Messageで送信された動画は、[トークルーム](#chat-room)上や[動画プレーヤー](#video-player)上で再生できます。
 
-:::note warn
-動画が正しく再生できない
-
-:::
+> [!WARNING]
+> 動画が正しく再生できない
+> 動画を含むメッセージの送信に成功したとしても、ユーザーの端末上で動画を正しく再生できない場合があります。詳しくは、FAQの「[メッセージとして送信した動画が再生できないのはなぜですか？](https://developers.line.biz/ja/faq/#why-cant-i-play-a-video-i-sent)」を参照してください。
 
 ### トークルーム上での自動再生
 

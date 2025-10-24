@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/registering-liff-apps/
-copied_at: 2025-10-23T16:00:14.697Z
+copied_at: 2025-10-24T06:29:17.080Z
 ---
 # LIFFアプリをチャネルに追加する
 
 LIFFアプリは、[LINE Developersコンソール](https://developers.line.biz/console/)でLINEログインのチャネルに追加すると、LINEまたは外部ブラウザで起動できるようになります。
 
-:::note info
-LINEミニアプリとしての作成を推奨します
-
-:::
+> [!TIP]
+> LINEミニアプリとしての作成を推奨します
+> 今後、LIFFとLINEミニアプリは、ブランド統合を予定しています。この統合により、LIFFはLINEミニアプリに統合されます。そのため、LIFFアプリを新規作成する際は、LINEミニアプリとして作成することを推奨します。詳しくは、「[2025年2月12日のニュース](https://developers.line.biz/ja/news/2025/02/12/line-mini-app/)」を参照してください。
 
 ## 始める前に
 

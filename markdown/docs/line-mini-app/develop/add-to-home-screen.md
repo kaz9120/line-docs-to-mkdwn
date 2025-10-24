@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/add-to-home-screen/
-copied_at: 2025-10-23T16:01:21.034Z
+copied_at: 2025-10-24T06:29:39.395Z
 ---
 # ユーザー端末のホーム画面にLINEミニアプリへのショートカットを追加する
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> この機能は、認証済ミニアプリでのみ利用できます。未認証ミニアプリの場合、開発用の内部チャネルではテストできますが、公開用の内部チャネルでは利用できません。
 
 ユーザー端末のホーム画面にLINEミニアプリへのショートカットを追加できます。
 
@@ -15,10 +14,9 @@ copied_at: 2025-10-23T16:01:21.034Z
 
 **Android端末での表示**
 
-:::note warn
-一部のAndroid端末において、追加済みのショートカットが削除される場合があります
-
-:::
+> [!WARNING]
+> 一部のAndroid端末において、追加済みのショートカットが削除される場合があります
+> 一部のAndroid端末において、ユーザーがLINEアプリの［**設定**］>［**アプリアイコン**］からアイコンを変更すると、追加済みのショートカットが削除される場合があります。詳しくは、『LINEヘルプセンター』の「[【Android】LINEアプリアイコン変更後、LINEのショートカットに問題が発生した場合](https://help.line.me/line/smartphone/pc?lang=ja&contentId=200000315)」を参照してください。
 
 ![](https://developers.line.biz/media/line-mini-app/develop/add-to-home-screen/add-shortcut-screen-android-ja.png)![](https://developers.line.biz/media/line-mini-app/develop/add-to-home-screen/shortcut-android.png)
 

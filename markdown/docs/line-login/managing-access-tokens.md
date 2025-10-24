@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/managing-access-tokens/
-copied_at: 2025-10-23T15:58:34.283Z
+copied_at: 2025-10-24T06:28:38.898Z
 ---
 # アクセストークンを管理する
 
@@ -24,10 +24,9 @@ LINEログインAPIで管理するアクセストークンは、LINEプラット
 
 *   [LIFFアプリを開発する](https://developers.line.biz/ja/docs/liff/developing-liff-apps/)
 
-:::note warn
-アクセストークンの有効期間
-
-:::
+> [!WARNING]
+> アクセストークンの有効期間
+> アクセストークンは発行後30日間有効です。アクセストークンを含むレスポンスの`expires_in`プロパティに、有効期間（秒）が含まれます。
 
 ### リフレッシュトークン
 
@@ -35,10 +34,9 @@ LINEログインAPIで管理するアクセストークンは、LINEプラット
 
 アクセストークンの有効期限が切れたときは、リフレッシュトークンを使用して新しいアクセストークンを取​得できます。詳しくは、『LINEログイン v2.1 APIリファレンス』の「[アクセストークンを更新する](https://developers.line.biz/ja/reference/line-login/#refresh-access-token)」を参照してください。
 
-:::note warn
-リフレッシュトークンの有効期間
-
-:::
+> [!WARNING]
+> リフレッシュトークンの有効期間
+> リフレッシュトークンは、アクセストークンが発行されてから最長90日間有効です。リフレッシュトークンの有効期限が切れた場合は、ユーザーに再度ログインを要求して新しいアクセストークンを生成する必要があります。
 
 ## アクセストークンを検証する
 

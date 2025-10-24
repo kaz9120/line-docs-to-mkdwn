@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-profile-plus/
-copied_at: 2025-10-23T16:02:26.294Z
+copied_at: 2025-10-24T06:30:01.585Z
 ---
 # LINE Profile+
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った日本の法人ユーザーのみがご利用いただけます。LINE Profile+に登録されている情報を、LINEログインやLIFFアプリ、LINEミニアプリで取得してご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。なお、LINEミニアプリにおいては、認証済ミニアプリでのみ利用できます。
 
 LINE Profile+は、LINEユーザーのプロフィール情報を管理するサービスです。ユーザーがLINE Profile+に登録した情報は、通常の[プロフィール情報](https://developers.line.biz/ja/glossary/#profile-information)とは異なり、所定の申請等を行った法人ユーザーのみが取得できます。
 
@@ -51,10 +50,9 @@ LINE Profile+で取得できるスコープの種類について詳しくは、�
 
 ![profile plus scope](https://developers.line.biz/media/partner-docs/profile_plus_scopes.png)
 
-:::note warn
-openidを同時に指定してください
-
-:::
+> [!WARNING]
+> openidを同時に指定してください
+> LINE Profile+に登録されている情報を取得するには、IDトークンを利用するため、IDトークンを取得する権限を要求する`openid`も同時に指定してください。
 
 #### 2\. liff.getDecodedIDToken()でIDトークンのペイロードを取得する
 
@@ -84,10 +82,9 @@ IDトークンに含まれるLINE Profile+の情報について詳しくは、�
 
 このページでは、LINE Profile+を利用するための追加情報のみを説明しています。LINEログイン v2.1を組み込む方法について詳しくは、「[ウェブアプリにLINEログインを組み込む](https://developers.line.biz/ja/docs/line-login/integrate-line-login/)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINEログイン v2.0以前のバージョンでは、LINE Profile+は利用できません。
 
 #### 1\. 認可URLにスコープを指定する
 
@@ -101,10 +98,9 @@ sh
 
 `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=123abc&scope=openid%20profile%20real_name%20gender%20birthdate%20phone%20address&bot_prompt=normal&nonce=0987654asd`
 
-:::note warn
-openidを同時に指定してください
-
-:::
+> [!WARNING]
+> openidを同時に指定してください
+> LINE Profile+に登録されている情報を取得するには、IDトークンを利用するため、IDトークンを取得する権限を要求する`openid`も同時に指定してください。
 
 ユーザーが認可URLにアクセスしてからの動作については、「[ユーザーがユーザー認証を行う](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#authentication-process)」を参照してください。
 
@@ -148,10 +144,9 @@ LINE Profile+で取得できる情報のスコープの種類は以下のとお�
 *   `phone`：ユーザーが登録した「電話番号」を取得する権限
 *   `address`：ユーザーが登録した「住所」を取得する権限
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 利用するスコープは、あらかじめ申請していただく必要があります。
 
 ## IDトークンに含まれるLINE Profile+の情報
 

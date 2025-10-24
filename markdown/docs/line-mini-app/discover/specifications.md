@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/discover/specifications/
-copied_at: 2025-10-23T16:00:50.480Z
+copied_at: 2025-10-24T06:29:27.257Z
 ---
 # LINEミニアプリの仕様
 
@@ -36,17 +36,15 @@ HTML5でサポートされているメディア形式は、LINEミニアプリ�
 
 LINEミニアプリは、[LIFF](https://developers.line.biz/ja/docs/liff/overview/)を使用して開発します。そのため、LINEミニアプリの対応するOSバージョンとLINEバージョンは、LIFFの[推奨環境](https://developers.line.biz/ja/docs/liff/overview/#operating-environment)に準拠しています。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> サポートされているバージョンは、予告なしに変更される場合があります。
 
 ### 外部ブラウザでLINEミニアプリを開く場合
 
-:::note info
-2025年10月1日より外部ブラウザでLINEミニアプリを利用できるようになりました
-
-:::
+> [!TIP]
+> 2025年10月1日より外部ブラウザでLINEミニアプリを利用できるようになりました
+> 外部ブラウザでLINEミニアプリを開いた場合に、表示される画面が変更されました。詳しくは、2025年9月26日のニュース、「[LINEミニアプリにおいて、2025年10月1日よりすべてのユーザーがウェブブラウザでサービスを利用できるようになります](https://developers.line.biz/ja/news/2025/09/26/mini-app-browser/)」を参照してください。
 
 LINE未使用ユーザー、もしくは[ディープリンク](https://en.wikipedia.org/wiki/Mobile_deep_linking)が動作しない状況にあるLINEユーザーが、[外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)でLINEミニアプリを開くと、以下の図のようなページが表示され、LINEミニアプリをスマートフォン版LINE（[LIFFブラウザ](https://developers.line.biz/ja/glossary/#liff-browser)）で開くように案内されます。ページ内の［**ウェブブラウザで開く**］をタップすると、LIFFのエンドポイントURLのページがウェブブラウザで表示されます。
 

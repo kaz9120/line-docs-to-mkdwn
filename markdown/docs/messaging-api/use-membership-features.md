@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/use-membership-features/
-copied_at: 2025-10-23T15:56:34.793Z
+copied_at: 2025-10-24T06:28:06.169Z
 ---
 # メンバーシップ機能を使う
 
@@ -14,10 +14,11 @@ Messaging APIでは、以下のエンドポイントでメンバーシップの�
 *   [メンバーシップに加入しているユーザーの一覧を取得する](#get-membership-user-ids)
 *   [提供中のメンバーシッププランを取得する](#get-membership-plans)
 
-:::note info
-メンバーシップをはじめるには
-
-:::
+> [!TIP]
+> メンバーシップをはじめるには
+> メンバーシップの設定や公開といった操作は、[LINE Official Account Manager](https://manager.line.biz/)で行います。詳しくは、『LINEヤフー for Business』の「[LINEで簡単にサブスクリプションサービスが作成できる！LINE公式アカウントの「メンバーシップ」機能とは？](https://www.lycbiz.com/jp/column/line-official-account/service-information/membership/)」を参照してください。
+> 
+> なお現時点でメンバーシップ機能が利用できる対象は、日本のLINE公式アカウントのみです。
 
 ### ユーザーのメンバーシップ加入状況を取得する
 

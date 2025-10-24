@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/user-consent/
-copied_at: 2025-10-23T15:57:47.263Z
+copied_at: 2025-10-24T06:28:22.374Z
 ---
 # ユーザーのプロフィール情報取得の同意
 
@@ -17,10 +17,9 @@ iOS版LINEまたはAndroid版LINEを使用しているユーザーは、LINEの�
 
 iOS版LINEまたはAndroid版LINEを使用していないユーザーは、プロフィール情報の取得に同意することができません。たとえば、過去にPC版LINEでLINEアカウントを作成し、以降もPC版LINEだけを使用しているユーザーが該当します。なお、このようなユーザーもLINE公式アカウントを友だち追加したり、トークに招待したりできます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 2020年4月より、PC版LINEでは新規のLINEアカウントを作成できなくなりました。
 
 なおユーザーがプロフィール情報の取得に同意していない場合、以下のWebhookイベントオブジェクトや、エンドポイントからのレスポンスに、そのユーザーのプロフィール情報は含まれません。また、Webhookの[メンバーシップイベント](https://developers.line.biz/ja/reference/messaging-api/#membership-event)は送信されません。
 
@@ -31,7 +30,12 @@ iOS版LINEまたはAndroid版LINEを使用していないユーザーは、プ�
 *   [グループトークのメンバーのユーザーIDを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-group-member-user-ids)エンドポイント
 *   [複数人トークのメンバーのユーザーIDを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-room-member-user-ids)エンドポイント
 
-:::note info
-ユーザーのプロフィール情報が取得できない
-
-:::
+> [!TIP]
+> ユーザーのプロフィール情報が取得できない
+> ユーザーのプロフィール情報が取得できない場合、以下の理由が考えられます。
+> 
+> *   ユーザーがプロフィール情報の取得に同意していない
+> *   ユーザーが対象のLINE公式アカウントを友だち追加していない
+> *   ユーザーが対象のLINE公式アカウントを友だち追加した後にブロックした
+> *   ユーザーがグループトークや複数人トークから対象のLINE公式アカウントを退出させた
+> *   対象のLINE公式アカウントが入っているグループトークや複数人トークから、ユーザーが退出した

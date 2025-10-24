@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/security-checklist/
-copied_at: 2025-10-23T15:58:15.944Z
+copied_at: 2025-10-24T06:28:54.162Z
 ---
 # LINEログインのセキュリティチェックリスト
 
@@ -10,10 +10,9 @@ LINEログインを組み込んだアプリの実装にあたっては、第三�
 
 また、LINE DEVELOPER DAY 2020のセッション「[具体例で学ぶ、LINE Loginを利用した安心・安全な認証・認可機能の実装方法](https://linedevday.linecorp.com/2020/ja/sessions/7159/)」も併せて確認することをおすすめします。
 
-:::note info
-チェックリストの目的を理解した上で、安全なシステムを構築してください
-
-:::
+> [!TIP]
+> チェックリストの目的を理解した上で、安全なシステムを構築してください
+> このチェックリストには、LINEログインを実装する上で特に注意すべき点を抜粋して記載しています。チェックリストの内容を満たせば、セキュリティが担保されるわけではありません。危険性を十分に理解した上で、安全なシステムを構築してください。
 
 *   [認可URLに付与するクエリパラメータのチェックリスト](#check-authorization-request)
 *   [コールバックURLに渡されたクエリパラメータのチェックリスト](#check-receiving-the-authorization-code)
@@ -25,10 +24,9 @@ LINEログインを組み込んだアプリの実装にあたっては、第三�
 
 認証と認可のプロセスを開始する際に利用する、認可URLに付与するクエリパラメータについてのチェックリストです。認可URLのクエリパラメータについて詳しくは、「[ユーザーに認証と認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」を参照してください。
 
-:::note info
-［コールバックURL］について
-
-:::
+> [!TIP]
+> ［コールバックURL］について
+> ［**コールバックURL**］は、[LINE Developersコンソール](https://developers.line.biz/console/)のLINEログインチャネルにおける、［**LINEログイン設定**］タブ内の［**コールバックURL**］を指します。［**コールバックURL**］の設定方法について詳しくは、「[LINEログインを始めよう](https://developers.line.biz/ja/docs/line-login/getting-started/)」を参照してください。
 
 | チェック内容 | 関連ページ |
 | --- | --- |

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/send-coupons-to-users/
-copied_at: 2025-10-23T15:56:36.702Z
+copied_at: 2025-10-24T06:28:06.349Z
 ---
 # クーポンを作成してユーザーに送る
 
@@ -25,10 +25,9 @@ Messaging APIでは、次の2つの手順でユーザーにクーポンが送れ
 1.  [クーポンを作成する](#create-coupon)
 2.  [クーポンを送信する](#send-coupon)
 
-:::note info
-クーポンはLINE Official Account Managerでも送信できます
-
-:::
+> [!TIP]
+> クーポンはLINE Official Account Managerでも送信できます
+> クーポンはMessaging APIの他に、[LINE Official Account Manager](https://manager.line.biz/)でも作成して送信できます。詳しくは、『LINEヤフー for Business』の「[クーポン](https://www.lycbiz.com/jp/manual/OfficialAccountManager/coupons-create/)」を参照してください。
 
 ## クーポンを作成する
 
@@ -132,9 +131,10 @@ json
 
 ![](https://developers.line.biz/media/messaging-api/coupon/how-images-look.jpg)
 
-:::note info
-クーポンの画像はどうやって作ればいい？
-
-:::
+> [!TIP]
+> クーポンの画像はどうやって作ればいい？
+> クーポンの画像は『LINEヤフーマーケティングキャンパス』の「[無料でもらえるテンプレート画像まとめ](https://lymcampus.jp/line-official-account/courses/template/lessons/6-1-1)」や、[LINE Creative Lab](https://creativelab.line.biz/)のテンプレートを利用することもできます。
+> 
+> ![Sample coupon image](https://developers.line.biz/media/messaging-api/coupon/sample-coupon-image-100-yen-off.jpg)
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}

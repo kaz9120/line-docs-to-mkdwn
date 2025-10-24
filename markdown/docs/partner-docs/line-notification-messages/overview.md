@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/overview/
-copied_at: 2025-10-23T16:02:30.505Z
+copied_at: 2025-10-24T06:30:03.864Z
 ---
 # LINE通知メッセージの概要
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## LINE通知メッセージとは
 
@@ -23,10 +22,9 @@ LINE通知メッセージには、用意されたテンプレートやアイテ�
 
 詳しくは、[LINE通知メッセージAPIの技術仕様](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/)や、[LINE通知メッセージAPIリファレンス](https://developers.line.biz/ja/reference/line-notification-messages/)を参照してください。
 
-:::note info
-LINE通知メッセージの利用用途について
-
-:::
+> [!TIP]
+> LINE通知メッセージの利用用途について
+> LINE通知メッセージの利用用途は、弊社がユーザーにとって有⽤かつ適切であると判断したものに限定されます。営利⽬的および広告⽬的のものは送信できません。詳しくは、『LINEヤフー for Business』の「[LINE通知メッセージ（テンプレート）UXガイドライン](https://www.lycbiz.com/sites/default/files/media/jp/download/LINE_Official_Notification_Template_UXGuideline.pdf)」、および「[LINE通知メッセージ（フレキシブル）UXガイドライン](https://www.lycbiz.com/sites/default/files/media/jp/download/LINE%E9%80%9A%E7%9F%A5%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8UX%E3%82%AC%E3%82%A4%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3.pdf)」を参照してください。
 
 ## LINE通知メッセージ以外のメッセージとの見た目の差異
 

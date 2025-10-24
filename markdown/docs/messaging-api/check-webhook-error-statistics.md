@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/check-webhook-error-statistics/
-copied_at: 2025-10-23T15:56:56.745Z
+copied_at: 2025-10-24T06:28:12.580Z
 ---
 # Webhookのエラーの原因と統計情報を確認する
 
@@ -21,10 +21,9 @@ Messaging APIでは、Webhookの送信におけるエラーの原因と統計情
 
 ![エラーの統計情報](https://developers.line.biz/media/messaging-api/receiving-messages/error-statistics-ja.png)
 
-:::note info
-Webhook URLを検証した際のリクエストはエラーの統計情報に含まれません
-
-:::
+> [!TIP]
+> Webhook URLを検証した際のリクエストはエラーの統計情報に含まれません
+> エラーの統計情報には実際に送信を試みたWebhookのみが表示されます。[Webhook URLを検証](https://developers.line.biz/ja/docs/messaging-api/verify-webhook-url/)した際の疎通確認用のリクエストは成功、失敗にかかわらずエラーの統計情報には含まれません。
 
 ## エラーが発生した原因を確認する
 

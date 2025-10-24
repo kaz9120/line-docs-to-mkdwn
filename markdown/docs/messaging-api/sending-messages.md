@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/sending-messages/
-copied_at: 2025-10-23T15:56:05.661Z
+copied_at: 2025-10-24T06:27:59.321Z
 ---
 # メッセージを送信する
 
@@ -22,10 +22,9 @@ Messaging APIでは、大きく分けて2種類の送信方法を利用できま
 
 ユーザーがLINE公式アカウントを友だち追加したり、LINE公式アカウントにメッセージを送ったりしたときに、Messaging APIで応答できます。`replyToken`プロパティには、ユーザーのアクションによる[Webhookイベント](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)を通じて受け取った応答トークンを設定します。1回のリクエストで[メッセージオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#message-objects)を最大5つまで送信できます。
 
-:::note info
-応答メッセージの準備中にローディングのアニメーションを表示できます
-
-:::
+> [!TIP]
+> 応答メッセージの準備中にローディングのアニメーションを表示できます
+> LINE公式アカウントがユーザーからのメッセージを受信したあと、メッセージの準備や予約の処理などで返答に少し時間がかかることがあります。そのような場合に、ユーザーにそのまま待機しておいて欲しいことをローディングのアニメーションで視覚的に伝えることができます。詳しくは、「[ローディングのアニメーションを表示する](https://developers.line.biz/ja/docs/messaging-api/use-loading-indicator/)」を参照してください。
 
 応答メッセージのリクエスト例は以下のとおりです。
 
@@ -48,10 +47,11 @@ sh
 
 1回のリクエストで[メッセージオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#message-objects)を最大5つまで送信できます。
 
-:::note info
-メッセージ通数のカウント方法について
-
-:::
+> [!TIP]
+> メッセージ通数のカウント方法について
+> メッセージ通数は、メッセージの送信対象となった人数でカウントされます。1回のリクエストで指定した[メッセージオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#message-objects)の件数は、メッセージ通数には影響しません。たとえば、1回のリクエストで4つのメッセージオブジェクトを含むプッシュメッセージを5人いるトークルームに送ったとします。この場合、メッセージ通数は5通です。
+> 
+> LINE公式アカウントをブロックしているユーザーIDや、存在しないユーザーIDなど、メッセージが届かないユーザーに送られたメッセージは、カウントから除外されます。
 
 プッシュメッセージのリクエストの例は以下のとおりです。
 
@@ -91,10 +91,20 @@ sh
 | 以前に送信した画像をクリックしたユーザー | 画像クリックオーディエンス。[LINE広告](https://admanager.line.biz/)で作成します。 |
 | [ビーコンバナー](https://developers.line.biz/ja/docs/messaging-api/using-beacons/#beacon-banner)が表示されたユーザー | LINE Beacon Networkインプレッションオーディエンス。[LINE広告](https://admanager.line.biz/)で作成します。なお、LINE Beacon Networkインプレッションオーディエンスは、台湾のユーザーが作成したLINE公式アカウントの場合のみ利用できます。 |
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> Messaging APIでは、次のタイプのオーディエンスは作成できません。
+> 
+> *   チャットタグオーディエンス
+> *   追加経路オーディエンス
+> *   予約オーディエンス
+> *   リッチメニューインプレッションオーディエンス
+> *   リッチメニュークリックオーディエンス
+> *   ウェブトラフィックオーディエンス
+> *   アプリイベントオーディエンス
+> *   動画視聴オーディエンス
+> *   画像クリックオーディエンス
+> *   LINE Beacon Networkインプレッションオーディエンス
 
 オーディエンスを作成したら、以下の手順に従って、配信に利用できることを確認します。
 
@@ -129,10 +139,11 @@ sh
 
 なお、送信できるメッセージ数には月単位の上限があります。上限を超えて送信しようとすると、配信に失敗します。`limit.upToRemainingQuota`プロパティを`true`に設定することで、送信するメッセージ数を上限内に保つことができます。送信可能なメッセージ数の上限については、「[Messaging APIの料金](https://developers.line.biz/ja/docs/messaging-api/pricing/)」を参照してください。
 
-:::note warn
-ナローキャストメッセージの配信が完了するまでは他のメッセージの送信に失敗する場合があります
-
-:::
+> [!WARNING]
+> ナローキャストメッセージの配信が完了するまでは他のメッセージの送信に失敗する場合があります
+> ナローキャストメッセージの配信時には、実際に配信されるメッセージ通数にかかわらず当月分の上限目安をすべて予約することがあります。上限目安がすべて予約されると、ナローキャストメッセージの配信が完了するまでは一時的に上限目安を超過した状態になります。その状態で他のメッセージを送信すると、`You have reached your monthly limit.`が返されてメッセージの送信に失敗します。
+> 
+> 詳しくは、『Messaging APIリファレンス』の「[当月に配信できるメッセージの残数に関する注意事項](https://developers.line.biz/ja/reference/messaging-api/#send-narrowcast-message-cautions)」を参照してください。
 
 #### レシピエントオブジェクト
 
@@ -162,10 +173,14 @@ json
 
 ![](https://developers.line.biz/media/news/redeliver-narrowcast.svg)
 
-:::note warn
-「送信対象が少なすぎる」というエラーについて
-
-:::
+> [!WARNING]
+> 「送信対象が少なすぎる」というエラーについて
+> 過去に送信したメッセージのリクエストIDを再配信オブジェクトで指定してメッセージを送ろうとしたが、`errorCode`の`2`（送信対象が少なすぎたためエラーになったことを意味する）が返された場合は、次のような原因が考えられます。
+> 
+> *   該当のナローキャストメッセージの送信後に、送信対象のユーザーの一部がLINE公式アカウントをブロックしたため、送信対象の人数が減った。
+> *   [演算子オブジェクト](#operator-object)（ANDやNOT）で、他のオーディエンスオブジェクトやデモグラフィックフィルターオブジェクトと組み合わせて条件を絞り込んだ結果、送信対象の人数が減った。
+> 
+> 送信対象のユーザーの属性を推測できないようにするために、送信対象が一定数よりも少ない場合はナローキャストメッセージを送信できません。詳しくは、『Messaging APIリファレンス』の「[属性情報やオーディエンスを利用したメッセージ送信の制限事項](https://developers.line.biz/ja/reference/messaging-api/#send-narrowcast-message-restrictions)」を参照してください。
 
 オーディエンスオブジェクトや再配信オブジェクトについて詳しくは、『Messaging APIリファレンス』の「[レシピエントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#narrowcast-recipient)」を参照してください。
 
@@ -193,10 +208,17 @@ json
 
 `"recipient": {     "type": "operator",    "and": [        {            "type": "audience",            "audienceGroupId": 5614991017776        },        {            "type": "operator",            "not": {                "type": "redelivery",                "requestId": "5b59509c-c57b-11e9-aa8c-2a2ae2dbcce4"            }        }    ] }`
 
-:::note info
-演算子オブジェクトは入れ子（ネスト）構造で送信対象を指定できます
-
-:::
+> [!TIP]
+> 演算子オブジェクトは入れ子（ネスト）構造で送信対象を指定できます
+> レシピエントオブジェクトおよびデモグラフィックフィルターオブジェクトは、演算子オブジェクトを利用して入れ子（ネスト）構造で送信対象を指定できます。演算子オブジェクトは、ネストの深い階層から優先して適用されます。
+> 
+> 以下の図では、送信対象は「**AかつBかつEに当てはまるユーザーのうち、CかつDであるユーザーを除く**（`AudienceA AND AudienceB AND NOT (AudienceC AND AudienceD) AND AudienceE`）」として解釈されます。
+> 
+> ![](https://developers.line.biz/media/messaging-api/narrowcast-message/operator_object_nest_sample.png)
+> 
+> json
+> 
+> `{     "type": "operator",    "and": [        {            "type": "audience",            "audienceGroupId": AudienceA        },        {            "type": "audience",            "audienceGroupId": AudienceB        },        {            "type": "operator",            "not": {                "type": "operator",                "and": [                    {                       "type": "audience",                       "audienceGroupId": AudienceC                    },                    {                       "type": "audience",                       "audienceGroupId": AudienceD                    },                 ]            }        },        {            "type": "audience",            "audienceGroupId": AudienceE        },    ] }`
 
 #### リミットオブジェクト
 

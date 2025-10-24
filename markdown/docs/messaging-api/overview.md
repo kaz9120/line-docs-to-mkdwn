@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/overview/
-copied_at: 2025-10-23T15:55:53.094Z
+copied_at: 2025-10-24T06:27:56.749Z
 ---
 # Messaging APIの概要
 
 Messaging APIを使って、ユーザー個人に合わせた体験をLINE上で提供するボットを作成できます。
 
-:::note info
-LINE公式アカウントとは
-
-:::
+> [!TIP]
+> LINE公式アカウントとは
+> LINE公式アカウントがどのようなものかが分からない場合は、総合学習プラットフォーム「[LINEキャンパス](https://lymcampus.jp/)」をご利用ください。
 
 ## Messaging APIの仕組み
 

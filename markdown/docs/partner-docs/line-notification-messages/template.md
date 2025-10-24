@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/template/
-copied_at: 2025-10-23T16:02:32.890Z
+copied_at: 2025-10-24T06:30:02.452Z
 ---
 # LINE通知メッセージ（テンプレート）
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 *   [LINE通知メッセージ（テンプレート）とは](#line-notification-messages-template-overview)
 *   [テンプレート](#templates)

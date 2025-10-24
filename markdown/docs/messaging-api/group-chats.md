@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/group-chats/
-copied_at: 2025-10-23T15:57:45.310Z
+copied_at: 2025-10-24T06:28:23.432Z
 ---
 # グループトークと複数人トーク
 
@@ -10,19 +10,17 @@ LINE公式アカウントは、Messaging APIを使用してグループトーク
 
 LINEには、複数のユーザーとのトークとして、**グループトーク**と**複数人トーク**の2種類があります。グループトークまたは複数人トークのユーザーは**メンバー**と呼びます。
 
-:::note info
-複数人トークはグループトークに統合されました
-
-:::
+> [!TIP]
+> 複数人トークはグループトークに統合されました
+> LINEバージョン10.17.0以降、複数人トークはグループトークに統合されました。統合以前に作成された複数人トークは引き続き利用できますが、バージョン10.17.0以降のLINEで複数の友だちとのトークを新規作成した場合は、必ずグループトークになります。詳しくは、『LINEみんなの使い方ガイド』の「[グループを作成・管理する](https://guide.line.me/ja/friends-and-groups/create-groups.html)」を参照してください。
 
 ### グループトーク
 
 グループトークは、複数人での継続的な利用を想定して設計されたトークです。グループトークには識別子として[グループID](https://developers.line.biz/ja/glossary/#group-id)が発行されます。ユーザーはグループトークを作成して、特定の名前をつけられます。グループトークはアルバム、ノートなどの機能に対応しています。
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> ユーザーが1対1のトークに3人目のユーザーを招待した場合は、グループトークが作成されます。グループトークでは、グループに招待されたユーザーの承認フローの有無を設定できます。設定方法について詳しくは、『LINEみんなの使い方ガイド』の「[グループを作成・管理する](https://guide.line.me/ja/friends-and-groups/create-groups.html)」を参照してください。
 
 ### 複数人トーク
 
@@ -72,9 +70,8 @@ json
 
 プッシュメッセージを送るときは、送信先として、リクエストボディの`to`プロパティにグループIDまたはルームIDを指定します。送信先のIDは、[Webhookイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects)に含まれています。メッセージはグループトークや複数人トークのすべてのメンバーに表示されます。
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> グループトークや複数人トークで、複数のユーザーを指定して[マルチキャストメッセージを送る](https://developers.line.biz/ja/reference/messaging-api/#send-multicast-message)ことはできません。
 
 html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

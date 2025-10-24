@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/unity-sdk/using-sdk/
-copied_at: 2025-10-23T15:59:42.630Z
+copied_at: 2025-10-24T06:29:07.142Z
 ---
 # 他のAPIの利用と実行結果の処理にLINE SDKを使用する
 
@@ -49,10 +49,9 @@ csharp
 
 `var currentToken = LineSDK.Instance.CurrentAccessToken; if (currentToken != null) {     Debug.Log("Current token value: " + currentToken.Value); }`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> サーバーにアクセストークンを送信するときは、アクセストークンを暗号化し、暗号化したデータをSSLで送信することをお勧めします。サーバーで受信したアクセストークンと、LINEログインAPIの呼び出しに使用するアクセストークンが一致すること、さらにLINEログインAPIの呼び出しに使用するチャネルIDが自分のチャネルのIDと一致することも、検証する必要があります。
 
 ### アクセストークンを検証し、更新する
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/flex-message-elements/
-copied_at: 2025-10-23T15:57:34.690Z
+copied_at: 2025-10-24T06:28:19.658Z
 ---
 # Flex Messageの要素
 
@@ -152,10 +152,9 @@ json
 
 ![折り返しありの例](https://developers.line.biz/media/messaging-api/flex-message-elements/wrap-sample.png)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> テキストの最後に改行文字（`\n`）を入力した場合の描画結果は、環境によって異なる可能性があります。
 
 上のFlex Messageを表現するには以下のようなJSONデータを指定します。`wrap`プロパティに`true`を設定しています。
 
@@ -167,10 +166,9 @@ json
 
 折り返したテキストの行間は、`lineSpacing`プロパティで指定できます。
 
-:::note warn
-行間を指定できる範囲
-
-:::
+> [!WARNING]
+> 行間を指定できる範囲
+> `lineSpacing`プロパティは、テキスト内の行間にのみ適用されます。そのため、開始行の上部と最終行の下部には適用されません。
 
 ![テキスト内の行間を広げた例](https://developers.line.biz/media/messaging-api/flex-message-elements/line-spacing-sample.png)
 
@@ -206,10 +204,9 @@ json
 
 ### フィラー
 
-:::note alert
-フィラーは非推奨のコンポーネントです
-
-:::
+> [!CAUTION]
+> フィラーは非推奨のコンポーネントです
+> スペースを作るには、フィラーの代わりに各コンポーネントのプロパティを使用してください。詳しくは、「[コンポーネントの位置](https://developers.line.biz/ja/docs/messaging-api/flex-message-layout/#component-position)」を参照してください。
 
 スペースを作るためのコンポーネントです。ボックス内のコンポーネントの間、前、または後にスペースを入れることができます。以下の例では、画像の間にフィラーを挿入しています。
 
