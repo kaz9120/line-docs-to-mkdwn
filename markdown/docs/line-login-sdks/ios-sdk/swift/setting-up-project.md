@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/setting-up-project/
-copied_at: 2025-10-23T15:58:59.850Z
+copied_at: 2025-10-24T06:28:54.523Z
 ---
 # プロジェクトを設定する
 
@@ -16,10 +16,9 @@ LINE SDK for iOS Swiftをビルドして使用するには、以下が必要で�
 *   デプロイメントターゲットとしてiOS 13.0以降
 *   Xcode 14.1以降
 
-:::note info
-デプロイメントターゲットとしてiOS 13.0未満をサポートする
-
-:::
+> [!TIP]
+> デプロイメントターゲットとしてiOS 13.0未満をサポートする
+> デプロイメントターゲットとしてiOS 13.0未満をサポートしたい場合は、以前のバージョンのLINE SDK for iOS Swiftを利用してください。詳しくは、「[Releases](https://github.com/line/line-sdk-ios-swift/releases)」を参照してください。
 
 LINE SDK for iOS Swiftは、SwiftとObjective-Cのどちらのコードでも利用できます。このガイドでは、Swiftのコードを使ってLINE SDK for iOS Swiftを実装することを前提とします。Objective-Cのコードを使ってLINE SDK for iOS Swiftを組み込む場合は、「[Objective-CのコードでSDKを使用する](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/using-objc/)」を参照してください。
 

@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/release-notes/
-copied_at: 2025-10-23T15:59:49.308Z
+copied_at: 2025-10-24T06:29:06.900Z
 ---
 # リリースノート
 
-:::note warn
-バージョン5.0.0以降のリリースノートはGitHubリポジトリで公開しています
-
-:::
+> [!WARNING]
+> バージョン5.0.0以降のリリースノートはGitHubリポジトリで公開しています
+> バージョン5.0.0以降のLINE SDK for Androidのリリースノートは、GitHubリポジトリで公開しています。詳しくは、[Releases](https://github.com/line/line-sdk-android/releases)を参照してください。
 
 2018/12/13
 

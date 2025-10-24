@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/reference/line-mini-app/
-copied_at: 2025-10-23T16:00:39.541Z
+copied_at: 2025-10-24T06:29:24.604Z
 ---
 # LINEミニアプリ APIリファレンス
 
 ## サービスメッセージ
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> この機能は、認証済ミニアプリでのみ利用できます。未認証ミニアプリの場合、開発用の内部チャネルではテストできますが、公開用の内部チャネルでは利用できません。
 
 サービスメッセージAPIを使用すると、サービスからLINEミニアプリのユーザーに、サービスメッセージを送信できます。
 
@@ -27,15 +26,15 @@ copied_at: 2025-10-23T16:00:39.541Z
 *   サービス通知トークンは、発行から1年間（31,536,000秒間）有効です。有効期限が切れるまでに、最大5回サービスメッセージを送信できます。
 *   サービス通知トークンを使用すると、有効期限が切れておらず、残りの送信可能回数が0でない場合は、サービス通知トークンの値が更新されます。ユーザーに対して、後続のサービスメッセージを送信する場合は、更新後のサービス通知トークンを保存してください。
 
-:::note alert
-1つのアクセストークンで複数のサービス通知トークンを発行しないでください
+> [!CAUTION]
+> 1つのアクセストークンで複数のサービス通知トークンを発行しないでください
+> [`liff.getAccessToken()`](https://developers.line.biz/ja/reference/liff/#get-access-token)で取得したアクセストークン（LIFFのアクセストークン）を再利用して、複数のサービス通知トークンを発行することは許可されていません。
+> 
+> LIFFのアクセストークン1つにつき、発行できるサービス通知トークンは1つだけです。
 
-:::
-
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> サービス通知トークンは、一人のユーザーに紐づいています。あるユーザーに紐づいたサービス通知トークンを利用して、ほかのユーザーにサービスメッセージを送信することはできません。
 
 _リクエストの例_
 
@@ -58,10 +57,11 @@ Authorization
 Bearer `{channel access token}`  
 詳しくは、「[チャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/)」を参照してください。
 
-:::note warn
-ステートレスチャネルアクセストークンの使用を推奨します
-
-:::
+> [!WARNING]
+> ステートレスチャネルアクセストークンの使用を推奨します
+> LINEミニアプリチャネルでは、[長期のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#long-lived-channel-access-token)および、[任意の有効期間を指定できるチャネルアクセストークン（チャネルアクセストークンv2.1）](https://developers.line.biz/ja/docs/basics/channel-access-token/#user-specified-expiration)は使用できません。
+> 
+> LINEミニアプリの開発では、[ステートレスチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#stateless-channel-access-token)または[短期のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#short-lived-channel-access-token)を使用できます。このうち、ステートレスチャネルアクセストークンの使用を推奨します。ステートレスチャネルアクセストークンは、発行数に制限がないため、アプリケーション側でトークンのライフサイクルを管理する必要がありません。
 
 #### リクエストボディ
 
@@ -145,10 +145,11 @@ Authorization
 Bearer `{channel access token}`  
 詳しくは、『LINEプラットフォームの基礎知識』の「[チャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/)」を参照してください。
 
-:::note warn
-ステートレスチャネルアクセストークンの使用を推奨します
-
-:::
+> [!WARNING]
+> ステートレスチャネルアクセストークンの使用を推奨します
+> LINEミニアプリチャネルでは、[長期のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#long-lived-channel-access-token)および、[任意の有効期間を指定できるチャネルアクセストークン（チャネルアクセストークンv2.1）](https://developers.line.biz/ja/docs/basics/channel-access-token/#user-specified-expiration)は使用できません。
+> 
+> LINEミニアプリの開発では、[ステートレスチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#stateless-channel-access-token)または[短期のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#short-lived-channel-access-token)を使用できます。このうち、ステートレスチャネルアクセストークンの使用を推奨します。ステートレスチャネルアクセストークンは、発行数に制限がないため、アプリケーション側でトークンのライフサイクルを管理する必要がありません。
 
 #### クエリパラメータ
 
@@ -170,10 +171,28 @@ String
 フォーマット：`{template name}_{BCP 47 language tag}`  
 最大文字数：30
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> サービスメッセージでサポートしている言語と言語タグは、以下のとおりです。
+> 
+> *   アラビア語：`ar`
+> *   中国語（簡体字）：`zh-CN`
+> *   中国語（繁体字）：`zh-TW`
+> *   英語：`en`
+> *   フランス語：`fr`
+> *   ドイツ語：`de`
+> *   インドネシア語：`id`
+> *   イタリア語：`it`
+> *   日本語：`ja`
+> *   韓国語：`ko`
+> *   マレー語：`ms`
+> *   ポルトガル語（ブラジル）：`pt-BR`
+> *   ポルトガル語（ポルトガル）：`pt-PT`
+> *   ロシア語：`ru`
+> *   スペイン語（スペイン）：`es-ES`
+> *   タイ語：`th`
+> *   トルコ語：`tr`
+> *   ベトナム語：`vi`
 
 params
 
@@ -222,10 +241,9 @@ String
 
 セッションID。詳しくは、「[サービスメッセージを送信する](https://developers.line.biz/ja/docs/line-mini-app/develop/service-messages/)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> `expiresIn`および`remainingCount`の値が`0`の場合は、サービスメッセージは送信されたが、サービス通知トークンが更新できなかったことを示します。
 
 _レスポンスの例_
 
@@ -246,10 +264,9 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 ## 共通プロフィールのクイック入力
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> 共通プロフィールのクイック入力を利用するには、LINEミニアプリが認証済みであり、かつ[利用申請](https://developers.line.biz/ja/docs/line-mini-app/quick-fill/overview/#step-one-quick-fill-application)が完了している必要があります。
 
 クイック入力とは、LINEミニアプリ上で［**自動入力**］をタップすることで、必要なプロフィール情報が自動で入力される機能です。ユーザーがアカウントセンターで設定した共通プロフィールの情報が、LINEミニアプリで簡単に利用できます。詳しくは、「[共通プロフィールのクイック入力の概要](https://developers.line.biz/ja/docs/line-mini-app/quick-fill/overview/)」を参照してください。
 
@@ -454,10 +471,11 @@ _LIFFブラウザ以外でAPIが呼ばれた場合の例_
 
 取得した共通プロフィールの情報をフォームに自動入力します。それぞれのプロフィール情報とフォームの紐づけには、`data-liff-autocomplete`属性を用います。
 
-:::note info
-スコープと一致しないフォームへの自動入力
-
-:::
+> [!TIP]
+> スコープと一致しないフォームへの自動入力
+> `liff.$commonProfile.fill()`による自動入力は、フォームの`data-liff-autocomplete`属性を用いて行います。このとき、フォームの`data-liff-autocomplete`属性に指定する値は、取得したプロフィール情報のスコープ（`family-name`、`tel`、`bday-year`など）と一致している必要があります。
+> 
+> たとえば、誕生年（`bday-year`）、誕生月（`bday-month`）、誕生日（`bday-day`）の情報をそれぞれ取得した後、`20110623`のような形式に加工した上でフォームに自動入力させたい場合は、`liff.$commonProfile.fill()`の代わりに、`document.getElementById().value`や`document.querySelector().value`を用いることができます。
 
 _取得した姓、電話番号、性別をそのまま自動入力する例_
 

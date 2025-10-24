@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-quick-reply/
-copied_at: 2025-10-23T15:56:17.817Z
+copied_at: 2025-10-24T06:28:01.759Z
 ---
 # クイックリプライを使う
 
 クイックリプライは、ユーザーが返信するためのボタンを、メッセージと一緒に表示するための機能です。ユーザーは、トーク画面の下部に表示される返信ボタンをタップするだけで、LINE公式アカウントに返信できます。クイックリプライ機能は、LINE公式アカウントがメンバーになっている1対1のトーク、グループトーク、複数人トークで利用できます。また、どのメッセージタイプでも、1つのメッセージにクイックリプライボタンを13個まで設定できます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> クイックリプライ機能は、Android版とiOS版のLINEでサポートされます。
 
 ![クイックリプライのサンプル](https://developers.line.biz/media/messaging-api/using-quick-reply/quickReplySample.png)
 
@@ -35,10 +34,9 @@ copied_at: 2025-10-23T15:56:17.817Z
 *   [日時選択アクション](https://developers.line.biz/ja/reference/messaging-api/#datetime-picker-action)
 *   [クリップボードアクション](https://developers.line.biz/ja/reference/messaging-api/#clipboard-action)
 
-:::note info
-リッチメニュー切替アクションは利用できません
-
-:::
+> [!TIP]
+> リッチメニュー切替アクションは利用できません
+> クイックリプライでは、[リッチメニュー切替アクション](https://developers.line.biz/ja/reference/messaging-api/#richmenu-switch-action)は利用できません。
 
 ### アイコン
 

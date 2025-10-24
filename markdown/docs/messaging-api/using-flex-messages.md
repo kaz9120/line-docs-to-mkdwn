@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-flex-messages/
-copied_at: 2025-10-23T15:57:32.264Z
+copied_at: 2025-10-24T06:28:19.125Z
 ---
 # Flex Messageを送信する
 
@@ -10,10 +10,9 @@ Flex Messageの構成要素は、コンテナ、ブロック、コンポーネ�
 
 Flex Messageでは、テキストの書字方向を左から右（左横書き）、または右から左（右横書き）に指定できます。
 
-:::note warn
-Flex Messageの制限事項
-
-:::
+> [!WARNING]
+> Flex Messageの制限事項
+> 受信端末の環境によって、同じFlex Messageでも描画結果が異なる可能性があります。描画に影響を与える要素には、OS、LINEのバージョン、端末の解像度、言語設定、フォントなどがあります。
 
 ![Flex Messageのサンプル](https://developers.line.biz/media/messaging-api/using-flex-messages/bubbleSamples-Update1.png)
 

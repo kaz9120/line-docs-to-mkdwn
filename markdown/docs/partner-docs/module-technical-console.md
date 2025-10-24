@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/module-technical-console/
-copied_at: 2025-10-23T16:02:45.062Z
+copied_at: 2025-10-24T06:30:06.998Z
 ---
 # モジュールチャネルの設定を行う
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。モジュールを利用した拡張機能の公開を希望するお客様は、担当営業までご連絡いただくか、[LINEマーケットプレイス お問い合わせ](https://line-marketplace.com/jp/inquiry)よりお問い合わせください。
 
 モジュールチャネルでは、[LINE Developersコンソール](https://developers.line.biz/console/)に専用の［**モジュール**］タブが表示されます。
 

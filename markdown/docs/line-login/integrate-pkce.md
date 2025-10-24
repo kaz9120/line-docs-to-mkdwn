@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/integrate-pkce/
-copied_at: 2025-10-23T15:58:27.929Z
+copied_at: 2025-10-24T06:28:36.648Z
 ---
 # LINEログインをPKCE対応する
 
@@ -18,10 +18,11 @@ LINEログインを組み込んだウェブアプリに、PKCEを実装した場
 | --- | --- |
 | 悪意のあるアプリが何らかの方法で認可コードを含むコールバックURLを取得した場合、アクセストークンを奪えてしまいます。<br/>![PKCE未実装の場合の認可コード横取り攻撃](https://developers.line.biz/media/line-login/new-user-login-without-pkce-ja.svg) | 悪意のあるアプリにリダイレクト時に渡される情報を横取りされても、一意の`code_challenge`を照合することでアクセストークンの横取りを防ぎます。<br/>![PKCE実装済みの場合の認可コード横取り攻撃](https://developers.line.biz/media/line-login/new-user-login-with-pkce-ja.svg) |
 
-:::note info
-PKCEを導入するもう1つのメリット
-
-:::
+> [!TIP]
+> PKCEを導入するもう1つのメリット
+> PKCE実装済みのLINEログインを組み込んだウェブアプリに、[**Yahoo! JAPANアプリ**](https://promo-mobile.yahoo.co.jp/yjapp/)からアクセスすると、メールアドレスとパスワードによるログインの工程をスキップできる[自動ログイン](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-auto-login)機能が有効になります。
+> 
+> ![Yahoo! JAPANアプリからの自動ログイン](https://developers.line.biz/media/line-login/yja-to-line-login-ja.png)
 
 ## LINEログインにPKCEを実装する
 
@@ -34,10 +35,15 @@ LINEログインにPKCEを実装するには、[通常のLINEログインの組�
 3.  [手順2で生成した`code_challenge`と`code_challenge_method`をクエリパラメータに付与した認可URLにユーザーをリダイレクトさせる。](#add-to-authentication-url)
 4.  [「アクセストークンを発行する」エンドポイントのリクエストボディに手順1で生成した`code_verifier`を加えて実行する。](#execute-issuing-access-token)
 
-:::note info
-PKCE対応のための新パラメータについて
-
-:::
+> [!TIP]
+> PKCE対応のための新パラメータについて
+> PKCE対応のために、LINEログインの「認可URL」および「アクセストークンを発行する」エンドポイントに、以下のパラメータが追加されました。
+> 
+> *   `code_verifier`
+> *   `code_challenge`
+> *   `code_challenge_method`
+> 
+> 各パラメータについて詳しくは、以下の各手順の説明を参照してください。
 
 ### 1\. code\_verifierの生成
 
@@ -67,10 +73,17 @@ js
 | --- | --- | --- |
 | `code_challenge` | `code_verifier`をSHA256でハッシュ化したうえで、Base64URL形式にエンコードした値 | BSCQwo\_m8Wf0fpjmwkIKmPAJ1A7tiuRSNDnXzODS7QI |
 
-:::note warn
-URLクエリパラメータ用に整形する
-
-:::
+> [!WARNING]
+> URLクエリパラメータ用に整形する
+> `code_challenge`の値は、URLクエリパラメータとして利用できるように、通常のBase64形式の文字列から以下の削除・置換を行う必要があります。詳しくは、『RFC 4648』の「[5\. Base 64 Encoding with URL and Filename Safe Alphabet](https://datatracker.ietf.org/doc/html/rfc4648#section-5)」を参照してください。
+> 
+> *   パディング（文字詰めの`=`）の削除
+> *   `+`を`-`に置換
+> *   `/`を`_`に置換
+> 
+> | Base64形式の例 | `code_challenge`用に削除・置換を行った例 |
+> | --- | --- |
+> | BSCQwo\_m8Wf0fpjmwk**+**KmPAJ1A**/**tiuRSNDnXzODS7**\==** | BSCQwo\_m8Wf0fpjmwk**\-**KmPAJ1A**\_**tiuRSNDnXzODS7 |
 
 **サンプルコード**
 

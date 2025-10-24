@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/generate-json-web-token/
-copied_at: 2025-10-23T15:55:59.238Z
+copied_at: 2025-10-24T06:27:57.859Z
 ---
 # チャネルアクセストークンv2.1を発行する
 
@@ -18,10 +18,9 @@ LINEプラットフォームでは、[4種類のチャネルアクセストー�
 
 ![](https://developers.line.biz/media/messaging-api/channel-access-token/channel-access-token-issue-flow.svg)
 
-:::note info
-チャネルアクセストークンv2.1の仕様
-
-:::
+> [!TIP]
+> チャネルアクセストークンv2.1の仕様
+> チャネルアクセストークンv2.1の発行における認証方式は[「Using JWTs as Authorization Grants」（RFC 7523）](https://datatracker.ietf.org/doc/html/rfc7523#section-2.1)に準拠しています。これは[OAuth Assertion Framework（RFC 7521）](https://datatracker.ietf.org/doc/html/rfc7521#section-4.1)のAssertion Frameworkにおいて[JSON Web Token（RFC 7519）](https://datatracker.ietf.org/doc/html/rfc7519)を利用したものです。
 
 ## アサーション署名キーを発行する
 
@@ -56,10 +55,9 @@ JWTを生成するには、アサーション署名キーのキーペア（秘�
 
 \*1 `use`か`key_ops`のいずれかを指定してください。
 
-:::note warn
-公開鍵を登録する前に確認すること
-
-:::
+> [!WARNING]
+> 公開鍵を登録する前に確認すること
+> 登録する公開鍵に`kid`プロパティがないことを確認してください。アサーション署名キーの公開鍵に`kid`プロパティが含まれているとエラーになります。これは`kid`がLINE Developersコンソールで公開鍵を登録したときにのみ発行されるためです。
 
 アサーション署名キーのキーペアは、公開仕様をもとに開発者が自らプログラムを作成して生成することもできますが、仕様を満たすライブラリ等を利用するとより簡単に生成できます。
 
@@ -269,10 +267,10 @@ sh
 
 [生成した](#generate-jwt)JWTアサーションを指定して、[チャネルアクセストークンv2.1を発行](https://developers.line.biz/ja/reference/messaging-api/#issue-channel-access-token-v2-1)できます。
 
-:::note warn
-キーIDを使ってチャネルアクセストークンv2.1を管理する
-
-:::
+> [!WARNING]
+> キーIDを使ってチャネルアクセストークンv2.1を管理する
+> *   チャネルアクセストークンv2.1をリクエストすると、チャネルアクセストークンと一意のキーID（`key_id`）のペアがレスポンスとして返されます。チャネルアクセストークンを適切に管理するため、チャネルアクセストークンとキーIDのペアを安全に保管するようにしてください。
+> *   キーIDは、2020年6月22日にMessaging APIに追加された識別子です。キーIDを持たないチャネルアクセストークンv2.1を使用している場合は、チャネルアクセストークンv2.1を再発行し、トークンとキーIDのペアを保管することをお勧めします。チャネルアクセストークンを再発行した場合は、新しいトークンを使用するようにボットを更新してください。
 
 チャネルアクセストークンv2.1を取得する手順は以下のとおりです。
 
@@ -286,10 +284,9 @@ sh
 
 [チャネルアクセストークンv2.1を取り消す](https://developers.line.biz/ja/reference/messaging-api/#revoke-channel-access-token-v2-1)エンドポイントを実行することで、有効なチャネルアクセストークンを取り消すことができます。
 
-:::note warn
-有効なチャネルアクセストークンの識別
-
-:::
+> [!WARNING]
+> 有効なチャネルアクセストークンの識別
+> 無効なチャネルアクセストークンを指定して、[チャネルアクセストークンv2.1を取り消す](https://developers.line.biz/ja/reference/messaging-api/#revoke-channel-access-token-v2-1)エンドポイントを実行した場合も、エラーレスポンスは発生しません。[すべての有効なチャネルアクセストークンv2.1のキーIDを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1)エンドポイントを使って、現在有効なチャネルアクセストークンとペアになるキーIDを取得できます。取得したキーIDを、データベースなどに保管したチャネルアクセストークンとキーIDのペアと照合することで、有効なチャネルアクセストークンを識別できます。
 
 チャネルアクセストークンv2.1を取り消す手順は以下のとおりです。
 

@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/
-copied_at: 2025-10-23T16:02:36.508Z
+copied_at: 2025-10-24T06:30:04.082Z
 ---
 # Webhookの配信完了イベント
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## Webhookの配信完了イベントの概要
 
@@ -30,15 +29,20 @@ LINE通知メッセージAPIをリクエストし、ユーザーに対してLINE
 
 _Webhookイベントの例_
 
-:::note warn
-Webhookの配信完了イベントの示す状態について
+> [!WARNING]
+> Webhookの配信完了イベントの示す状態について
+> Webhookの配信完了イベントは、**LINE通知メッセージがユーザーに配信され、メッセージを確認できる状態になったことを示す**ものです。以下を示すものではありません。
+> 
+> *   LINE通知メッセージAPIのリクエスト成功
+> *   [LINE通知メッセージの受信への同意を求めるメッセージの受信](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/flow-when-receiving-message/#user-consent-flow-for-receiving-line-notification-messages-1)
+> *   LINE通知メッセージの受信への同意
+> *   [SMS認証を求めるメッセージの受信](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/flow-when-receiving-message/#user-consent-flow-for-receiving-line-notification-messages-3)
+> *   SMS認証の実施
+> *   ユーザーによるLINE通知メッセージの開封（既読）
 
-:::
-
-:::note warn
-Webhookイベントの署名検証
-
-:::
+> [!WARNING]
+> Webhookイベントの署名検証
+> 配信完了イベント受信時の[署名の検証](https://developers.line.biz/ja/docs/messaging-api/receiving-messages/#verify-signature)についてはチャネルシークレットを用いて行ってください。なお、LINEチャットPlusを利用しているチャネルにおいては、Switcher Secretを用いて署名の検証を行ってください。
 
 ## Webhookの配信完了イベントに関する補足事項
 

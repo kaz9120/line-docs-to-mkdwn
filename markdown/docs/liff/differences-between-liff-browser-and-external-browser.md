@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/differences-between-liff-browser-and-external-browser/
-copied_at: 2025-10-23T16:00:25.924Z
+copied_at: 2025-10-24T06:29:21.736Z
 ---
 # LIFFブラウザと外部ブラウザの違い
 
-:::note info
-LIFFブラウザの仕様
-
-:::
+> [!TIP]
+> LIFFブラウザの仕様
+> 詳しくは、「[LIFFブラウザの仕様](https://developers.line.biz/ja/docs/liff/overview/#liff-browser-spec)」を参照してください。
 
 [LIFFブラウザ](https://developers.line.biz/ja/glossary/#liff-browser)は、[外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)がサポートしているウェブ技術の一部をサポートしていません。LIFFブラウザでサポートしていないウェブ技術として、以下のものがあります。
 

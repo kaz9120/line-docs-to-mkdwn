@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-flex-message-simulator/
-copied_at: 2025-10-23T15:57:40.949Z
+copied_at: 2025-10-24T06:28:22.228Z
 ---
 # チュートリアル - Flex Message Simulatorでデジタル名刺を作成する
 
@@ -42,10 +42,9 @@ Flex Message Simulatorでは、定義済みのFlex Messageレイアウトが提�
 
 定義済みのレイアウトを使用するには、ページの右上にある［**Showcase**］をクリックします。使いたいレイアウトをクリックし、画面右下の［**作成**］をクリックします。
 
-:::note warn
-レイアウトについて
-
-:::
+> [!WARNING]
+> レイアウトについて
+> このチュートリアルでは、定義済みのレイアウトを使用せずに、Flex Messageを最初から作成します。
 
 ![Flex Message Simulator Showcase](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/showcase.png)
 
@@ -74,10 +73,11 @@ Flex Message Simulatorでは、定義済みのFlex Messageレイアウトが提�
 
 ![Bubbleタイプのコンテナを選択する](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/select-bubble-type.png)
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> ドロップダウンメニューから［**bubble**］を選択すると、プレビューエリアの下に「OK」メッセージがポップアップ表示されます。これは、編集内容がプレビューエリアに正常に反映されたことを意味します。
+> 
+> ![Messageタイプを選択する](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/type.png)
 
 コンテナのタイプの詳細については、「[コンテナ](https://developers.line.biz/ja/docs/messaging-api/flex-message-elements/#container)」を参照してください。
 
@@ -88,18 +88,16 @@ Flex Message Simulatorでは、定義済みのFlex Messageレイアウトが提�
 ![Blockスタイル例](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/elements.png)
 
 1.  ヘッダーを追加するために、ツリービューエリアで［**header**］を選択します。上部の［**+**］をクリックし、［**box**］を選択します。
-2.  ヘッダーの背景色を設定します。プロパティエリアの［**backgroundColor**］フィールドに、16進数カラーコードの背景色（このチュートリアルでは`#00B900`）を入力し、Enterキーを押します。これで、ヘッダーがボディブロックと視覚的に区別できるようになりました。:::note info
-    入力内容を反映するにはEnterキーを押します
-    
-    :::
+2.  ヘッダーの背景色を設定します。プロパティエリアの［**backgroundColor**］フィールドに、16進数カラーコードの背景色（このチュートリアルでは`#00B900`）を入力し、Enterキーを押します。これで、ヘッダーがボディブロックと視覚的に区別できるようになりました。> [!TIP]
+    > 入力内容を反映するにはEnterキーを押します
+    > プロパティエリアで項目を編集または選択し、キーボードのEnterキーを押すと、プレビューエリアに反映されます。これ以降の説明では、Enterキーの操作は省略します。
     
       
     ![ヘッダーの背景色を設定する](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/set-header-color.png)
 3.  ヘッダーにテキストを追加します。
-    1.  ツリービューで、［**header**］の下の［**box vertical**］をクリックします。:::note info
-        ヒント
-        
-        :::
+    1.  ツリービューで、［**header**］の下の［**box vertical**］をクリックします。> [!TIP]
+        > ヒント
+        > Vertical box（垂直ボックス）は、Flex Messageのレイアウト方式の一つです。子要素を配置する向きを決定します。詳しくは、[ボックスコンポーネントの向き](https://developers.line.biz/ja/docs/messaging-api/flex-message-layout/#box-component-orientation)を参照してください。
         
     2.  ツリービューの［**+**］をクリックし、ドロップダウンメニューから［**text**］を選択します。［**text**］が［**box vertical**］の下に作成されます。
     3.  ツリービューで、作成したtext要素をクリックします。
@@ -117,15 +115,18 @@ Flex Message Simulatorでは、定義済みのFlex Messageレイアウトが提�
 
 1.  ツリービューエリアの［**hero**］をクリックします。
 2.  左上の［**+**］をクリックし、ドロップダウンメニューから［**image**］を選択します。デフォルト画像がプレビューエリアに表示されます。
-3.  画像を変更するために、ツリービューエリアで［**image**］をクリックします。プロパティエリアの［**url**］フィールドに、名刺のポートレート画像のURLを入力します。このチュートリアルでは、[こちら](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/mary.png)の画像を使用します。:::note warn
-    画像に関する要件
+3.  画像を変更するために、ツリービューエリアで［**image**］をクリックします。プロパティエリアの［**url**］フィールドに、名刺のポートレート画像のURLを入力します。このチュートリアルでは、[こちら](https://developers.line.biz/media/messaging-api/using-flex-message-simulator/mary.png)の画像を使用します。> [!WARNING]
+    > 画像に関する要件
+    > Flex Message Simulatorに画像ファイルはアップロードできません。すでにウェブ上にアップロードされている画像のURLを指定してください。画像とそのURLは、以下の条件を満たす必要があります。
+    > 
+    > *   プロトコル：HTTPS（TLS 1.2以降）
+    > *   画像フォーマット：JPEGまたはPNG
+    > *   最大画像サイズ：1024 x 1024ピクセル
+    > *   最大ファイルサイズ：10MB
     
-    :::
-    
-    :::note info
-    推奨ファイルサイズ
-    
-    :::
+    > [!TIP]
+    > 推奨ファイルサイズ
+    > 表示の遅延を防ぐために、個々の画像ファイルサイズを1MB以下にすることを推奨しています。
     
 
 画像はうまく反映されましたが、背景と比較すると少し小さいようです。サイズを調整しましょう。
@@ -213,10 +214,14 @@ Flex Message Simulatorでは、定義済みのFlex Messageレイアウトが提�
 5.  同じ［**Action**］セクションで、［**label**］プロパティに「Flex Message Corp 公式サイト」と入力します。これがボタンのラベルになります。
 6.  ウェブサイトを開くために、［**uri**］プロパティにウェブサイトのURIを入力します。
 
-:::note warn
-uriフィールドのドメイン名、パス、クエリパラメータ、フラグメントはパーセントエンコードしてください
-
-:::
+> [!WARNING]
+> uriフィールドのドメイン名、パス、クエリパラメータ、フラグメントはパーセントエンコードしてください
+> ［**uri**］フィールドのドメイン名、パス、クエリパラメータ、フラグメントはUTF-8を用いて[パーセントエンコード](https://ja.wikipedia.org/wiki/%E3%83%91%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0)してください。たとえば、以下の構成要素を持つURIを指定する場合は、`https://example.com/path?q=%E3%81%8A%E3%81%AF%E3%82%88%E3%81%86#%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF`とします。
+> 
+> | スキーム | ドメイン名 | パス | クエリパラメータ | フラグメント |
+> | --- | --- | --- | --- | --- |
+> | キー | 値 |
+> | https | example.com | /path | q | おはよう | こんにちは |
 
 これで、タップすると会社のウェブサイトに移動するボタンが名刺に追加されました。
 

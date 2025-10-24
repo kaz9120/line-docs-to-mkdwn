@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/service/update-service/
-copied_at: 2025-10-23T16:01:44.039Z
+copied_at: 2025-10-24T06:29:51.861Z
 ---
 # 認証済ミニアプリ更新後の再審査
 
@@ -20,9 +20,8 @@ LINEミニアプリが認証済ミニアプリになった後に、[LINE Develop
 
 公開されたLINEミニアプリ（配信内容やクリエイティブ等すべてを含む）に当社が不適切と判断する表現が発見された場合、お客様は速やかに修正対応を行う必要があります。対応いただけない場合、罰則の対象となる場合があります。詳しくは、『[LINEミニアプリポリシー](https://terms2.line.me/LINE_MINI_App?lang=ja)』の「罰則」を参照してください。
 
-:::note info
-公開中のLINEミニアプリの一時的な利用停止について
-
-:::
+> [!TIP]
+> 公開中のLINEミニアプリの一時的な利用停止について
+> 公開中のLINEミニアプリにおいて、メンテナンス等の正当な理由で、一時的に「本番用」の［**エンドポイントURL**］を異なるURLに差し替える場合、再審査は不要です。［**エンドポイントURL**］を変更すると、すぐにページが切り替わります。
 
 詳しくは、「[審査を依頼する](https://developers.line.biz/ja/docs/line-mini-app/submit/submission-guide/)」を参照してください。

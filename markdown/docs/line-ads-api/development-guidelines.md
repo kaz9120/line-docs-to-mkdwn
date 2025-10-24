@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-ads-api/development-guidelines/
-copied_at: 2025-10-23T16:02:53.728Z
+copied_at: 2025-10-24T06:30:08.131Z
 ---
 # LINE広告API開発ガイドライン
 
@@ -17,10 +17,9 @@ LINE広告APIを使って開発する際は、以下の開発ガイドライン�
 
 なお、いかなる目的でもレート制限を超えてリクエストを送信しないでください。レート制限について詳しくは、[ダッシュボードAPIのドキュメント](https://ads.line.me/public-docs/certificated-ad-tech-general-partner)（英語）、および[オーディエンスAPIのドキュメント](https://ads.line.me/public-docs/data-general-partner)（英語）を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> レート制限を超えて送信を行った場合、`429 Too Many Requests`が返却され、エラーとなります。
 
 ## 存在しないIDへのリクエストの禁止
 

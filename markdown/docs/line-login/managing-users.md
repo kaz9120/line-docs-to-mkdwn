@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/managing-users/
-copied_at: 2025-10-23T15:58:38.314Z
+copied_at: 2025-10-24T06:28:41.425Z
 ---
 # ユーザーを管理する
 
@@ -10,10 +10,9 @@ LINEログインしたユーザーを管理する方法を説明します。
 
 [アクセストークン](https://developers.line.biz/ja/docs/line-login/managing-access-tokens/)で特定されるユーザーのプロフィール情報を取得できます。プロフィール情報には、ユーザーID、表示名、プロフィール画像、およびステータスメッセージが含まれます。
 
-:::note warn
-アクセストークンのスコープを確認してください
-
-:::
+> [!WARNING]
+> アクセストークンのスコープを確認してください
+> ユーザーのプロフィール情報を取得するには、`profile`のスコープを持つアクセストークンが必要です。詳しくは、「[認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」と「[スコープ](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#scopes)」を参照してください。
 
 リクエストの例：
 
@@ -29,15 +28,15 @@ json
 
 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[ユーザープロフィールを取得する](https://developers.line.biz/ja/reference/line-login/#get-user-profile)」を参照してください。
 
-:::note info
-サービスでユーザーを識別するには
+> [!TIP]
+> サービスでユーザーを識別するには
+> ユーザーを識別するには、ユーザーが変更できない[ユーザーID](https://developers.line.biz/ja/glossary/#user-id)を使用してください。
+> 
+> ユーザーは、LINEに設定した表示名、プロフィール画像、およびステータスメッセージをいつでも変更できます。 これらの情報はユーザーを識別する目的では、利用できません。
 
-:::
-
-:::note info
-IDトークンを使ってユーザーを識別する
-
-:::
+> [!TIP]
+> IDトークンを使ってユーザーを識別する
+> アクセストークンと一緒に取得したIDトークンを使って、ユーザーのプロフィール情報とメールアドレスを取得できます。 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[IDトークンを検証する](https://developers.line.biz/ja/reference/line-login/#verify-id-token)」を参照してください。
 
 ## ユーザーをログアウトする
 

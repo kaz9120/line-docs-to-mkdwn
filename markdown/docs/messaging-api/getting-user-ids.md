@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/getting-user-ids/
-copied_at: 2025-10-23T15:56:09.715Z
+copied_at: 2025-10-24T06:28:00.521Z
 ---
 # ユーザーIDを取得する
 
@@ -58,10 +58,9 @@ json
 
 LINE公式アカウントと友だちになっているユーザー全員のユーザーIDは、[LINE公式アカウントを友だち追加したユーザーのリストを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-follower-ids)エンドポイントで取得できます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> この機能は認証済アカウントまたは[プレミアムアカウント](https://developers.line.biz/ja/glossary/#premium-account)でのみご利用いただけます。アカウント種別について詳しくは、『LINEヤフー for Business』の「[LINE公式アカウント アカウント種別](https://www.lycbiz.com/jp/service/line-official-account/account-type/)」を参照してください。
 
 ### グループトークや複数人トークのメンバーのユーザーIDを取得する
 
@@ -70,10 +69,9 @@ LINE公式アカウントが参加しているグループトークや複数人�
 *   [グループトークのメンバーのユーザーIDを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-group-member-user-ids)
 *   [複数人トークのメンバーのユーザーIDを取得する](https://developers.line.biz/ja/reference/messaging-api/#get-room-member-user-ids)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> この機能は認証済アカウントまたは[プレミアムアカウント](https://developers.line.biz/ja/glossary/#premium-account)でのみご利用いただけます。アカウント種別について詳しくは、『LINEヤフー for Business』の「[LINE公式アカウント アカウント種別](https://www.lycbiz.com/jp/service/line-official-account/account-type/)」を参照してください。
 
 ## ユーザーIDが有効かを確認する
 

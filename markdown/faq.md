@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/faq/
-copied_at: 2025-10-23T16:02:55.855Z
+copied_at: 2025-10-24T06:30:08.114Z
 ---
 # FAQ
 

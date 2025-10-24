@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/messaging-api/
-copied_at: 2025-10-23T15:55:48.252Z
+copied_at: 2025-10-24T06:27:56.652Z
 ---
 # Messaging APIリファレンス
 
@@ -437,10 +437,9 @@ GET
 
 LINE公式アカウントを友だち追加したユーザーの情報を取得できます。
 
-:::note warn
-自分のユーザーIDを取得する
-
-:::
+> [!WARNING]
+> 自分のユーザーIDを取得する
+> 自分のユーザーIDは、[LINE Developersコンソール](https://developers.line.biz/console/)のチャネルの［**チャネル基本設定**］タブにある［**あなたのユーザーID**］で確認できます。LINE Developersコンソールのアクセス権限について詳しくは、『[権限を管理する](https://developers.line.biz/ja/docs/line-developers-console/managing-roles/)』の「[チャネルの権限](https://developers.line.biz/ja/docs/line-developers-console/managing-roles/#roles-for-channel)」を参照してください。開発者が自分自身のユーザーIDを取得するためのAPIはありません。
 
 エンドポイント一覧
 
@@ -766,10 +765,15 @@ POST
 
 送信するメッセージの内容を表すJSONオブジェクトです。
 
-:::note info
-メッセージオブジェクトが有効かを検証する
-
-:::
+> [!TIP]
+> メッセージオブジェクトが有効かを検証する
+> 以下のエンドポイントを使用すると、メッセージオブジェクトが有効かを検証できます。
+> 
+> *   [応答メッセージのメッセージオブジェクトを検証する](#validate-message-objects-of-reply-message)
+> *   [プッシュメッセージのメッセージオブジェクトを検証する](#validate-message-objects-of-push-message)
+> *   [マルチキャストメッセージのメッセージオブジェクトを検証する](#validate-message-objects-of-multicast-message)
+> *   [ナローキャストメッセージのメッセージオブジェクトを検証する](#validate-message-objects-of-narrowcast-message)
+> *   [ブロードキャストメッセージのメッセージオブジェクトを検証する](#validate-message-objects-of-broadcast-message)
 
 表示
 

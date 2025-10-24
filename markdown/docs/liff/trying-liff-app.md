@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/trying-liff-app/
-copied_at: 2025-10-23T16:00:07.365Z
+copied_at: 2025-10-24T06:29:14.835Z
 ---
 # LIFFスターターアプリを試してみる
 
@@ -18,10 +18,10 @@ LIFFスターターアプリは、LIFFアプリ開発に必要な最低限の機
 
 このページを読むことで、LIFFアプリをサーバー上にデプロイし、LINE上でLIFFアプリを開く体験ができます。LIFFを用いて作りたいアプリがあるときに、どのように作ればよいかをイメージできます。
 
-:::note info
-LIFFスターターアプリを試す前に
-
-:::
+> [!TIP]
+> LIFFスターターアプリを試す前に
+> *   LIFFについては「[概要](https://developers.line.biz/ja/docs/liff/overview/)」を参照してください。
+> *   LIFFの機能をオンライン上で試したい場合は[LIFFプレイグラウンド](https://liff-playground.netlify.app/)をご利用ください。LIFFを用いるとどのようなことができるのかを確認できます。なお、[LIFFプレイグラウンドのソースコード](https://github.com/line/liff-playground)はGitHubで公開していますので、開発者は自身のLIFF IDを設定して、独自のLIFFプレイグラウンドをデプロイできます。例えば開発者のLIFF IDをもとに[`liff.login()`](https://developers.line.biz/ja/reference/liff/#login)や[`liff.getProfile()`](https://developers.line.biz/ja/reference/liff/#get-profile)といった各クライアントAPIをウェブ上で実行できます。
 
 ## LIFFスターターアプリとは何か
 
@@ -63,10 +63,9 @@ LIFFスターターアプリはNode.jsで動作します。また、パッケー
     
     `$ cd line-liff-v2-starter/src/vanilla`
     
-    :::note info
-    Next.jsやNuxtを使いたいときは
-    
-    :::
+    > [!TIP]
+    > Next.jsやNuxtを使いたいときは
+    > Next.jsを使いたいときは`cd line-liff-v2-starter/src/nextjs/`、Nuxtを使いたいときは`cd line-liff-v2-starter/src/nuxtjs/`で、それぞれのディレクトリに移動してください。
     
 3.  次に依存パッケージをインストールし、続いてLIFFアプリを起動します。インストールは`yarn install`コマンド、LIFFアプリの起動は`yarn dev`コマンドを実行します。コンパイル成功のメッセージ（`compiled successfully`）が表示されて、ターミナルの画面出力が止まったら、ローカルサーバーでLIFFアプリが起動しています。
     
@@ -75,10 +74,9 @@ LIFFスターターアプリはNode.jsで動作します。また、パッケー
     `$ yarn install $ yarn dev`
     
 4.  ターミナルに表示されたURL（vanilla JavaScriptの場合は`http://localhost:3000`）にブラウザでアクセスすると、次のような画面が表示されます。  
-    ![LIFFアプリ](https://developers.line.biz/media/liff/trying-liff-app/screenshot-pc.png):::note warn
-    LIFF IDを設定する必要があります
-    
-    :::
+    ![LIFFアプリ](https://developers.line.biz/media/liff/trying-liff-app/screenshot-pc.png)> [!WARNING]
+    > LIFF IDを設定する必要があります
+    > 環境変数としてLIFF IDを設定する必要がありますが、ここではまだ設定していません。LIFF IDの設定は「[LIFF IDの取得・設定](#get-and-set-liff-id)」で行います。
     
 5.  ブラウザでLIFFアプリの起動を確認できたら、Windowsならctrl+c、macOSならcommand+cでローカルサーバーを停止します。
 
@@ -86,10 +84,9 @@ LIFFスターターアプリはNode.jsで動作します。また、パッケー
 
 ここまでの手順により、ローカルサーバー上でLIFFスターターアプリを起動できました。次はNetlifyを用いてサーバーにLIFFアプリをデプロイします。
 
-:::note info
-Netlifyのアカウントが必要です
-
-:::
+> [!TIP]
+> Netlifyのアカウントが必要です
+> [Netlify](https://www.netlify.com/)は静的サイトのためのホスティングサービスです。Netlifyにデプロイする際は、あらかじめアカウントを開設してください。このページの内容はNetlifyの無料プランで実行できます。
 
 1.  初めにNetlifyのCLIをインストールします。これはコマンドライン上でNetlifyへのログインやデプロイといった操作を行うためのツールです。
     
@@ -97,10 +94,9 @@ Netlifyのアカウントが必要です
     
     `$ npm install -g netlify-cli`
     
-2.  これで`netlify`コマンドを使えるようになりました。次に`netlify login`コマンドでNetlifyアカウントにログインします。コマンドを実行するとブラウザでNetlifyのログイン画面が開くので、ログインします。:::note info
-    netlify loginコマンドを実行する前に
-    
-    :::
+2.  これで`netlify`コマンドを使えるようになりました。次に`netlify login`コマンドでNetlifyアカウントにログインします。コマンドを実行するとブラウザでNetlifyのログイン画面が開くので、ログインします。> [!TIP]
+    > netlify loginコマンドを実行する前に
+    > 先に[Netlify](https://www.netlify.com/)のサイトでアカウントを開設してから、`netlify login`コマンドを実行してください。
     
     bash
     
@@ -161,10 +157,9 @@ Netlifyのアカウントが必要です
 
 LIFFスターターアプリをLIFFアプリとして開くためには、LIFF IDが必要です。まず「[チャネルを作成する](https://developers.line.biz/ja/docs/liff/getting-started/)」と「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)」を読み、LIFF IDを取得してください。
 
-:::note info
-エンドポイントURLを入力する
-
-:::
+> [!TIP]
+> エンドポイントURLを入力する
+> チャネルにLIFFアプリを追加する際に［**エンドポイントURL**］を入力する必要があります。ここには、前の手順で本番環境へのデプロイ時に取得した`Website URL`を入力してください。
 
 上記手順でLIFF IDを取得できます。これをサーバー側の環境変数`LIFF_ID`として設定します。
 
@@ -180,24 +175,27 @@ LIFFスターターアプリをLIFFアプリとして開くためには、LIFF I
     
     `$ netlify build $ netlify deploy --prod`
     
-    :::note info
-    環境変数の確認方法
-    
-    :::
+    > [!TIP]
+    > 環境変数の確認方法
+    > NetlifyのSite settingsで環境変数を確認できます。詳しくは、『Netlify Docs』の「[Build environment variables](https://docs.netlify.com/build/configure-builds/environment-variables/)」を参照してください。
+    > 
+    > ![NetlifyのSite settings](https://developers.line.biz/media/liff/trying-liff-app/netlify-environment.png)
     
 3.  これでLINEからLIFFアプリを開けるようになりました。LIFFアプリのURLは、[LINE Developersコンソール](https://developers.line.biz/console/)で作成したチャネルの［**LIFF**］タブにLIFF URLとして表示されます。  
     LIFF URLをLINEの任意のトークルームに送信し、トークルーム上のLIFF URLをタップすると、LINEの[LIFFブラウザ](https://developers.line.biz/ja/glossary/#liff-browser)でLIFFアプリが開けます。  
     ![LIFFアプリ](https://developers.line.biz/media/liff/trying-liff-app/screenshot-mobile.png)
 
-:::note info
-LIFF IDを設定せずにLIFFアプリを開いた場合
+> [!TIP]
+> LIFF IDを設定せずにLIFFアプリを開いた場合
+> 環境変数の`LIFF_ID`を設定せずにLIFFアプリを開いた場合、[`liff.init()`](https://developers.line.biz/ja/reference/liff/#initialize-liff-app)によるLIFFアプリの初期化に失敗しますが、LIFFスターターアプリの見た目に変化はありません。
 
-:::
-
-:::note info
-ローカルサーバー上でLIFF_IDを設定するとき
-
-:::
+> [!TIP]
+> ローカルサーバー上でLIFF_IDを設定するとき
+> ローカルサーバーを起動するときに`LIFF_ID`を設定するには、次のようにサーバーを起動します。
+> 
+> bash
+> 
+> `$ LIFF_ID="Your LIFF ID" yarn dev`
 
 ## 次のステップ
 

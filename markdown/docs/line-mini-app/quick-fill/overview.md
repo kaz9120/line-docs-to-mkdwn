@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/quick-fill/overview/
-copied_at: 2025-10-23T16:01:32.009Z
+copied_at: 2025-10-24T06:29:46.002Z
 ---
 # 共通プロフィールのクイック入力の概要
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> 共通プロフィールのクイック入力を利用するには、LINEミニアプリが認証済みであり、かつ[利用申請](https://developers.line.biz/ja/docs/line-mini-app/quick-fill/overview/#step-one-quick-fill-application)が完了している必要があります。
 
 ## 共通プロフィールのクイック入力とは
 
@@ -36,10 +35,9 @@ LINEミニアプリにクイック入力を組み込むには、以下の手順�
 
 ### 1\. クイック入力の利用申請をする
 
-:::note info
-認証済ミニアプリでのみ利用できます
-
-:::
+> [!TIP]
+> 認証済ミニアプリでのみ利用できます
+> 共通プロフィールのクイック入力は、認証済ミニアプリでのみ利用できます。利用申請の前に、対象となるアプリが認証済ミニアプリであることを確認してください。
 
 共通プロフィールのクイック入力を利用するには、利用申請書に記入の上、申請フォームより申請してください。同一のサービス事業主が複数のLINEミニアプリを一括で申請する場合は、複数申請用の利用申請書を使用できます。
 
@@ -58,10 +56,9 @@ LINEミニアプリにクイック入力を組み込むには、以下の手順�
 
 クイック入力で利用できるスコープの種類について詳しくは、「[LINE Developersコンソールで選択できるスコープの種類](#scope)」を参照してください。
 
-:::note info
-クイック入力とチャネル同意の簡略化を同時に有効にした場合の挙動について
-
-:::
+> [!TIP]
+> クイック入力とチャネル同意の簡略化を同時に有効にした場合の挙動について
+> クイック入力と[チャネル同意の簡略化](https://developers.line.biz/ja/docs/line-mini-app/develop/channel-consent-simplification/)を同時に有効にした場合、「アクセス許可要求画面」においてユーザーが共通プロフィールのトグルボタンをオフにすることができなくなります。この挙動については、今後修正が予定されています。「アクセス許可要求画面」について詳しくは、「[「チャネル同意の簡略化」を有効化したLINEミニアプリにアクセスした際の動作](https://developers.line.biz/ja/docs/line-mini-app/develop/channel-consent-simplification/#detailed-workflow)」を参照してください。
 
 ### 3\. LINEミニアプリの審査を依頼する
 
@@ -138,10 +135,9 @@ js
 
 なおLINEミニアプリは、[LINE Front-end Framework（LIFF）](https://developers.line.biz/ja/docs/liff/overview/)の仕組みを利用しています。クイック入力の推奨環境については、『LIFFドキュメント』の「[推奨環境](https://developers.line.biz/ja/docs/liff/overview/#operating-environment)」も併せて参照してください。
 
-:::note warn
-LIFFアプリの動作が保証されるエンドポイントURLの遷移先
-
-:::
+> [!WARNING]
+> LIFFアプリの動作が保証されるエンドポイントURLの遷移先
+> LIFFアプリは、エンドポイントURL（例：`https://example.com/path`）と完全に一致、もしくはエンドポイントURLよりも下の階層（例：`https://example.com/path/to/lower?key1=value1#URL-fragment`）においてのみ動作します。それ以外へ遷移した場合の動作は保証されません。
 
 ### LIFF SDKのバージョン
 

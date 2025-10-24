@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/error-notification/
-copied_at: 2025-10-23T16:02:18.293Z
+copied_at: 2025-10-24T06:29:56.441Z
 ---
 # エラー通知
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## 概要
 
@@ -45,10 +44,9 @@ LINEプラットフォームがエラーの発生を検知したときは、以�
 | 本文 | LINE Platform sent a webhook, but your bot server did not respond or returned an error.<br/>Check the reason and details for the error and your bot server's configuration. Then make any necessary changes so that it can receive webhooks properly. |
 | エラーの詳細 | エラーの原因や発生日時などが状況に応じて記載されます。詳細については、[メール本文](#content)を参照してください。 |
 
-:::note info
-エラーはLINE Developersコンソールでも確認できます
-
-:::
+> [!TIP]
+> エラーはLINE Developersコンソールでも確認できます
+> 通知メールで受け取ったエラーの情報は、[LINE Developersコンソール](https://developers.line.biz/console/)でも確認できます。詳しくは、「[LINE Developersコンソールの［統計情報］タブ内の［エラー］について](#line-developers-console)」を参照してください。
 
 #### LINEプラットフォームがWebhookの再送を停止したとき
 
@@ -87,10 +85,9 @@ Webhookの再送について詳しくは、[受け取りに失敗したWebhook�
 
 この場合、ボットサーバーは受信したWebhookイベントを正常に処理することができなかったと考えられます。ボットサーバーのWebhookイベントの処理に関するログなどを調査し、問題の発生原因を調査してください。
 
-:::note warn
-エラーの調査について
-
-:::
+> [!WARNING]
+> エラーの調査について
+> LINEヤフー株式会社では、エラーに関する個別の調査や確認は行っていません。エラーの原因については、チャネルやボットサーバーを管理する開発者自身で対応を行う必要があります。
 
 ## LINE Developersコンソールの［統計情報］タブ内の［エラー］について
 

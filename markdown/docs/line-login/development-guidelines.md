@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/development-guidelines/
-copied_at: 2025-10-23T15:58:13.711Z
+copied_at: 2025-10-24T06:28:30.684Z
 ---
 # LINEログイン開発ガイドライン
 
@@ -18,10 +18,9 @@ LINEログインを使ったウェブアプリを開発する際は、以下の�
 
 *   [ログ保存の推奨](#save-logs)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINEログイン開発における基本ルールは、[規約とポリシー](https://developers.line.biz/ja/terms-and-policies/)に記載される内容に基づきます。
 
 ## 禁止事項
 
@@ -29,10 +28,9 @@ LINEログインを使ったウェブアプリを開発する際は、以下の�
 
 負荷テストを目的に、大量の[認可リクエスト](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)や[LINEログインAPI](https://developers.line.biz/ja/reference/line-login/)のリクエストをLINEプラットフォームに対して送信しないでください。ウェブアプリの負荷テストを行う場合は、LINEプラットフォームへの大量のリクエストが発生しないテスト環境を用意してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> レート制限を超えて送信を行った場合、`429 Too Many Requests`が返却され、エラーとなります。
 
 ## 必須事項
 
@@ -102,12 +100,13 @@ LINEログインを組み込んだ連動アプリ（ウェブサイトやスマ�
 | --- | --- | --- | --- | --- |
 | 8d48c8577e739b9c | Mon, 16 Jul 2021 10:20:22 GMT | POST | `https://api.line.me/oauth2/v2.1/token` | 200 |
 
-:::note info
-追加でログに保存しておくと有用な情報
+> [!TIP]
+> 追加でログに保存しておくと有用な情報
+> 運用するウェブアプリの要件等によっては、上記に加えて、たとえば以下のような情報を保存しておくことで、問題が発生した際の調査をより円滑に行うことができます。
+> 
+> *   LINEログインAPIに対するリクエストのボディ
+> *   APIリクエスト後にLINEプラットフォームから返却されたレスポンスのボディ
 
-:::
-
-:::note warn
-ログの提供は行っておりません
-
-:::
+> [!WARNING]
+> ログの提供は行っておりません
+> 認可リクエストやLINEログインAPIのリクエストのログ等は、お問い合わせいただいても提供は行っておりません。ログの保存は、LINEログインを利用したウェブアプリを開発する開発者自身で行ってください。

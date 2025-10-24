@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/login-button/
-copied_at: 2025-10-23T15:58:42.783Z
+copied_at: 2025-10-24T06:28:42.696Z
 ---
 # LINEログインボタン デザインガイドライン
 
@@ -44,10 +44,13 @@ LINEログインボタンは、必ず以下の色で表示してください。
 | 縦線（無効） | ![line color for only disabled](https://developers.line.biz/media/line-login/login-button/e5e5e5-60-per.png)#E5E5E5（不透明度：60％） |
 | 枠線（無効のみ） | ![border color](https://developers.line.biz/media/line-login/login-button/e5e5e5-60-per.png)#E5E5E5（不透明度：60％） |
 
-:::note warn
-透明色のレイヤーにご注意ください
-
-:::
+> [!WARNING]
+> 透明色のレイヤーにご注意ください
+> 透明色は、配置するレイヤーにご注意ください。たとえば、マウスオーバーの縦線の場合、基本色（`#06C755`）のレイヤーの上に、マウスオーバー（`#000000（不透明度：30％）`）を配置し、さらにその上のレイヤーに縦線（`#000000（不透明度：8％）`）とテキスト／ロゴ（`#FFFFFF`）を配置します。
+> 
+> ![LINEログインボタンのレイヤー](https://developers.line.biz/media/line-login/login-button/login-button-color-layer-order-ja.png)
+> 
+> 各レイヤーの配置について詳しくは、下図を参考にしてください。
 
 ![LINEログインボタンの色](https://developers.line.biz/media/line-login/login-button/login-button-color-ja.png)
 

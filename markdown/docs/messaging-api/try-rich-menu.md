@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/try-rich-menu/
-copied_at: 2025-10-23T15:57:09.084Z
+copied_at: 2025-10-24T06:28:17.478Z
 ---
 # リッチメニューを試す
 
 リッチメニュープレイグラウンドは、リッチメニューの機能を試すことができるLINE公式アカウントです。本アカウントは、日本語のみに対応しています。[日時選択アクション](https://developers.line.biz/ja/reference/messaging-api/#datetime-picker-action)による日付選択、[リッチメニューエイリアス](https://developers.line.biz/ja/docs/messaging-api/switch-rich-menus/)によるリッチメニューの切り替えなど、リッチメニューのさまざまな機能を試すことができます。
 
-:::note info
-リッチメニューを利用するメリットとは？
-
-:::
+> [!TIP]
+> リッチメニューを利用するメリットとは？
+> サービス提供者とエンドユーザー、それぞれの視点から見たリッチメニューのメリットを[LINE API Use Case](https://lineapiusecase.com/ja/api/msgapi.html)サイトで確認できます。
 
 ![リッチメニュープレイグラウンドメイン画面](https://developers.line.biz/media/messaging-api/rich-menu-playground/richmenu-playground-bot-overview.png)
 
@@ -17,10 +16,9 @@ copied_at: 2025-10-23T15:57:09.084Z
 
 リッチメニューの機能を試すために、LINEアカウントにリッチメニュープレイグラウンドを友だちとして追加します。リッチメニュープレイグラウンドの追加方法は、以下のとおりです。
 
-:::note info
-リッチメニュープレイグラウンドはスマートフォンで試してください
-
-:::
+> [!TIP]
+> リッチメニュープレイグラウンドはスマートフォンで試してください
+> リッチメニューは、デスクトップ版（macOS、Windows）のLINEでは表示されません。リッチメニュープレイグラウンドはスマートフォン版のLINEで試してください。
 
 | 追加する経路 | 追加する方法 |
 | --- | --- |
@@ -67,10 +65,9 @@ copied_at: 2025-10-23T15:57:09.084Z
 
 ![メッセージアクションを試す](https://developers.line.biz/media/messaging-api/rich-menu-playground/01-message-action-ja.png)
 
-:::note info
-メッセージアクション
-
-:::
+> [!TIP]
+> メッセージアクション
+> LINE公式アカウントとのトークで、ユーザーがリッチメニューからメッセージを送信すると、LINEプラットフォームは対応する[メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event)をボットサーバーに送信します。ボットサーバーは、メッセージイベントで返された応答トークンを使って[応答メッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)を送信することができます。
 
 | ボタン | 説明 | 設定値（アクションオブジェクトの値） |
 | --- | --- | --- |
@@ -82,20 +79,20 @@ copied_at: 2025-10-23T15:57:09.084Z
 
 ![ポストバックアクションを試す(1)](https://developers.line.biz/media/messaging-api/rich-menu-playground/02-postback-action-ja.png)
 
-:::note info
-ポストバックアクション
-
-:::
+> [!TIP]
+> ポストバックアクション
+> ポストバックアクションを持つリッチメニューをユーザーがタップすると、LINEプラットフォームはボットサーバーに[ポストバックイベント](https://developers.line.biz/ja/reference/messaging-api/#postback-event)を送信します。このポストバックイベントには、ポストバックアクションの`data`プロパティに指定した文字列が含まれます。
+> 
+> `data`プロパティに指定した内容は、ユーザーには表示されません。これにより、一意のパラメータや識別子などのデータがボットサーバーに安全に送信されることが保証されます。ポストバックイベントから取得した応答トークンを使って、[応答メッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)を送信することができます。
 
 | ボタン | 説明 | 設定値（アクションオブジェクトの値） |
 | --- | --- | --- |
 | displayTextあり | displayTextを設定したポストバックアクションを実行します。 | `{"type":"postback","label":"ディスプレイテキストあり","data":"actionId=21","displayText":"ディスプレイテキストです。トーク画面に表示されます。"}` |
 | displayTextなし | displayTextを設定していないポストバックアクションを実行します。 | `{"type":"postback","label":"ディスプレイテキストなし","data":"actionId=22"}` |
 
-:::note info
-displayTextについて
-
-:::
+> [!TIP]
+> displayTextについて
+> `displayText`プロパティにテキストを設定しておくと、ポストバックアクションが設定されたリッチメニューをユーザーがタップした場合に、そのテキストがユーザーからのメッセージとしてLINEのトーク画面に表示されます。`displayText`プロパティに設定したテキストは、トーク画面に表示されるだけで、[メッセージイベント](https://developers.line.biz/ja/reference/messaging-api/#message-event)としてボットサーバーに送信されることはありません。
 
 ### ポストバックアクションを試す(2)
 
@@ -133,10 +130,9 @@ displayTextについて
 | Chromeカスタムタブで開く（Androidのみ） | クエリパラメータに`openInAppBrowser=0`を付与した状態でURIアクションを実行します。詳しくは、「[URLを外部ブラウザで開く](https://developers.line.biz/ja/docs/messaging-api/using-line-url-scheme/#opening-url-in-external-browser)」を参照してください。 | `{"type":"uri","label":"Chromeカスタムタブで開く","uri":"https://developers.line.biz/docs/messaging-api/actions/?openInAppBrowser=0#uri-action"}` |
 | 設定を確認する | URIアクションを実行せず、URIアクションオブジェクトの設定値だけ確認します。 | \- |
 
-:::note info
-openInAppBrowserについて
-
-:::
+> [!TIP]
+> openInAppBrowserについて
+> `openInAppBrowser`パラメータは、Android版LINEにおいてのみLINE内ブラウザを開くことができます。`openInAppBrowser`パラメータの仕様について詳しくは、「[URLを外部ブラウザで開く](https://developers.line.biz/ja/docs/messaging-api/using-line-url-scheme/#opening-url-in-external-browser)」を参照してください。
 
 ### 日時選択アクションを試す
 

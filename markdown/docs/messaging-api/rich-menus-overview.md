@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/rich-menus-overview/
-copied_at: 2025-10-23T15:57:00.548Z
+copied_at: 2025-10-24T06:28:13.638Z
 ---
 # リッチメニューの概要
 
@@ -10,10 +10,9 @@ copied_at: 2025-10-23T15:57:00.548Z
 
 リッチメニューはLINE公式アカウントのトーク画面下部に表示されるメニュー機能です。リッチメニューに、LINE公式アカウントの各機能や、外部サイトや予約ページなどへのリンクを設定することで、よりリッチなユーザー体験を提供できます。[リッチメニューの構造](#rich-menu-structure)に基づいて、[リッチメニューを作成するツール](#choosing-tool-for-creating-rich-menus)を使ってみましょう。
 
-:::note warn
-リッチメニューはデスクトップ版では表示されません
-
-:::
+> [!WARNING]
+> リッチメニューはデスクトップ版では表示されません
+> リッチメニューは、デスクトップ版（macOS、Windows）のLINEでは表示されません。
 
 ## リッチメニューの構造
 
@@ -29,10 +28,9 @@ copied_at: 2025-10-23T15:57:00.548Z
 
 リッチメニューの設定には、[LINE Official Account Manager](#creating-a-rich-menu-with-the-line-manager) 、または[Messaging API](#creating-a-rich-menu-using-the-messaging-api)を使用します。ニーズに合わせてツールを選びましょう。
 
-:::note warn
-1つのリッチメニューに使用できるのは1つのツールのみ
-
-:::
+> [!WARNING]
+> 1つのリッチメニューに使用できるのは1つのツールのみ
+> 1つのリッチメニューの取得や編集に、2つのツールを使うことはできません。LINE Official Account Managerで作成したリッチメニューは、LINE Official Account Managerでのみ取得と編集ができます。また、Messaging APIで作成したリッチメニューについては、LINE Official Account Managerは使用できません。
 
 | ツール | 利点 |
 | --- | --- |

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/link-a-bot/
-copied_at: 2025-10-23T15:58:29.929Z
+copied_at: 2025-10-24T06:28:36.505Z
 ---
 # LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）
 
@@ -21,10 +21,14 @@ LINE公式アカウントを友だち追加するオプションを、同意画�
 
 LINE Developersコンソールで、LINEログインのチャネルにLINE公式アカウントをリンクします。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINEログインのチャネルにLINE公式アカウントをリンクするには、以下の要件を満たす必要があります。
+> 
+> *   LINE公式アカウントに関連付けられたMessaging APIのチャネルが、LINEログインのチャネルと同じプロバイダーに属していること。
+> *   操作するアカウントは、LINEログインのチャネルのAdmin権限と、LINE公式アカウントの管理者権限を持っていること。
+>     *   LINEログインのチャネルのAdmin権限は、[LINE Developersコンソール](https://developers.line.biz/console/)で確認できます。
+>     *   LINE公式アカウントの管理者権限は、[LINE Official Account Manager](https://manager.line.biz)で確認できます。
 
 1.  [LINE Developersコンソール](https://developers.line.biz/console/)にログインし、LINEログインのチャネルがあるプロバイダーをクリックします。
 2.  LINEログインのチャネルをクリックします。
@@ -50,10 +54,9 @@ text
 
 ![表示される画面](https://developers.line.biz/media/line-login/link-a-bot/bot-prompt-ja.png)
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> `bot_prompt`以外のクエリパラメータについて詳しくは、「[認可を要求する](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#making-an-authorization-request)」を参照してください。
 
 #### 同意画面のオプションの表示について
 
@@ -65,10 +68,13 @@ text
 | ブロック済み | LINE公式アカウントのブロックを解除するオプションが表示されます。ユーザーがオプションを有効にして続行すると、LINE公式アカウントのブロックが解除されます。 |
 | 友だち追加済み | LINE公式アカウントが友だち追加済みであることが表示されます。LINE公式アカウントを友だち追加するオプションは表示されません。 |
 
-:::note info
-認証プロバイダーの場合、オプションはデフォルトで有効になります
-
-:::
+> [!TIP]
+> 認証プロバイダーの場合、オプションはデフォルトで有効になります
+> LINEログインのチャネルが認証プロバイダー配下に存在する場合、`bot_prompt=normal`のときに表示される同意画面上のオプションは、デフォルトで有効になります。
+> 
+> ![](https://developers.line.biz/media/line-login/link-a-bot/add-friend-option-on-certified-provider-ja.png)
+> 
+> 認証プロバイダーについて詳しくは、『LINE Developersコンソールドキュメント』の「[認証プロバイダーについて](https://developers.line.biz/ja/docs/line-developers-console/overview/#certified-provider)」を参照してください。
 
 ## ユーザーとLINE公式アカウントの関係を取得する
 
@@ -94,10 +100,9 @@ text
 | `true` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しました。具体的には、以下のいずれかです。<br/><ul><!--[--><li><!--[-->ユーザーがLINE公式アカウントを友だち追加した。<!--]--></li><li><!--[-->ユーザーがブロックを解除した。<!--]--></li><!--]--></ul> |
 | `false` | LINE公式アカウントとユーザーの関係が、ログイン時に変化しませんでした。具体的には、以下のいずれかです。<br/><ul><!--[--><li><!--[-->ユーザーは以前からLINE公式アカウントと友だちだった。<!--]--></li><li><!--[-->ユーザーがLINE公式アカウントを友だち追加しなかった。<!--]--></li><li><!--[-->ユーザーがLINE公式アカウントのブロックを解除しなかった。<!--]--></li><!--]--></ul> |
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINE公式アカウントを友だち追加するオプションを含む同意画面がユーザーに表示されなかった場合は、`friendship_status_changed`クエリパラメータは含まれません。
 
 ### LINEログインAPIを使って友だち関係を取得する
 

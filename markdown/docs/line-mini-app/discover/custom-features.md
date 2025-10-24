@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/discover/custom-features/
-copied_at: 2025-10-23T16:00:54.864Z
+copied_at: 2025-10-24T06:29:29.663Z
 ---
 # カスタム機能
 
@@ -32,10 +32,9 @@ LINEミニアプリから送られたサービスメッセージは、LINEミニ
 
 サービスメッセージを送信するには、サービスメッセージAPIを使用します。詳しくは、「[サービスメッセージを送信する](https://developers.line.biz/ja/docs/line-mini-app/develop/service-messages/)」を参照してください。
 
-:::note warn
-サービスメッセージの送信条件
-
-:::
+> [!WARNING]
+> サービスメッセージの送信条件
+> サービスメッセージは、LINEミニアプリ上でのユーザーの操作（アクション）に対する確認や応答としてのみ送信できます。値下げ、ショッピング特典、新商品、割引クーポン、プロモーションなどの情報を含む広告やイベントの通知は禁止されています。サービスメッセージの条件について詳しくは、「[サービスメッセージの条件](https://developers.line.biz/ja/docs/line-mini-app/service/service-operation/#conditions-for-service-messages)」を参照してください。
 
 ## Custom Path
 

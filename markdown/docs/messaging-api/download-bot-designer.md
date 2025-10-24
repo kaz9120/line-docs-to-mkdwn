@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/download-bot-designer/
-copied_at: 2025-10-23T15:57:29.845Z
+copied_at: 2025-10-24T06:28:18.765Z
 ---
 # LINE Bot Designerのダウンロード
 
-:::note warn
-LINE Bot Designerの開発を終了しました
-
-:::
+> [!WARNING]
+> LINE Bot Designerの開発を終了しました
+> [Flex Message](https://developers.line.biz/ja/reference/messaging-api/#flex-message)のプロトタイプの作成には、[Flex Message Simulator](https://developers.line.biz/flex-simulator/)の利用をお勧めします。詳しくは、2022年1月18日のニュース、「[LINE Bot Designerの開発を終了しました](https://developers.line.biz/ja/news/2022/01/18/development-of-line-bot-designer-has-been-finished/)」を参照してください。
 
 お使いのプラットフォームに合わせてLINE Bot Designerをダウンロードしてください。
 

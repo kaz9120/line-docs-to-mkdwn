@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/verify-webhook-url/
-copied_at: 2025-10-23T15:56:54.062Z
+copied_at: 2025-10-24T06:28:11.272Z
 ---
 # Webhook URLを検証する
 
@@ -9,10 +9,15 @@ Messaging APIのWebhookを利用する場合、LINEプラットフォームか�
 *   [検証方法1. Webhook URL検証用のエンドポイントで検証する](#verify-method-01)
 *   [検証方法2. LINE DevelopersコンソールからWebhook URLの［検証］ボタンで検証する](#verify-method-02)
 
-:::note info
-疎通確認のリクエストにはステータスコード200を返してください
-
-:::
+> [!TIP]
+> 疎通確認のリクエストにはステータスコード200を返してください
+> 疎通確認の際は、Webhookイベントが含まれないHTTP POSTリクエストが送信されます。この場合も、ステータスコード`200`を返してください。
+> 
+> Webhookイベントが含まれないHTTP POSTリクエストの例：
+> 
+> json
+> 
+> `{   "destination": "xxxxxxxxxx",  "events": [] }`
 
 Webhook URLを検証した結果、ボットサーバーがWebhookを受信できていない場合は、[Webhookの受信に失敗する原因を調査](#investigate-webhook-reception-failure)してください。
 

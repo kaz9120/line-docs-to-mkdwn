@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/
-copied_at: 2025-10-23T16:02:34.711Z
+copied_at: 2025-10-24T06:30:04.235Z
 ---
 # LINE通知メッセージAPIの技術仕様
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## ユーザーにLINE通知メッセージを送る
 
@@ -55,10 +54,9 @@ LINE通知メッセージAPIをリクエストし、ユーザーに対してLINE
 *   [LINE Developersコンソールで取得する](#use-console)
 *   [APIで取得する](#use-api)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 送信通数には、実際にユーザーに送信されたLINE通知メッセージの通数のみが集計されます。送信条件について詳しくは、「[LINE通知メッセージが送信される条件](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages)」を参照してください。
 
 #### LINE Developersコンソールで取得する
 
@@ -103,10 +101,11 @@ LINE通知メッセージの送信時に「LINE」という名前のLINE公式�
 
 ![LINE通知メッセージが届きました](https://developers.line.biz/media/line-notification-message/type1-pnpflow-3-ja.png)
 
-:::note warn
-ブロック時の動作
-
-:::
+> [!WARNING]
+> ブロック時の動作
+> LINE通知メッセージAPIで送信対象として指定したユーザーが、LINE通知メッセージの送信元であるLINE公式アカウントをブロックしていた場合は、LINE通知メッセージは送信されず、「LINE」システムアカウントからの「LINE通知メッセージが届きました」メッセージについても送信されません。
+> 
+> また、送信元であるLINE公式アカウントをブロックしていた間に送信されたLINE通知メッセージは、ユーザーがブロックを解除しても後から届くことはありません。
 
 ### LINE通知メッセージ受信への同意方法
 
@@ -114,10 +113,15 @@ LINE通知メッセージの送信時に「LINE」という名前のLINE公式�
 
 ![LINE通知メッセージの受信同意](https://developers.line.biz/media/line-notification-message/consent-line-notification-message-ja.png)
 
-:::note warn
-LINE通知メッセージの受信設定について
-
-:::
+> [!WARNING]
+> LINE通知メッセージの受信設定について
+> LINE通知メッセージの受信設定には、以下の3つの状態があります。
+> 
+> | 状態 | 説明 |
+> | --- | --- |
+> | 同意（オン） | LINE通知メッセージを受信します。 |
+> | 拒否（オフ） | LINE通知メッセージの受信を拒否しています。LINE通知メッセージは送信されません。 |
+> | 未設定 | 同意も拒否もしていない状態です。LINE通知メッセージ受信時に、LINE通知メッセージの受信への同意を求めるメッセージが送信されます。<ul><!--[--><li><!--[-->バージョン8.0.0以前のLINEアプリにおいてLINEアカウントを新規作成した場合などに、LINE通知メッセージの受信同意状態は「未設定」となります。<!--]--></li><li><!--[-->1度でも「未設定」以外の状態に変更した場合、「未設定」状態に戻すことはできません。<!--]--></li><!--]--></ul> |
 
 ### LINE通知メッセージの受信への同意を行っていない際に送信されたメッセージについて
 

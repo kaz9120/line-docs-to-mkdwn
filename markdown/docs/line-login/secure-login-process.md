@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/secure-login-process/
-copied_at: 2025-10-23T15:58:31.991Z
+copied_at: 2025-10-24T06:28:38.582Z
 ---
 # アプリとサーバーの間で安全なログインプロセスを構築する
 
@@ -20,10 +20,9 @@ copied_at: 2025-10-23T15:58:31.991Z
 
 これらのトークンを使うと、サーバーは信頼できる情報をLINEプラットフォームから直接取得できます。
 
-:::note info
-このページの使いかた
-
-:::
+> [!TIP]
+> このページの使いかた
+> ここでは、LINE SDKを使用する上で私たちがおすすめする設計の概念を説明しています。 このとおりに設計しなければならないということではありません。 危険性を十分に理解したうえで、安全なシステムを構築してください。
 
 ## アクセストークンを使用して新規ユーザーを登録する
 
@@ -31,10 +30,9 @@ copied_at: 2025-10-23T15:58:31.991Z
 
 このとき、以下のように、アプリからユーザーのプロフィール情報をサーバーに直接送信すると、攻撃に対して脆弱になります。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> 以下の例では、ユーザー登録およびログインプロセスの潜在的な脆弱性を強調しています。
 
 ![](https://developers.line.biz/media/line-login/new-user-login-bad-ja.svg)
 
@@ -45,19 +43,23 @@ copied_at: 2025-10-23T15:58:31.991Z
 *   [アクセストークンの有効性を検証する（GET /oauth2/v2.1/verify）](https://developers.line.biz/ja/reference/line-login/#verify-access-token)
 *   [ユーザープロフィールを取得する（GET /v2/profile）](https://developers.line.biz/ja/reference/line-login/#get-user-profile)
 
-:::note warn
-アクセストークンの検証後、さらに確認が必要です
-
-:::
+> [!WARNING]
+> アクセストークンの検証後、さらに確認が必要です
+> LINEログインAPIによるアクセストークンの検証に成功すると、レスポンスには`client_id`プロパティ（チャネルID）と`expires_in`プロパティ（アクセストークンの有効期間）が含まれます。アクセストークンを使用する前に、各プロパティが以下の条件を満たすことを確認してください。
+> 
+> | プロパティ | 条件 |
+> | --- | --- |
+> | `client_id` | アプリにリンクされているLINEログインチャネルのチャネルIDと同じ |
+> | `expires_in` | 正の値 |
+> |  |  |
 
 ## OpenIDを使用して新規ユーザーを登録する
 
 アプリが[OpenID Connect](https://openid.net/developers/how-connect-works/)をサポートしている場合は、アクセストークンを確認する必要はありません。代わりに、アプリからIDトークンをサーバーに送信します。サーバーでは、LINEプラットフォームが提供するエンドポイントを使用してIDトークンを検証し、プロフィール情報を取得してください。
 
-:::note info
-nonce（number used once）
-
-:::
+> [!TIP]
+> nonce（number used once）
+> nonceは、各ログイン試行を一意に識別するために使用します。ランダムな値を発行してください。 nonceを正しく使うことで、[リプレイ攻撃](https://en.wikipedia.org/wiki/Replay_attack)を防ぐことができます。
 
 図に示したAPIについて詳しくは、『LINEログインAPIリファレンス』の以下の項目を参照してください。
 

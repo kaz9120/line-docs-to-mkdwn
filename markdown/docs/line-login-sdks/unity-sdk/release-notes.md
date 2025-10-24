@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/unity-sdk/release-notes/
-copied_at: 2025-10-23T15:59:51.462Z
+copied_at: 2025-10-24T06:29:25.908Z
 ---
 # リリースノート
 
-:::note warn
-バージョン1.0.0以降のリリースノートはGitHubリポジトリで公開しています
-
-:::
+> [!WARNING]
+> バージョン1.0.0以降のリリースノートはGitHubリポジトリで公開しています
+> バージョン1.0.0以降のLINE SDK for Unityのリリースノートは、GitHubリポジトリで公開しています。詳しくは、[Releases](https://github.com/line/line-sdk-unity/releases)を参照してください。
 
 2019/03/20
 

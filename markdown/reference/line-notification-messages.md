@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/reference/line-notification-messages/
-copied_at: 2025-10-23T16:02:07.546Z
+copied_at: 2025-10-24T06:29:54.342Z
 ---
 # LINE通知メッセージAPIリファレンス
 
-:::note warn
-オプション機能を利用するには手続きが必要です
-
-:::
+> [!WARNING]
+> オプション機能を利用するには手続きが必要です
+> 本ドキュメントに記載の機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 *   [共通仕様](#line-notification-messages-common-specifications)
     *   [ステータスコード](#line-notification-messages-status-codes)
@@ -44,20 +43,11 @@ LINE通知メッセージAPIのレスポンスには、以下のHTTPヘッダー
 
 詳しくは、『LINE通知メッセージドキュメント』の「[LINE通知メッセージ（テンプレート）](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/template/)」を参照してください。
 
-:::note alert
-リクエスト元IPアドレスの制限について
-
-:::
+> [!CAUTION]
+> リクエスト元IPアドレスの制限について
+> LINE通知メッセージを送る場合、Messaging APIチャネルの［**セキュリティ設定**］タブで、LINEプラットフォームのAPIを呼び出せるサーバーのIPアドレスを登録しないでください。リクエスト元のIPアドレスを制限した状態でLINE通知メッセージを送ると、送信に失敗することがあります。設定方法について詳しくは、「[長期のチャネルアクセストークン利用時にAPIの呼び出し元を制限する（任意）](https://developers.line.biz/ja/docs/messaging-api/building-bot/#configure-security-settings)」を参照してください。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/pnp/templated/push \ -H 'Authorization: Bearer {channel_access_token}' \ -H 'Content-Type:application/json' \ -H 'X-Line-Delivery-Tag:15034552939884E28681A7D668CEA94C147C716C0EC9DFE8B80B44EF3B57F6BD0602366BC3menu01' \ -d '{     "to": "c9fb9ae95bff879cbcdfc9edf6716640bc40841f3b7352140daa1431af4c319e",    "templateKey": "shipment_completed_ja",    "body": {        "emphasizedItem": {            "itemKey": "date_002_ja",            "content": "2024年8月10日(土)"        },        "items": [            {                "itemKey": "time_range_001_ja",                "content": "午前中"            },            {                "itemKey": "number_001_ja",                "content": "1234567"            },            {                "itemKey": "price_001_ja",                "content": "12,000円"            },            {                "itemKey": "name_010_ja",                "content": "スープセット（冷凍）"            }        ],        "buttons": [            {                "buttonKey": "check_delivery_status_ja",                "url": "https://example.com/CheckDeliveryStatus/"            },            {                "buttonKey": "Check_Contact",                "url": "https://example.com/ContactUs/"            }        ]    } }'`
 
 #### HTTPリクエスト
 
@@ -69,10 +59,9 @@ sh
 
 #### リクエストヘッダー
 
-:::note warn
-サポートしていない機能
-
-:::
+> [!WARNING]
+> サポートしていない機能
+> LINE通知メッセージAPIでは、[リトライキー](https://developers.line.biz/ja/reference/messaging-api/#retry-api-request)（`X-Line-Retry-Key`）を使ったAPIリクエストの再試行はできません。
 
 Content-Type
 
@@ -96,14 +85,6 @@ Webhookを介して、[配信完了イベント](https://developers.line.biz/ja/
 
 _X-Line-Delivery-Tagの例_
 
-Shell
-
-[](#)
-
-sh
-
-`15034552939884E28681A7D668CEA94C147C716C0EC9DFE8B80B44EF3B57F6BD0602366BC3menu01`
-
 #### リクエストボディ
 
 to
@@ -116,10 +97,10 @@ String
 
 メッセージの送信条件について詳しくは、「[LINE通知メッセージが送信される条件](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   [グループトークと複数人トーク](https://developers.line.biz/ja/docs/messaging-api/group-chats/#group-chat-types)は送信対象として指定できません。
+> *   複数の電話番号を送信対象として指定することはできません。
 
 templateKey
 
@@ -195,14 +176,6 @@ String
 
 _アイテムの例_
 
-JSON
-
-[](#)
-
-json
-
-`{   "itemKey": "time_range_001_ja",  "content": "午前中" }`
-
 ##### ボタン
 
 buttonKey
@@ -226,27 +199,11 @@ String
 
 _ボタンの例_
 
-JSON
-
-[](#)
-
-json
-
-`{   "buttonKey": "Check_Contact",  "url": "https://example.com/ContactUs/" }`
-
 #### レスポンス
 
 ステータスコード`202`と空のJSONオブジェクトを返します。
 
 _レスポンスの例_
-
-JSON
-
-[](#)
-
-json
-
-`{}`
 
 #### エラーレスポンス
 
@@ -262,14 +219,6 @@ json
 
 _エラーレスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`// 存在しない、または使用する権限がないテンプレートを指定した場合（400 Bad Request） {   "message": "Invalid templateKey: reserve_004",  "details": [    {      "message": "The specified template doesn't exist, or you don't have the permission",      "property": "templateKey"    }  ] } // 存在しないアイテムを指定した場合（400 Bad Request） {   "message": "The request body has 1 invalid key(s).",  "details": [    {      "message": "The specified item key does not exist: datetime_000",      "property": "body.items[0].itemKey"    }  ] } // 同じアイテムを重複して指定した場合（400 Bad Request） {   "message": "The request body has 1 error(s)",  "details": [    {      "message": "Duplicate itemKey in items or between emphasizedItem and items are not allowed: date_002_ja",      "property": "body.emphasizedItem.itemKey"    }  ] } // メッセージの送信先が無効な場合（400 Bad Request） {   "message": "The request body has 1 error(s)",  "details": [    {      "message": "The value must be a valid SHA-256 digest.",      "property": "to"    }  ] } // LINE通知メッセージ（テンプレート）を送信する権限がない場合（403 Forbidden） {   "message": "Access to this API is not available for your account" } // LINE通知メッセージの送信に失敗した場合（422 Unprocessable Entity） {   "message": "Failed to send messages" }`
-
 ### 送信済みのLINE通知メッセージ（テンプレート）の数を取得する
 
 「[LINE通知メッセージ（テンプレート）を送る](https://developers.line.biz/ja/reference/line-notification-messages/#send-line-notification-message-template)」エンドポイントを使って送信された、LINE通知メッセージ（テンプレート）の数を取得します。
@@ -277,14 +226,6 @@ json
 詳しくは、『LINE通知メッセージドキュメント』の「[送信済みLINE通知メッセージの数を取得する](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/#get-number-of-sent-line-notification-messages)」を参照してください。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X GET 'https://api.line.me/v2/bot/message/delivery/pnp/templated?date=20240916' \ -H 'Authorization: Bearer {channel_access_token}'`
 
 #### HTTPリクエスト
 
@@ -337,14 +278,6 @@ Number
 
 _レスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`{   "status": "ready",  "success": 3 }`
-
 #### エラーレスポンス
 
 以下のHTTPステータスコードと、エラーレスポンスを返します。
@@ -357,14 +290,6 @@ json
 
 _エラーレスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`// 無効な日付を指定した場合（400 Bad Request） {   "message": "The value for the 'date' parameter is invalid" }`
-
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}
 
 ## LINE通知メッセージ（フレキシブル）
@@ -376,25 +301,19 @@ html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html 
 
 ユーザーの電話番号を指定してLINE通知メッセージ（フレキシブル）を送るAPIです。
 
-:::note info
-従来の「LINE通知メッセージ」は、名称が「LINE通知メッセージ（フレキシブル）」に変更されました
+> [!TIP]
+> 従来の「LINE通知メッセージ」は、名称が「LINE通知メッセージ（フレキシブル）」に変更されました
+> LINE通知メッセージに、用意されたテンプレートやアイテムを組み合わせて簡単にメッセージを作成できる「[LINE通知メッセージ（テンプレート）](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/template/)」が新たに加わりました。
+> 
+> これに伴い、UX審査を要する従来の「LINE通知メッセージ」は、名称が「LINE通知メッセージ（フレキシブル）」に変更されました。
+> 
+> 詳しくは、2025年6月2日の『法人ユーザー向けお知らせ』、「[LINE通知メッセージ（テンプレート）の提供を開始しました](https://developers.line.biz/ja/docs/partner-docs/notice/#partner-news-20250602)」を参照してください。
 
-:::
-
-:::note alert
-リクエスト元IPアドレスの制限について
-
-:::
+> [!CAUTION]
+> リクエスト元IPアドレスの制限について
+> LINE通知メッセージを送る場合、Messaging APIチャネルの［**セキュリティ設定**］タブで、LINEプラットフォームのAPIを呼び出せるサーバーのIPアドレスを登録しないでください。リクエスト元のIPアドレスを制限した状態でLINE通知メッセージを送ると、送信に失敗することがあります。設定方法について詳しくは、「[長期のチャネルアクセストークン利用時にAPIの呼び出し元を制限する（任意）](https://developers.line.biz/ja/docs/messaging-api/building-bot/#configure-security-settings)」を参照してください。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X POST https://api.line.me/bot/pnp/push \ -H 'Authorization: Bearer {channel_access_token}' \ -H 'Content-Type:application/json' \ -d '{     "to": "{hashed_phone_number}",    "messages":[        {            "type":"text",            "text":"Hello, world1"        },        {            "type":"text",            "text":"Hello, world2"        }    ] }' #リクエストの例(X-Line-Delivery-Tagあり) curl -v -X POST https://api.line.me/bot/pnp/push \ -H 'Authorization: Bearer {channel_access_token}' \ -H 'Content-Type:application/json' \ -H 'X-Line-Delivery-Tag:{delivery_tag}' \ -d '{     "to": "{hashed_phone_number}",    "messages":[        {            "type":"text",            "text":"Hello, world1"        },        {            "type":"text",            "text":"Hello, world2"        }    ] }'`
 
 #### HTTPリクエスト
 
@@ -406,10 +325,9 @@ sh
 
 #### リクエストヘッダー
 
-:::note warn
-サポートしていない機能
-
-:::
+> [!WARNING]
+> サポートしていない機能
+> LINE通知メッセージAPIでは、[リトライキー](https://developers.line.biz/ja/reference/messaging-api/#retry-api-request)（`X-Line-Retry-Key`）を使ったAPIリクエストの再試行はできません。
 
 Content-Type
 
@@ -433,14 +351,6 @@ Webhookを介して、[配信完了イベント](https://developers.line.biz/ja/
 
 _X-Line-Delivery-Tagの例_
 
-Shell
-
-[](#)
-
-sh
-
-`15034552939884E28681A7D668CEA94C147C716C0EC9DFE8B80B44EF3B57F6BD0602366BC3menu01`
-
 #### リクエストボディ
 
 to
@@ -453,10 +363,10 @@ String
 
 メッセージの送信条件について詳しくは、「[LINE通知メッセージが送信される条件](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages)」を参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> *   [グループトークと複数人トーク](https://developers.line.biz/ja/docs/messaging-api/group-chats/#group-chat-types)は送信対象として指定できません。
+> *   複数の電話番号を送信対象として指定することはできません。
 
 messages
 
@@ -474,14 +384,6 @@ messages
 
 _レスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`{}`
-
 #### エラーレスポンス
 
 以下のHTTPステータスコードと、エラーレスポンスを返します。
@@ -495,14 +397,6 @@ json
 
 _エラーレスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`// メッセージの送信先が無効な場合（400 Bad Request） {   "message": "The request body has 1 error(s)",  "details": [    {      "message": "The value must be a valid SHA-256 digest.",      "property": "to"    }  ] } // LINE通知メッセージの送信に失敗した場合（422 Unprocessable Entity） {   "message": "Failed to send messages" }`
-
 ### 送信済みのLINE通知メッセージ（フレキシブル）の数を取得する
 
 「[LINE通知メッセージ（フレキシブル）を送る](https://developers.line.biz/ja/reference/line-notification-messages/#send-line-notification-message-flexible)」エンドポイントを使って送信された、LINE通知メッセージ（フレキシブル）の数を取得します。
@@ -510,14 +404,6 @@ json
 詳しくは、『LINE通知メッセージドキュメント』の「[送信済みLINE通知メッセージの数を取得する](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/#get-number-of-sent-line-notification-messages)」を参照してください。
 
 _リクエストの例_
-
-Shell
-
-[](#)
-
-sh
-
-`curl -v -X GET 'https://api.line.me/v2/bot/message/delivery/pnp?date=20211231' \ -H 'Authorization: Bearer {channel_access_token}'`
 
 #### HTTPリクエスト
 
@@ -570,14 +456,6 @@ Number
 
 _レスポンスの例_
 
-JSON
-
-[](#)
-
-json
-
-`{   "status": "ready",  "success": 3 }`
-
 #### エラーレスポンス
 
 以下のHTTPステータスコードと、エラーレスポンスを返します。
@@ -589,13 +467,5 @@ json
 詳しくは、『Messaging APIリファレンス』の「[ステータスコード](https://developers.line.biz/ja/reference/messaging-api/#status-codes)」および「[エラーレスポンス](https://developers.line.biz/ja/reference/messaging-api/#error-responses)」を参照してください。
 
 _エラーレスポンスの例_
-
-JSON
-
-[](#)
-
-json
-
-`// 無効な日付を指定した場合（400 Bad Request） {   "message": "The value for the 'date' parameter is invalid" }`
 
 html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}

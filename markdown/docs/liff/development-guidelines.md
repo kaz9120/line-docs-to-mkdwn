@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/development-guidelines/
-copied_at: 2025-10-23T16:00:00.079Z
+copied_at: 2025-10-24T06:29:10.953Z
 ---
 # LIFFアプリ開発ガイドライン
 
@@ -14,10 +14,9 @@ LIFFを使ったウェブアプリを開発する際は、以下の開発ガイ�
 
 LIFFはLINEログインの仕組みを利用しています。そのため、『LINEログインドキュメント』の「[LINEログイン開発ガイドライン](https://developers.line.biz/ja/docs/line-login/development-guidelines/)」の内容にも従ってください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LIFF開発における基本ルールは、[規約とポリシー](https://developers.line.biz/ja/terms-and-policies/)に記載される内容に基づきます。
 
 ## ユーザー情報は必ず安全に取り扱う
 
@@ -39,19 +38,17 @@ LIFFはLINEログインの仕組みを利用しています。そのため、『
 *   テスト段階のLIFFアプリに対するアクセス権限は、LIFFアプリ側で制限してください。
 *   LIFFアプリとLIFFアプリ内で開くコンテンツのURLスキームは、**https**である必要があります。コンテンツのURLスキームがhttpの場合は、[LINE内ブラウザ](https://developers.line.biz/ja/glossary/#line-iab)で表示されます。この場合、LIFFアプリとしてチャネルに追加されていても、LIFFアプリとして動作しません。
 
-:::note warn
-LIFFアプリにおけるcookie、localStorage、またはsessionStorageの利用
-
-:::
+> [!WARNING]
+> LIFFアプリにおけるcookie、localStorage、またはsessionStorageの利用
+> LIFFアプリではcookie、localStorage、またはsessionStorageを利用できます。ただし、OSの仕様変更によって将来的に利用が制限される可能性があります。
 
 ## LINEプラットフォームへの大量リクエストの禁止
 
 負荷テストを目的に、[LIFF URLスキーム](https://developers.line.biz/ja/docs/line-login/using-line-url-scheme/#opening-a-liff-app) （`https://liff.line.me/{liffId}`）を経由してLIFFアプリへ大量のアクセスを行ったり、[LIFF API](https://developers.line.biz/ja/reference/liff/)に大量のリクエストを送信したりしないでください。LIFFアプリの負荷テストを行う場合は、LINEプラットフォームへの大量のリクエストが発生しないテスト環境を用意してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> レート制限を超えて送信を行った場合、`429 Too Many Requests`が返却され、エラーとなります。
 
 ## ユーザー退会時の連動アプリに対する権限取消
 

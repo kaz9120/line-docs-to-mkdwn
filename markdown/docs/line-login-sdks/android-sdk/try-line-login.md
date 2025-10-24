@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/try-line-login/
-copied_at: 2025-10-23T15:59:21.631Z
+copied_at: 2025-10-24T06:29:00.487Z
 ---
 # サンプルアプリを試してみる
 
@@ -25,10 +25,9 @@ LINEヤフー株式会社が提供するサンプルチャネルを使ってサ�
 2.  Android StudioでLINE SDKプロジェクトを開きます。
 3.  プロジェクトをビルドし、AndroidデバイスまたはAndroid Emulatorを使用してアプリを実行します。
 
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> サンプルアプリには、既に`1620019587`というサンプルチャネルIDが設定されています。自身のチャネルIDを設定する必要はありません。
 
 ## サンプルアプリを実行してみる
 
@@ -46,10 +45,9 @@ LINEヤフー株式会社が提供するサンプルチャネルを使ってサ�
 
 ログインしていない場合は、［**login**］ボタンが表示されます。［**login**］ボタンをタップすると、アプリ連携ログインの処理が開始されます。このログインメソッドとプロセスは、SDKに組み込まれたログインボタンと同じですが、`Scopes`などのオプションで調整できます。詳しくは、LINE SDK が提供する`LineLoginApi`クラスの`getLoginIntent`メソッドを参照してください。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> デフォルトのスコープは`PROFILE`と`OPENID_CONNECT`です。
 
 ### ［web login］ボタンを使う
 

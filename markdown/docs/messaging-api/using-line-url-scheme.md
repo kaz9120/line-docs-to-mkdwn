@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-line-url-scheme/
-copied_at: 2025-10-23T15:56:21.854Z
+copied_at: 2025-10-24T06:28:03.027Z
 ---
 # LINE URLスキームでLINEの機能を使う
 
@@ -16,15 +16,15 @@ LINE URLスキームを使うと、スタンプショップやLIFFアプリを�
 | `https://liff.line.me/`で始まるURLスキーム | [LIFFアプリ](https://developers.line.biz/ja/docs/liff/overview/)を開くためのURLスキーム |
 | `https://miniapp.line.me/`で始まるURLスキーム | [LINEミニアプリ](https://developers.line.biz/ja/docs/line-mini-app/discover/introduction/)を開くためのURLスキーム |
 
-:::note alert
-「line://」は非推奨です
+> [!CAUTION]
+> 「line://」は非推奨です
+> ユーザーが`line://`で始まるURLにアクセスした際に、ユーザーおよびLINEヤフー株式会社の意図に反して、LINE以外のアプリを起動させる「乗っ取り攻撃」を防ぐため、`line://`は非推奨です。「乗っ取り攻撃」は、特定の条件を満たした場合にのみ成立します。
+> 
+> なお、`line://`を廃止する時期は未定です。
 
-:::
-
-:::note warn
-LINE以外のネイティブアプリを起動するURLスキームはLINEヤフー株式会社では提供していません
-
-:::
+> [!WARNING]
+> LINE以外のネイティブアプリを起動するURLスキームはLINEヤフー株式会社では提供していません
+> LINE以外のネイティブアプリを起動するURLスキームは、LINEヤフー株式会社では提供していません。ただし他社が提供するネイティブアプリにおいて、そのアプリを起動するURLスキームが用意されている場合は、そのURLスキームをLINEの[リッチメニュー](https://developers.line.biz/ja/docs/messaging-api/using-rich-menus/)や[Flex Message](https://developers.line.biz/ja/docs/messaging-api/using-flex-messages/)などのURIアクションで利用することはできます。
 
 ## LINE URLスキームをクリックしたときの動作
 
@@ -39,10 +39,9 @@ LINE以外のネイティブアプリを起動するURLスキームはLINEヤフ
 
 LINE URLスキームは、iOS版LINEまたはAndroid版LINEをインストールしたスマートフォンで利用できます。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINE URLスキームは、デスクトップ版（macOS、Windows）のLINEではサポートされません。
 
 ## LINEで利用できるURLスキーム
 
@@ -66,10 +65,9 @@ LINEで利用できるURLスキームは以下のとおりです。なお、指�
 
 このLINE URLスキームを使うと、カメラまたはカメラロールを開くことができます。カメラロールは、ユーザーがトークに送信する画像を選択する画面です。
 
-:::note warn
-カメラまたはカメラロールを開く際の制限事項
-
-:::
+> [!WARNING]
+> カメラまたはカメラロールを開く際の制限事項
+> このURLスキームは、LINEのトーク（オープンチャットを含む）でのみサポートされます。トーク以外の機能や、LINE以外のアプリ、LIFFアプリではサポートされません。
 
 ![](https://developers.line.biz/media/messaging-api/using-line-url-scheme/camera-screen.png)
 
@@ -85,10 +83,9 @@ LINEで利用できるURLスキームは以下のとおりです。なお、指�
 
 このLINE URLスキームを使うと、「位置情報」画面を開き、位置情報をLINE公式アカウントに送信できます。
 
-:::note warn
-「位置情報」画面を開く際の制限事項
-
-:::
+> [!WARNING]
+> 「位置情報」画面を開く際の制限事項
+> このURLスキームはLINE公式アカウントとの1対1のトークでのみサポートされます。他の種類のトークや、LINE以外のアプリ、LIFFアプリではサポートされません。
 
 ![](https://developers.line.biz/media/messaging-api/using-line-url-scheme/location.png)
 
@@ -107,20 +104,26 @@ LINEで利用できるURLスキームは以下のとおりです。なお、指�
 | https://line.me/R/ti/p/`{Percent-encoded LINE ID}` | 指定したLINE公式アカウントのプロフィールを開きます。LINE公式アカウントとすでに友だちだった場合は、1対1のトーク画面を開きます。 |
 | https://line.me/R/nv/recommendOA/`{Percent-encoded LINE ID}` | 「送信先を選択」画面を開きます。友だち、グループトーク、または複数人トークを選択してLINE公式アカウントのリンクをシェアできます。 |
 
-:::note warn
-「Percent-encoded LINE ID」はパーセントエンコードしてください
+> [!WARNING]
+> 「Percent-encoded LINE ID」はパーセントエンコードしてください
+> `{Percent-encoded LINE ID}`はUTF-8を用いて[パーセントエンコード](https://developer.mozilla.org/ja/docs/Glossary/Percent-encoding)してください。たとえば、LINE IDが`@linedevelopers`の場合は、`https://line.me/R/ti/p/%40linedevelopers`や`https://line.me/R/nv/recommendOA/%40linedevelopers`のようにします。LINE IDをパーセントエンコードせずにそのまま置き換えた場合も動作しますが、非推奨です。
+> 
+> ただし「送信先を選択」画面を開くURLスキーム（`https://line.me/R/nv/recommendOA/%40linedevelopers`）でLINE IDをパーセントエンコードした場合、Android版のLINEバージョン13.8.0未満では動作しません。
+> 
+> LINE公式アカウントのLINE IDは、[ベーシックIDとプレミアムID](https://help.linebiz.com/lineadshelp/s/article/L000001191?language=ja)のどちらも利用できます。
 
-:::
+> [!TIP]
+> LINE公式アカウントのLINE IDを確認するには？
+> LINE公式アカウントのLINE IDは[LINE Official Account Manager](https://manager.line.biz/)で確認できます。詳しくは、「[LINE公式アカウントのLINE IDをシェアする](https://developers.line.biz/ja/docs/messaging-api/sharing-bot/#share-the-line-id-of-your-line-official-account)」を参照してください。
 
-:::note info
-LINE公式アカウントのLINE IDを確認するには？
-
-:::
-
-:::note info
-パソコンのブラウザで開いた場合
-
-:::
+> [!TIP]
+> パソコンのブラウザで開いた場合
+> ユーザーが`https://line.me/R/ti/p/{Percent-encoded LINE ID}`をパソコンで開いた場合、LINE公式アカウントのWeb版プロフィール（例：[LINE FRIENDSのプロフィール](https://line.me/R/ti/p/%40linecharacter)）や、QRコードが表示されます。どちらが表示されるかは、以下の条件を満たしているかどうかで異なります。
+> 
+> *   LINE公式アカウントが認証済アカウントである
+> *   Web版プロフィールを「利用する」設定にしている
+> 
+> どちらの条件も満たしている場合、LINE公式アカウントのWeb版プロフィールがQRコード付きで表示されます。条件を満たしていない場合は、LINE公式アカウントのQRコードのみが表示されます。利用中の未認証アカウントを認証済アカウントに変更したり、Web版プロフィールを利用したりするための設定は、[LINE Official Account Manager](https://manager.line.biz/)から行うことができます。
 
 ### LINE公式アカウントのLINE VOOMやプロフィールを開く
 
@@ -134,20 +137,17 @@ LINE公式アカウントのLINE IDを確認するには？
 | https://line.me/R/home/public/profile?id=`{LINE ID without @}` | 指定したLINE公式アカウントのプロフィールを開きます。 |
 | https://line.me/R/home/public/post?id=`{LINE ID without @}`&postId=`{postId}` | 指定したLINE公式アカウントの特定のLINE VOOMの投稿を開きます。各投稿のIDは、[LINE VOOM Studio](https://voom-studio.line.biz/)で確認できます。 |
 
-:::note warn
-このURLスキームではLINE IDの先頭の@を含めないでください
+> [!WARNING]
+> このURLスキームではLINE IDの先頭の@を含めないでください
+> `{LINE ID without @}`は、LINE公式アカウントのLINE IDに置き換えてください。ベーシックIDと[プレミアムID](https://developers.line.biz/ja/glossary/#premium-id)のどちらも指定できます。なお、LINE IDの先頭の`@`を含めないでください。たとえば、LINE IDが`@linedevelopers`の場合は、`https://line.me/R/home/public/main?id=linedevelopers`のようにします。
 
-:::
+> [!TIP]
+> LINE公式アカウントのLINE IDを確認するには？
+> LINE公式アカウントのLINE IDは[LINE Official Account Manager](https://manager.line.biz/)で確認できます。詳しくは、「[LINE公式アカウントのLINE IDをシェアする](https://developers.line.biz/ja/docs/messaging-api/sharing-bot/#share-the-line-id-of-your-line-official-account)」を参照してください。
 
-:::note info
-LINE公式アカウントのLINE IDを確認するには？
-
-:::
-
-:::note info
-LINE VOOMへの投稿とプロフィールのカスタマイズ
-
-:::
+> [!TIP]
+> LINE VOOMへの投稿とプロフィールのカスタマイズ
+> あなたが管理しているLINE公式アカウントのLINE VOOMに投稿したり、プロフィールをカスタマイズしたりするには、[LINE VOOM Studio](https://voom-studio.line.biz/)や[LINE Official Account Manager](https://manager.line.biz/)を使います。
 
 ### LINE公式アカウントとのトーク画面を開く
 
@@ -158,15 +158,15 @@ LINE VOOMへの投稿とプロフィールのカスタマイズ
 | https://line.me/R/oaMessage/`{Percent-encoded LINE ID}` | LINE公式アカウントとのトーク画面を開きます。 |
 | https://line.me/R/oaMessage/`{Percent-encoded LINE ID}`/?`{text_message}` | `{text_message}`に設定したテキストメッセージがメッセージ入力欄に入力された状態で、LINE公式アカウントとのトーク画面を開きます。 |
 
-:::note warn
-「Percent-encoded LINE ID」と「text_message」はパーセントエンコードしてください
+> [!WARNING]
+> 「Percent-encoded LINE ID」と「text_message」はパーセントエンコードしてください
+> `{Percent-encoded LINE ID}`と`{text_message}`はUTF-8を用いて[パーセントエンコード](https://developer.mozilla.org/ja/docs/Glossary/Percent-encoding)してください。たとえば、LINE IDが`@linedevelopers`のLINE公式アカウントに対して、`こんにちは`というテキストメッセージを送信する場合は、`https://line.me/R/oaMessage/%40linedevelopers/?%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF`のようにします。LINE IDをパーセントエンコードせずにそのまま置き換えた場合も動作しますが、非推奨です。
+> 
+> LINE公式アカウントのLINE IDは、[ベーシックIDとプレミアムID](https://help.linebiz.com/lineadshelp/s/article/L000001191?language=ja)のどちらも利用できます。
 
-:::
-
-:::note info
-LINE公式アカウントのLINE IDを確認するには？
-
-:::
+> [!TIP]
+> LINE公式アカウントのLINE IDを確認するには？
+> LINE公式アカウントのLINE IDは[LINE Official Account Manager](https://manager.line.biz/)で確認できます。詳しくは、「[LINE公式アカウントのLINE IDをシェアする](https://developers.line.biz/ja/docs/messaging-api/sharing-bot/#share-the-line-id-of-your-line-official-account)」を参照してください。
 
 ### テキストメッセージを送る
 
@@ -176,10 +176,9 @@ LINE公式アカウントのLINE IDを確認するには？
 | --- | --- |
 | https://line.me/R/share?text=`{text_message}` | 「送信先を選択」画面を開きます。ユーザーは、友だち、グループトーク、または複数人トークを選択して、`{text_message}`に設定されたテキストメッセージを送信できます。テキストはKeepメモやLINE VOOM、他のアプリにも送信できます。 |
 
-:::note warn
-「text_message」はパーセントエンコードしてください
-
-:::
+> [!WARNING]
+> 「text_message」はパーセントエンコードしてください
+> `{text_message}`はUTF-8を用いて[パーセントエンコード](https://developer.mozilla.org/ja/docs/Glossary/Percent-encoding)してください。たとえば、`こんにちは`というテキストメッセージを指定する場合は、`https://line.me/R/share?text=%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF`のようにします。
 
 ### プロフィール情報を開く
 
@@ -220,7 +219,6 @@ LINE公式アカウントのLINE IDを確認するには？
 | `https://line.me/R/nv/connectedApps` | 「アカウント」 > 「連動アプリ」設定画面を開きます。この画面では、認証済みアプリに付与されている権限を確認したり、アプリの連動を解除したりできます。 |
 | `https://line.me/R/nv/connectedDevices` | 「アカウント」 >「ログイン中の端末」設定画面を開きます。 |
 | `https://line.me/R/nv/settings/privacy` | 「プライバシー管理」の設定画面を開きます。 |
-| `https://line.me/R/nv/things/deviceLink` | 「LINE Things」設定画面を開きます。LINEとデバイスを連携したり、連携済みのデバイスを確認したりする画面です。 |
 | `https://line.me/R/nv/settings/sticker` | 「スタンプ」設定画面を開きます。 |
 | `https://line.me/R/nv/stickerShop/mySticker` | 「スタンプ」 > 「マイスタンプ」設定画面を開きます。 |
 | `https://line.me/R/nv/settings/themeSettingsMenu`（iOS）、`https://line.me/R/nv/settings/theme`（Android） | 「着せかえ」設定画面を開きます。<br/>iOSとAndroidでスキームが異なります。 |
@@ -249,10 +247,9 @@ LINE公式アカウントのLINE IDを確認するには？
 | `https://line.me/R/shop/sticker/event` | スタンプショップの無料タブを開きます。 |
 | `https://line.me/R/shop/sticker/category` | スタンプショップのカテゴリータブを開きます。 |
 
-:::note info
-独自のスタンプセットを作成するには？
-
-:::
+> [!TIP]
+> 独自のスタンプセットを作成するには？
+> ユーザー向けに独自のスタンプセットを作成するには、[LINE Creators Market](https://creator.line.me/ja/)サイトで[LINEスタンプメーカー](https://creator.line.me/ja/stickermaker/)アプリを使用してください。
 
 ### 着せかえショップを開く
 
@@ -277,19 +274,20 @@ LINE公式アカウントのLINE IDを確認するには？
 
 LIFFアプリが開くまでの処理について詳しくは、『LIFFドキュメント』の「[LIFFアプリを開く](https://developers.line.biz/ja/docs/liff/opening-liff-app/)」を参照してください。
 
-:::note warn
-「https://line.me/R/app/{liffId}」および「line://app/{liffId}」は非推奨です
-
-:::
+> [!WARNING]
+> 「https://line.me/R/app/{liffId}」および「line://app/{liffId}」は非推奨です
+> [LIFF v1](https://developers.line.biz/ja/docs/liff/versioning-policy/#life-cycle-schedule)向けに提供されていた以下の形式のLIFF URLは、[非推奨](https://developers.line.biz/ja/glossary/#deprecated)です。
+> 
+> *   `https://line.me/R/app/{liffId}` 
+> *   `line://app/{liffId}`
 
 ### URLを外部ブラウザで開く
 
 クエリパラメータを使うと、[LINE内ブラウザ](https://developers.line.biz/ja/glossary/#line-iab)の代わりに[外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)でURLを開くことができます。
 
-:::note warn
-これらのクエリパラメータはLIFFアプリではサポートされません
-
-:::
+> [!WARNING]
+> これらのクエリパラメータはLIFFアプリではサポートされません
+> これらのクエリパラメータは、LINEアプリからアクセスするすべてのURLで機能します。ただし、LIFFアプリのみ例外的にサポートされないため、LIFF URLにクエリパラメータを付与しても機能しません。
 
 | クエリパラメータ付きのURL | 説明 |
 | --- | --- |

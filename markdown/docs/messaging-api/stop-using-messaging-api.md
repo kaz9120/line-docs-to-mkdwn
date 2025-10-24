@@ -1,13 +1,12 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/stop-using-messaging-api/
-copied_at: 2025-10-23T15:56:45.431Z
+copied_at: 2025-10-24T06:28:08.820Z
 ---
 # Messaging APIの利用を停止する
 
-:::note info
-LINE公式アカウントの利用を停止する
-
-:::
+> [!TIP]
+> LINE公式アカウントの利用を停止する
+> Messaging APIチャネルと紐づいているLINE公式アカウントの利用を停止したい場合は、「[LINE公式アカウントの利用を停止する](https://developers.line.biz/ja/docs/messaging-api/stop-using-line-official-account/)」を参照してください。
 
 Messaging APIチャネルに紐づいているLINE公式アカウントの利用は継続したいが、Messaging APIの利用は停止したい場合は、以下の作業を行うことを推奨します。なお、Messaging APIチャネルに紐づいているLINE公式アカウントを残し、Messaging APIチャネルのみを削除することはできません。
 

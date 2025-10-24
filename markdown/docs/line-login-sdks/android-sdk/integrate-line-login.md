@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/android-sdk/integrate-line-login/
-copied_at: 2025-10-23T15:59:23.679Z
+copied_at: 2025-10-24T06:29:03.634Z
 ---
 # AndroidアプリにLINEログインを組み込む
 
@@ -13,15 +13,13 @@ LINE SDK for Androidをビルドして使用するには、以下が必要です
 *   [プロバイダー](https://developers.line.biz/ja/glossary/#provider)およびLINEログインのチャネルを作成する。どちらもLINE Developersコンソールで[作成できます](https://developers.line.biz/console/register/line-login/channel/)。
 *   `minSdkVersion`を24以降（Android 7.0以降）に設定する。
 
-:::note info
-minSdkVersionを24未満（Android 7.0未満）に設定する
+> [!TIP]
+> minSdkVersionを24未満（Android 7.0未満）に設定する
+> `minSdkVersion`を24未満（Android 7.0未満）に設定したい場合は、以前のバージョンのLINE SDK for Androidを利用してください。詳しくは、「[Releases](https://github.com/line/line-sdk-android/releases)」を参照してください。
 
-:::
-
-:::note warn
-リソース名のコンフリクト
-
-:::
+> [!WARNING]
+> リソース名のコンフリクト
+> SDK内のリソースとコンフリクトする可能性があるため、`linesdk_`で始まるリソースIDは使用しないでください。
 
 ## 以前のバージョンからのアップグレードについて
 
@@ -60,10 +58,9 @@ xml
 
 `<uses-permission android:name="android.permission.INTERNET"/>`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ログイン呼び出しを行うアクティビティの起動モードが`singleInstance`に設定されていると、`onActivityResult`コールバックを正しく受け取れない場合があります。
 
 ## アプリをチャネルにリンクする
 
@@ -160,10 +157,9 @@ java
 
 `private static final int REQUEST_CODE = 1; ... final TextView loginButton = (TextView) findViewById(R.id.login_button); loginButton.setOnClickListener(new View.OnClickListener() {     public void onClick(View view) {        try{            // App-to-app login            Intent loginIntent = LineLoginApi.getLoginIntent(                view.getContext(),                Constants.CHANNEL_ID,                new LineAuthenticationParams.Builder()                        .scopes(Arrays.asList(Scope.PROFILE))                        // .nonce("<a randomly-generated string>") // nonce can be used to improve security                        .build());            startActivityForResult(loginIntent, REQUEST_CODE);         }        catch(Exception e) {            Log.e("ERROR", e.toString());        }    } });`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> アプリ連携ログインではなく、ブラウザでLINEログイン画面を開いてユーザーをログインさせたい場合は、`getLoginIntentWithoutLineAppAuth()`メソッドを使います。
 
 ## ログイン結果を処理する
 
@@ -197,10 +193,11 @@ java
 
 ### ユーザー情報をバックエンドサーバーで利用する
 
-:::note alert
-ユーザーのなりすまし
-
-:::
+> [!CAUTION]
+> ユーザーのなりすまし
+> バックエンドサーバーでは、`LineProfile`オブジェクトから取得できるユーザーIDなどの情報は、**利用しないでください**。悪意のあるクライアントは、任意のユーザーになりすますために、任意のユーザーIDや不正な情報をバックエンドサーバーに送信できます。
+> 
+> ユーザーIDなどの情報を送信する代わりにアクセストークンを送信し、バックエンドサーバーではアクセストークンからユーザーIDなどの情報を取得します。
 
 通常、バックエンドサーバーでユーザーを識別するために、ユーザーIDや表示名のような、ユーザーのLINEアカウントに登録されている情報を使用します。そのような情報をアプリからバックエンドサーバーに送信する際は、情報を平文で送信するのではなく、アプリで取得したアクセストークンを送信してください。信頼できる情報を安全に送受信するために、アクセストークンを利用してください。バックエンドサーバーでアクセストークンの正当性を検証したり、ユーザー情報をLINEプラットフォームのサーバーから取得したりできます。
 
@@ -228,9 +225,8 @@ java
     `LineApiClientBuilder apiClientBuilder = new LineApiClientBuilder(getApplicationContext(), "your channel id here"); lineApiClient = apiClientBuilder.build();`
     
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINE SDK for Androidのメソッドの実行にはネットワーク通信が伴うため、メインスレッドで呼び出すと`NetworkOnMainThreadExceptions`が発生します。`AsyncTask`クラスを使ってメソッドを呼び出すことで、この問題を回避できます。
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}

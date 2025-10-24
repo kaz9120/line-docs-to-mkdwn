@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/using-user-profile/
-copied_at: 2025-10-23T16:00:21.329Z
+copied_at: 2025-10-24T06:29:19.794Z
 ---
 # LIFFアプリおよびサーバーでユーザー情報を使用する
 
@@ -17,15 +17,13 @@ LIFFアプリで、これらのユーザー情報を正しく処理しないと�
 *   [IDトークンを送信してユーザー情報を取得する](#sending-id-token)
 *   [アクセストークンを送信してユーザー情報を取得する](#sending-access-token)
 
-:::note alert
-ユーザー情報をサーバーに送信しないでください
+> [!CAUTION]
+> ユーザー情報をサーバーに送信しないでください
+> `liff.getDecodedIDToken()`および`liff.getProfile()`で取得したユーザーのプロフィールの詳細を、LIFFアプリからサーバーに送信しないでください。
 
-:::
-
-:::note info
-ヒント
-
-:::
+> [!TIP]
+> ヒント
+> LIFF SDKは、LINEプラットフォームから取得したIDトークンおよびアクセストークンを検証しています。そのため、`liff.getIDToken()`および`liff.getAccessToken()`で取得したトークンは信用できます。
 
 ### IDトークンを送信してユーザー情報を取得する
 
@@ -41,7 +39,6 @@ LIFFアプリで、これらのユーザー情報を正しく処理しないと�
 
 [`liff.getDecodedIDToken()`](https://developers.line.biz/ja/reference/liff/#get-decoded-id-token)または[`liff.getProfile()`](https://developers.line.biz/ja/reference/liff/#get-profile)で取得したユーザーのプロフィール情報を使用してください。
 
-:::note alert
-ユーザー情報をサーバーに送信しないでください
-
-:::
+> [!CAUTION]
+> ユーザー情報をサーバーに送信しないでください
+> `liff.getDecodedIDToken()`および`liff.getProfile()`で取得したユーザーのプロフィールの詳細を、LIFFアプリからサーバーに送信しないでください。

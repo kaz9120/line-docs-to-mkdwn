@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-like-buttons/
-copied_at: 2025-10-23T15:58:02.996Z
+copied_at: 2025-10-24T06:28:27.420Z
 ---
 # 「いいね」ボタンを設置する
 
@@ -8,10 +8,9 @@ copied_at: 2025-10-23T15:58:02.996Z
 
 「いいね」ボタンは、「友だち追加」ボタンと一緒に設置することもできます。「友だち追加」ボタンと一緒に設置するには、LINE公式アカウントのIDが必要になります。
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> AppleのITPポリシーにより、Safariで「いいね」ボタンが正常に動作しない場合があります。
 
 ## ボタンを作成
 

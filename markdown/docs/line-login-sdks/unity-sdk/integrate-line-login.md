@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/unity-sdk/integrate-line-login/
-copied_at: 2025-10-23T15:59:40.632Z
+copied_at: 2025-10-24T06:29:06.916Z
 ---
 # UnityゲームにLINEログインを組み込む
 
@@ -14,10 +14,9 @@ copied_at: 2025-10-23T15:59:40.632Z
 
 ### プロジェクトにインポートする
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINE SDK for Unityをプロジェクトにインポートする前に、プロジェクトのバックアップを作成するか、バージョン管理システムに保存してください。
 
 Unityプロジェクトを開いたまま、ダウンロードした`.unitypackage`ファイルをダブルクリックします。以下のように、パッケージ内のすべてのファイルをインポートします。
 

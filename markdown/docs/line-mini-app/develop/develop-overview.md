@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/develop-overview/
-copied_at: 2025-10-23T16:01:05.572Z
+copied_at: 2025-10-24T06:29:34.047Z
 ---
 # 開発を始めよう
 
@@ -77,15 +77,21 @@ LINEミニアプリチャネルを作成する際、認証プロバイダーの�
 
 ![](https://developers.line.biz/media/line-developers-console/different-user-ids.png)
 
-:::note alert
-チャネル作成時に特に注意が必要なケース
+> [!CAUTION]
+> チャネル作成時に特に注意が必要なケース
+> たとえば、以下のような場合には特に注意してください。
+> 
+> *   チャネルとプロバイダーを別々の個人または企業が管理している。
+> *   1つのプロバイダー配下に、相互に関係がないサービスや企業のチャネルを作成する。
+> *   チャネルの運用ツール等を運営するサービス（企業）が管理するプロバイダーの配下にチャネルを作成する。
+> 
+> このようなケースでは、後からチャネルをプロバイダー間で移動できないことや、プロバイダーごとに異なるユーザーIDが割り当てられることに起因して、将来的に問題が発生する可能性があります。そのリスクを十分検討した上で、適切なプロバイダーの配下にチャネルを作成してください。
 
-:::
-
-:::note info
-プロバイダーとチャネル管理のベストプラクティス
-
-:::
+> [!TIP]
+> プロバイダーとチャネル管理のベストプラクティス
+> プロバイダーとチャネルについては、Admin権限の管理や、どのプロバイダー配下にチャネルを作成するべきかなどについて、具体例を交えて解説しているページがあります。
+> 
+> 詳しくは、『LINE Developersコンソール』ドキュメントの「[プロバイダーとチャネル管理のベストプラクティス](https://developers.line.biz/ja/docs/line-developers-console/best-practices-for-provider-and-channel-management/)」を参照してください。
 
 ## LINEミニアプリの開発
 
@@ -111,10 +117,9 @@ LINEミニアプリ用として提供されるAPIは、LIFF APIと[サービス�
 
 たとえば、[カスタムアクションボタンを実装する](https://developers.line.biz/ja/docs/line-mini-app/develop/share-messages/)ときは、LINEミニアプリでLIFF APIを呼び出します。また、[サービスメッセージ](https://developers.line.biz/ja/docs/line-mini-app/develop/service-messages/)を送信する際は、サービスメッセージAPIをサーバーで呼び出します。
 
-:::note info
-LIFF APIは常に改善を続けています
-
-:::
+> [!TIP]
+> LIFF APIは常に改善を続けています
+> ユーザー体験を充実させるために、LIFF APIでは新規機能の追加や既存機能の改善が頻繁に行われています。
 
 ## 公開前のLINEミニアプリにベーシック認証でアクセス制限をかける
 
@@ -135,10 +140,9 @@ LIFF APIは常に改善を続けています
 
 LIFFアプリ、およびステータスが「反映済み」のLINEミニアプリでは、ベーシック認証は利用できません。また、ダイジェスト認証は利用できません。
 
-:::note info
-条件を満たしているのにベーシック認証が利用できない
-
-:::
+> [!TIP]
+> 条件を満たしているのにベーシック認証が利用できない
+> LIFF間遷移後のLINEミニアプリではベーシック認証は利用できません。LIFF間遷移について詳しくは、『LIFFドキュメント』の「[LIFFアプリから別のLIFFアプリを開いた場合の動作について（LIFF間遷移）](https://developers.line.biz/ja/docs/liff/opening-liff-app/#move-liff-to-liff)」を参照してください。
 
 LIFFブラウザのベーシック認証に関する仕様については、『LIFFドキュメント』の[LIFFブラウザの仕様](https://developers.line.biz/ja/docs/liff/overview/#liff-browser-spec)を参照してください。
 

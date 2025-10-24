@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/flex-message-layout/
-copied_at: 2025-10-23T15:57:37.151Z
+copied_at: 2025-10-24T06:28:19.979Z
 ---
 # Flex Messageのレイアウト
 
@@ -93,10 +93,14 @@ json
 
 `{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "text",        "text": "Hello",        "color": "#00ff00",        "flex": 0      },      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "color": "#ff0000",        "flex": 2      },      {        "type": "text",        "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",        "wrap": true,        "color": "#0000ff",        "flex": 3      }    ]  } }`
 
-:::note info
-flexプロパティとCSS Flexbox
-
-:::
+> [!TIP]
+> flexプロパティとCSS Flexbox
+> 水平ボックス内の子コンポーネントの`flex`プロパティは、CSS Flexboxの`flex`プロパティと次のように対応しています。
+> 
+> | Flex Messageの子コンポーネントの`flex`プロパティの値 | 対応するCSS Flexboxのスタイル |
+> | :-: | --- |
+> | `0` | `flex: 0 0 auto;` |
+> | `0`以上 | `flex: X 0 0;`（Xは子コンポーネントの`flex`プロパティの値） |
 
 ### 垂直ボックス内の高さの分配
 
@@ -118,19 +122,22 @@ json
 
 `{   "type": "bubble",  "body": {    "type": "box",    "layout": "horizontal",    "contents": [      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "text",            "wrap": true,            "text": "TEXT\nTEXT\nTEXT\nTEXT\nTEXT"          }        ],        "backgroundColor": "#c0c0c0"      },      {        "type": "box",        "layout": "vertical",        "contents": [          {            "type": "separator",            "color": "#ff0000"          },          {            "type": "text",            "text": "flex=2",            "flex": 2          },          {            "type": "separator",            "color": "#ff0000"          },          {            "type": "text",            "text": "flex=3",            "flex": 3          },          {            "type": "separator",            "color": "#ff0000"          }        ]      }    ]  } }`
 
-:::note info
-CSS flexプロパティとCSS Flexbox
-
-:::
+> [!TIP]
+> CSS flexプロパティとCSS Flexbox
+> 垂直ボックス内の子コンポーネントの`flex`プロパティは、CSS Flexboxの`flex`プロパティと次のように対応しています。
+> 
+> | Flex Messageの子コンポーネントの`flex`プロパティの値 | 対応するCSS Flexboxのスタイル |
+> | :-: | --- |
+> | `0` | `flex: 0 0 auto;` |
+> | `0` or greater | `flex: X 0 auto;`（Xは子コンポーネントの`flex`プロパティの値） |
 
 ### ボックスの幅
 
 ボックスの幅は、`width`プロパティを使って、ピクセル単位、または親コンポーネントの幅に対するパーセンテージで指定できます。水平ボックス内の子ボックスの幅を指定した場合、子ボックスの`flex`プロパティは`0`に設定されます。
 
-:::note warn
-widthプロパティをピクセルで指定する場合
-
-:::
+> [!WARNING]
+> widthプロパティをピクセルで指定する場合
+> バブルの幅は、デバイスの画面サイズに依存します。バブルの全体的なレイアウトを調整するために`width`プロパティをピクセルで指定すると、最終的に予期せぬレイアウトになることがあります。デバイスの画面サイズの影響を受けにくくするために、`flex`プロパティを使うことをお勧めします。
 
 ### ボックスの最大幅
 
@@ -187,10 +194,15 @@ json
 
 `{   "type": "bubble",  "body": {    "type": "box",    "layout": "vertical",    "contents": [      {        "type": "text",        "text": "hello, world",        "size": "30px"      },      {        "type": "text",        "text": "hello, world",        "margin": "10px",        "size": "30px",        "scaling": true      }    ]  } }`
 
-:::note info
-フォントサイズの自動縮小との併用
-
-:::
+> [!TIP]
+> フォントサイズの自動縮小との併用
+> ボタンおよびテキストでは、`scaling`プロパティに`true`を指定し、かつ`adjustMode`プロパティに`shrink-to-fit`を指定することができます。その場合、フォントサイズが自動的に拡大縮小された結果、テキストの幅がコンポーネントの幅を超えたとき、フォントサイズはコンポーネントの幅に合わせて縮小されます。
+> 
+> 以下は、LINEアプリのフォントサイズが［**特大**］の場合の例です。
+> 
+> | dummy | dummy |
+> | --- | --- |
+> | ![](https://developers.line.biz/media/messaging-api/flex-message-layout/scaling-sample-small-tip.png) | <ol><!--[--><li><!--[-->デフォルトの場合<!--]--></li><li><!--[--><code><!--[-->scaling<!--]--></code>プロパティに<code><!--[-->true<!--]--></code>を指定した場合<!--]--></li><li><!--[--><code><!--[-->scaling<!--]--></code>プロパティに<code><!--[-->true<!--]--></code>を指定し、<code><!--[-->adjustMode<!--]--></code>プロパティに<code><!--[-->shrink-to-fit<!--]--></code>を指定した場合<!--]--></li><!--]--></ol> |
 
 ## コンポーネントの位置
 
@@ -222,10 +234,9 @@ json
 *   下揃え：`bottom`
 *   中央揃え：`center`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> [ベースラインボックス](#baseline-box)の子要素ではこの設定は無視されます。
 
 ![](https://developers.line.biz/media/messaging-api/flex-message-layout/gravitySample.png)
 
@@ -263,10 +274,13 @@ json
 
 [ボックス](https://developers.line.biz/ja/reference/messaging-api/#box)の余白を使って、子コンポーネントを軸に沿って配置できます。ここでは[主軸](#justify-content)と[交差軸](#align-items)に沿ってコンポーネントを配置する方法を学びます。
 
-:::note info
-親ボックスコンポーネントによって主軸と交差軸が変わります
-
-:::
+> [!TIP]
+> 親ボックスコンポーネントによって主軸と交差軸が変わります
+> `justifyContent`プロパティと`alignItems`プロパティは、それぞれ主軸と交差軸に沿った子コンポーネントの配置を設定します。親ボックスコンポーネントによって、主軸と交差軸の向きは変わります。
+> 
+> ![](https://developers.line.biz/media/messaging-api/flex-message-layout/horizontal_vertical_axis.png)
+> 
+> 書字方向（`LTR`または`RTL`）は、親ボックスコンポーネントの向きに関係なく、常に水平方向に適用されます。
 
 #### 主軸に沿って子コンポーネントを配置する
 
@@ -415,10 +429,9 @@ json
 | `offsetEnd` | [バブル](https://developers.line.biz/ja/reference/messaging-api/#bubble)の書字方向がLTRの場合 | 親要素の右端からコンポーネントの右端までの相対位置を指定します。 |
 | [バブル](https://developers.line.biz/ja/reference/messaging-api/#bubble)の書字方向がRTLの場合 | 親要素の左端からコンポーネントの左端までの相対位置を指定します。 |
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> オフセットプロパティを指定しない場合のコンポーネントの位置は、端末によって異なる可能性があります。そのため、縦方向（`offsetTop`または`offsetBottom`）および横方向（`offsetStart`または`offsetEnd`）のオフセットプロパティを明示的に指定することを推奨します。
 
 「TARGET」と表示されているコンポーネントの通常の位置が1枚目の画像です。`position`プロパティとオフセットプロパティを使って位置を動かしたのが2枚目の画像です。
 
@@ -455,10 +468,9 @@ json
 
 [ボックスコンポーネント](https://developers.line.biz/ja/reference/messaging-api/#box)では、`background.type`プロパティに`linearGradient`を指定することで、背景に線形グラデーションを設定できます。ここでは、グラデーションの[角度](#linear-gradient-bg-angle)と[中間色](#linear-gradient-bg-center-color)の設定方法を学びます。
 
-:::note warn
-グラデーションの方向は親の書字方向に影響されません
-
-:::
+> [!WARNING]
+> グラデーションの方向は親の書字方向に影響されません
+> グラデーションの方向は、親要素の書字方向（`LTR`または`RTL`）の影響を受けません。
 
 ### 線形グラデーションの角度
 

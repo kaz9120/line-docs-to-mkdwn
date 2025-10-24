@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/service/line-mini-app-oa/
-copied_at: 2025-10-23T16:01:45.994Z
+copied_at: 2025-10-24T06:29:59.569Z
 ---
 # LINE公式アカウントを活用する
 
@@ -35,12 +35,16 @@ LINE公式アカウントのリッチメニューに、LINEミニアプリへの
 5.  ［**友だち追加オプション**］の［**編集**］をクリックします。
 6.  ［**On (normal)**］を選択します。
 
-:::note warn
-注意
+> [!WARNING]
+> 注意
+> LINEミニアプリのチャネルにLINE公式アカウントをリンクするには、以下の要件を満たす必要があります。
+> 
+> *   LINE公式アカウントに関連付けられたMessaging APIのチャネルが、LINEミニアプリのチャネルと同じプロバイダーに属していること。
+>     *   LINE公式アカウントと紐づくMessaging APIチャネルのプロバイダーは、後から変更はできません。そのため、Messaging APIチャネルのプロバイダーの設定を行う際は十分に注意してください。Messaging APIとプロバイダーの連携について詳しくは、『LINEヤフー for Business』の「[Messaging API](https://www.lycbiz.com/jp/manual/OfficialAccountManager/account-settings_messaging_api/)」を参照してください。
+> *   操作するアカウントは、LINEミニアプリのチャネルのAdmin権限と、LINE公式アカウントの管理者権限を持っていること。
+>     *   LINEミニアプリのチャネルのAdmin権限は、[LINE Developersコンソール](https://developers.line.biz/console/)で確認できます。
+>     *   LINE公式アカウントの管理者権限は、[LINE Official Account Manager](https://manager.line.biz)で確認できます。
 
-:::
-
-:::note info
-認証プロバイダーは友だち追加するオプションをデフォルトでオンに設定できます
-
-:::
+> [!TIP]
+> 認証プロバイダーは友だち追加するオプションをデフォルトでオンに設定できます
+> 認証プロバイダーは、LINE公式アカウントを友だち追加するオプションを、デフォルトでオンに設定できます。つまり、ユーザーがチェックを外す操作をしない限りは、LINEミニアプリの同意画面で認可したときに、友だち追加するオプションで使用するLINE公式アカウントが友だちとして追加されます。

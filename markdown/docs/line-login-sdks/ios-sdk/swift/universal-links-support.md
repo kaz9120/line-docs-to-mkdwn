@@ -1,15 +1,14 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/universal-links-support/
-copied_at: 2025-10-23T15:59:02.076Z
+copied_at: 2025-10-24T06:28:56.495Z
 ---
 # ユニバーサルリンクを利用する
 
 Appleの[ユニバーサルリンク](https://developer.apple.com/library/archive/documentation/General/Conceptual/AppSearch/UniversalLinks.html)機能を使ってアプリのセキュリティを高めることができます。ユニバーサルリンクを設定すると、LINEにより、まずユニバーサルリンクを使ってアプリの起動が試行されます。ユニバーサルリンクが無効な場合は、iOSバンドルIDに基づいたURLがフォールバックとして使用されます（詳しくは、「[アプリをチャネルにリンクする](https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/setting-up-project/#linking-app-to-channel)」を参照してください）。
 
-:::note warn
-ユニバーサルリンク機能の有効化を推奨します
-
-:::
+> [!WARNING]
+> ユニバーサルリンク機能の有効化を推奨します
+> ユニバーサルリンク機能の有効化は必須ではありませんが、アプリケーションの安全性を高めるため使用することを推奨します。
 
 ユーザーにユニバーサルリンクを使ってアプリを起動させるには、以下の手順に従います。
 
@@ -77,10 +76,9 @@ swift
 
 `// SceneDelegate.swift func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {     _ = LoginManager.shared.application(.shared, open: URLContexts.first?.url) }`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> ただし、アプリがマルチウィンドウをサポートしていない場合は、`UIApplicationDelegate`オブジェクトを呼び出して、URLを開きます。アプリデリゲートクラスを変更してください。
 
 これで、ユニバーサルリンクを使ってLINEからアプリを起動し、アプリでログイン結果を制御できるようになりました。
 

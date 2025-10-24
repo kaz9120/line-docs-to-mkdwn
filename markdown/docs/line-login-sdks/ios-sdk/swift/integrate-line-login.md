@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/integrate-line-login/
-copied_at: 2025-10-23T15:59:04.231Z
+copied_at: 2025-10-24T06:28:57.517Z
 ---
 # iOSアプリにLINEログインを組み込む
 
@@ -28,10 +28,9 @@ swift
 
 `func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {     // Add this to your "didFinishLaunching" delegate method.    LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: nil)     return true }`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LINE SDK for iOS Swiftの他のプロパティにアクセスしたり、他のメソッドを呼び出したりする**前に**、`setup`メソッドを呼び出してください。
 
 #### ユニバーサルリンクを使用する
 
@@ -63,10 +62,9 @@ swift
 
 `// SceneDelegate.swift func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {     _ = LoginManager.shared.application(.shared, open: URLContexts.first?.url) }`
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> プロジェクトがマルチウィンドウをサポートしていない場合は、`UIApplicationDelegate`オブジェクトを呼び出して、URLを開きます。アプリデリゲートクラスを変更してください。
 
 ## ログイン処理を実行する
 
@@ -139,10 +137,11 @@ swift
 
 ### ユーザー情報をバックエンドサーバーで利用する
 
-:::note alert
-ユーザーのなりすまし
-
-:::
+> [!CAUTION]
+> ユーザーのなりすまし
+> バックエンドサーバーでは、`UserProfile`オブジェクトから取得できるユーザーIDなどの情報は、**利用しないでください**。悪意のあるクライアントは、任意のユーザーになりすますために、任意のユーザーIDや不正な情報をバックエンドサーバーに送信できます。
+> 
+> ユーザーIDなどの情報を送信する代わりにアクセストークンを送信し、バックエンドサーバーではアクセストークンからユーザーIDなどの情報を取得します。
 
 通常、バックエンドサーバーでユーザーを識別するために、ユーザーIDや表示名のような、ユーザーのLINEアカウントに登録されている情報を使用します。そのような情報をアプリからバックエンドサーバーに送信する際は、情報を平文で送信するのではなく、アプリで取得したアクセストークンを送信してください。信頼できる情報を安全に送受信するために、アクセストークンを利用してください。バックエンドサーバーでアクセストークンの正当性を検証したり、ユーザー情報をLINEプラットフォームのサーバーから取得したりできます。
 

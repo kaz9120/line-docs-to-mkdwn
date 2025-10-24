@@ -1,15 +1,15 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/sticker-list/
-copied_at: 2025-10-23T15:56:11.735Z
+copied_at: 2025-10-24T06:28:00.685Z
 ---
 # スタンプ
 
 Messaging APIを使うと、スタンプを[スタンプメッセージ](https://developers.line.biz/ja/docs/messaging-api/message-types/#sticker-messages)として送信できます。ただし、送信できるのは下記の[スタンプ定義](#sticker-definitions)に記載されているスタンプに限られます。スタンプメッセージの送信方法について詳しくは、「[メッセージを送信する](https://developers.line.biz/ja/docs/messaging-api/sending-messages/)」を参照してください。
 
-:::note info
-スタンプ定義に記載されていないスタンプを送信するには
-
-:::
+> [!TIP]
+> スタンプ定義に記載されていないスタンプを送信するには
+> *   ご自身のLINEアカウントで所持しているスタンプは、[LINE Official Account Manager](https://manager.line.biz/)およびLINE公式アカウント管理アプリの「チャット」で送信できます。詳しくは、『LINEヤフー for Business』の「[チャット](https://www.lycbiz.com/jp/manual/OfficialAccountManager/chats/)」を参照してください。
+> *   スポンサードスタンプやクリエイターズスタンプなど、自社でライセンスを保有しているスタンプを送信する機能は、所定の申請等を行った法人ユーザーのみがご利用いただけます。自社のLINE公式アカウントでご利用になりたいお客様は、担当営業までご連絡いただくか、[弊社パートナー](https://www.lycbiz.com/jp/partner/sales/)にお問い合わせください。
 
 ## スタンプを送信する
 

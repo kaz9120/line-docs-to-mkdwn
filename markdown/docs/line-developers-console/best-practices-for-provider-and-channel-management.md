@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-developers-console/best-practices-for-provider-and-channel-management/
-copied_at: 2025-10-23T15:55:43.996Z
+copied_at: 2025-10-24T06:27:54.183Z
 ---
 # プロバイダーとチャネル管理のベストプラクティス
 
@@ -51,10 +51,13 @@ copied_at: 2025-10-23T15:55:43.996Z
 
 権限について詳しくは、「[権限を管理する](https://developers.line.biz/ja/docs/line-developers-console/managing-roles/)」を参照してください。
 
-:::note warn
-開発者をプロバイダーから削除する際の注意点
-
-:::
+> [!WARNING]
+> 開発者をプロバイダーから削除する際の注意点
+> [LINE Developersコンソール](https://developers.line.biz/console/)で開発者をプロバイダーから削除する際に、［**選択した開発者をこのプロバイダーに紐づいているチャネルからも削除する。**］をチェックし、［**OK**］をクリックすると、選択した開発者がプロバイダーの配下のチャネルからも削除されます。
+> 
+> ただし、選択した開発者がプロバイダーの配下のチャネルから削除された結果、そのチャネルのAdmin権限を持つ開発者が0人になる可能性があります。そのため、［**選択した開発者をこのプロバイダーに紐づいているチャネルからも削除する。**］をチェックする際は、チャネルのAdmin権限を持つ開発者が他にいることを確認してください。
+> 
+> ![](https://developers.line.biz/media/line-developers-console/best-practices-for-provider-and-channel-management/delete-developer-from-provider-ja.png)
 
 ## プロバイダーをサービス提供者ごとに作成する
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/versioning-policy/
-copied_at: 2025-10-23T16:00:34.466Z
+copied_at: 2025-10-24T06:29:23.447Z
 ---
 # バージョニングポリシー
 
@@ -11,10 +11,11 @@ LIFFアプリに適切なLIFF SDKを組み込むために、LIFFのバージョ�
 *   [LIFF SDK（sdk.js）のアップデートポリシー](#update-policy)
 *   [LIFF SDKのライフサイクル](#life-cycle)
 
-:::note warn
-注意
-
-:::
+> [!WARNING]
+> 注意
+> LIFF SDKのアップデートに伴い、LIFFアプリに組み込んだLIFF SDKが廃止されることがあります。廃止されたLIFF SDKを組み込んでいるLIFFアプリは、開けません。
+> 
+> 長期的にLIFFアプリを利用する場合は、定期的にこのページを確認し、適切なLIFF SDKを組み込んでください。
 
 ## メジャーバージョンのステータス
 
@@ -53,10 +54,9 @@ LIFFでは、LIFF v2.1.13リリース以降、以下の2種類のCDNパスを用
 | CDNエッジパス | メジャーバージョンのみを含むCDNパスです。常に最新の機能を使用する場合は、このCDNパスを使用します。メジャーバージョンがアップデートされたときのみURLを更新する必要があります。<br/>例：https://static.line-scdn.net/liff/edge/**2**/sdk.js |
 | CDN固定パス | パッチバージョンまで含むCDNパスです。特定のバージョンの機能を使用する場合は、このCDNパスを使用します。LIFFアプリを更新しない限り、指定したパッチバージョンを使い続けることができます。LIFFの新機能や、セキュリティ改善、バグ修正を反映したいときのみURLを更新してください。自動的に更新されないため、LIFF SDKのアップデートの影響を受けません。<br/>例：https://static.line-scdn.net/liff/edge/**versions/2.22.3**/sdk.js |
 
-:::note warn
-どのバージョンを使うべきか
-
-:::
+> [!WARNING]
+> どのバージョンを使うべきか
+> CDN固定パスを使用している開発者は、LIFFアプリを更新するタイミングを決める必要があります。アップデートの内容を正しく理解し、自分のLIFFアプリに適しているか判断するために、『LIFFドキュメント』の「[リリースノート](https://developers.line.biz/ja/docs/liff/release-notes/)」をこまめに確認してください。
 
 CDN固定パスを指定する例：
 
@@ -64,15 +64,18 @@ html
 
 `<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>`
 
-:::note info
-後方互換性を維持するためのCDNパスについて
+> [!TIP]
+> 後方互換性を維持するためのCDNパスについて
+> 作成済みのLIFFアプリの動作を保証するために、以下のCDNパスでLIFF SDKの提供を継続します。このCDNパスで利用できるLIFF SDKは、CDNエッジパスで利用できるLIFF SDKと同じバージョンです。
+> 
+> 後方互換性を維持するためのCDNパス：  
+> https://static.line-scdn.net/liff/edge/**2.1**/sdk.js
 
-:::
-
-:::note warn
-後方互換性を維持するためのCDNパスの廃止について
-
-:::
+> [!WARNING]
+> 後方互換性を維持するためのCDNパスの廃止について
+> 後方互換性を維持するためのCDNパスは、[LIFF SDKのライフサイクルスケジュール](#life-cycle-schedule)に関わらず廃止される可能性があります。LIFFアプリで指定するCDNパスを、CDNエッジパスに変更することをおすすめします。
+> 
+> 方針が決まり次第改めてお知らせします。
 
 ## LIFF SDKのライフサイクル
 

@@ -1,166 +1,107 @@
 ---
-url: https://developers.line.biz/ja/docs/messaging-api/switch-rich-menus/
-copied_at: 2025-10-23T15:57:06.782Z
+url: https://developers.line.biz/ja/docs/messaging-api/building-bot/
+copied_at: 2025-10-24T06:28:16.369Z
 ---
-# リッチメニューでタブ切り替えを行う
+# ボットを作成する
 
-ユーザー単位のリッチメニューを活用して、タブ切り替えが可能なリッチメニューをユーザーに提供できます。[リッチメニューエイリアス](https://developers.line.biz/ja/glossary/#rich-menu-alias)と[リッチメニュー切替アクション](https://developers.line.biz/ja/reference/messaging-api/#richmenu-switch-action)を使うことで、タブ切り替えのように、複数のリッチメニューを簡単に切り替えられます。
+このガイドでは、Messaging APIを使ってLINEボットを作成する方法を説明します。
 
-![](https://developers.line.biz/media/messaging-api/rich-menu/switching-richmenu-ja.png)
+## 始める前に
 
-たとえばリッチメニューAとリッチメニューBを切り替えたい場合、以下の手順に従って設定します。
+ボットの設定と作成を始める前に、以下を用意していることを確認します。
 
-1.  [リッチメニューの画像を準備する](#richmenu-switch-01)
-2.  [リッチメニューAを作成する](#richmenu-switch-02)
-3.  [リッチメニューAに画像をアップロードする](#richmenu-switch-03)
-4.  [リッチメニューBを作成する](#richmenu-switch-04)
-5.  [リッチメニューBに画像をアップロードする](#richmenu-switch-05)
-6.  [リッチメニューAをデフォルトにする](#richmenu-switch-06)
-7.  [リッチメニューエイリアスAを作成する](#richmenu-switch-07)
-8.  [リッチメニューエイリアスBを作成する](#richmenu-switch-08)
-9.  [リッチメニューの表示を終了する](#richmenu-switch-09)
+*   ボット用の[Messaging APIチャネル](https://developers.line.biz/ja/docs/messaging-api/getting-started/)
+*   ボットをホストするサーバー
 
-## 1\. リッチメニューの画像を準備する
+## LINE Developersコンソールでの設定
 
-事前にリッチメニューAの画像（`richmenu-a.png`）と、リッチメニューBの画像（`richmenu-b.png`）を準備しておきます。使用できる画像について詳しくは、『Messaging APIリファレンス』の「[リッチメニューの画像の要件](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image-requirements)」を参照してください。
+[チャネルアクセストークン](#issue-a-channel-access-token)を発行し、[Webhook URL](#setting-webhook-url)を設定します。チャネルアクセストークンは、ボットがMessaging APIを呼び出すために必要です。Webhook URLは、LINEプラットフォームからのWebhookペイロードをボットが受信するために必要です。設定が完了したら、[LINE公式アカウントを友だち追加し](#add-your-line-official-account-as-friend)、[動作を確認](#confirm-webhook-behavior)します。
 
-| リッチメニューAの画像 | リッチメニューBの画像 |
-| :-: | :-: |
-| ![リッチメニューAの画像](https://developers.line.biz/media/messaging-api/rich-menu/richmenu-a.png) | ![リッチメニューBの画像](https://developers.line.biz/media/messaging-api/rich-menu/richmenu-b.png) |
+### チャネルアクセストークンを準備する
 
-## 2\. リッチメニューAを作成する
+チャネルアクセストークンをまだ持っていない場合は、発行してください。チャネルアクセストークンは、Messaging APIで使用するアクセストークンです。以下のいずれかのトークンを発行できます。
 
-Messaging APIで[リッチメニューを作成](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu)します。この例では、タップ[領域オブジェクト](https://developers.line.biz/ja/reference/messaging-api/#area-object)のアクションに、以下を指定しています。
+*   [任意の有効期間を指定できるチャネルアクセストークン（チャネルアクセストークンv2.1）](https://developers.line.biz/ja/docs/basics/channel-access-token/#user-specified-expiration)（推奨）
+*   [ステートレスチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#stateless-channel-access-token)
+*   [短期のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#short-lived-channel-access-token)
+*   [長期のチャネルアクセストークン](https://developers.line.biz/ja/docs/basics/channel-access-token/#long-lived-channel-access-token)
 
-*   **リッチメニューAの左側のタップ領域**
-    *   アクション：[URIアクション](https://developers.line.biz/ja/reference/messaging-api/#uri-action)
-    *   URI：[LINE Developersサイト](https://developers.line.biz/ja/)
-*   **リッチメニューAの右側のタップ領域**
-    *   アクション：[リッチメニュー切替アクション](https://developers.line.biz/ja/reference/messaging-api/#richmenu-switch-action)（type：`richmenuswitch`）
-    *   切替先：リッチメニューB（richMenuAliasId：`richmenu-alias-b`）
+### Webhook URLを設定する
 
-sh
+Webhook URLはボットサーバーのエンドポイントで、Webhookペイロードの送信先です。なお、Webhook URLに設定できるボットサーバーのエンドポイントは1つだけです。
 
-`curl -v -X POST https://api.line.me/v2/bot/richmenu \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "size": {        "width": 2500,        "height": 1686    },    "selected": false,    "name": "richmenu-a",    "chatBarText": "Tap to open",    "areas": [        {            "bounds": {                "x": 0,                "y": 0,                "width": 1250,                "height": 1686            },            "action": {                "type": "uri",                "uri": "https://developers.line.biz/"            }        },        {            "bounds": {                "x": 1251,                "y": 0,                "width": 1250,                "height": 1686            },            "action": {                "type": "richmenuswitch",                "richMenuAliasId": "richmenu-alias-b",                "data": "richmenu-changed-to-b"            }        }    ] }'`
+Webhook URLは、以下の手順で設定してください。
 
-リッチメニューAが作成されると、レスポンスとしてリッチメニューのIDが返ります。
+1.  [LINE Developersコンソール](https://developers.line.biz/console/)にログインし、Messaging APIのチャネルがあるプロバイダーをクリックします。
+2.  Messaging APIのチャネルをクリックします。
+3.  ［**Messaging API設定**］タブをクリックします。
+4.  ［**Webhook URL**］の［**編集**］をクリックし、Webhook URL（LINEプラットフォームからボットにイベントを送信する際の送信先URL）を入力して、［**更新**］をクリックします。  
+    Webhook URLにはHTTPSを使用し、一般的なブラウザ等で広く信頼されている認証局で発行されたSSL/TLS証明書を設定する必要があります。また、自己署名証明書は利用できない点に注意してください。SSL/TLSの設定で問題が発生した場合は、SSL/TLS証明書チェーンが完全で、中間証明書がサーバーに正しくインストールされていることを確かめてください。
+5.  ［**検証**］をクリックします。設定したWebhook URLでWebhookイベントを受け取ると、「**成功**」と表示されます。
+6.  ［**Webhookの利用**］を有効にします。
 
-json
+![](https://developers.line.biz/media/messaging-api/build-bot/webhook-url-example-com.png)
 
-`{   "richMenuId": "richmenu-19682466851b21e2d7c0ed482ee0930f" }`
+### LINE公式アカウントを友だち追加する
 
-## 3\. リッチメニューAに画像をアップロードする
+Messaging APIチャネルに紐づいたLINE公式アカウントをLINEアカウントに友だち追加しておくと、後で検証できます。[LINE Developersコンソール](https://developers.line.biz/console/)の［**Messaging API設定**］タブにあるQRコードを読み込むと、簡単に追加できます。
 
-リッチメニューを作成したら、Messaging APIでリッチメニューA用の「[画像をアップロード](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image)」します。[手順2](#richmenu-switch-02)で取得したリッチメニューAのリッチメニューIDを、パスパラメータで指定します。
+### 長期のチャネルアクセストークン利用時にAPIの呼び出し元を制限する（任意）
 
-sh
+長期のチャネルアクセストークンを利用する場合、LINEプラットフォームのAPIを呼び出すことができるサーバーを、IPアドレスで制限できます。
 
-`curl -v -X POST https://api-data.line.me/v2/bot/richmenu/richmenu-19682466851b21e2d7c0ed482ee0930f/content \ -H 'Authorization: Bearer {channel access token}' \ -H "Content-Type: image/png" \ -T richmenu-a.png`
+IPアドレスを登録するには、[LINE Developersコンソール](https://developers.line.biz/console/)のチャネル設定の［**セキュリティ設定**］タブを開きます。IPアドレスは、1つずつ個別に登録するか、CIDR（Classless Inter-Domain Routing）記法を使用して、ネットワークアドレスで登録もできます。
 
-## 4\. リッチメニューBを作成する
+なおMessaging APIで使用するチャネルアクセストークンは、[任意の有効期間を指定できるチャネルアクセストークン（チャネルアクセストークンv2.1）](https://developers.line.biz/ja/docs/basics/channel-access-token/#user-specified-expiration)を推奨しています。
 
-リッチメニューAと同様の手順で、リッチメニューB（`richmenu-b`）を作成します。タップ[領域オブジェクト](https://developers.line.biz/ja/reference/messaging-api/#area-object)のアクションに、以下を指定します。
+![](https://developers.line.biz/media/messaging-api/build-bot/security-settings-input-ja.png)
 
-*   **リッチメニューBの左側のタップ領域**
-    *   アクション：[リッチメニュー切替アクション](https://developers.line.biz/ja/reference/messaging-api/#richmenu-switch-action)（type：`richmenuswitch`）
-    *   切替先：リッチメニューA（richMenuAliasId：`richmenu-alias-a`）
-*   **リッチメニューBの右側のタップ領域**
-    *   アクション：[URIアクション](https://developers.line.biz/ja/reference/messaging-api/#uri-action)
-    *   URI：[LINE API Use Case](https://lineapiusecase.com/)
+## Webhookの動作を確認する
+
+ユーザーがLINE公式アカウントを友だち追加したり、LINE公式アカウントにメッセージを送ったりすると、LINEプラットフォームからボットサーバーにHTTP POSTリクエストが送信されます。リクエスト先は、[LINE Developersコンソール](https://developers.line.biz/console/)の［**Messaging API設定**］タブで登録した［**Webhook URL**］です。リクエストにはWebhookイベントオブジェクトが含まれ、ヘッダーには署名が含まれます。
+
+ここでは、サーバーが[Webhookイベントを受信](#receive-webhook-events)できるかを確認する方法について説明します。
+
+### Webhookイベントを受信する
+
+ボットサーバーがWebhookイベントを受信しているかを確認するには、まず、[先の手順](#set-up-bot-on-line-developers-console)で追加したLINE公式アカウントをブロックします。そして、ボットサーバーがLINEプラットフォームから[フォロー解除イベント](https://developers.line.biz/ja/reference/messaging-api/#unfollow-event)を受信したことをサーバーのログで確認します。以下はログの例です。
 
 sh
 
-`curl -v -X POST https://api.line.me/v2/bot/richmenu \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "size": {        "width": 2500,        "height": 1686    },    "selected": false,    "name": "richmenu-b",    "chatBarText": "Tap to open",    "areas": [        {            "bounds": {                "x": 0,                "y": 0,                "width": 1250,                "height": 1686            },            "action": {                "type": "richmenuswitch",                "richMenuAliasId": "richmenu-alias-a",                "data": "richmenu-changed-to-a"            }        },        {            "bounds": {                "x": 1251,                "y": 0,                "width": 1250,                "height": 1686            },            "action": {                "type": "uri",                "uri": "https://lineapiusecase.com/"            }        }    ] }'`
+`2017-07-21T09:18:46.755256+00:00 app[web.1]: 2017-07-21 09:18:46.737  INFO 4 --- [io-13386-exec-2] c.e.bot.spring.KitchenSinkController     : unfollowed this bot: UnfollowEvent(source=UserSource(userId=Uxxxxxxxxxx...), timestamp=2017-07-21T09:18:46.031Z)`
 
-リッチメニューBが作成されると、レスポンスとしてリッチメニューのIDが返ります。
+同様のログが表示された場合、ボットサーバーはLINEプラットフォームからWebhookイベントを受信しています。ログを確認した後、LINE公式アカウントのブロックを解除してください。
 
-json
+## LINE Official Account Managerでの設定
 
-`{   "richMenuId": "richmenu-4ecc8d672d9da4ba375fb82fa938fe5e" }`
+[LINE Official Account Manager](https://manager.line.biz/)は、LINE公式アカウントを管理するためのツールです。Messaging APIが提供する機能を利用できるほか、[プロフィールをカスタマイズ](#customize-profile)してユーザー体験を向上させたり、LINE VOOMの投稿を作成したりなど、さまざまな機能を利用できます。
 
-## 5\. リッチメニューBに画像をアップロードする
+LINE公式アカウントのすべての機能については、『[LINEヤフー for Business](https://www.lycbiz.com/jp/)』を参照してください。
 
-リッチメニューBを作成したら、Messaging APIでリッチメニューB用の「[画像をアップロード](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image)」します。[手順4](#richmenu-switch-04)で取得したリッチメニューIDを、パスパラメータで指定します。
+> [!TIP]
+> あいさつメッセージと応答メッセージ
+> チャネルの［**Messaging API設定**］タブで［**あいさつメッセージ**］や［**応答メッセージ**］の設定が［**有効**］になっていると、ユーザーがLINE公式アカウントを友だち追加したときや、メッセージを送ってきたときに、LINE公式アカウントが自動で応答します。この［**あいさつメッセージ**］と［**応答メッセージ**］は、チャネルを作成したときにデフォルトの設定が［**有効**］になっています。
+> 
+> 応答の処理はMessaging APIで行うのであいさつメッセージや応答メッセージを自動で送りたくないという場合は、[LINE Official Account Manager](https://manager.line.biz/)で、［**あいさつメッセージ**］や［**応答メッセージ**］の設定を［**オフ**］にしてください。
+> 
+> 友だち追加されたときの応答はあいさつメッセージに任せて、それ以外の応答をMessaging APIで行う、というように併用することも可能です。しかし、ユーザーに送られたメッセージがあいさつメッセージや応答メッセージによる応答なのか、それともMessaging APIを使ったボットによる応答なのか、開発者自身が混乱してしまうことがあります。Messaging APIを使って初めてLINEボットを作成するときは、［**あいさつメッセージ**］や［**応答メッセージ**］の設定を［**オフ**］にしておくことをお勧めします。
 
-sh
+### プロフィールをカスタマイズする
 
-`curl -v -X POST https://api-data.line.me/v2/bot/richmenu/richmenu-4ecc8d672d9da4ba375fb82fa938fe5e/content \ -H 'Authorization: Bearer {channel access token}' \ -H "Content-Type: image/png" \ -T richmenu-b.png`
+プロフィールには、LINE公式アカウントの基本情報を設定します。プロフィール画像、背景画像、ボタン、パーツをカスタマイズできます。プロフィールの設定は、LINE Official Account Managerから行います。
 
-## 6\. リッチメニューAをデフォルトにする
+プロフィールのカスタマイズについて詳しくは、『LINEヤフー for Business』の「[プロフィール](https://www.lycbiz.com/jp/manual/OfficialAccountManager/profile/)」を参照してください。
 
-「[デフォルトのリッチメニューを設定する](https://developers.line.biz/ja/reference/messaging-api/#set-default-rich-menu)」エンドポイントを使って、リッチメニューAをデフォルトのリッチメニューにします。
+### あいさつメッセージを設定する（任意）
 
-sh
+ユーザーがLINE公式アカウントを初めて友だち追加した際に、あいさつメッセージを送信できます。あいさつメッセージを設定するには、[LINE Developersコンソール](https://developers.line.biz/console/)のチャネル設定の［**Messaging API設定**］タブに表示されている［**あいさつメッセージ**］の［**編集**］をクリックし、LINE Official Account Managerを開きます。LINE Official Account Manager上で、あいさつメッセージを設定します。別の方法として、Webhook[フォローイベント](https://developers.line.biz/ja/reference/messaging-api/#follow-event)を受け取ってからユーザーへプログラム的に応答することもできます。
 
-`curl -v -X POST https://api.line.me/v2/bot/user/all/richmenu/richmenu-19682466851b21e2d7c0ed482ee0930f \ -H 'Authorization: Bearer {channel access token}'`
+### 応答メッセージを設定する（任意）
 
-これによりリッチメニューAが表示されるようになります。しかし、リッチメニューエイリアスBが未作成のため、右側をタップしてもまだリッチメニューBには切り替わりません。
+ユーザーがLINE公式アカウントにメッセージを送信した際に、応答メッセージを送信できます。応答メッセージを設定するには、[LINE Developersコンソール](https://developers.line.biz/console/)のチャネル設定の［**Messaging API設定**］タブに表示されている［**応答メッセージ**］の［**編集**］をクリックし、LINE Official Account Managerを開きます。LINE Official Account Manager上で、応答メッセージを設定します。ただし、Messaging APIを使用すれば、Webhookイベントの内容に合わせた応答を返すようにボットをプログラムできるため、より多くの処理を実行できます。
 
-![デフォルトのリッチメニューが表示された](https://developers.line.biz/media/messaging-api/rich-menu/set-default-rich-menu.png)
+## 次のステップ
 
-:::note warn
-リッチメニューAが表示されない場合
+ボットを設定すると、LINE公式アカウントがユーザーからのメッセージを受信したり、ユーザーにメッセージを送信したりできます。また、リッチメニューやクイックリプライを利用することで、パーソナライズされた体験を提供できます。Messaging APIで利用できる機能について詳しくは、『[Messaging APIドキュメント](https://developers.line.biz/ja/docs/messaging-api/)』の各ページを参照してください。
 
-:::
-
-## 7\. リッチメニューエイリアスAを作成する
-
-リッチメニューAの[リッチメニューエイリアスを作成](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu-alias)します。以下の例では、[手順2](#richmenu-switch-02)で作成しておいたリッチメニューAに、リッチメニューエイリアス`richmenu-alias-a`を設定します。
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/richmenu/alias \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "richMenuAliasId": "richmenu-alias-a",    "richMenuId": "richmenu-19682466851b21e2d7c0ed482ee0930f" }'`
-
-## 8\. リッチメニューエイリアスBを作成する
-
-同様にリッチメニューBの[リッチメニューエイリアスを作成](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu-alias)します。以下の例では、[手順4](#richmenu-switch-04)で作成しておいたリッチメニューBに、リッチメニューエイリアス`richmenu-alias-b`を設定します。
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/richmenu/alias \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ '{     "richMenuAliasId": "richmenu-alias-b",    "richMenuId": "richmenu-4ecc8d672d9da4ba375fb82fa938fe5e" }'`
-
-これで、リッチメニューAで右側の領域をタップするとリッチメニューBに切り替わるようになりました。リッチメニューBで左側の領域をタップすると、リッチメニューAに戻ります。
-
-| リッチメニューA | リッチメニューB |
-| :-: | :-: |
-| ![リッチメニューA](https://developers.line.biz/media/messaging-api/rich-menu/set-default-rich-menu.png) | ![リッチメニューB](https://developers.line.biz/media/messaging-api/rich-menu/switch-rich-menu.png) |
-
-リッチメニューエイリアスと紐づくリッチメニューは、「[リッチメニューエイリアスを更新する](https://developers.line.biz/ja/reference/messaging-api/#update-rich-menu-alias)」エンドポイントを使って、いつでも変更できます。
-
-## 9\. リッチメニューの表示を終了する
-
-リッチメニューの表示を終了したい場合は、Messaging APIで以下の手順で実施します。
-
-1.  [デフォルトのリッチメニューを解除する](https://developers.line.biz/ja/reference/messaging-api/#clear-default-rich-menu)
-2.  [リッチメニューエイリアスを削除する](https://developers.line.biz/ja/reference/messaging-api/#delete-rich-menu-alias)
-3.  [リッチメニューを削除する](https://developers.line.biz/ja/reference/messaging-api/#delete-rich-menu)
-
-なお、[ユーザーとのリンクを解除](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-user)せずにリッチメニューを削除できます。しかしこの場合、リッチメニューは即時には削除されず、ユーザーがトーク画面に再入室したときに削除が反映されます。
-
-LINE公式アカウントと友だちになっているユーザーの、ユーザーIDが分かっている場合は、リッチメニューを削除する代わりに、リッチメニューのリンクを解除できます。リッチメニューを保持した状態でリッチメニューとユーザーのリンクを解除するには、以下の手順に従って設定します。
-
-*   [リッチメニューとユーザーのリンクを解除する](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-user)
-*   [複数のユーザーのリッチメニューのリンクを解除する](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-users)
-
-リッチメニューとユーザーのリンクを解除した場合、リッチメニューは即時に表示されなくなります。
-
-## 意図したリッチメニューが表示されないときは
-
-意図したリッチメニューが表示されない場合は、以下の点を確認してください。
-
-*   [デフォルトのリッチメニューを解除してもリッチメニューが表示され続けてしまう](#youll-still-see-the-rich-menu-after-you-clear-the-default)
-*   [新しいデフォルトのリッチメニューを設定したのに他のリッチメニューが表示されてしまう](#you-see-a-different-rich-menu)
-
-### デフォルトのリッチメニューを解除してもリッチメニューが表示され続けてしまう
-
-リッチメニュー切替アクションでリッチメニューAからリッチメニューBに、またはリッチメニューBからリッチメニューAに切り替わった場合、表示されるリッチメニューは、表示優先順位が最も高いユーザー単位のリッチメニューです。そのため、[手順6](#richmenu-switch-06)で設定したデフォルトのリッチメニューを解除しただけでは、リッチメニューAもしくはリッチメニューBは引き続き表示されたままとなります。
-
-その場合は、[リッチメニューを削除する](https://developers.line.biz/ja/reference/messaging-api/#delete-rich-menu)か、[リッチメニューとユーザーのリンクを解除する](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-user)ことで、リッチメニューの表示を終了できます。リッチメニューの表示優先順位について詳しくは、「[リッチメニューの表示優先度](https://developers.line.biz/ja/docs/messaging-api/rich-menus-overview/#rich-menu-display)」を参照してください。
-
-### 新しいデフォルトのリッチメニューを設定したのに他のリッチメニューが表示されてしまう
-
-新しいデフォルトのリッチメニューを設定したのに他のリッチメニューが表示されてしまう場合は、デフォルトのリッチメニューよりも表示優先順位の高い、ユーザー単位のリッチメニューが設定されている可能性があります。
-
-その場合は、意図せず表示されている[リッチメニューを削除する](https://developers.line.biz/ja/reference/messaging-api/#delete-rich-menu)か、[リッチメニューとユーザーのリンクを解除する](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-user)ことで、新しいリッチメニューが表示されるようになります。詳しくは、「[リッチメニューの表示優先度](https://developers.line.biz/ja/docs/messaging-api/rich-menus-overview/#rich-menu-display)」を参照してください。
-
-html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
+html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}

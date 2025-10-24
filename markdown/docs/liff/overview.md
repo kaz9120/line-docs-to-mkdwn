@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/overview/
-copied_at: 2025-10-23T16:00:02.230Z
+copied_at: 2025-10-24T06:29:12.566Z
 ---
 # LINE Front-end Framework (LIFF)
 
@@ -12,15 +12,13 @@ LIFF v2で追加された機能については、「[リリースノート](http
 
 今後追加が予定されている機能については、『LINEログインドキュメント』の[ロードマップ](https://developers.line.biz/ja/docs/line-login/roadmap/)を参照してください。
 
-:::note info
-LIFFの機能をウェブ上で試せます
+> [!TIP]
+> LIFFの機能をウェブ上で試せます
+> LINEヤフー株式会社では開発者向けに[LIFFプレイグラウンド](https://liff-playground.netlify.app/)というウェブアプリ（LIFFアプリ）を提供しています。LIFFプレイグラウンドではLIFFの基本的な機能が試せます。LIFFを用いるとどのようなことができるのかを確認したいときに参照してください。なお、[LIFFプレイグラウンドのソースコード](https://github.com/line/liff-playground)をGitHubで公開しています。
 
-:::
-
-:::note warn
-OpenChatでのLIFFアプリの利用はサポートされていません
-
-:::
+> [!WARNING]
+> OpenChatでのLIFFアプリの利用はサポートされていません
+> 現在のところ、OpenChatではLIFFアプリの利用は正式にサポートされていません。たとえば、LIFFアプリからプロフィール情報を取得できない場合があります。
 
 ## デモ用のLIFFアプリを体験する
 
@@ -45,10 +43,9 @@ LIFFの推奨環境は以下のとおりです。
 | Android | 最新バージョン。[Android WebView](https://developer.android.com/reference/android/webkit/WebView)が使用されます。 | LINEの推奨環境に準ずる。 \* |
 | LINE | 最新バージョン | LINEの推奨環境に準ずる。 \* |
 
-:::note warn
-LIFFアプリは、OS、LINEともに最新バージョンの環境での利用を推奨します
-
-:::
+> [!WARNING]
+> LIFFアプリは、OS、LINEともに最新バージョンの環境での利用を推奨します
+> LIFFアプリは、OS、LINEともに最新バージョンの環境での利用を推奨します。上記の「最低動作環境」以降のバージョンでも、機能や設定によっては動作しない場合や画面が正常に表示されない場合があります。
 
 \* LINEの推奨環境については、ヘルプセンターの「[LINEの推奨環境を教えてください](https://help.line.me/line/ios/pc?lang=ja&contentId=10002433)」を参照してください。
 
@@ -78,10 +75,9 @@ LIFFブラウザが利用している[WKWebView](https://developer.apple.com/doc
 
 LIFFブラウザにおけるキャッシュの制御については、[Cache-Control](https://developer.mozilla.org/ja/docs/Web/HTTP/Reference/Headers/Cache-Control) などのHTTPヘッダーを用いて行ってください。
 
-:::note warn
-キャッシュの削除について
-
-:::
+> [!WARNING]
+> キャッシュの削除について
+> LIFFブラウザに保存されたキャッシュを明示的に削除することはできません。
 
 ## LIFFブラウザの画面サイズ
 
@@ -97,10 +93,9 @@ LIFFアプリの画面サイズを`Full`に指定している場合、ヘッダ�
 
 ![](https://developers.line.biz/media/news/2025/liff-action-button-after.png)
 
-:::note info
-アクションボタンを非表示にする
-
-:::
+> [!TIP]
+> アクションボタンを非表示にする
+> LINE DevelopersコンソールでLIFFアプリの［**モジュールモード**］をオンにすると、アクションボタンを非表示にできます。詳しくは、「[LIFFアプリをチャネルに追加する](https://developers.line.biz/ja/docs/liff/registering-liff-apps/)」を参照してください。
 
 アクションボタンを押すと、[マルチタブビュー](#multi-tab-view)または[オプション](#multi-tab-view-option)のどちらかがLINEアプリのバージョンに応じて表示されます。LINEバージョン15.12.0以降ではマルチタブビューが表示され、LINEバージョン15.12.0未満ではオプションが表示されます。
 
@@ -124,10 +119,9 @@ LIFFアプリの画面サイズを`Full`に指定している場合、ヘッダ�
 | **更新** | 現在開いているページを再読み込みします。 |
 | **権限設定** | 権限設定画面を開きます。権限設定画面では、現在開いているLIFFアプリのカメラやマイクへのアクセス権を確認できます。変更はできません。LINEバージョン14.6.0以降で利用可能です。 |
 
-:::note warn
-パーマネントリンクのシェアに失敗する場合があります
-
-:::
+> [!WARNING]
+> パーマネントリンクのシェアに失敗する場合があります
+> 現在のページのURLがLINE Developersコンソールの［**エンドポイントURL**］に指定したURLで始まらない場合、パーマネントリンクを取得できずシェアに失敗します。
 
 ### 最近使用したサービス
 
