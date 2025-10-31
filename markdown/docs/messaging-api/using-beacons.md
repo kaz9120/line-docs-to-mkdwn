@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/using-beacons/
-copied_at: 2025-10-24T06:28:03.200Z
+copied_at: 2025-10-24T10:15:13.028Z
 ---
 # LINEでビーコンを使う
 
@@ -47,9 +47,31 @@ Webhookのビーコンイベントを発生させるには、以下の手順に�
 
 以下は、[ビーコンイベントオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#beacon-event)の例です。
 
-json
-
-`{   "destination": "xxxxxxxxxx",  "events": [    {      "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",      "type": "beacon",      "mode": "active",      "timestamp": 1462629479859,      "source": {        "type": "user",        "userId": "U4af4980629..."      },      "webhookEventId": "01FZ74A0TDDPYRVKNK77XKC3ZR",      "deliveryContext": {        "isRedelivery": false      },      "beacon": {        "hwid": "d41d8cd98f",        "type": "enter"      }    }  ] }`
+```json
+{
+  "destination": "xxxxxxxxxx",
+  "events": [
+    {
+      "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+      "type": "beacon",
+      "mode": "active",
+      "timestamp": 1462629479859,
+      "source": {
+        "type": "user",
+        "userId": "U4af4980629..."
+      },
+      "webhookEventId": "01FZ74A0TDDPYRVKNK77XKC3ZR",
+      "deliveryContext": {
+        "isRedelivery": false
+      },
+      "beacon": {
+        "hwid": "d41d8cd98f",
+        "type": "enter"
+      }
+    }
+  ]
+}
+```
 
 ## ビーコンバナー
 

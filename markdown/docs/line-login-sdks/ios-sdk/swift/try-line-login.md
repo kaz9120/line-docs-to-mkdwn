@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/try-line-login/
-copied_at: 2025-10-23T15:58:57.277Z
+copied_at: 2025-10-24T10:16:10.443Z
 ---
 # スターターアプリを試してみる
 
@@ -17,10 +17,9 @@ iOS向けのLINEログインスターターアプリを実行すると、iOSア�
 LINEヤフー株式会社が提供するサンプルチャネルを使ってスターターアプリを試すには、以下の手順に従います。
 
 1.  [LINE SDK for iOS Swiftのオープンソースリポジトリ](https://github.com/line/line-sdk-ios-swift)をクローンします。
-    
-    sh
-    
-    `$ git clone https://github.com/line/line-sdk-ios-swift.git`
+    ```sh
+    $ git clone https://github.com/line/line-sdk-ios-swift.git
+    ```
     
 2.  `LineSDK.xcworkspace`ファイルを開きます。
 3.  `LineSDKSample`プロジェクトをビルドします。スターターアプリがSimulatorで起動します。

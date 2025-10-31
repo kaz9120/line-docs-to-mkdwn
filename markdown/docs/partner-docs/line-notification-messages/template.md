@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/template/
-copied_at: 2025-10-24T06:30:02.452Z
+copied_at: 2025-10-24T10:17:19.900Z
 ---
 # LINE通知メッセージ（テンプレート）
 
@@ -27,9 +27,46 @@ LINE通知メッセージ（テンプレート）は日本、タイ、台湾のL
 
 たとえば上記のメッセージは、次のようなJSONを作成することで送信できます。
 
-json
-
-`{   "to": "{hashed_phone_number}",  "templateKey": "shipment_completed_ja",  "body": {    "emphasizedItem": {      "itemKey": "date_002_ja",      "content": "2024年8月10日(土)"    },    "items": [      {        "itemKey": "time_range_001_ja",        "content": "午前中"      },      {        "itemKey": "number_001_ja",        "content": "1234567"      },      {        "itemKey": "price_001_ja",        "content": "12,000円"      },      {        "itemKey": "name_010_ja",        "content": "スープセット（冷凍）"      }    ],    "buttons": [      {        "buttonKey": "check_delivery_status_ja",        "url": "https://example.com/CheckDeliveryStatus/"      },      {        "buttonKey": "Check_Contact",        "url": "https://example.com/ContactUs/"      }    ]  } }`
+```json
+{
+  "to": "{hashed_phone_number}",
+  "templateKey": "shipment_completed_ja",
+  "body": {
+    "emphasizedItem": {
+      "itemKey": "date_002_ja",
+      "content": "2024年8月10日(土)"
+    },
+    "items": [
+      {
+        "itemKey": "time_range_001_ja",
+        "content": "午前中"
+      },
+      {
+        "itemKey": "number_001_ja",
+        "content": "1234567"
+      },
+      {
+        "itemKey": "price_001_ja",
+        "content": "12,000円"
+      },
+      {
+        "itemKey": "name_010_ja",
+        "content": "スープセット（冷凍）"
+      }
+    ],
+    "buttons": [
+      {
+        "buttonKey": "check_delivery_status_ja",
+        "url": "https://example.com/CheckDeliveryStatus/"
+      },
+      {
+        "buttonKey": "Check_Contact",
+        "url": "https://example.com/ContactUs/"
+      }
+    ]
+  }
+}
+```
 
 送信したLINE通知メッセージ（テンプレート）の数は、LINE Developersコンソールにログインして、［**統計情報**］タブの［**電話番号を利用した送信メッセージ**］から確認できます。詳しくは、「[送信済みLINE通知メッセージの数を取得する](https://developers.line.biz/ja/docs/partner-docs/line-notification-messages/technical-specs/#get-number-of-sent-line-notification-messages)」を参照してください。
 

@@ -1,143 +1,55 @@
 ---
-url: https://developers.line.biz/ja/docs/line-login/integrate-line-login-v2/
-copied_at: 2025-10-24T06:28:45.303Z
+url: https://developers.line.biz/ja/docs/line-login/managing-access-tokens-v2/
+copied_at: 2025-10-24T10:16:07.626Z
 ---
-# ウェブアプリにLINEログインを組み込む（LINEログイン v2.0）
+# アクセストークンを管理する（LINEログイン v2.0）
 
 > [!CAUTION]
 > LINEログイン v2.0は非推奨です
 > このページは旧バージョンのLINEログイン v2.0に関するドキュメントです。LINEログイン v2.0は[非推奨](https://developers.line.biz/ja/glossary/#deprecated)であり、時期は未定ですが[廃止](https://developers.line.biz/ja/glossary/#end-of-life)を予定しているため、現行バージョン（LINEログイン v2.1）の利用を推奨します。なお廃止時期の告知から、実際の廃止までは一定の猶予期間を置く予定です。詳しくは、「[LINEログインのバージョンについて](https://developers.line.biz/ja/docs/line-login/overview/#versions)」を参照してください。
 
-このページでは、ウェブアプリにLINEログインを組み込む方法について説明します。LINEログインを組み込めるアプリがない場合は、サンプルアプリを利用できます。「[LINEログインを利用するには](https://developers.line.biz/ja/docs/line-login/getting-started/)」を参照してください。
+LINEログインAPIで管理するアクセストークンは、LINEプラットフォームに保存されているユーザー情報（例：ユーザーID、表示名、プロフィール画像、およびステータスメッセージ）を利用することを、アプリが許可されていることを示します。
 
-## ログインのフロー
+ここでは、[LINEログイン v2.0](https://developers.line.biz/ja/docs/line-login/overview/#versions)のエンドポイントを使ってアクセストークンを管理する方法について説明します。
 
-ウェブアプリ向けのLINEログインの処理（ウェブログイン）は、[OAuth 2.0の認可コード付与のフロー](https://datatracker.ietf.org/doc/html/rfc6749)に基づいています。
+## ユーザーのアクセストークンを取得する
 
-ウェブログインのフローの概要は以下のとおりです。フロー図で「Web app」が関係しているフローは、ウェブアプリで実装が必要です。
+ユーザーの認証が終わると、LINEプラットフォームからアクセストークンが返されます。
 
-![Web login flow](https://developers.line.biz/media/line-login/web-login-flow.svg)
+この時点で、ユーザー情報を利用することを、アプリが許可されていると考えることができます。
 
-## チャネルを作成する
+詳しくは、以下の記事を参照してください。
 
-[「LINEログインチャネル」を作成](https://developers.line.biz/ja/docs/line-login/getting-started/#step-1-create-channel)し、ウェブアプリ用に設定します。
+**LINEログイン：**
 
-*   [コールバックURLを設定する](#setting-callback-url)
-
-### コールバックURLを設定する
-
-コールバックURLは、ユーザーが認証と認可の操作を行ったあとで、ウェブアプリが認可コードと`state`を受け取るために使用されます。
-
-[LINE Developersコンソール](https://developers.line.biz/console/)のチャネル設定の［**LINEログイン設定**］タブで、コールバックURLを設定してください。1つのチャネルに、複数のコールバックURLを指定できます。
-
-![リダイレクト設定](https://developers.line.biz/media/line-login/integrate-login-web/redirect-settings.png)
+*   [ウェブアプリにLINEログイン v2.0を組み込む](https://developers.line.biz/ja/docs/line-login/integrate-line-login-v2/)
 
 > [!WARNING]
-> メールアドレスの取得権限について
-> LINEログイン v2.0を使用する場合は、LINEログインを使ってログインしたユーザーのメールアドレスを取得できません。
+> アクセストークンの有効期間
+> アクセストークンは発行後30日間有効です。アクセストークンを含むレスポンスの`expires_in`プロパティに、有効期間（秒）が含まれます。
 
-## ユーザーに認証と認可を要求する
+### リフレッシュトークン
 
-LINEプラットフォームとユーザーの間で、認証と認可のプロセスを開始させます。ユーザーがLINEログインボタンをクリックしたときに、認可URLにユーザーをリダイレクトしてください。
+ユーザーの認証が終わったときに、アクセストークンと共にリフレッシュトークンが返されます。
 
-> [!TIP]
-> ヒント
-> *   ウェブアプリにLINEログインボタンを追加する際は、「[LINEログインボタン デザインガイドライン](https://developers.line.biz/ja/docs/line-login/login-button/)」に従ってください。
-> *   LINEログインボタンを表示せず、認可URLに直接リンクすることもできます。
-> *   ユーザーの認証情報は、ウェブアプリには通知されません。
+アクセストークンの有効期限が切れたときは、リフレッシュトークンを使用して新しいアクセストークンを取​得できます。詳しくは、『LINEログイン v2.0 APIリファレンス』の「[アクセストークンを更新する](https://developers.line.biz/ja/reference/line-login-v2/#refresh-access-token)」を参照してください。
 
-認可URLの例：
+> [!WARNING]
+> リフレッシュトークンの有効期間
+> リフレッシュトークンは、アクセストークンが発行されてから最長90日間有効です。リフレッシュトークンの有効期限が切れた場合は、ユーザーに再度ログインを要求して新しいアクセストークンを生成する必要があります。
 
-text
+## アクセストークンを検証する
 
-`https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth&state=123abc`
+アプリやほかのサーバーから受信したアクセストークンをサーバーで使用する場合は、アクセストークンを検証してください。
 
-認可URLに付与できるクエリパラメータは、以下のとおりです。
+アクセストークンの検証方法は、『LINEログイン v2.0 APIリファレンス』の「[アクセストークンを検証する](https://developers.line.biz/ja/reference/line-login-v2/#verify-access-token)」を参照してください。
 
-| パラメータ | タイプ | 必須 | 説明 |
-| --- | --- | --- | --- |
-| `response_type` | String | 必須 | `code` |
-| `client_id` | String | 必須 | LINEログインチャネルのチャネルID。[LINE Developersコンソール](https://developers.line.biz/console/)で確認できます。 |
-| `redirect_uri` | String | 必須 | [LINE Developersコンソール](https://developers.line.biz/console/)に登録したコールバックURL |
-| `state` | String | 必須 | [クロスサイトリクエストフォージェリ](https://wikipedia.org/wiki/Cross-site_request_forgery)防止用の固有な英数字の文字列。 **ログインセッションごとにウェブアプリでランダムに生成してください。** なお、URLエンコードされた文字列は使用できません。 |
-|  |  |  |  |
-
-### ユーザーがユーザー認証と認可を行う
-
-> [!TIP]
-> ユーザー認証と認可はユーザーとLINEプラットフォームの間で直接行われます
-> LINEログインを組み込むウェブアプリ側で、認可の機能を実装する必要はありません。
-
-認可URLにリダイレクトされたユーザーは、自分のLINE認証情報を使ってログインし、ウェブアプリが要求するアクセス権を認可します。
-
-同意画面の例：
-
-![同意画面](https://developers.line.biz/media/line-login/integrate-login-web/consent-screen.png)
-
-## ウェブアプリで認可コードまたはエラーレスポンスを受け取る
-
-ユーザーによる認証と認可のプロセスが終了すると、ユーザーはコールバックURLにリダイレクトされます。
-
-ユーザーがアプリにアクセス権を付与したときは、認可コードが渡されます。また、アクセス権の付与を拒否したときは、エラーレスポンスが渡されます。
-
-### 認可コードを受け取る
-
-ユーザーの認証と認可が完了すると、以下のクエリパラメータを含むコールバックURLにリダイレクトされます。
-
-| パラメータ | タイプ | 説明 |
-| --- | --- | --- |
-| `code` | String | アクセストークンの取得に使用される認可コード。有効期間は10分です。また、認可コードは1回のみ利用可能です。 |
-| `state` | String | [クロスサイトリクエストフォージェリ](https://wikipedia.org/wiki/Cross-site_request_forgery)防止用の固有な英数字の文字列。この値が認可URLに付与した`state`パラメータの値と一致することを検証してください。 |
-|  |  |  |
-
-リダイレクト先URLの例：
-
-text
-
-`https://example.com/callback?code=b5fd32eacc791df&state=123abc`
-
-### エラーレスポンスを受け取る
-
-アプリの要求する権限の付与をユーザーが拒否した場合、以下のクエリパラメータを含むコールバックURLにリダイレクトされます。
-
-| パラメータ | タイプ | 説明 |
-| --- | --- | --- |
-| `error_description` | String | `The+user+has+denied+the+approval`<br/>注意：このパラメータは、iOSアプリとAndroidアプリのアプリ内ブラウザでは表示されません。この問題については、現在対応中です。 |
-| `errorMessage` | String | `DISALLOWED` |
-| `errorCode` | Number | `417` |
-| `state` | String | 認可URLに含めた`state`パラメータ。この値で、どのプロセスが拒否されたか特定できます。 |
-| `error` | String | `access_denied` |
-|  |  |  |
-
-リダイレクト先URLの例：
-
-text
-
-`https://example.com/callback?error_description=The+user+has+denied+the+approval&errorMessage=DISALLOWED&errorCode=417&state=123abc&error=access_denied`
-
-## ウェブアプリでアクセストークンを取得する
-
-LINEプラットフォームから認可コードを受け取った際、同時に受け取った`state`パラメータと、[認証と認可を要求した](#making-an-authorization-request)ときに指定した`state`パラメータが一致すれば、アクセストークンを取得できます。
-
-リクエストの例：
-
-sh
-
-`curl -v -X POST https://api.line.me/v2/oauth/accessToken \ -H 'Content-Type: application/x-www-form-urlencoded' \ -d 'grant_type=authorization_code' \ -d 'code=b5fd32eacc791df' \ -d 'redirect_uri=https%3A%2F%2Fexample.com%2Fauth' \ -d 'client_id=12345' \ -d 'client_secret=d6524edacc8742aeedf98f'`
-
-レスポンスの例：
-
-json
-
-`{   "access_token": "bNl4YEFPI/hjFWhTqexp4MuEw5YPs7qhr6dJDXKwNPuLka...",  "expires_in": 2591977,  "refresh_token": "8iFFRdyxNVNLWYeteMMJ",  "scope": "P",  "token_type": "Bearer" }`
-
-詳しくは、『LINEログイン v2.0 APIリファレンス』の「[アクセストークンを発行する](https://developers.line.biz/ja/reference/line-login-v2/#issue-access-token)」を参照してください。
-
-## 次のステップ
-
-取得したアクセストークンを使って、以下の操作を行えます。
-
-*   [アクセストークンを管理する（LINEログイン v2.0）](https://developers.line.biz/ja/docs/line-login/managing-access-tokens-v2/)
-*   [ユーザーを管理する（LINEログイン v2.0](https://developers.line.biz/ja/docs/line-login/managing-users-v2/)
-
-html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
+> [!WARNING]
+> アクセストークンの検証後、さらに確認が必要です
+> LINEログインAPIによるアクセストークンの検証に成功すると、レスポンスには`client_id`プロパティ（チャネルID）と`expires_in`プロパティ（アクセストークンの有効期間）が含まれます。アクセストークンを使用する前に、各プロパティが以下の条件を満たすことを確認してください。
+> 
+> | プロパティ | 条件 |
+> | --- | --- |
+> | `client_id` | アプリにリンクされているLINEログインチャネルのチャネルIDと同じ |
+> | `expires_in` | 正の値 |
+> |  |  |

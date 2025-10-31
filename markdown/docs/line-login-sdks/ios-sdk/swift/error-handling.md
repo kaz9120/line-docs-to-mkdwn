@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/error-handling/
-copied_at: 2025-10-24T06:28:58.757Z
+copied_at: 2025-10-24T10:16:14.128Z
 ---
 # エラーを制御する
 
@@ -10,9 +10,17 @@ SDKにより、発生する可能性があるエラーが制御され、適切�
 
 LINE SDK for iOS Swiftのすべてのメソッドが、レスポンスとして`Result`列挙型を返します。レスポンスに`.failure`のケースが含まれる場合は、関連づけられたエラーを取得できます。
 
-swift
-
-`API.getProfile { result in     switch result {    case .success(let profile):        print(profile.displayName)    case .failure(let error):        print(error)        // Handle the error    } }`
+```swift
+API.getProfile { result in
+    switch result {
+    case .success(let profile):
+        print(profile.displayName)
+    case .failure(let error):
+        print(error)
+        // Handle the error
+    }
+}
+```
 
 上のサンプルコードでは単にエラーを出力しています。ログに出力されるエラーには、人間が判読できる形式でエラーの原因が記述されています。この情報から、個々のエラーに対処する方法を判定できます。
 
@@ -29,9 +37,18 @@ LINE SDK for iOS Swiftで報告されるエラーは、`Swift.Error`プロトコ
 
 理由がどのようなものか理解するため、以下の`ResponseErrorReason`列挙型のスニペットを参照してください。
 
-swift
-
-``public enum ResponseErrorReason {     // Error happens in the underlying `URLSession`. Code 2001.    case URLSessionError(Error)    // The response is not a valid `HTTPURLResponse`. Code 2002.    case nonHTTPURLResponse    // Cannot parse received data to an instance of target type. Code 2003.    case dataParsingFailed(Any.Type, Data, Error)    // Received response contains an invalid HTTP status code. Code 2004.    case invalidHTTPStatusAPIError(detail: APIErrorDetail) }``
+```swift
+public enum ResponseErrorReason {
+    // Error happens in the underlying `URLSession`. Code 2001.
+    case URLSessionError(Error)
+    // The response is not a valid `HTTPURLResponse`. Code 2002.
+    case nonHTTPURLResponse
+    // Cannot parse received data to an instance of target type. Code 2003.
+    case dataParsingFailed(Any.Type, Data, Error)
+    // Received response contains an invalid HTTP status code. Code 2004.
+    case invalidHTTPStatusAPIError(detail: APIErrorDetail)
+}
+```
 
 > [!WARNING]
 > 注意
@@ -41,25 +58,64 @@ swift
 
 最上位の`LineSDKError`インスタンスからエラーの詳細を取得するには、Swiftのパターンマッチングを使ってエラーから関連データを抽出します。たとえば、エラーの原因がサーバーから返された無効なHTTPステータスコードにあるかどうかを確認するには、以下のコードを使います。
 
-swift
-
-`case .failure(let error):     if case .responseFailed(        reason: .invalidHTTPStatusAPIError(let detail)) = error    {        print("HTTP Status Code: \(detail.code)")        print("API Error Detail: \(detail.error?.detail ?? "nil")")        print("Raw Response: \(detail.raw)")    }`
+```swift
+case .failure(let error):
+    if case .responseFailed(
+        reason: .invalidHTTPStatusAPIError(let detail)) = error 
+    {
+        print("HTTP Status Code: \(detail.code)")
+        print("API Error Detail: \(detail.error?.detail ?? "nil")")
+        print("Raw Response: \(detail.raw)")
+    }
+```
 
 エラーのタイプと原因に従って、エラーの制御方法を決定できます。たとえば、`.invalidHTTPStatusAPIError`が発生した場合は、`detail`パラメータの`code`プロパティを確認できます。エラーコード`500`はサーバーエラーを示すため、メッセージを表示する以外にできることはないかもしれません。その一方で、エラーコード`403`は対象のAPIエンドポイントにアクセスする権限が現在のトークンに不足していることを示します。この場合はユーザーに、アプリに再度ログインして対象のエンドポイントにアクセスするために必要な権限を付与するように促すことができます。
 
 以下のコードは、上記のエラーを制御する方法を示しています。
 
-swift
-
-`case .failure(let error):     if case .responseFailed(        reason: .invalidHTTPStatusAPIError(let detail)) = error    {        if detail.code == 500 {            print("LINE API Server Error: \(String(describing: detail.error)")        } else if detail.code == 403 {            print("Not enough permission. Login again with required permissions?")            // Do Login        }    }`
+```swift
+case .failure(let error):
+    if case .responseFailed(
+        reason: .invalidHTTPStatusAPIError(let detail)) = error
+    {
+        if detail.code == 500 {
+            print("LINE API Server Error: \(String(describing: detail.error)")
+        } else if detail.code == 403 {
+            print("Not enough permission. Login again with required permissions?")
+            // Do Login
+        }
+    }
+```
 
 ## 一般的なエラーを制御するショートカットを使う
 
 LINE SDK for iOS Swiftの使用中に発生する可能性がある一般的なエラーは数多く存在します。それらをすばやく識別するためのショートカットがいくつかあります。これらのショートカットを使って、返されるエラーのパターンッマッチングにかける作業を減らすことができます。
 
-swift
-
-`case .failure(let error):     if error.isUserCancelled {        // User cancelled the login process himself/herself.             } else if error.isPermissionError {        // Equivalent to checking .responseFailed.invalidHTTPStatusAPIError        // with code 403. Should login again.             } else if error.isURLSessionTimeOut {        // Underlying request timeout in URL session. Should try again later.             } else if error.isRefreshTokenError {        // User is accessing a public API with expired token, LINE SDK tried to        // refresh the access token automatically, but failed (due to refresh token)        // also expired. Should login again.             } else if /* error.isXYZ other condition */ {        // You could also extend LineSDKError to make your own shortcuts.             } else {        // Any other errors.        print("\(error)")    }`
+```swift
+case .failure(let error):
+    if error.isUserCancelled {
+        // User cancelled the login process himself/herself.
+        
+    } else if error.isPermissionError {
+        // Equivalent to checking .responseFailed.invalidHTTPStatusAPIError 
+        // with code 403. Should login again.
+        
+    } else if error.isURLSessionTimeOut {
+        // Underlying request timeout in URL session. Should try again later.
+        
+    } else if error.isRefreshTokenError {
+        // User is accessing a public API with expired token, LINE SDK tried to
+        // refresh the access token automatically, but failed (due to refresh token)
+        // also expired. Should login again.
+        
+    } else if /* error.isXYZ other condition */ {
+        // You could also extend LineSDKError to make your own shortcuts.
+        
+    } else {
+        // Any other errors.
+        print("\(error)")
+    }
+```
 
 一般的なエラーを制御するショートカットを使えば、エラー制御のコードを簡単に抽象化できます。シンプルなエラー制御の設計方法はアプリのアーキテクチャによって変わりますが、一般的で広く受容されている手法を使って、同じエラー制御コードの繰り返しを防ぐことができます。グッドプラクティスとして、すべてのエラー制御コードを1か所にまとめることをお勧めします。
 

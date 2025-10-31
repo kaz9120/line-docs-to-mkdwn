@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/liff/
-copied_at: 2025-10-24T06:29:10.295Z
+copied_at: 2025-10-24T10:16:30.286Z
 ---
 # LIFF v2 APIリファレンス
 
@@ -63,11 +63,11 @@ Unknown
 | 500 | APIサーバーの一時的なエラーです。 |
 | INIT\_FAILED | LIFF SDKの初期化時にエラーが発生しました。 |
 | INVALID\_ARGUMENT | 無効な引数が指定されました。 |
-| UNAUTHORIZED | <ul><!--[--><li><!--[-->ユーザーが認可しませんでした。<!--]--></li><li><!--[-->アクセストークンを指定せずにAPIが呼ばれました。<!--]--></li><li><!--[-->ログイン処理を行う前に、シェアターゲットピッカーを呼び出しました。<!--]--></li><!--]--></ul> |
-| FORBIDDEN | <ul><!--[--><li><!--[-->必要な権限がありません。<!--]--></li><li><!--[-->サポートされていない環境で機能を利用しようとしました。<!--]--></li><!--]--></ul> |
-| INVALID\_CONFIG | 無効な設定です。<ul><!--[--><li><!--[--><a aria-current="page" href="/ja/reference/liff/#initialize-liff-app" class="router-link-active router-link-exact-active"><!--[--><!--[--><code><!--[-->liff.init()<!--]--></code><!--]--><!--]--></a>を使ってLIFFアプリを初期化するには、liffIdを指定する必要があります。<!--]--></li><li><!--[--><a aria-current="page" href="/ja/reference/liff/#permanent-link-create-url" class="router-link-active router-link-exact-active"><!--[--><!--[--><code><!--[-->liff.permanentLink.createUrl()<!--]--></code><!--]--><!--]--></a>を実行したページのURLが、［<strong><!--[-->エンドポイントURL<!--]--></strong>］に指定したURLで始まりません。<!--]--></li><!--]--></ul> |
+| UNAUTHORIZED | <ul><li>ユーザーが認可しませんでした。</li><li>アクセストークンを指定せずにAPIが呼ばれました。</li><li>ログイン処理を行う前に、シェアターゲットピッカーを呼び出しました。</li></ul> |
+| FORBIDDEN | <ul><li>必要な権限がありません。</li><li>サポートされていない環境で機能を利用しようとしました。</li></ul> |
+| INVALID\_CONFIG | 無効な設定です。<ul><li><a aria-current="page" href="/ja/reference/liff/#initialize-liff-app" class="router-link-active router-link-exact-active"><code>liff.init()</code></a>を使ってLIFFアプリを初期化するには、liffIdを指定する必要があります。</li><li><a aria-current="page" href="/ja/reference/liff/#permanent-link-create-url" class="router-link-active router-link-exact-active"><code>liff.permanentLink.createUrl()</code></a>を実行したページのURLが、［<strong>エンドポイントURL</strong>］に指定したURLで始まりません。</li></ul> |
 | INVALID\_ID\_TOKEN | IDトークンが正規のものであることを確認できませんでした。 |
-| EXCEPTION\_IN\_SUBWINDOW | サブウィンドウで問題が発生しました。<ul><!--[--><li><!--[-->ターゲットピッカー（グループまたは友だちを選択する画面）を表示後、10分以上操作しなかった場合など<!--]--></li><!--]--></ul> |
+| EXCEPTION\_IN\_SUBWINDOW | サブウィンドウで問題が発生しました。<ul><li>ターゲットピッカー（グループまたは友だちを選択する画面）を表示後、10分以上操作しなかった場合など</li></ul> |
 | UNKNOWN | 不明なエラーです。 |
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}
@@ -145,9 +145,10 @@ LIFFアプリを初期化する際の注意事項は以下のとおりです。�
 > 
 > たとえば、LIFFアプリのエンドポイントURLが`https://example.com/path1/path2/`で、`liff.init()`メソッドを実行するURLが`https://example.com/path1/`の場合、表示される警告メッセージは次のとおりです。
 > 
-> text
-> 
-> `liff.init() was called with a current URL that is not related to the endpoint URL. https://example.com/path1/ is not under https://example.com/path1/path2/`
+> ```text
+> liff.init() was called with a current URL that is not related to the endpoint URL.
+> https://example.com/path1/ is not under https://example.com/path1/path2/
+> ```
 > 
 > 上記の警告メッセージが表示された場合、エンドポイントURLを`https://example.com/`や`https://example.com/path1/`に変更できないか検討してください。これらのURLに変更することで、`liff.init()`メソッドの動作が保証されます。
 
@@ -159,9 +160,17 @@ LIFFアプリを初期化する際の注意事項は以下のとおりです。�
 
 URLを操作する処理は、`liff.init()`メソッドが返す`Promise`オブジェクトがresolveしてから実行してください。
 
-javascript
-
-`// Example using window.location.replace() liff   .init({    liffId: "1234567890-AbcdEfgh", // Use own liffId  })  .then(() => {    // Redirect to another page after the returned Promise object has been resolved    window.location.replace(location.href + "/entry/");  });`
+```javascript
+// Example using window.location.replace()
+liff
+  .init({
+    liffId: "1234567890-AbcdEfgh", // Use own liffId
+  })
+  .then(() => {
+    // Redirect to another page after the returned Promise object has been resolved
+    window.location.replace(location.href + "/entry/");
+  });
+```
 
 `Promise`オブジェクトがresolveする前に、次のようなURLを操作する処理を実行すると、LIFFアプリを正常に開けない場合があります。
 
@@ -175,9 +184,15 @@ javascript
 
 なお、LIFF v2.11.0以降のバージョンでは、`liff.init()`メソッドがresolveされたタイミングでURLから機密情報が除外されます。そのため、以下のように`then()`メソッド内でページビューを送信することで、機密情報の漏洩を防ぐことができます。ロギングツールを利用する場合は、LIFFアプリをv2.11.0以降にバージョンアップすることをお勧めします。LIFF v2.11.0の更新内容について詳しくは、『LIFFドキュメント』の「[リリースノート](https://developers.line.biz/ja/docs/liff/release-notes/#liff-v2-11-0)」を参照してください。
 
-javascript
-
-`liff   .init({    liffId: "1234567890-AbcdEfgh", // Use own liffId  })  .then(() => {    ga("send", "pageview");  });`
+```javascript
+liff
+  .init({
+    liffId: "1234567890-AbcdEfgh", // Use own liffId
+  })
+  .then(() => {
+    ga("send", "pageview");
+  });
+```
 
 > [!WARNING]
 > LIFFアプリのクエリパラメータについて
@@ -212,9 +227,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.init(config, successCallback, errorCallback);`
+```javascript
+liff.init(config, successCallback, errorCallback);
+```
 
 #### 引数
 
@@ -292,9 +307,9 @@ html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html 
 
 #### 構文
 
-javascript
-
-`liff.getOS();`
+```javascript
+liff.getOS();
+```
 
 #### 引数
 
@@ -339,9 +354,9 @@ LIFF SDKのバージョンが2.24.0以上
 
 #### 構文
 
-javascript
-
-`liff.getAppLanguage();`
+```javascript
+liff.getAppLanguage();
+```
 
 #### 引数
 
@@ -367,9 +382,9 @@ LIFFアプリを動作させている環境の言語設定を取得します。
 
 #### 構文
 
-javascript
-
-`liff.getLanguage();`
+```javascript
+liff.getLanguage();
+```
 
 #### 引数
 
@@ -391,9 +406,9 @@ LIFF SDKのバージョンを取得します。
 
 #### 構文
 
-javascript
-
-`liff.getVersion();`
+```javascript
+liff.getVersion();
+```
 
 #### 引数
 
@@ -415,9 +430,9 @@ html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html 
 
 #### 構文
 
-javascript
-
-`liff.getLineVersion();`
+```javascript
+liff.getLineVersion();
+```
 
 #### 引数
 
@@ -441,9 +456,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.getContext();`
+```javascript
+liff.getContext();
+```
 
 #### 引数
 
@@ -829,9 +844,9 @@ LIFFアプリをLIFFブラウザで動作させているかどうかを取得し
 
 #### 構文
 
-javascript
-
-`liff.isInClient();`
+```javascript
+liff.isInClient();
+```
 
 #### 引数
 
@@ -852,9 +867,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.isLoggedIn();`
+```javascript
+liff.isLoggedIn();
+```
 
 #### 引数
 
@@ -875,9 +890,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.isApiAvailable(apiName);`
+```javascript
+liff.isApiAvailable(apiName);
+```
 
 #### 引数
 
@@ -927,9 +942,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.login(loginConfig);`
+```javascript
+liff.login(loginConfig);
+```
 
 #### 引数
 
@@ -957,8 +972,8 @@ String
 
 | redirectUri | ログイン処理 |
 | --- | --- |
-| <ul><!--[--><li><!--[-->https://example.com/path1/path2?query1=value1<!--]--></li><li><!--[-->https://example.com/path1/path2?query2=value2<!--]--></li><li><!--[-->https://example.com/path1/path2#URL-fragment<!--]--></li><li><!--[-->https://example.com/path1/path2<!--]--></li><li><!--[-->https://example.com/path1/path2/<!--]--></li><li><!--[-->https://example.com/path1/path2/path3<!--]--></li><!--]--></ul> | ✅ 成功 |
-| <ul><!--[--><li><!--[-->https://example.com/path1<!--]--></li><li><!--[-->https://example.com/<!--]--></li><li><!--[-->https://example.com/path2/path1<!--]--></li><!--]--></ul> | ❌ 失敗 |
+| <ul><li>https://example.com/path1/path2?query1=value1</li><li>https://example.com/path1/path2?query2=value2</li><li>https://example.com/path1/path2#URL-fragment</li><li>https://example.com/path1/path2</li><li>https://example.com/path1/path2/</li><li>https://example.com/path1/path2/path3</li></ul> | ✅ 成功 |
+| <ul><li>https://example.com/path1</li><li>https://example.com/</li><li>https://example.com/path2/path1</li></ul> | ❌ 失敗 |
 
 #### 戻り値
 
@@ -974,9 +989,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.logout();`
+```javascript
+liff.logout();
+```
 
 #### 引数
 
@@ -1010,9 +1025,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.getAccessToken();`
+```javascript
+liff.getAccessToken();
+```
 
 #### 引数
 
@@ -1050,9 +1065,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.getIDToken();`
+```javascript
+liff.getIDToken();
+```
 
 #### 引数
 
@@ -1096,9 +1111,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.getDecodedIDToken();`
+```javascript
+liff.getDecodedIDToken();
+```
 
 #### 引数
 
@@ -1137,9 +1152,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.permission.getGrantedAll();`
+```javascript
+liff.permission.getGrantedAll();
+```
 
 #### 引数
 
@@ -1161,9 +1176,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.permission.query(permission);`
+```javascript
+liff.permission.query(permission);
+```
 
 #### 引数
 
@@ -1216,9 +1231,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.permission.requestAll();`
+```javascript
+liff.permission.requestAll();
+```
 
 #### 引数
 
@@ -1254,9 +1269,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.getProfile();`
+```javascript
+liff.getProfile();
+```
 
 #### 引数
 
@@ -1314,9 +1329,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.getFriendship();`
+```javascript
+liff.getFriendship();
+```
 
 #### 引数
 
@@ -1368,9 +1383,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.openWindow(params);`
+```javascript
+liff.openWindow(params);
+```
 
 #### 引数
 
@@ -1425,9 +1440,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.closeWindow();`
+```javascript
+liff.closeWindow();
+```
 
 #### 引数
 
@@ -1464,9 +1479,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.sendMessages(messages);`
+```javascript
+liff.sendMessages(messages);
+```
 
 #### 引数
 
@@ -1527,9 +1542,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.shareTargetPicker(messages, options);`
+```javascript
+liff.shareTargetPicker(messages, options);
+```
 
 #### 引数
 
@@ -1637,9 +1652,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.scanCodeV2();`
+```javascript
+liff.scanCodeV2();
+```
 
 #### 引数
 
@@ -1694,9 +1709,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.scanCode();`
+```javascript
+liff.scanCode();
+```
 
 #### 引数
 
@@ -1724,17 +1739,17 @@ LIFFアプリの任意のページのパーマネントリンクを取得しま�
 
 パーマネントリンクの形式：
 
-text
-
-`https://liff.line.me/{liffId}/{path}?{query}#{URL fragment}`
+```text
+https://liff.line.me/{liffId}/{path}?{query}#{URL fragment}
+```
 
 _例_
 
 #### 構文
 
-javascript
-
-`liff.permanentLink.createUrlBy(url);`
+```javascript
+liff.permanentLink.createUrlBy(url);
+```
 
 #### 引数
 
@@ -1770,17 +1785,17 @@ html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html 
 
 パーマネントリンクの形式：
 
-text
-
-`https://liff.line.me/{liffId}/{path}?{query}#{URL fragment}`
+```text
+https://liff.line.me/{liffId}/{path}?{query}#{URL fragment}
+```
 
 _例_
 
 #### 構文
 
-javascript
-
-`liff.permanentLink.createUrl();`
+```javascript
+liff.permanentLink.createUrl();
+```
 
 #### 引数
 
@@ -1813,9 +1828,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.permanentLink.setExtraQueryParam(extraString);`
+```javascript
+liff.permanentLink.setExtraQueryParam(extraString);
+```
 
 #### 引数
 
@@ -1845,9 +1860,9 @@ _LIFFプラグインの例_
 
 #### 構文
 
-javascript
-
-`liff.use(module, option);`
+```javascript
+liff.use(module, option);
+```
 
 #### 引数
 
@@ -1887,9 +1902,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.i18n.setLang(language);`
+```javascript
+liff.i18n.setLang(language);
+```
 
 #### 引数
 
@@ -1956,9 +1971,9 @@ _例_
 
 #### 構文
 
-javascript
-
-`liff.createShortcutOnHomeScreen(params);`
+```javascript
+liff.createShortcutOnHomeScreen(params);
+```
 
 #### 引数
 

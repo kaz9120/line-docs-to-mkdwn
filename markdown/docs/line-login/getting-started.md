@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/getting-started/
-copied_at: 2025-10-24T06:28:31.868Z
+copied_at: 2025-10-24T10:15:40.980Z
 ---
 # LINEログインを始めよう
 
@@ -24,7 +24,7 @@ LINEログインのスターターアプリを利用するには、以下の要�
 | --- | --- |
 | LINEアカウント | LINEを利用するためのアカウントです。LINEアカウントは、スターターアプリを試すために必要です。LINEアカウントを作成するには、iOS版LINEまたはAndroid版LINEを[ダウンロード](https://line.me/)して、新規登録をしてください。登録方法について詳しくは、『LINEみんなの使い方ガイド』の「[新規登録をする](https://guide.line.me/ja/signup-and-migration/line-signup.html)」を参照してください。 |
 | プロバイダー | プロバイダーは、アプリを提供する個人または組織を表す概念です。プロバイダーは、[LINE Developersコンソール](https://developers.line.biz/console/)で作成します。1人のLINEユーザーは、プロバイダーごとに異なるユーザーIDを持ちます。 |
-| LINEログインのチャネル | チャネルは、アプリとLINEプラットフォームを接続するための通信路です。プロバイダーの中に作成します。アプリごとに、チャネルを作成する必要があります。LINEログインのチャネルは、[LINE Developersコンソール](https://developers.line.biz/console/register/line-login/channel/)で作成します。<br/>注：<ul><!--[--><li><!--[-->LINE Developersコンソールを利用したことがない場合は、開発者として登録してからチャネルを作成します。<ul><!--[--><li><!--[-->チャネルの作成手順は<a href="#step-1-create-channel" class=""><!--[--><!--[-->Step 1: LINEログインのチャネルを作成する<!--]--><!--]--></a>で説明しています。<!--]--></li><!--]--></ul><!--]--></li><li><!--[-->スターターアプリを利用するためにLINEログインのチャネルを作成する際は、［<strong><!--[-->アプリタイプ<!--]--></strong>］で、［<strong><!--[-->ウェブアプリ<!--]--></strong>］を選択してください。<!--]--></li><!--]--></ul> |
+| LINEログインのチャネル | チャネルは、アプリとLINEプラットフォームを接続するための通信路です。プロバイダーの中に作成します。アプリごとに、チャネルを作成する必要があります。LINEログインのチャネルは、[LINE Developersコンソール](https://developers.line.biz/console/register/line-login/channel/)で作成します。<br/>注：<ul><li>LINE Developersコンソールを利用したことがない場合は、開発者として登録してからチャネルを作成します。<ul><li>チャネルの作成手順は<a href="#step-1-create-channel" class="">Step 1: LINEログインのチャネルを作成する</a>で説明しています。</li></ul></li><li>スターターアプリを利用するためにLINEログインのチャネルを作成する際は、［<strong>アプリタイプ</strong>］で、［<strong>ウェブアプリ</strong>］を選択してください。</li></ul> |
 | Herokuアカウント | [Heroku](https://www.heroku.com/)は、ウェブアプリをホストできるサービスです。スターターアプリをHerokuにデプロイするため、Heroku以外のサーバーを用意する必要がありません。 |
 | Heroku CLI | Herokuの機能を利用するには、[Heroku Command Line Interface (CLI)](https://devcenter.heroku.com/articles/heroku-cli) が必要です。 |
 
@@ -46,12 +46,12 @@ LINEログインのスターターアプリを利用するには、以下の要�
 | --- | --- | --- | --- |
 | **チャネルの種類** | ✅ | チャネルの種類。LINEログインを選択して、LINEログインチャネルを作成します。 | \- |
 | **プロバイダー** | ✅ | チャネルの[プロバイダー](https://developers.line.biz/ja/docs/line-developers-console/overview/#provider) | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
-| **サービスを提供する地域** | ✅ | LINEログインを組み込んだサービスを提供する地域。以下のいずれかを選択します。<br/><ul><!--[--><li><!--[-->日本<!--]--></li><li><!--[-->タイ<!--]--></li><li><!--[-->台湾<!--]--></li><li><!--[-->インドネシア<!--]--></li><!--]--></ul>※複数の地域でサービスを提供する場合は、地域ごとにチャネルを作成します。 | \- |
+| **サービスを提供する地域** | ✅ | LINEログインを組み込んだサービスを提供する地域。以下のいずれかを選択します。<br/><ul><li>日本</li><li>タイ</li><li>台湾</li><li>インドネシア</li></ul>※複数の地域でサービスを提供する場合は、地域ごとにチャネルを作成します。 | \- |
 | **会社・事業者の所在国・地域** | ✅ | チャネルを管理する会社・事業者の所在国・地域 | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
 | **チャネルアイコン** | ❌ | チャネルのアイコン | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
 | **チャネル名** | ✅ | チャネルの名前<br/>※チャネル名には、「LINE」またはそれに類する文字列を含めることはできません。 | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
 | **チャネル説明** | ✅ | チャネルの説明 | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
-| **アプリタイプ** | ✅ | LINEログインを組み込むアプリの種類。以下のいずれかを選択します。<br/><ul><!--[--><li><!--[-->ウェブアプリ<!--]--></li><li><!--[-->ネイティブアプリ<!--]--></li><!--]--></ul>※ スターターアプリをデプロイする場合は、［**ウェブアプリ**］を選択してください。 | \- |
+| **アプリタイプ** | ✅ | LINEログインを組み込むアプリの種類。以下のいずれかを選択します。<br/><ul><li>ウェブアプリ</li><li>ネイティブアプリ</li></ul>※ スターターアプリをデプロイする場合は、［**ウェブアプリ**］を選択してください。 | \- |
 | **メールアドレス** | ✅ | チャネルに関する重要な更新情報を受信するメールアドレス | \- |
 | **プライバシーポリシーURL** | 説明を参照 | アプリのプライバシーポリシーのURL。[認証プロバイダー](https://developers.line.biz/ja/docs/line-developers-console/overview/#certified-provider)の場合は必須です。 | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
 | **サービス利用規約URL** | ❌ | アプリの利用規約のURL | LINEログインおよびLIFFアプリ起動時の権限の同意画面 |
@@ -156,16 +156,14 @@ LINEアカウントでログインすると、LINEユーザーのプロフィー
 [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)を使用して、ウェブアプリのログを確認します。
 
 1.  コマンドラインからHerokuにログインします。
-    
-    sh
-    
-    `$ heroku login`
+    ```sh
+    $ heroku login
+    ```
     
 2.  ログを確認します。
-    
-    sh
-    
-    `$ heroku logs --app {Heroku app name} --tail`
+    ```sh
+    $ heroku logs --app {Heroku app name} --tail
+    ```
     
 
 ## Step 5: ウェブアプリをカスタマイズする
@@ -179,29 +177,26 @@ LINEアカウントでログインすると、LINEユーザーのプロフィー
 *   Git™
 
 1.  GitHubの[line-login-starter](https://github.com/line/line-login-starter)リポジトリをクローンします。
-    
-    sh
-    
-    `git clone https://github.com/line/line-login-starter.git`
+    ```sh
+    git clone https://github.com/line/line-login-starter.git
+    ```
     
 2.  `cd`コマンドを実行して、`line-login-starter`ディレクトリに移動します。
 3.  Heroku用リモートをローカルリポジトリに追加します。
-    
-    sh
-    
-    `$ heroku git:remote -a {Heroku app name}`
+    ```sh
+    $ heroku git:remote -a {Heroku app name}
+    ```
     
 4.  変更を加えてコミットします（任意）。
-    
-    sh
-    
-    `$ git add . $ git commit -m "First commit"`
+    ```sh
+    $ git add .
+    $ git commit -m "First commit"
+    ```
     
 5.  変更をHerokuのmasterブランチにプッシュします。
-    
-    sh
-    
-    `$ git push heroku master`
+    ```sh
+    $ git push heroku master
+    ```
     
 
 ## Step 6: チャネルを公開する（任意）

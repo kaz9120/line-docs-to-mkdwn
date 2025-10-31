@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/how-to-handle-auto-login-failure/
-copied_at: 2025-10-24T06:28:34.512Z
+copied_at: 2025-10-24T10:15:42.194Z
 ---
 # 自動ログインに失敗した時の対応方法
 
@@ -48,7 +48,9 @@ LINEアプリ上でのログインに失敗した場合、コールバックURL�
 
 この画面は「[自動ログインに失敗した場合](#when-automatic-login-fails)」に表示するため、再ログインを促す際には自動ログインを無効にする必要があります。自動ログインを無効にする場合は、以下のように認可URLのクエリパラメータで`disable_auto_login`パラメータを`true`に設定してユーザーをリダイレクトしてください。
 
-`https://access.line.me/oauth2/v2.1/authorize?**disable_auto_login=true**&response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz`
+```
+https://access.line.me/oauth2/v2.1/authorize?disable_auto_login=true&response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz
+```
 
 この画面には、LINEヘルプセンターの「[Webサイトで自動ログインを試みたが失敗した](https://help.line.me/line/ios/sp?lang=ja&contentId=20020693)」へのリンク（`https://help.line.me/line/ios/sp?lang=ja&contentId=20020693`）も併せて表示することを推奨します。
 
@@ -60,7 +62,9 @@ LINEアプリ上でのログインに失敗した場合、コールバックURL�
 
 自動ログインに失敗したユーザーを、自動ログインを無効にした認可URLへ直接リダイレクトする方法です。ユーザーを直接リダイレクトすることで、自動ログインに失敗したことを意識させずにログイン画面を表示できます。自動ログインを無効にする場合は、以下のように認可URLのクエリパラメータで`disable_auto_login`パラメータを`true`に設定してユーザーをリダイレクトしてください。
 
-`https://access.line.me/oauth2/v2.1/authorize?**disable_auto_login=true**&response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz`
+```
+https://access.line.me/oauth2/v2.1/authorize?disable_auto_login=true&response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz
+```
 
 ユーザーに対して、リダイレクトが発生することを事前に知らせたいときは、リダイレクトメッセージを表示しても構いません。
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login-sdks/ios-sdk/swift/setting-up-project/
-copied_at: 2025-10-24T06:28:54.523Z
+copied_at: 2025-10-24T10:16:10.944Z
 ---
 # プロジェクトを設定する
 
@@ -31,16 +31,19 @@ LINE SDK for iOS Swiftは、以前のバージョンのLINE SDK for iOS Objectiv
 CocoaPodsについて詳しくない場合は、『[CocoaPods Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html)』を参照してください。CocoaPodsを使ってLINE SDK for iOS Swiftをアプリに組み込む前に、作業環境にCocoaPodsのgemをインストールする必要があります。
 
 1.  Podfileを準備したら、ターゲットに以下のpodコマンドを追加します。
+    ```ruby
+    platform :ios, '13.0'
+    use_frameworks!
     
-    ruby
-    
-    `platform :ios, '13.0' use_frameworks! target '<Your App Target Name>' do     pod 'LineSDKSwift', '~> 5.0' end`
+    target '<Your App Target Name>' do
+        pod 'LineSDKSwift', '~> 5.0'
+    end
+    ```
     
 2.  以下のコマンドを実行します。
-    
-    bash
-    
-    `$ pod install`
+    ```bash
+    $ pod install
+    ```
     
 
 LINE SDK for iOS Swiftがダウンロードされ、Xcodeのワークスペースに組み込まれます。
@@ -50,22 +53,20 @@ LINE SDK for iOS Swiftがダウンロードされ、Xcodeのワークスペー�
 [Carthage](https://github.com/Carthage/Carthage)は分散型の依存性マネージャーで、ライブラリをビルドしてバイナリのフレームワークとして利用できます。
 
 1.  Carthageツールをインストールするには、[Homebrew](https://brew.sh/)を使います。
-    
-    bash
-    
-    `$ brew update $ brew install carthage`
+    ```bash
+    $ brew update
+    $ brew install carthage
+    ```
     
 2.  Carthageを使ってLINE SDK for iOS SwiftをXcodeプロジェクトに組み込むには、CartfileにSDKのGitHubリポジトリを以下のように指定します。
-    
-    text
-    
-    `github "line/line-sdk-ios-swift" ~> 5.0`
+    ```text
+    github "line/line-sdk-ios-swift" ~> 5.0
+    ```
     
 3.  以下のコマンドを実行してLINE SDK for iOS Swiftをビルドします。
-    
-    text
-    
-    `$ carthage update line-sdk-ios-swift`
+    ```text
+    $ carthage update line-sdk-ios-swift
+    ```
     
 
 以下のセクションに記載された手順に従って、ビルドされた`LineSDK.framework`ファイルをXcodeプロジェクトに追加できます。
@@ -79,22 +80,19 @@ LINE SDK for iOS Swiftがダウンロードされ、Xcodeのワークスペー�
 #### ビルドフェーズでLineSDK.frameworkファイルをコピーする
 
 1.  アプリのターゲットの［Build Phases］設定タブで ［**+**］アイコンをクリックして、［**New Run Script Phase**］を選択します。以下の内容で実行スクリプトを作成します。
-    
-    text
-    
-    `/usr/local/bin/carthage copy-frameworks`
+    ```text
+    /usr/local/bin/carthage copy-frameworks
+    ```
     
 2.  `LineSDK.framework`ファイルのパスを［Input Files］セクションに追加します。
-    
-    text
-    
-    `$(SRCROOT)/Carthage/Build/iOS/LineSDK.framework`
+    ```text
+    $(SRCROOT)/Carthage/Build/iOS/LineSDK.framework
+    ```
     
 3.  `LineSDK.framework`ファイルのパスを［Output Files］セクションに追加します。
-    
-    text
-    
-    `$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LineSDK.framework`
+    ```text
+    $(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/LineSDK.framework
+    ```
     
 
 実行スクリプトは以下のようになるはずです。
@@ -114,9 +112,25 @@ LINE SDK for iOS Swiftがダウンロードされ、Xcodeのワークスペー�
 
 Xcodeでアプリの`Info.plist`ファイルを右クリックして、［**Open As**］、［**Source Code**］の順に選択します。以下のスニペットを最後の`</dict>`タグの直前に挿入します。
 
-xml
-
-`<key>CFBundleURLTypes</key> <array>     <dict>        <key>CFBundleTypeRole</key>        <string>Editor</string>        <key>CFBundleURLSchemes</key>        <array>            <!-- LINEからアプリに戻る際に利用するURLスキーマを追加 -->            <string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>        </array>    </dict> </array> <key>LSApplicationQueriesSchemes</key> <array>     <!-- アプリからLINEを起動する際に利用するURLスキーマを追加 -->    <string>lineauth2</string> </array>`
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <!-- LINEからアプリに戻る際に利用するURLスキーマを追加 -->
+            <string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        </array>
+    </dict>
+</array>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <!-- アプリからLINEを起動する際に利用するURLスキーマを追加 -->
+    <string>lineauth2</string>
+</array>
+```
 
 このスニペットにより以下の設定が追加されます。
 

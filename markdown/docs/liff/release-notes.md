@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/liff/release-notes/
-copied_at: 2025-10-24T06:29:45.374Z
+copied_at: 2025-10-24T10:16:40.828Z
 ---
 # リリースノート
 
@@ -232,9 +232,10 @@ LIFF v2.27.2では、以下の改善を行いました。
 
 たとえば、LIFFアプリのエンドポイントURLが`https://example.com/path1/path2/`で、`liff.init()`メソッドを実行するURLが`https://example.com/path1/`の場合、次のような警告メッセージが表示されます。
 
-text
-
-`liff.init() was called with a current URL that is not related to the endpoint URL. https://example.com/path1/ is not under https://example.com/path1/path2/`
+```text
+liff.init() was called with a current URL that is not related to the endpoint URL.
+https://example.com/path1/ is not under https://example.com/path1/path2/
+```
 
 上記の警告メッセージが表示された場合、エンドポイントURLを`https://example.com/`や`https://example.com/path1/`に変更できないか検討してください。これらのURLに変更することで、`liff.init()`メソッドの動作が保証されます。
 
@@ -276,9 +277,12 @@ LIFF v2.27.0では、以下の機能を追加しました。
 
 LIFF SDKに[`liff.permission.getGrantedAll()`](https://developers.line.biz/ja/reference/liff/#permission-get-granted-all)メソッドが追加されました。`liff.permission.getGrantedAll()`メソッドを使うと、ユーザーが権限の付与に同意したスコープを一括で取得できます。
 
-javascript
-
-`liff.permission.getGrantedAll().then((scopes) => {   // ["profile", "chat_message.write", "openid", "email"]  console.log(scopes); });`
+```javascript
+liff.permission.getGrantedAll().then((scopes) => {
+  // ["profile", "chat_message.write", "openid", "email"]
+  console.log(scopes);
+});
+```
 
 このメソッドで取得できるスコープは次のとおりです。
 
@@ -676,9 +680,9 @@ LIFFアプリで利用するLIFF APIのみをLIFF SDKに含めることで、LIF
 
 まず、`liff`オブジェクトを`@line/liff/core`からインポートします。従来の`liff`オブジェクトのインポート元である`@line/liff`と異なる点に注意してください。
 
-js
-
-`import liff from "@line/liff/core";`
+```js
+import liff from "@line/liff/core";
+```
 
 この`liff`オブジェクトは従来の`liff`オブジェクトとは異なり、以下のプロパティとメソッドのみが含まれています。
 
@@ -690,17 +694,31 @@ js
 
 上記以外のLIFF APIを利用するには、対応するモジュールをインポートします。以下の例では、[`liff.getOS()`](https://developers.line.biz/ja/reference/liff/#get-os)メソッドと[`liff.getLanguage()`](https://developers.line.biz/ja/reference/liff/#get-language)メソッドに対応するモジュールをインポートしています。
 
-js
-
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; import GetLanguage from "@line/liff/get-language";`
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
+import GetLanguage from "@line/liff/get-language";
+```
 
 そして、インポートしたLIFF APIのモジュールを`liff.use()`メソッドに渡し、LIFF APIを有効化します。LIFF APIのモジュールはクラスで定義されているため、`liff.use()`メソッドにインスタンスを渡す必要があります。
 
 LIFF APIを有効化すると、LIFF APIを利用できるようになります。
 
-js
+```js
+import liff from "@line/liff/core";
+import GetOS from "@line/liff/get-os";
+import GetLanguage from "@line/liff/get-language";
 
-`import liff from "@line/liff/core"; import GetOS from "@line/liff/get-os"; import GetLanguage from "@line/liff/get-language"; liff.use(new GetOS()); liff.use(new GetLanguage()); liff.init({   liffId: "123456-abcedfg", }); liff.getOS(); liff.getLanguage();`
+liff.use(new GetOS());
+liff.use(new GetLanguage());
+
+liff.init({
+  liffId: "123456-abcedfg",
+});
+
+liff.getOS();
+liff.getLanguage();
+```
 
 プラガブルSDKについて詳しくは、『LIFFドキュメント』の「[プラガブルSDK](https://developers.line.biz/ja/docs/liff/pluggable-sdk/)」を参照してください。
 
@@ -708,9 +726,13 @@ js
 > 従来のLIFF SDKを利用する
 > 従来のLIFF SDKも引き続き利用できます。利用方法に変更はありません。
 > 
-> js
+> ```js
+> // 従来のliffオブジェクト
+> import liff from "@line/liff";
 > 
-> `// 従来のliffオブジェクト import liff from "@line/liff"; // プラガブルSDKのliffオブジェクト import liff from "@line/liff/core";`
+> // プラガブルSDKのliffオブジェクト
+> import liff from "@line/liff/core";
+> ```
 
 html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}
 
@@ -809,9 +831,9 @@ LIFF SDKの表示する文言が多言語に対応しました。これにより
 
 LIFF SDKが表示する文言の言語を指定する、[`liff.i18n.setLang()`](https://developers.line.biz/ja/reference/liff/#i18n-set-lang)メソッドが追加されました。`liff.i18n.setLang()`メソッドを使うと、ユーザーの言語に関わらず、指定した言語でLIFF SDKの文言を表示できます。
 
-js
-
-`liff.i18n.setLang("en");`
+```js
+liff.i18n.setLang("en");
+```
 
 なお、翻訳が適用されていない文言は、このメソッドの影響を受けません。
 
@@ -825,9 +847,9 @@ js
 
 LIFF SDKのnpmパッケージにおいて、[`liff.getProfile()`](https://developers.line.biz/ja/reference/liff/#get-profile)メソッドで取得できる[プロフィール情報](https://developers.line.biz/ja/glossary/#profile-information)のTypeScriptの型定義を利用できるようになりました。`@liff/get-profile`パッケージから`Profile`型をインポートできます。
 
-ts
-
-`import { Profile } from "@liff/get-profile";`
+```ts
+import { Profile } from "@liff/get-profile";
+```
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}
 
@@ -843,9 +865,9 @@ LIFF v2.20.3では、以下の不具合を修正しました。
 
 Androidの[外部ブラウザ](https://developers.line.biz/ja/glossary/#external-browser)で[自動ログイン](https://developers.line.biz/ja/docs/line-login/integrate-line-login/#line-auto-login)が正しく行われない場合がありました。その暫定対応として、Androidの外部ブラウザにおいて、自動ログイン後に以下のアラートを表示するようにしました。
 
-text
-
-`Login successfully!`
+```text
+Login successfully!
+```
 
 なお、今後のLIFF SDKのアップデートでアラートの表示を改善する予定です。
 
@@ -1027,9 +1049,23 @@ LIFFアプリの任意のページのパーマネントリンクを取得する[
 
 #### liff.permanentLink.createUrlBy()メソッドのサンプルコード
 
-javascript
+```javascript
+// For example, if the endpoint URL of the LIFF app is https://example.com/path1?q1=v1
+// and its LIFF ID is 1234567890-AbcdEfgh
+liff.permanentLink
+  .createUrlBy("https://example.com/path1?q1=v1")
+  .then((permanentLink) => {
+    // https://liff.line.me/1234567890-AbcdEfgh
+    console.log(permanentLink);
+  });
 
-`// For example, if the endpoint URL of the LIFF app is https://example.com/path1?q1=v1 // and its LIFF ID is 1234567890-AbcdEfgh liff.permanentLink   .createUrlBy("https://example.com/path1?q1=v1")  .then((permanentLink) => {    // https://liff.line.me/1234567890-AbcdEfgh    console.log(permanentLink);  }); liff.permanentLink   .createUrlBy("https://example.com/path1/path2?q1=v1&q2=v2")  .then((permanentLink) => {    // https://liff.line.me/1234567890-AbcdEfgh/path2?q=2=v2    console.log(permanentLink);  });`
+liff.permanentLink
+  .createUrlBy("https://example.com/path1/path2?q1=v1&q2=v2")
+  .then((permanentLink) => {
+    // https://liff.line.me/1234567890-AbcdEfgh/path2?q=2=v2
+    console.log(permanentLink);
+  });
+```
 
 > [!WARNING]
 > liff.permanentLink.createUrl()メソッドは次回メジャーバージョン以降に非推奨になる可能性があります
@@ -1072,9 +1108,18 @@ LIFF v2.16.1では以下の不具合を修正しています。
 
 [webpack v5から、Node.jsのポリフィルが削除されました。](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-nodejs-polyfills-removed)その影響により、webpack v5を使ったプロジェクトでLIFF v2.16.0以前のnpm版を使用すると、ビルド時にエラーが発生し、以下のようなメッセージが表示されます。
 
-text
+```text
+Module not found: Error: Can't resolve 'crypto' in 'node_modules/js-crypto-env/dist'
 
-`Module not found: Error: Can't resolve 'crypto' in 'node_modules/js-crypto-env/dist'  BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default. This is no longer the case. Verify if you need this module and configure a polyfill for it.  If you want to include a polyfill, you need to: - add a fallback 'resolve.fallback: { "crypto": require.resolve("crypto-browserify") }' - install 'crypto-browserify' If you don't want to include a polyfill, you can use an empty module like this: resolve.fallback: { "crypto": false }`
+BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
+This is no longer the case. Verify if you need this module and configure a polyfill for it.
+
+If you want to include a polyfill, you need to:
+- add a fallback 'resolve.fallback: { "crypto": require.resolve("crypto-browserify") }'
+- install 'crypto-browserify'
+If you don't want to include a polyfill, you can use an empty module like this:
+resolve.fallback: { "crypto": false }
+```
 
 これは、LIFF v2.16.0以前では、LIFF SDK内部においてNode.jsのポリフィルに依存した実装をしているためです。LIFF v2.16.1では、Node.jsのポリフィルに依存しない実装に変更されたため、上記のエラーが発生しなくなりました。
 
@@ -1084,15 +1129,26 @@ LIFF SDKのバージョンを維持したまま不具合を修正するには、
 
 まず、Node.jsのポリフィルをインストールします。`crypto-browserify` と `stream-browserify` をインストールしてください。
 
-bash
+```bash
+# npmの場合
+$ npm install crypto-browserify stream-browserify
 
-`# npmの場合 $ npm install crypto-browserify stream-browserify # Yarnの場合 $ yarn add crypto-browserify stream-browserify`
+# Yarnの場合
+$ yarn add crypto-browserify stream-browserify
+```
 
 次に、`webpack.config.js`の`resolve.fallback`を以下のようにします。
 
-js
-
-`module.exports = {   resolve: {    fallback: {      crypto: require.resolve("crypto-browserify"),      stream: require.resolve("stream-browserify"),    },  }, };`
+```js
+module.exports = {
+  resolve: {
+    fallback: {
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+    },
+  },
+};
+```
 
   
 
@@ -1136,9 +1192,45 @@ LIFF v2.16.0では以下の機能追加を行いました。
 
 **`liff.shareTargetPicker()`メソッドに`isMultiple`プロパティを追加したサンプルコード：**
 
-js
-
-``if (liff.isApiAvailable("shareTargetPicker")) {   liff    .shareTargetPicker(      [        {          type: "text",          text: "Hello, World!",        },      ],      {        isMultiple: true,      },    )    .then(function (res) {      if (res) {        // succeeded in sending a message through TargetPicker        console.log(`[${res.status}] Message sent!`);      } else {        const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");        if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {          // LINE 10.3.0 - 10.10.0          // Old LINE will access here regardless of user's action          console.log(            "TargetPicker was opened at least. Whether succeeded to send message is unclear",          );        } else {          // LINE 10.11.0 -          // sending message canceled          console.log("TargetPicker was closed!");        }      }    })    .catch(function (error) {      // something went wrong before sending a message      console.log("something wrong happen");    }); }``
+```js
+if (liff.isApiAvailable("shareTargetPicker")) {
+  liff
+    .shareTargetPicker(
+      [
+        {
+          type: "text",
+          text: "Hello, World!",
+        },
+      ],
+      {
+        isMultiple: true,
+      },
+    )
+    .then(function (res) {
+      if (res) {
+        // succeeded in sending a message through TargetPicker
+        console.log(`[${res.status}] Message sent!`);
+      } else {
+        const [majorVer, minorVer] = (liff.getLineVersion() || "").split(".");
+        if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
+          // LINE 10.3.0 - 10.10.0
+          // Old LINE will access here regardless of user's action
+          console.log(
+            "TargetPicker was opened at least. Whether succeeded to send message is unclear",
+          );
+        } else {
+          // LINE 10.11.0 -
+          // sending message canceled
+          console.log("TargetPicker was closed!");
+        }
+      }
+    })
+    .catch(function (error) {
+      // something went wrong before sending a message
+      console.log("something wrong happen");
+    });
+}
+```
 
 詳しくは、『LIFF APIリファレンス』の「[liff.shareTargetPicker()](https://developers.line.biz/ja/reference/liff/#share-target-picker)」を参照してください。
 
@@ -1197,9 +1289,11 @@ LIFFアプリ上で二次元コードリーダーを起動する[`liff.scanCodeV
 
 ###### `liff.scanCodeV2()`のサンプルコード：
 
-javascript
-
-`liff.scanCodeV2().then((result) => {   // result = { value: "" } });`
+```javascript
+liff.scanCodeV2().then((result) => {
+  // result = { value: "" }
+});
+```
 
 > [!WARNING]
 > LINEミニアプリによる二次元コードリーダーのサポートは2021年10月7日を予定しています
@@ -1250,9 +1344,14 @@ javascript
 
 **`liff.init()`メソッドに`withLoginOnExternalBrowser`プロパティを追加したサンプルコード：**
 
-js
-
-`liff.init({   liffId: "123456-abcdef",  withLoginOnExternalBrowser: true, // Enable automatic login process }).then(() =>   // Start to use liff's api });`
+```js
+liff.init({
+  liffId: "123456-abcdef",
+  withLoginOnExternalBrowser: true, // Enable automatic login process
+}).then(() =>
+  // Start to use liff's api
+});
+```
 
 詳しくは、『LIFF APIリファレンス』の「[liff.init()](https://developers.line.biz/ja/reference/liff/#initialize-liff-app)」を参照してください。
 
@@ -1371,17 +1470,25 @@ LIFF URLが`https://liff.line.me/{liffId}/path`で、エンドポイントURLが
 
 `liff.init().then()`メソッド内では、機密情報が除外されます。
 
-js
+```js
+console.log(window.location.href);
+// https://example.com/?liff.state=path#access_token=xxx&context_token=xxx&feature_token=xxx&id_token=xxx&client_id=xxx
 
-`console.log(window.location.href); // https://example.com/?liff.state=path#access_token=xxx&context_token=xxx&feature_token=xxx&id_token=xxx&client_id=xxx liff.init({ liffId: myLiffId }).then(() => {   console.log(window.location.href);  // https://example.com/?liff.state=path });`
+liff.init({ liffId: myLiffId }).then(() => {
+  console.log(window.location.href);
+  // https://example.com/?liff.state=path
+});
+```
 
 > [!WARNING]
 > Google Analyticsなど外部のロギングツールの利用について
 > Google Analyticsなど外部のロギングツールを利用する場合は、LIFFアプリにアクセスしたユーザーの機密情報をよりセキュアに管理するために、LIFF v2.11.0へのアップデートをお勧めします。ロギングツールへは、機密情報を含まない`liff.init()`実行後のURLを送るようにしてください。
 > 
-> js
-> 
-> `liff.init({ liffId: myLiffId }).then(() => {   ga("send", "pageview"); });`
+> ```js
+> liff.init({ liffId: myLiffId }).then(() => {
+>   ga("send", "pageview");
+> });
+> ```
 
 LIFF SDKの組み込み方法について詳しくは、「[LIFFアプリにLIFF SDKを組み込む](https://developers.line.biz/ja/docs/liff/developing-liff-apps/#integrating-sdk)」を参照してください。
 
@@ -1475,9 +1582,12 @@ LIFF v2.7.1以前のバージョンでは、2次リダイレクト先URLにリ�
 
 **liff.init()がresolveされたらアラートを表示するコード例：**
 
-javascript
-
-`liff.init(myLiffId).then(() => {   // This process is executed after liff.init() is resolved.  window.alert("liff.init() is resolved."); });`
+```javascript
+liff.init(myLiffId).then(() => {
+  // This process is executed after liff.init() is resolved.
+  window.alert("liff.init() is resolved.");
+});
+```
 
 LIFF v2.8.0では、2次リダイレクト先URLにリダイレクトされた時点で初めて`liff.init()`がresolveされるため、`then()`メソッドの処理が重複して実行される不具合は修正されています。上記のコード例では、一度のみアラートが表示されます。
 
@@ -1551,7 +1661,9 @@ LIFF v2.7.0では不具合を修正し、日本語などユニコード文字で
 | LIFF v2.6.0以前 | LIFF v2.7.0 |
 | :-: | :-: |
 | 
-`{<br/>"iss": "[https://access.line.me](https://access.line.me)",<br/>"sub": "U272cada9c6f4c0c933b0713bc2f90f68",<br/>"aud": "1234567890",<br/>"exp": 1513142487,<br/>"iat": 1513138887,<br/>"name": "**ã³ãã¼**", //文字化けします。<br/>"picture": "[https://profile.line-scdn.net/](https://profile.line-scdn.net/)..."<br/>}`
+```
+{<br/>"iss": "https://access.line.me",<br/>"sub": "U272cada9c6f4c0c933b0713bc2f90f68",<br/>"aud": "1234567890",<br/>"exp": 1513142487,<br/>"iat": 1513138887,<br/>"name": "ã³ãã¼", //文字化けします。<br/>"picture": "https://profile.line-scdn.net/..."<br/>}
+```
 
 
 
@@ -1559,7 +1671,9 @@ LIFF v2.7.0では不具合を修正し、日本語などユニコード文字で
 
  | 
 
-`{<br/>"iss": "[https://access.line.me](https://access.line.me)",<br/>"sub": "U272cada9c6f4c0c933b0713bc2f90f68",<br/>"aud": "1234567890",<br/>"exp": 1513142487,<br/>"iat": 1513138887,<br/>"name": "**コニー**", //正しく取得できます。<br/>"picture": "[https://profile.line-scdn.net/](https://profile.line-scdn.net/)..."<br/>}`
+```
+{<br/>"iss": "https://access.line.me",<br/>"sub": "U272cada9c6f4c0c933b0713bc2f90f68",<br/>"aud": "1234567890",<br/>"exp": 1513142487,<br/>"iat": 1513138887,<br/>"name": "コニー", //正しく取得できます。<br/>"picture": "https://profile.line-scdn.net/..."<br/>}
+```
 
 
 
@@ -1665,9 +1779,11 @@ APIの使用可否を確認する[`liff.isApiAvailable()`](https://developers.li
 
 別のLIFFアプリを開く前に、`liff.isApiAvailable('multipleLiffTransition')`を実行することで、LIFF間遷移が可能な状態か確認することができます。別のLIFFアプリを開く際に、エラーが発生することを避けることができます。
 
-js
-
-`if (liff.isApiAvailable('multipleLiffTransition')) {   window.location.href = "https://line.me/{liffId}", // URL for another LIFF app }`
+```js
+if (liff.isApiAvailable('multipleLiffTransition')) {
+  window.location.href = "https://line.me/{liffId}", // URL for another LIFF app
+}
+```
 
 > [!TIP]
 > liff.getContext()を使ってLIFF間遷移の情報を取得する
@@ -1678,9 +1794,25 @@ js
 > 
 > 以下は、`liff.getContext()`を実行した際の戻り値の例です。
 > 
-> json
-> 
-> `{   "type": "utou",  "utouId": "UU29e6eb36812f484fd275d41b5af4e760926c516d8c9faa35…b1e8de8fbb6ecb263ee8724e48118565e3368d39778fe648d",  "userId": "U70e153189a29f1188b045366285346bc",  "viewType": "full",  "accessTokenHash": "ArIXhlwQMAZyW7SDHm7L2g",  "availability": {    "shareTargetPicker": {      "permission": true,      "minVer": "10.3.0"    },    "multipleLiffTransition": {      "permission": true,      "minVer": "10.18.0"    }  } }`
+> ```json
+> {
+>   "type": "utou",
+>   "utouId": "UU29e6eb36812f484fd275d41b5af4e760926c516d8c9faa35…b1e8de8fbb6ecb263ee8724e48118565e3368d39778fe648d",
+>   "userId": "U70e153189a29f1188b045366285346bc",
+>   "viewType": "full",
+>   "accessTokenHash": "ArIXhlwQMAZyW7SDHm7L2g",
+>   "availability": {
+>     "shareTargetPicker": {
+>       "permission": true,
+>       "minVer": "10.3.0"
+>     },
+>     "multipleLiffTransition": {
+>       "permission": true,
+>       "minVer": "10.18.0"
+>     }
+>   }
+> }
+> ```
 
 詳しくは、『LIFF APIリファレンス』の「[liff.isApiAvailable()](https://developers.line.biz/ja/reference/liff/#is-api-available)」および「[liff.getContext()](https://developers.line.biz/ja/reference/liff/#get-context)」を参照してください。
 
@@ -1844,9 +1976,20 @@ LIFF v2.4.0では、以下の変更が適用されました。
 
 以下のように、ネットワークエラーや、ユーザーのLINEバージョンなどによってLIFFアプリの初期化に失敗した場合に、`liff.closeWindow()`メソッドでLIFFアプリを閉じることができます。
 
-js
-
-`liff   .init({    liffId: "123456-abcedfg", // Use own liffId  })  .then(() => {    // Start to use liff's api  })  .catch((err) => {    // Error happens during initialization    console.log(err.code, err.message);    liff.closeWindow();  });`
+```js
+liff
+  .init({
+    liffId: "123456-abcedfg", // Use own liffId
+  })
+  .then(() => {
+    // Start to use liff's api
+  })
+  .catch((err) => {
+    // Error happens during initialization
+    console.log(err.code, err.message);
+    liff.closeWindow();
+  });
+```
 
 詳しくは、『LIFF APIリファレンス』の「[liff.closeWindow()](https://developers.line.biz/ja/reference/liff/#close-window)」を参照してください。
 
@@ -2044,9 +2187,21 @@ LIFF v2に、`liff.isApiAvailable()`が追加されました。指定したAPI�
 
 `liff.isApiAvailable()`を事前に実行することで、ターゲットピッカーが使用不可能な環境で`liff.shareTargetPicker()`を実行した際、ユーザーの画面にエラーメッセージが表示されることを避けられます。
 
-javascript
-
-`if (liff.isApiAvailable("shareTargetPicker")) {   liff    .shareTargetPicker([      {        type: "text",        text: "Hello, World!",      },    ])    .then(alert("ShareTargetPicker was launched"))    .catch(function (res) {      alert("Failed to launch ShareTargetPicker");    }); }`
+```javascript
+if (liff.isApiAvailable("shareTargetPicker")) {
+  liff
+    .shareTargetPicker([
+      {
+        type: "text",
+        text: "Hello, World!",
+      },
+    ])
+    .then(alert("ShareTargetPicker was launched"))
+    .catch(function (res) {
+      alert("Failed to launch ShareTargetPicker");
+    });
+}
+```
 
 詳しくは、『LIFF v2 APIリファレンス』の「[liff.isApiAvailable()](https://developers.line.biz/ja/reference/liff/#is-api-available)」を参照してください。
 
@@ -2145,15 +2300,21 @@ LINEは今後もお客様への一層のサービス向上に取組んでまい�
 
 修正前：
 
-text
-
-`liff.scanCode().then(result => {   // result = { value: "" } });`
+```text
+liff.scanCode().then(result => {
+  // result = { value: "" }
+});
+```
 
 修正後：
 
-text
-
-`if (liff.scanCode) {     liff.scanCode().then(result => {       // result = { value: "" }     }); }`
+```text
+if (liff.scanCode) {
+    liff.scanCode().then(result => {
+      // result = { value: "" }
+    });
+}
+```
 
 詳しくは、『[LIFF v2 APIリファレンス](https://developers.line.biz/ja/reference/liff/)』を参照してください。
 

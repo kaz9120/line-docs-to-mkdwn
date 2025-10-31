@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/integrate-line-login/
-copied_at: 2025-10-24T06:28:34.518Z
+copied_at: 2025-10-24T10:15:52.037Z
 ---
 # ウェブアプリにLINEログインを組み込む
 
@@ -51,9 +51,9 @@ LINEログイン v2.1を使用する場合は、LINEログインを使ってロ�
 
 LINEプラットフォームとユーザーの間で、認証と認可のプロセスを開始させます。ユーザーがLINEログインボタンをクリックしたときに、以下の例のように認可URLに必須のクエリパラメータを付けてユーザーをリダイレクトしてください。
 
-text
-
-`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz`
+```text
+https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=12345abcde&scope=profile%20openid&nonce=09876xyz
+```
 
 認可URLに付与できるクエリパラメータは、以下のとおりです。
 
@@ -68,7 +68,7 @@ text
 | `prompt` | String | 任意 | 
 認証や認可のための画面を表示するかどうかの設定。以下のいずれかの値を設定できます。
 
-<ul><!--[--><li><!--[--><code><!--[-->consent<!--]--></code>：ユーザーが要求された権限にすべて同意済みであっても、強制的に同意画面を表示します。<!--]--></li><li><!--[--><code><!--[-->none<!--]--></code>：<a href="#line-auto-login" class=""><!--[--><!--[-->自動ログイン<!--]--><!--]--></a>が可能な環境、かつログイン済みで対象チャネルに同意済みの場合に、<a href="#line-sso-login" class=""><!--[--><!--[-->シングルサインオン（SSO）<!--]--><!--]--></a>の認証画面をスキップします。<!--]--></li><li><!--[--><code><!--[-->login<!--]--></code>：ログイン済み、またはシングルサインオンによるログインセッションが残っている場合であっても、認証のための画面を表示します。なお、<code><!--[-->login<!--]--></code>を指定した場合は自動ログインは無効になります。また、レスポンスで返される<a href="/ja/docs/line-login/verify-id-token/#id-tokens" class=""><!--[--><!--[-->IDトークン<!--]--><!--]--></a>の<code><!--[-->amr<!--]--></code>で認証方法の判別が可能です。<!--]--></li><!--]--></ul> |
+<ul><li><code>consent</code>：ユーザーが要求された権限にすべて同意済みであっても、強制的に同意画面を表示します。</li><li><code>none</code>：<a href="#line-auto-login" class="">自動ログイン</a>が可能な環境、かつログイン済みで対象チャネルに同意済みの場合に、<a href="#line-sso-login" class="">シングルサインオン（SSO）</a>の認証画面をスキップします。</li><li><code>login</code>：ログイン済み、またはシングルサインオンによるログインセッションが残っている場合であっても、認証のための画面を表示します。なお、<code>login</code>を指定した場合は自動ログインは無効になります。また、レスポンスで返される<a href="/ja/docs/line-login/verify-id-token/#id-tokens" class="">IDトークン</a>の<code>amr</code>で認証方法の判別が可能です。</li></ul> |
 | `max_age` | Number | 任意 | ユーザー認証後に許容される最大経過時間（秒）。[OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)の「Authentication Request」セクションで定義されている`max_age`パラメータに相当します。 |
 | `ui_locales` | String | 任意 | LINEログインで表示される画面の表示言語および文字種。[RFC 5646（BCP 47）](https://datatracker.ietf.org/doc/html/rfc5646)で定義されている言語タグを、優先順位が高い順に、スペース区切りのリストで設定します。[OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html)の「Authentication Request」セクションで定義されている`ui_locales`パラメータに相当します。 |
 | `bot_prompt` | String | 任意 | LINE公式アカウントを友だち追加するオプションをユーザーのログイン時に表示します。`normal`または`aggressive`を指定します。詳しくは、「[LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）](https://developers.line.biz/ja/docs/line-login/link-a-bot/)」を参照してください。 |
@@ -82,7 +82,7 @@ text
 
 認可レスポンスのパラメータをウェブアプリにどのように返すかの設定。以下のいずれかの値を設定できます。デフォルト値は`query`です。
 
-<ul><!--[--><li><!--[--><code><!--[-->query<!--]--></code>：認可レスポンスの各パラメータをコールバックURLのクエリパラメータとして返します。*1<!--]--></li><li><!--[--><code><!--[-->form_post<!--]--></code>：認可レスポンスの各パラメータをHTTP POSTリクエストのリクエストボディとして返します。*2<!--]--></li><li><!--[--><code><!--[-->query.jwt<!--]--></code>：認可レスポンスの各パラメータをJWTにまとめ、コールバックURLのクエリパラメータとして返します。<code><!--[-->jwt<!--]--></code>を設定した場合と同じです。*3<!--]--></li><li><!--[--><code><!--[-->form_post.jwt<!--]--></code>：認可レスポンスの各パラメータをJWTにまとめ、HTTP POSTリクエストのリクエストボディとして返します。*3<!--]--></li><li><!--[--><code><!--[-->jwt<!--]--></code>：認可レスポンスの各パラメータをJWTにまとめ、コールバックURLのクエリパラメータとして返します。<code><!--[-->query.jwt<!--]--></code>を設定した場合と同じです。*3<!--]--></li><!--]--></ul>\*1 [OAuth 2.0 Multiple Response Type Encoding Practices](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html)の「[2.1. Response Modes](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#ResponseModes)」セクションで定義されている`query`に相当します。<br/>\*2 [OAuth 2.0 Form Post Response Mode](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html)の「[2\. Form Post Response Mode](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html#FormPostResponseMode)」セクションで定義されている`form_post`に相当します。<br/>\*3 [Financial-grade API: JWT Secured Authorization Response Mode for OAuth 2.0 (JARM)](https://openid.net/specs/openid-financial-api-jarm.html)の「[4.3. Response Encoding](https://openid.net/specs/openid-financial-api-jarm.html#response-encoding)」セクションで定義されている`query.jwt`、`form_post.jwt`、`jwt`に相当します。 |
+<ul><li><code>query</code>：認可レスポンスの各パラメータをコールバックURLのクエリパラメータとして返します。*1</li><li><code>form_post</code>：認可レスポンスの各パラメータをHTTP POSTリクエストのリクエストボディとして返します。*2</li><li><code>query.jwt</code>：認可レスポンスの各パラメータをJWTにまとめ、コールバックURLのクエリパラメータとして返します。<code>jwt</code>を設定した場合と同じです。*3</li><li><code>form_post.jwt</code>：認可レスポンスの各パラメータをJWTにまとめ、HTTP POSTリクエストのリクエストボディとして返します。*3</li><li><code>jwt</code>：認可レスポンスの各パラメータをJWTにまとめ、コールバックURLのクエリパラメータとして返します。<code>query.jwt</code>を設定した場合と同じです。*3</li></ul>\*1 [OAuth 2.0 Multiple Response Type Encoding Practices](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html)の「[2.1. Response Modes](https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#ResponseModes)」セクションで定義されている`query`に相当します。<br/>\*2 [OAuth 2.0 Form Post Response Mode](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html)の「[2\. Form Post Response Mode](https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html#FormPostResponseMode)」セクションで定義されている`form_post`に相当します。<br/>\*3 [Financial-grade API: JWT Secured Authorization Response Mode for OAuth 2.0 (JARM)](https://openid.net/specs/openid-financial-api-jarm.html)の「[4.3. Response Encoding](https://openid.net/specs/openid-financial-api-jarm.html#response-encoding)」セクションで定義されている`query.jwt`、`form_post.jwt`、`jwt`に相当します。 |
 |  |  |  |  |
 
 > [!TIP]
@@ -245,15 +245,15 @@ SSOは、過去にLINEログインをしたことがある外部ブラウザで�
 
 認可リクエストの`response_mode`パラメータに`query`を設定した場合のリダイレクト先URLの例：
 
-text
-
-`https://example.com/callback?code=abcd1234&state=0987poi&friendship_status_changed=true`
+```text
+https://example.com/callback?code=abcd1234&state=0987poi&friendship_status_changed=true
+```
 
 認可リクエストの`response_mode`パラメータに`query.jwt`や`jwt`を設定した場合のリダイレクト先URLの例：
 
-text
-
-`https://example.com/callback?response=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...`
+```text
+https://example.com/callback?response=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+```
 
 ### エラーレスポンスを受け取る
 
@@ -268,9 +268,9 @@ text
 
 リダイレクト先URLの例：
 
-text
-
-`https://example.com/callback?error=ACCESS_DENIED&error_description=The+resource+owner+denied+the+request.&state=0987poi`
+```text
+https://example.com/callback?error=ACCESS_DENIED&error_description=The+resource+owner+denied+the+request.&state=0987poi
+```
 
 #### エラーコード
 
@@ -282,7 +282,7 @@ text
 | `INVALID_SCOPE` | 
 `scope`クエリパラメータの値に問題があります。適切な値を指定しているかを確認してください。
 
-<ul><!--[--><li><!--[--><code><!--[-->profile<!--]--></code>と<code><!--[-->openid<!--]--></code>のいずれかは必須です。<!--]--></li><li><!--[--><code><!--[-->email<!--]--></code>を指定する場合、<code><!--[-->openid<!--]--></code>も合わせて指定する必要があります。<!--]--></li><!--]--></ul> |
+<ul><li><code>profile</code>と<code>openid</code>のいずれかは必須です。</li><li><code>email</code>を指定する場合、<code>openid</code>も合わせて指定する必要があります。</li></ul> |
 | `SERVER_ERROR` | LINEログインサーバーで予期しないエラーが発生しました。 |
 | `LOGIN_REQUIRED` | `prompt`パラメータに`none`が指定されていますが、ユーザーの端末で自動ログインが動作しない、または未ログインの状態でした。 |
 | `INTERACTION_REQUIRED` | `prompt`パラメータに`none`が指定されていますが、ユーザーの端末で自動ログインが動作しませんでした。 |
@@ -295,9 +295,15 @@ LINEプラットフォームから認可コードを受け取った際、同時�
 
 リクエストの例：
 
-sh
-
-`curl -v -X POST https://api.line.me/oauth2/v2.1/token \ -H 'Content-Type: application/x-www-form-urlencoded' \ -d 'grant_type=authorization_code' \ -d 'code=1234567890abcde' \ --data-urlencode 'redirect_uri=https://example.com/auth?key=value' \ -d 'client_id=1234567890' \ -d 'client_secret=1234567890abcdefghij1234567890ab'`
+```sh
+curl -v -X POST https://api.line.me/oauth2/v2.1/token \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'grant_type=authorization_code' \
+-d 'code=1234567890abcde' \
+--data-urlencode 'redirect_uri=https://example.com/auth?key=value' \
+-d 'client_id=1234567890' \
+-d 'client_secret=1234567890abcdefghij1234567890ab'
+```
 
 ### レスポンス
 
@@ -319,9 +325,16 @@ LINEプラットフォームがアプリからのリクエストを検証し、�
 
 以下は、JSONレスポンスの例です。
 
-json
-
-`{   "access_token": "bNl4YEFPI/hjFWhTqexp4MuEw5YPs...",  "expires_in": 2592000,  "id_token": "eyJhbGciOiJIUzI1NiJ9...",  "refresh_token": "Aa1FdeggRhTnPNNpxr8p",  "scope": "profile",  "token_type": "Bearer" }`
+```json
+{
+  "access_token": "bNl4YEFPI/hjFWhTqexp4MuEw5YPs...",
+  "expires_in": 2592000,
+  "id_token": "eyJhbGciOiJIUzI1NiJ9...",
+  "refresh_token": "Aa1FdeggRhTnPNNpxr8p",
+  "scope": "profile",
+  "token_type": "Bearer"
+}
+```
 
 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[アクセストークンを発行する](https://developers.line.biz/ja/reference/line-login/#issue-access-token)」を参照してください。
 

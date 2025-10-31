@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/linking-accounts/
-copied_at: 2025-10-23T15:56:27.985Z
+copied_at: 2025-10-24T10:15:14.710Z
 ---
 # ユーザーアカウントの連携
 
@@ -42,15 +42,18 @@ Messaging APIを使わなくても、独自に実装してアカウントを連�
 
 ユーザーのLINEアカウントと自社サービスのアカウントを連携するには、連携トークンが必要です。[連携トークンを発行](https://developers.line.biz/ja/reference/messaging-api/#issue-link-token)するには、`/bot/user/{userId}/linkToken`エンドポイントにHTTP POSTリクエストを送信します。
 
-sh
-
-`curl -X POST https://api.line.me/v2/bot/user/{userId}/linkToken \ -H 'Authorization: Bearer {channel access token}'`
+```sh
+curl -X POST https://api.line.me/v2/bot/user/{userId}/linkToken \
+-H 'Authorization: Bearer {channel access token}'
+```
 
 リクエストが成功すると、ステータスコード`200`と連携トークンが返されます。連携トークンは10分間有効で、1回のみ使用できます。
 
-sh
-
-`{   "linkToken": "NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY" }`
+```sh
+{
+  "linkToken": "NMZTNuVrPTqlr2IF8Bnymkb7rXfYv5EY"
+}
+```
 
 ### 2\. ユーザーに連携URLを送信する
 
@@ -58,9 +61,27 @@ sh
 
 以下は、連携URLを指定したメッセージをユーザーに送信するリクエストの例です。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/message/push \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "to": "{user id}",    "messages": [{        "type": "template",        "altText": "Account Link",        "template": {            "type": "buttons",            "text": "Account Link",            "actions": [{                "type": "uri",                "label": "Account Link",                "uri": "http://example.com/link?linkToken=xxx"            }]        }    }] }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+    "to": "{user id}",
+    "messages": [{
+        "type": "template",
+        "altText": "Account Link",
+        "template": {
+            "type": "buttons",
+            "text": "Account Link",
+            "actions": [{
+                "type": "uri",
+                "label": "Account Link",
+                "uri": "http://example.com/link?linkToken=xxx"
+            }]
+        }
+    }]
+}'
+```
 
 ### 3\. 自社サービスのユーザーIDを取得する
 
@@ -81,9 +102,9 @@ nonceとしてランダムな値を生成する際の推奨事項は以下のと
 
 nonceを生成したら、そのnonceとサービスのユーザーIDを紐づけて保存します。次に、ユーザーを以下のエンドポイントにリダイレクトします。
 
-sh
-
-`https://access.line.me/dialog/bot/accountLink?linkToken={link token}&nonce={nonce}`
+```sh
+https://access.line.me/dialog/bot/accountLink?linkToken={link token}&nonce={nonce}
+```
 
 ユーザーがこのエンドポイントにアクセスすると、LINEプラットフォームにより、ユーザーが連携トークンを発行したユーザーかどうかを確認します。その確認結果に応じて、LINEプラットフォームは以下のような処理を行います。
 

@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/messaging-api/use-loading-indicator/
-copied_at: 2025-10-23T15:56:32.683Z
+copied_at: 2025-10-24T10:15:15.876Z
 ---
 # ローディングのアニメーションを表示する
 
@@ -24,9 +24,15 @@ LINE公式アカウントがユーザーからのメッセージを受信した�
 
 以下は、ローディングのアニメーションを5秒間表示するリクエストの例です。
 
-sh
-
-`curl -v -X POST https://api.line.me/v2/bot/chat/loading/start \ -H 'Content-Type: application/json' \ -H 'Authorization: Bearer {channel access token}' \ -d '{     "chatId": "U4af4980629...",    "loadingSeconds": 5 }'`
+```sh
+curl -v -X POST https://api.line.me/v2/bot/chat/loading/start \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {channel access token}' \
+-d '{
+    "chatId": "U4af4980629...",
+    "loadingSeconds": 5
+}'
+```
 
 詳しくは、『Messaging APIリファレンス』の「[ローディングのアニメーションを表示する](https://developers.line.biz/ja/reference/messaging-api/#display-a-loading-indicator)」を参照してください。
 

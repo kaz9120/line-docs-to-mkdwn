@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-login/managing-users/
-copied_at: 2025-10-24T06:28:41.425Z
+copied_at: 2025-10-24T10:16:04.026Z
 ---
 # ユーザーを管理する
 
@@ -16,15 +16,21 @@ LINEログインしたユーザーを管理する方法を説明します。
 
 リクエストの例：
 
-sh
-
-`curl -v -X GET https://api.line.me/v2/profile \ -H 'Authorization: Bearer {access token}'`
+```sh
+curl -v -X GET https://api.line.me/v2/profile \
+-H 'Authorization: Bearer {access token}'
+```
 
 レスポンスの例：
 
-json
-
-`{   "userId":"U4af4980629...",  "displayName":"Brown",  "pictureUrl":"https://profile.line-scdn.net/abcdefghijklmn",  "statusMessage":"Hello, LINE!" }`
+```json
+{
+  "userId":"U4af4980629...",
+  "displayName":"Brown",
+  "pictureUrl":"https://profile.line-scdn.net/abcdefghijklmn",
+  "statusMessage":"Hello, LINE!"
+}
+```
 
 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[ユーザープロフィールを取得する](https://developers.line.biz/ja/reference/line-login/#get-user-profile)」を参照してください。
 
@@ -46,9 +52,11 @@ json
 
 アクセストークンを取り消すリクエストの例：
 
-sh
-
-`curl -v -X POST 'https://api.line.me/oauth2/v2.1/revoke' \ -H "Content-Type:application/x-www-form-urlencoded" \ -d "client_id={channel id}&client_secret={channel secret}&access_token={access token}"`
+```sh
+curl -v -X POST 'https://api.line.me/oauth2/v2.1/revoke' \
+-H "Content-Type:application/x-www-form-urlencoded" \
+-d "client_id={channel id}&client_secret={channel secret}&access_token={access token}"
+```
 
 詳しくは、『LINEログイン v2.1 APIリファレンス』の「[アクセストークンを取り消す](https://developers.line.biz/ja/reference/line-login/#revoke-access-token)」を参照してください。
 

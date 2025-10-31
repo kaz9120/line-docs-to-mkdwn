@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/reference/line-notification-messages/
-copied_at: 2025-10-24T06:29:54.342Z
+copied_at: 2025-10-24T10:17:14.168Z
 ---
 # LINE通知メッセージAPIリファレンス
 
@@ -211,9 +211,9 @@ _レスポンスの例_
 
 | コード | 説明 |
 | --- | --- |
-| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><!--[--><li><!--[-->メッセージの送信先が無効です。<!--]--></li><li><!--[-->無効なメッセージオブジェクトが指定されています。<!--]--></li><li><!--[-->このLINE公式アカウントでは指定したテンプレートは使用できません。<!--]--></li><!--]--></ul> |
+| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><li>メッセージの送信先が無効です。</li><li>無効なメッセージオブジェクトが指定されています。</li><li>このLINE公式アカウントでは指定したテンプレートは使用できません。</li></ul> |
 | `403` | このエンドポイントを使う権限がありません。 |
-| `422` | LINE通知メッセージ（テンプレート）の送信に失敗しました。以下のような理由が考えられます。<ul><!--[--><li><!--[-->メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが存在しません。<!--]--></li><li><!--[-->メッセージ送信対象に指定した電話番号は、LINE通知メッセージのサービス対象国で発行されたものではありません。詳しくは、「<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages" class=""><!--[--><!--[-->LINE通知メッセージが送信される条件<!--]--><!--]--></a>」を参照してください。<!--]--></li><li><!--[-->メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#how-to-consent-for-line-notification-messages" class=""><!--[--><!--[-->LINE通知メッセージの受信を拒否<!--]--><!--]--></a>しています。<!--]--></li><li><!--[-->メッセージ送信対象に指定した電話番号に紐づくLINEユーザーは、<a href="https://guide.line.me/privacy-policy_update/2022/0001/?lang=ja-jp" target="_blank" class="" rel="nofollow"><!--[--><!--[-->LINEのプライバシーポリシー（2022年3月改定）<!--]--><!--]--></a>に同意していません。<!--]--></li><!--]--></ul> |
+| `422` | LINE通知メッセージ（テンプレート）の送信に失敗しました。以下のような理由が考えられます。<ul><li>メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが存在しません。</li><li>メッセージ送信対象に指定した電話番号は、LINE通知メッセージのサービス対象国で発行されたものではありません。詳しくは、「<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages" class="">LINE通知メッセージが送信される条件</a>」を参照してください。</li><li>メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#how-to-consent-for-line-notification-messages" class="">LINE通知メッセージの受信を拒否</a>しています。</li><li>メッセージ送信対象に指定した電話番号に紐づくLINEユーザーは、<a href="https://guide.line.me/privacy-policy_update/2022/0001/?lang=ja-jp" target="_blank" class="" rel="nofollow">LINEのプライバシーポリシー（2022年3月改定）</a>に同意していません。</li></ul> |
 
 詳しくは、『Messaging APIリファレンス』の「[ステータスコード](https://developers.line.biz/ja/reference/messaging-api/#status-codes)」および「[エラーレスポンス](https://developers.line.biz/ja/reference/messaging-api/#error-responses)」を参照してください。
 
@@ -284,7 +284,7 @@ _レスポンスの例_
 
 | コード | 説明 |
 | --- | --- |
-| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><!--[--><li><!--[-->無効な日付が指定されています。<!--]--></li><li><!--[-->日付が指定されていません。<!--]--></li><!--]--></ul> |
+| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><li>無効な日付が指定されています。</li><li>日付が指定されていません。</li></ul> |
 
 詳しくは、『Messaging APIリファレンス』の「[ステータスコード](https://developers.line.biz/ja/reference/messaging-api/#status-codes)」および「[エラーレスポンス](https://developers.line.biz/ja/reference/messaging-api/#error-responses)」を参照してください。
 
@@ -390,8 +390,8 @@ _レスポンスの例_
 
 | コード | 説明 |
 | --- | --- |
-| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><!--[--><li><!--[-->メッセージの送信先が無効です。<!--]--></li><li><!--[-->無効なメッセージオブジェクトが指定されています。<!--]--></li><!--]--></ul> |
-| `422` | LINE通知メッセージの送信に失敗しました。以下のような理由が考えられます。<ul><!--[--><li><!--[-->メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが存在しません。<!--]--></li><li><!--[-->メッセージ送信対象に指定した電話番号は、LINE通知メッセージのサービス対象国で発行されたものではありません。詳しくは、「<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages" class=""><!--[--><!--[-->LINE通知メッセージが送信される条件<!--]--><!--]--></a>」を参照してください。<!--]--></li><li><!--[-->メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#how-to-consent-for-line-notification-messages" class=""><!--[--><!--[-->LINE通知メッセージの受信を拒否<!--]--><!--]--></a>しています。<!--]--></li><li><!--[-->メッセージ送信対象に指定した電話番号に紐づくLINEユーザーは、<a href="https://guide.line.me/privacy-policy_update/2022/0001/?lang=ja-jp" target="_blank" class="" rel="nofollow"><!--[--><!--[-->LINEのプライバシーポリシー（2022年3月改定）<!--]--><!--]--></a>に同意していません。<!--]--></li><!--]--></ul> |
+| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><li>メッセージの送信先が無効です。</li><li>無効なメッセージオブジェクトが指定されています。</li></ul> |
+| `422` | LINE通知メッセージの送信に失敗しました。以下のような理由が考えられます。<ul><li>メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが存在しません。</li><li>メッセージ送信対象に指定した電話番号は、LINE通知メッセージのサービス対象国で発行されたものではありません。詳しくは、「<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#conditions-for-sending-line-notification-messages" class="">LINE通知メッセージが送信される条件</a>」を参照してください。</li><li>メッセージ送信対象に指定した電話番号に紐づくLINEユーザーが<a href="/ja/docs/partner-docs/line-notification-messages/technical-specs/#how-to-consent-for-line-notification-messages" class="">LINE通知メッセージの受信を拒否</a>しています。</li><li>メッセージ送信対象に指定した電話番号に紐づくLINEユーザーは、<a href="https://guide.line.me/privacy-policy_update/2022/0001/?lang=ja-jp" target="_blank" class="" rel="nofollow">LINEのプライバシーポリシー（2022年3月改定）</a>に同意していません。</li></ul> |
 
 詳しくは、『Messaging APIリファレンス』の「[ステータスコード](https://developers.line.biz/ja/reference/messaging-api/#status-codes)」および「[エラーレスポンス](https://developers.line.biz/ja/reference/messaging-api/#error-responses)」を参照してください。
 
@@ -462,7 +462,7 @@ _レスポンスの例_
 
 | コード | 説明 |
 | --- | --- |
-| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><!--[--><li><!--[-->無効な日付が指定されています。<!--]--></li><li><!--[-->日付が指定されていません。<!--]--></li><!--]--></ul> |
+| `400` | リクエストに問題があります。次のような理由が考えられます。<ul><li>無効な日付が指定されています。</li><li>日付が指定されていません。</li></ul> |
 
 詳しくは、『Messaging APIリファレンス』の「[ステータスコード](https://developers.line.biz/ja/reference/messaging-api/#status-codes)」および「[エラーレスポンス](https://developers.line.biz/ja/reference/messaging-api/#error-responses)」を参照してください。
 

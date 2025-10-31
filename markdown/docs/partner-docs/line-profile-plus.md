@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/partner-docs/line-profile-plus/
-copied_at: 2025-10-24T06:30:01.585Z
+copied_at: 2025-10-24T10:17:19.412Z
 ---
 # LINE Profile+
 
@@ -60,9 +60,12 @@ LIFF SDKの[`liff.getDecodedIDToken()`](https://developers.line.biz/ja/reference
 
 IDトークンのペイロードを取得するコードの例：
 
-javascript
-
-`liff.init(() => {   const idToken = liff.getDecodedIDToken();  console.log(idToken); // print decoded idToken object });`
+```javascript
+liff.init(() => {
+  const idToken = liff.getDecodedIDToken();
+  console.log(idToken); // print decoded idToken object
+});
+```
 
 #### 3\. IDトークンのペイロードからLINE Profile+の情報を取得する
 
@@ -70,9 +73,21 @@ javascript
 
 LINE Profile+の情報の例：
 
-json
-
-`"given_name": "ライン", "middle_name": "L", "family_name": "太郎", "gender": "male", "birthdate": "1990-01-01", "phone_number": "+81901111....", "address": {     "postal_code": "1028282",    "region": "東京都",    "locality": "千代田区紀尾井町",    "street_address": "1番3号",    "country": "JP" }`
+```json
+"given_name": "ライン",
+"middle_name": "L",
+"family_name": "太郎",
+"gender": "male",
+"birthdate": "1990-01-01",
+"phone_number": "+81901111....",
+"address": {
+    "postal_code": "1028282",
+    "region": "東京都",
+    "locality": "千代田区紀尾井町",
+    "street_address": "1番3号",
+    "country": "JP"
+}
+```
 
 IDトークンに含まれるLINE Profile+の情報について詳しくは、「[IDトークンに含まれるLINE Profile+の情報](#id-token)」を参照してください。
 
@@ -94,9 +109,9 @@ LINE Profile+で取得できるスコープの種類について詳しくは、�
 
 クエリパラメータにLINE Profile+のスコープを指定した認可URLの例：
 
-sh
-
-`https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=123abc&scope=openid%20profile%20real_name%20gender%20birthdate%20phone%20address&bot_prompt=normal&nonce=0987654asd`
+```sh
+https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1234567890&redirect_uri=https%3A%2F%2Fexample.com%2Fauth%3Fkey%3Dvalue&state=123abc&scope=openid%20profile%20real_name%20gender%20birthdate%20phone%20address&bot_prompt=normal&nonce=0987654asd
+```
 
 > [!WARNING]
 > openidを同時に指定してください
@@ -110,17 +125,25 @@ LINE Profile+に登録されている情報は、[IDトークン](https://develo
 
 リクエストの例：
 
-sh
-
-`curl -v -X POST https://api.line.me/oauth2/v2.1/token \ -H 'Content-Type: application/x-www-form-urlencoded' \ -d 'grant_type=authorization_code' \ -d 'code=b5fd32eacc791df' \ --data-urlencode 'redirect_uri=https://example.com/auth?key=value' \ -d 'client_id=12345' \ -d 'client_secret=d6524edacc8742aeedf98f'`
+```sh
+curl -v -X POST https://api.line.me/oauth2/v2.1/token \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'grant_type=authorization_code' \
+-d 'code=b5fd32eacc791df' \
+--data-urlencode 'redirect_uri=https://example.com/auth?key=value' \
+-d 'client_id=12345' \
+-d 'client_secret=d6524edacc8742aeedf98f'
+```
 
 [アクセストークンの発行](https://developers.line.biz/ja/reference/line-login/#issue-access-token)で取得したIDトークンはBase64形式でエンコード（例：eyJhbGciOiJIUzI1NiJ9...）されています。[IDトークンの検証](https://developers.line.biz/ja/reference/line-login/#verify-id-token)を実行することで、JSON形式にデコードされたIDトークンのペイロードを取得できます。
 
 リクエストの例：
 
-sh
-
-`curl -v -X POST 'https://api.line.me/oauth2/v2.1/verify' \  -d 'id_token=eyJraWQiOiIxNmUwNGQ0ZTU2NzgzYTc5MmRjYjQ2ODRkOD...' \ -d 'client_id=1234567890'`
+```sh
+curl -v -X POST 'https://api.line.me/oauth2/v2.1/verify' \
+ -d 'id_token=eyJraWQiOiIxNmUwNGQ0ZTU2NzgzYTc5MmRjYjQ2ODRkOD...' \
+ -d 'client_id=1234567890'
+```
 
 #### 3\. IDトークンのペイロードからLINE Profile+の情報を取得する
 
@@ -128,9 +151,21 @@ sh
 
 LINE Profile+の情報の例：
 
-json
-
-`"given_name": "ライン", "middle_name": "L", "family_name": "太郎", "gender": "male", "birthdate": "1990-01-01", "phone_number": "+81901111....", "address": {     "postal_code": "1028282",    "region": "東京都",    "locality": "千代田区紀尾井町",    "street_address": "1番3号",    "country": "JP" }`
+```json
+"given_name": "ライン",
+"middle_name": "L",
+"family_name": "太郎",
+"gender": "male",
+"birthdate": "1990-01-01",
+"phone_number": "+81901111....",
+"address": {
+    "postal_code": "1028282",
+    "region": "東京都",
+    "locality": "千代田区紀尾井町",
+    "street_address": "1番3号",
+    "country": "JP"
+}
+```
 
 IDトークンに含まれるLINE Profile+の情報について詳しくは、「[IDトークンに含まれるLINE Profile+の情報](#id-token)」を参照してください。
 
@@ -183,8 +218,29 @@ LINE Profile+には、最大10件の住所を登録できます。IDトークン
 
 #### ペイロードの例
 
-json
-
-`{   "iss": "https://access.line.me",  "sub": "U272cada9c6f4c0c933b0713bc2f90f68",  "aud": "1234567890",  "exp": 1513142487,  "iat": 1513138887,  "name": "LINE taro",  "picture": "https://profile.line-scdn.net/0h8pWWElvzZ19qLk3ywQYYCFZraTIdAGEXEhx9ak56MDxDHiUIVEEsPBspMG1EGSEPAk4uP01t0m5G",  "given_name": "ライン",  "middle_name": "L",  "family_name": "太郎",  "gender": "male",  "birthdate": "1990-01-01",  "phone_number": "+81901111....",  "address": {    "postal_code": "1028282",    "region": "東京都",    "locality": "千代田区紀尾井町",    "street_address": "1番3号",    "country": "JP"  } }`
+```json
+{
+  "iss": "https://access.line.me",
+  "sub": "U272cada9c6f4c0c933b0713bc2f90f68",
+  "aud": "1234567890",
+  "exp": 1513142487,
+  "iat": 1513138887,
+  "name": "LINE taro",
+  "picture": "https://profile.line-scdn.net/0h8pWWElvzZ19qLk3ywQYYCFZraTIdAGEXEhx9ak56MDxDHiUIVEEsPBspMG1EGSEPAk4uP01t0m5G",
+  "given_name": "ライン",
+  "middle_name": "L",
+  "family_name": "太郎",
+  "gender": "male",
+  "birthdate": "1990-01-01",
+  "phone_number": "+81901111....",
+  "address": {
+    "postal_code": "1028282",
+    "region": "東京都",
+    "locality": "千代田区紀尾井町",
+    "street_address": "1番3号",
+    "country": "JP"
+  }
+}
+```
 
 html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html pre.shiki code .sc3cj, html code.shiki .sc3cj{--shiki-default:#D2A8FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .sH3jZ, html code.shiki .sH3jZ{--shiki-default:#8B949E}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}

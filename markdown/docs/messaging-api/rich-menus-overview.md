@@ -1,108 +1,155 @@
 ---
-url: https://developers.line.biz/ja/docs/messaging-api/rich-menus-overview/
-copied_at: 2025-10-24T06:28:13.638Z
+url: https://developers.line.biz/ja/docs/messaging-api/using-rich-menus/
+copied_at: 2025-10-24T10:15:23.327Z
 ---
-# リッチメニューの概要
+# リッチメニューを使う
 
-このページでは、LINE公式アカウントのトーク画面で表示される、リッチメニューについて説明します。
+このページでは、LINE公式アカウントを友だち追加しているすべてのユーザーに表示される「デフォルトのリッチメニュー」を、Messaging APIを使って設定する方法について説明します。
 
-## リッチメニューとは
+> [!TIP]
+> LINE Official Account Managerでも設定できます
+> デフォルトのリッチメニューは、[LINE Official Account Manager](https://manager.line.biz/)でも設定できます。詳しくは、「[LINE Official Account Managerでリッチメニューを設定する](https://developers.line.biz/ja/docs/messaging-api/rich-menus-overview/#creating-a-rich-menu-with-the-line-manager)」を参照してください。
 
-リッチメニューはLINE公式アカウントのトーク画面下部に表示されるメニュー機能です。リッチメニューに、LINE公式アカウントの各機能や、外部サイトや予約ページなどへのリンクを設定することで、よりリッチなユーザー体験を提供できます。[リッチメニューの構造](#rich-menu-structure)に基づいて、[リッチメニューを作成するツール](#choosing-tool-for-creating-rich-menus)を使ってみましょう。
+*   [デフォルトのリッチメニューを設定する](#set-default-rich-menu)
+    *   [1\. リッチメニューの画像を準備する](#prepare-a-rich-menu-image)
+    *   [2\. リッチメニューを作成する](#create-a-rich-menu)
+    *   [3\. リッチメニューに画像をアップロードして添付する](#upload-the-rich-menu-image)
+    *   [4\. デフォルトのリッチメニューを設定する](#set-the-default-rich-menu)
+*   [ユーザー単位のリッチメニューについて](#about-per-user-rich-menu)
 
-> [!WARNING]
-> リッチメニューはデスクトップ版では表示されません
-> リッチメニューは、デスクトップ版（macOS、Windows）のLINEでは表示されません。
+## デフォルトのリッチメニューを設定する
 
-## リッチメニューの構造
+Messaging APIを使ってデフォルトのリッチメニューを設定するには、以下の手順に従います。
 
-リッチメニューは、リッチメニュー画像、タップ領域、およびトークルームメニューで構成されます。
+1.  [リッチメニューの画像を準備する](#prepare-a-rich-menu-image)。
+2.  タップ領域を指定して[リッチメニューを作成する](#create-a-rich-menu)。
+3.  [リッチメニューに画像をアップロードして添付する](#upload-the-rich-menu-image)。
+4.  [デフォルトのリッチメニューを設定する](#set-the-default-rich-menu)。
 
-![](https://developers.line.biz/media/messaging-api/rich-menu/bot-demo-rich-menu-image.png)
+### 1\. リッチメニューの画像を準備する
 
-1.  リッチメニュー画像：メニューの項目を含む1枚の画像（JPEGまたはPNG）ファイルです。画像の要件について詳しくは、『Messaging APIリファレンス』の「[リッチメニューの画像の要件](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image-requirements)」を参照してください。
-2.  タップ領域：メニューの項目として分割した領域。ポストバックイベントを返したり、URLを開いたりするさまざまなアクションを各項目に設定します。
-3.  トークルームメニュー：リッチメニューの開閉に使うメニューです。トークルームメニューのテキストは、カスタマイズできます。
+まず、リッチメニューの画像を準備します。リッチメニューの画像は、タップ領域をどのように配置するかを考慮する必要があります。
 
-## リッチメニューを設定するツール
+ここでは、以下のリッチメニュー用のテンプレート画像（`richmenu-template-guide-04.png`）を使用します。任意のディレクトリに保存してください。
 
-リッチメニューの設定には、[LINE Official Account Manager](#creating-a-rich-menu-with-the-line-manager) 、または[Messaging API](#creating-a-rich-menu-using-the-messaging-api)を使用します。ニーズに合わせてツールを選びましょう。
+![このガイドで使用するリッチメニュー用のテンプレート画像](https://developers.line.biz/media/messaging-api/rich-menu/richmenu-template-guide-04.png)
 
-> [!WARNING]
-> 1つのリッチメニューに使用できるのは1つのツールのみ
-> 1つのリッチメニューの取得や編集に、2つのツールを使うことはできません。LINE Official Account Managerで作成したリッチメニューは、LINE Official Account Managerでのみ取得と編集ができます。また、Messaging APIで作成したリッチメニューについては、LINE Official Account Managerは使用できません。
+この画像の場合、A、B、Cの3つのタップ領域を定義することが想定されています。
 
-| ツール | 利点 |
-| --- | --- |
-| [LINE Official Account Manager](https://manager.line.biz/) | <ul><!--[--><li><!--[-->開発期間が短く済みます<!--]--></li><li><!--[-->操作が簡単なGUIで開発できます<!--]--></li><li><!--[-->表示期間を設定できます<!--]--></li><li><!--[-->表示された回数やクリック率などの統計情報が確認できます<!--]--></li><!--]--></ul>
-詳しくは、『LINEヤフー for Business』の「[リッチメニューの活用方法](https://www.lycbiz.com/jp/column/line-official-account/technique/20180731-01/)」および「[分析 - リッチメニュー](https://www.lycbiz.com/jp/manual/OfficialAccountManager/insight_rich-menus/)」を参照してください。
+> [!TIP]
+> リッチメニュー用のテンプレート画像について
+> [LINE Official Account Manager](https://manager.line.biz)からリッチメニュー用のテンプレート画像をダウンロードできます。リッチメニュー新規作成画面を開いて、［**デザインガイド**］をクリックしてください。LINE Official Account Managerには、[LINE Developersコンソール](https://developers.line.biz/console/)と同じアカウントでログインできます。
 
- |
-| Messaging API | <ul><!--[--><li><!--[-->高度なカスタマイズが可能です<!--]--></li><li><!--[--><a href="/ja/reference/messaging-api/#postback-action" class=""><!--[--><!--[-->ポストバックアクション<!--]--><!--]--></a>や<a href="/ja/reference/messaging-api/#datetime-picker-action" class=""><!--[--><!--[-->日時選択アクション<!--]--><!--]--></a>などの<a href="/ja/reference/messaging-api/#action-objects" class=""><!--[--><!--[-->アクションオブジェクト<!--]--><!--]--></a>を利用できます<!--]--></li><li><!--[--><a href="/ja/docs/messaging-api/switch-rich-menus/" class=""><!--[--><!--[-->リッチメニューでタブ切り替えを行う<!--]--><!--]--></a>ことができます<!--]--></li><!--]--></ul>
+画像の要件について詳しくは、『Messaging APIリファレンス』の「[リッチメニューの画像の要件](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image-requirements)」を参照してください。
 
-リッチメニューの機能を実際に使って試したい場合は、「[リッチメニューを試す](https://developers.line.biz/ja/docs/messaging-api/try-rich-menu/)」を参照してください。
+### 2\. リッチメニューを作成する
 
- |
+手順1.で用意したリッチメニューの画像に合うリッチメニューを作成します。画像のA、B、Cにタップ領域が正しく設定されるようにします。
 
-なおMessaging APIで設定したリッチメニューについては、表示された回数やクリック率などの統計情報は取得できません。
+リッチメニューを作成するには、[リッチメニューオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-object)を[リッチメニューを作成する](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu)エンドポイントのリクエストに指定します。以下のコマンドをターミナルで実行してください。A、B、Cのそれぞれのタップ領域で、異なるURLが開くように[URIアクション](https://developers.line.biz/ja/reference/messaging-api/#uri-action)を指定しています。
 
-### LINE Official Account Managerでリッチメニューを設定する
+```sh
+curl -v -X POST https://api.line.me/v2/bot/richmenu \
+-H 'Authorization: Bearer {channel access token}' \
+-H 'Content-Type: application/json' \
+-d \
+'{
+    "size": {
+        "width": 2500,
+        "height": 1686
+    },
+    "selected": false,
+    "name": "デフォルトのリッチメニューのテスト",
+    "chatBarText": "Tap to open",
+    "areas": [
+        {
+            "bounds": {
+                "x": 0,
+                "y": 0,
+                "width": 1666,
+                "height": 1686
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域A",
+                "uri": "https://developers.line.biz/ja/news/"
+            }
+        },
+        {
+            "bounds": {
+                "x": 1667,
+                "y": 0,
+                "width": 834,
+                "height": 843
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域B",
+                "uri": "https://lineapiusecase.com/"
+            }
+        },
+        {
+            "bounds": {
+                "x": 1667,
+                "y": 844,
+                "width": 834,
+                "height": 843
+            },
+            "action": {
+                "type": "uri",
+                "label": "タップ領域C",
+                "uri": "https://techblog.lycorp.co.jp/ja/"
+            }
+        }
+    ]
+}'
+```
 
-LINE Official Account Managerではデフォルトのリッチメニューを設定できます。より[優先順位](#rich-menu-display)の高いリッチメニューが既に設定されていなければ、ユーザーにはデフォルトのリッチメニューが表示されます。
+> [!TIP]
+> ヒント
+> *   リクエストの`selected`プロパティを`true`に変更すると、ユーザーにリンクしたときにリッチメニューが自動的に表示されます。
+> *   トークルームメニューのテキストを変更するには、リクエストの`chatBarText`プロパティを指定します。
+> *   指定した[リッチメニューオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-object)に不備がないか、リッチメニューを作成する前に、[リッチメニューオブジェクトを検証する](https://developers.line.biz/ja/reference/messaging-api/#validate-rich-menu-object)ことも可能です。
 
-LINE Official Account Managerを使うと、あらかじめタップ領域が定義されたテンプレートをもとに、GUIを使ってタップ領域を設定できます。詳しくは、[LINE Official Account Managerのマニュアル](https://www.lycbiz.com/jp/manual/OfficialAccountManager/rich-menus/)を参照してください。
+リッチメニューの作成に成功すると、リッチメニューのIDがレスポンスで返されます。リッチメニューのIDは、以降の手順で使用します。
 
-### Messaging APIでリッチメニューを設定する
+```json
+{
+  "richMenuId": "richmenu-88c05..."
+}
+```
 
-Messaging APIでリッチメニューを設定する場合は、必要となるエンドポイントを順番に呼び出す必要があります。基本的には以下の手順で行います。
+### 3\. リッチメニューに画像をアップロードして添付する
 
-1.  リッチメニューの画像を準備する。
-2.  [リッチメニューを作成する](https://developers.line.biz/ja/reference/messaging-api/#create-rich-menu)エンドポイントを使用する。
-3.  [リッチメニューの画像をアップロードする](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image)エンドポイントを使用する。
-4.  [デフォルトのリッチメニューを設定する](https://developers.line.biz/ja/reference/messaging-api/#set-default-rich-menu)エンドポイントを使用する。
+手順2.で作成したリッチメニューに、手順1.で用意した[画像をアップロード](https://developers.line.biz/ja/reference/messaging-api/#upload-rich-menu-image)して添付します。ターミナル上で、以下の手順でコマンドを実行してください。
 
-Messaging APIでリッチメニューを設定する方法について詳しくは、「[リッチメニューを使う](https://developers.line.biz/ja/docs/messaging-api/using-rich-menus/)」を参照してください。
+1.  手順1.で用意した画像があるディレクトリに移動する。
+2.  以下のコマンドの`{richMenuId}`を手順2.で取得したリッチメニューのIDに置き換えて実行する。
 
-## リッチメニューの適用範囲
+```sh
+curl -v -X POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content \
+-H "Authorization: Bearer {channel access token}" \
+-H "Content-Type: image/png" \
+-T richmenu-template-guide-04.png
+```
 
-リッチメニューには、2つの適用範囲があり、それぞれで設定できるツールが異なります。
+### 4\. デフォルトのリッチメニューを設定する
 
-| 適用範囲 | 設定できるツール |
-| --- | --- |
-| LINE公式アカウントとのトーク画面を開いたすべてのユーザー（デフォルトのリッチメニュー） | <ul><!--[--><li><!--[-->LINE Official Account Manager<!--]--></li><li><!--[-->Messaging API<!--]--></li><!--]--></ul> |
-| ユーザー単位（ユーザー単位のリッチメニュー） | Messaging API |
+準備が完了したため、リッチメニューを表示するための設定を行います。ここでは、[デフォルトのリッチメニューを設定](https://developers.line.biz/ja/reference/messaging-api/#set-default-rich-menu)します。デフォルトのリッチメニューは、LINE公式アカウントを友だち追加し、ユーザー単位のリッチメニューがリンクされていないすべてのユーザーに表示されます。以下のコマンドをターミナルで実行してください。
 
-適用範囲と設定したツールによって、リッチメニューの表示優先度や、ユーザーのトーク画面に反映されるタイミングが異なります。
+```sh
+curl -v -X POST https://api.line.me/v2/bot/user/all/richmenu/{richMenuId} \
+-H "Authorization: Bearer {channel access token}"
+```
 
-*   [リッチメニューの表示優先度](#rich-menu-display)
-*   [リッチメニューの設定変更が反映されるタイミング](#when-setting-change-takes-effect)
+#### 4-1. リッチメニューの表示を確認する
 
-### リッチメニューの表示優先度
+設定したデフォルトのリッチメニューが表示されることを確認します。リッチメニューを設定したLINE公式アカウントのトーク画面を開きます。今回作成したリッチメニューは、閉じた状態で表示されるため［**Tap to open**］をタップして、リッチメニューを開きます。
 
-リッチメニューは、設定したツールと適用範囲によって表示優先度が異なります。リッチメニューの表示優先順位（1が最優先で表示）は以下のとおりです。
+![](https://developers.line.biz/media/messaging-api/rich-menu/default-rich-menu-example.png)
 
-1.  Messaging APIで設定するユーザー単位のリッチメニュー
-2.  Messaging APIで設定するデフォルトのリッチメニュー
-3.  [LINE Official Account Manager](https://manager.line.biz)で設定するデフォルトのリッチメニュー
+## ユーザー単位のリッチメニューについて
 
-### リッチメニューの設定変更が反映されるタイミング
+Messaging APIを使うと、ユーザーごとにリッチメニューをリンクできます。ユーザー単位のリッチメニューについて詳しくは、「[ユーザー単位のリッチメニューを使う](https://developers.line.biz/ja/docs/messaging-api/use-per-user-rich-menus/)」を参照してください。
 
-リッチメニューの設定を変更したとき、リッチメニューの適用範囲と設定したツールによって、ユーザーのトーク画面に反映されるタイミングが異なります。
-
-| 適用範囲と設定したツール | 反映されるタイミング |
-| --- | --- |
-| Messaging APIで設定するユーザー単位のリッチメニュー | 即時。ただし、[ユーザーとのリンクを解除](https://developers.line.biz/ja/reference/messaging-api/#unlink-rich-menu-from-user)せずにリッチメニューを削除した場合は、トーク画面に再入室したときに削除が反映されます。 |
-| Messaging APIで設定するデフォルトのリッチメニュー | トーク画面に再入室したとき。変更が反映されるまで、1分程度掛かる場合があります。 |
-| LINE Official Account Managerで設定するデフォルトのリッチメニュー | トーク画面に再入室したとき。 |
-
-### LINE公式アカウントと友だちではないユーザーがトーク画面を開いた場合
-
-LINE公式アカウントと友だちではないユーザーがトーク画面を開いた場合、LINE Official Account Managerもしくは、Messaging APIで設定したデフォルトのリッチメニューが表示されます。
-
-なお、LINE公式アカウントと友だちではないユーザーに対して、ユーザー単位のリッチメニューはリンクできません。詳しくは、『Messaging APIリファレンス』の「[リッチメニューをリンクできる条件](https://developers.line.biz/ja/reference/messaging-api/#link-rich-menu-to-user-conditions)」を参照してください。
-
-## リッチメニューのAPIリファレンス
-
-*   [リッチメニュー](https://developers.line.biz/ja/reference/messaging-api/#rich-menu)
-*   [ユーザー単位のリッチメニュー](https://developers.line.biz/ja/reference/messaging-api/#per-user-rich-menu)
-*   [リッチメニューエイリアス](https://developers.line.biz/ja/reference/messaging-api/#rich-menu-alias)
+html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}

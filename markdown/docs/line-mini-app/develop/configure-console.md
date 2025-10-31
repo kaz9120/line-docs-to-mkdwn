@@ -1,6 +1,6 @@
 ---
 url: https://developers.line.biz/ja/docs/line-mini-app/develop/configure-console/
-copied_at: 2025-10-24T06:29:41.651Z
+copied_at: 2025-10-24T10:17:07.810Z
 ---
 # LINE DevelopersコンソールでLINEミニアプリの設定を管理する
 
@@ -24,8 +24,8 @@ LINEミニアプリチャネルの設定のうち、ユーザーに表示され�
 
 | 項目 | 表示される画面 |
 | --- | --- |
-| **チャネルアイコン** | <ul><!--[--><li><!--[--><a href="#built-in-share-settings" class=""><!--[--><!--[-->アクションボタン<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#multi-tab-view-settings" class=""><!--[--><!--[-->マルチタブビュー<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#consent-screen-settings" class=""><!--[--><!--[-->チャネル同意画面<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#footer-secition-of-service-message" class=""><!--[--><!--[-->サービスメッセージのフッターセクション<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#add-shortcut-screen" class=""><!--[--><!--[-->ショートカット追加画面<!--]--><!--]--></a><!--]--></li><!--]--></ul>※ LINEミニアプリのアイコンとしてユーザーに認識される画像です。 |
-| **チャネル名** | <ul><!--[--><li><!--[--><a href="#built-in-share-settings" class=""><!--[--><!--[-->アクションボタン<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#multi-tab-view-settings" class=""><!--[--><!--[-->マルチタブビュー<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#consent-screen-settings" class=""><!--[--><!--[-->チャネル同意画面<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#footer-secition-of-service-message" class=""><!--[--><!--[-->サービスメッセージのフッターセクション<!--]--><!--]--></a><!--]--></li><li><!--[--><a href="#add-shortcut-screen" class=""><!--[--><!--[-->ショートカット追加画面<!--]--><!--]--></a><!--]--></li><!--]--></ul>※ LINEミニアプリ名としてユーザーに認識されるテキストです。［**チャネル名**］は、［**ウェブアプリ設定**］タブ > ［**LIFFアプリ名**］にコピーされます。 |
+| **チャネルアイコン** | <ul><li><a href="#built-in-share-settings" class="">アクションボタン</a></li><li><a href="#multi-tab-view-settings" class="">マルチタブビュー</a></li><li><a href="#consent-screen-settings" class="">チャネル同意画面</a></li><li><a href="#footer-secition-of-service-message" class="">サービスメッセージのフッターセクション</a></li><li><a href="#add-shortcut-screen" class="">ショートカット追加画面</a></li></ul>※ LINEミニアプリのアイコンとしてユーザーに認識される画像です。 |
+| **チャネル名** | <ul><li><a href="#built-in-share-settings" class="">アクションボタン</a></li><li><a href="#multi-tab-view-settings" class="">マルチタブビュー</a></li><li><a href="#consent-screen-settings" class="">チャネル同意画面</a></li><li><a href="#footer-secition-of-service-message" class="">サービスメッセージのフッターセクション</a></li><li><a href="#add-shortcut-screen" class="">ショートカット追加画面</a></li></ul>※ LINEミニアプリ名としてユーザーに認識されるテキストです。［**チャネル名**］は、［**ウェブアプリ設定**］タブ > ［**LIFFアプリ名**］にコピーされます。 |
 | **チャネル説明** | [チャネル同意画面](#consent-screen-settings) |
 | **プライバシーポリシーURL** | [チャネル同意画面](#consent-screen-settings) |
 | **多言語対応** | [チャネル同意画面](#consent-screen-settings) |

@@ -1,140 +1,90 @@
 ---
-url: https://developers.line.biz/ja/docs/messaging-api/send-coupons-to-users/
-copied_at: 2025-10-24T06:28:06.349Z
+url: https://developers.line.biz/ja/docs/messaging-api/sharing-bot/
+copied_at: 2025-10-24T10:15:16.495Z
 ---
-# クーポンを作成してユーザーに送る
+# LINE公式アカウントの友だちを増やす
 
-Messaging APIでクーポンを作成して、LINE公式アカウントからユーザーにメッセージとして送信できます。
+LINE公式アカウントを作成したら、次はLINE公式アカウントを宣伝して友だちを増やしましょう。LINE公式アカウントをユーザーに露出する方法を紹介します。
 
-![](https://developers.line.biz/media/messaging-api/coupon/several-coupons.jpg)
+*   [QRコードを使う](#use-qr-code)
+*   [LINE公式アカウントのLINE IDをシェアする](#share-the-line-id-of-your-line-official-account)
+*   [［友だち追加］ボタンまたはリンクを使う](#use-the-add-friend-button-or-link)
+*   [ユーザーからLINE上の友だちにLINE公式アカウントをおすすめしてもらう](#encourage-users-to-recommend-your-bot-to-friends-on-line)
+*   [LINEログイン時にLINE公式アカウントの友だち追加を促す](#prompt-users-to-add-your-line-official-account-at-line-login)
 
-*   [Messaging APIでクーポンを送る手順](#send-coupons-using-messaging-api)
-*   [クーポンを作成する](#create-coupon)
-    *   [作成したクーポンは修正できません](#edit-coupon)
-*   [クーポンを送信する](#send-coupon)
-*   [クーポンを終了する](#discontinue-coupon)
-*   [作成済みのクーポン一覧を確認する](#check-coupon-list)
-*   [クーポンの詳細を確認する](#get-coupon-details)
-*   [送信したクーポンの表示回数や使用回数を確認する](#check-coupon-usage)
-*   [クーポンの画像が表示されるサイズ](#coupon-image-size)
+## QRコードを使う
 
-## Messaging APIでクーポンを送る手順
+LINE公式アカウントのQRコードをウェブサイトや印刷物でシェアしましょう。ユーザーはQRコードを読み取るだけで、LINE公式アカウントを友だち追加できます。QRコードは、[LINE Developersコンソール](https://developers.line.biz/console/)や[LINE Official Account Manager](https://manager.line.biz/)から取得できます。
 
-Messaging APIでは、次の2つの手順でユーザーにクーポンが送れます。
+LINE Developersコンソールでは、チャネル設定の［**Messaging API設定**］タブをクリックします。
 
-1.  [クーポンを作成する](#create-coupon)
-2.  [クーポンを送信する](#send-coupon)
+![](https://developers.line.biz/media/messaging-api/sharing-bot/qr-code-console-ja.png)
 
-> [!TIP]
-> クーポンはLINE Official Account Managerでも送信できます
-> クーポンはMessaging APIの他に、[LINE Official Account Manager](https://manager.line.biz/)でも作成して送信できます。詳しくは、『LINEヤフー for Business』の「[クーポン](https://www.lycbiz.com/jp/manual/OfficialAccountManager/coupons-create/)」を参照してください。
+LINE Official Account Managerでは、［**ホーム**］>［**友だちを増やす**］>［**友だち追加ガイド**］>［**友だち追加QRコードを作成**］をクリックします。HTMLスニペットをコピーして、ご自身のサイトに貼り付けるとQRコードが表示されます。
 
-## クーポンを作成する
+![](https://developers.line.biz/media/messaging-api/sharing-bot/qr-code-oa-manager-ja.png)
 
-まずは「[クーポンを作成する](https://developers.line.biz/ja/reference/messaging-api/#create-coupon)」エンドポイントでクーポンを作成します。
+## LINE公式アカウントのLINE IDをシェアする
 
-sh
+LINE公式アカウントのLINE IDをシェアすると、ユーザーはLINE上でLINE公式アカウントを検索して友だち追加できます。LINE公式アカウントのLINE IDは、[LINE Official Account Manager](https://manager.line.biz/)のヘッダーで確認できます。アットマーク（@）で始まる文字列がLINE公式アカウントのLINE IDです。
 
-`curl -v -X POST https://api.line.me/v2/bot/coupon \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d \ ' {   "title": "友だち限定クーポン",  "description": "- クーポンを使用するには、この画面をスタッフに提示してください。\n- 使用済みのクーポンはご利用になれません。また、お客さまの操作で誤って「使用済み」にしてしまった場合も利用できなくなります。\n- 本クーポンは有効期間に関わらず、予告なく変更されたり、終了したりする場合があります。",  "reward": {    "type": "discount",    "priceInfo": {      "type": "fixed",      "fixedAmount": 100    }  },  "acquisitionCondition": {    "type": "normal"  },  "startTimestamp": 0,  "endTimestamp": 1924959599,  "imageUrl": "https://developers.line.biz/media/messaging-api/coupon/sample-coupon-image-100-yen-off.jpg",  "timezone": "ASIA_TOKYO",  "visibility": "UNLISTED",  "maxUseCountPerTicket": 1 }'`
+また、プレミアムIDを購入することで、ユーザーが覚えやすいカスタマイズされたLINE IDを作成することができます。プレミアムIDについて詳しくは、『LINEヤフー for Business』の「[料金プラン](https://www.lycbiz.com/jp/service/line-official-account/plan/)」を参照してください。
 
-クーポンを作成すると、レスポンスでクーポンIDが返されます。
+![](https://developers.line.biz/media/messaging-api/sharing-bot/oa-manager-line-id.png)
 
-json
+## ［友だち追加］ボタンまたはリンクを使う
 
-`{   "couponId": "01JYNW8JMQVFBNWF1APF8Z3FS7" }`
+アプリまたはウェブサイトにボタンまたはリンクを追加すると、ユーザーはデバイスからワンタップでLINE公式アカウントを友だち追加できます。以下のボタンまたはリンクを追加できます。
 
-クーポンを作成する際は、リクエストボディの`acquisitionCondition.type`を`lottery`にして「抽選形式で当選したユーザーのみ獲得できる」という獲得条件を設けたり、[リワードオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#create-coupon-reward-object)（`reward`）で「50%割引」や「100円キャッシュバック」といった特典を細かく設定したりできます。
+*   [LINE Social Pluginsの［友だち追加］ボタン](#add-friend-button-by-line-social-plugins)
+*   [LINE Official Account Managerの［友だち追加］ボタン](#add-friend-button-by-the-line-manager)
+*   [プロフィールページを開くLINE URLスキーム](#line-url-scheme-for-profile-page)
 
-詳しくは、『Messaging APIリファレンス』の「[クーポンを作成する](https://developers.line.biz/ja/reference/messaging-api/#create-coupon)」を参照してください。
+### LINE Social Pluginsの［友だち追加］ボタン
 
-クーポンを作成したら、続いて[クーポンを送信する](#send-coupon)手順に進みます。
+LINE Social Pluginsで、[［友だち追加］ボタン](https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-add-friend-buttons/)用のコードを生成します。コードをアプリやウェブサイトにコピー＆ペーストするだけで［**友だち追加**］ボタンを追加できます。このボタンは複数の言語で利用できます。また、LINE公式アカウントの友だち数を表示するようにボタンを設定したり、LINE公式アカウントのホームへのリンクを追加したりできます。LINE公式アカウントを友だち追加すると、ボタンテキストが「友だち追加」から「友だち済み」に変化します。
 
-### 作成したクーポンは修正できません
+LINE Social Pluginsが生成する［**友だち追加**］ボタンを利用するには、「[ボタンを作成](https://developers.line.biz/ja/docs/line-social-plugins/install-guide/using-add-friend-buttons/#create-button)」の手順を参照してください。
 
-作成したクーポンは、後から内容を修正できません。クーポンの内容を変更したい場合は、[クーポンを終了](#discontinue-coupon)させて、新たに作成しなおしてください。
+![](https://developers.line.biz/media/messaging-api/sharing-bot/add-friend-button-types.png)
 
-なお、LINE Official Account Managerを使ってクーポンを作成する場合は、「下書き」の状態で保存できますが、Messaging APIでクーポンを作成するときは「下書き」状態にはできません。
+### LINE Official Account Managerの［友だち追加］ボタン
 
-## クーポンを送信する
+[LINE Official Account Manager](https://manager.line.biz/)で［**友だち追加**］用のコードを生成します。［**ホーム**］ > ［**友だちを増やす**］ > ［**友だち追加ガイド**］>［**ボタンを作成**］をクリックします。HTMLコードをウェブサイトにコピー＆ペーストすると、ボタンが表示されます。
 
-クーポンを作成してクーポンIDを取得したら、そのクーポンIDを[クーポンメッセージ](https://developers.line.biz/ja/docs/messaging-api/message-types/#coupon-messages)で指定して送信します。クーポンIDが分からなくなってしまった場合は、[クーポンの一覧を取得](#check-coupon-list)して確認できます。
+![](https://developers.line.biz/media/messaging-api/sharing-bot/add-friend-button-oa-manager-ja.png)
 
-sh
+### プロフィールページを開くLINE URLスキーム
 
-`curl -v -X POST https://api.line.me/v2/bot/message/broadcast \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json' \ -d ' {   "messages": [    {      "type": "coupon",      "couponId": "01JYNW8JMQVFBNWF1APF8Z3FS7"    }  ] }'`
+ウェブアプリやネイティブアプリで以下のLINE URLスキームを使って、LINE公式アカウントの友だち追加を促します。iOS版LINEやAndroid版LINEでタップすると、LINE公式アカウントのプロフィールが表示されます。
 
-クーポンメッセージは、以下のすべてのメッセージとして送信できます。また、Messaging APIで作成したクーポンをLINE Official Account Managerでメッセージとして送信することもできます。
+*   https://line.me/R/ti/p/`{Percent-encoded LINE ID}` 
 
-*   [プッシュメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-push-message)
-*   [マルチキャストメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-multicast-message)
-*   [ブロードキャストメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-broadcast-message)
-*   [ナローキャストメッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-narrowcast-message)
-*   [応答メッセージ](https://developers.line.biz/ja/reference/messaging-api/#send-reply-message)
+たとえば、[`https://line.me/R/ti/p/%40linedevelopers`](https://line.me/R/ti/p/%40linedevelopers)を開くと、LINE DevelopersのLINE公式アカウントのプロフィールページが表示されます。このLINE URLスキームについて詳しくは、「[LINE公式アカウントをシェアする](https://developers.line.biz/ja/docs/messaging-api/using-line-url-scheme/#sharing-line-official-account)」を参照してください。
 
-ユーザーは届いたクーポンを開いて獲得することで、有効期間内にクーポンを使用できます。
+![](https://developers.line.biz/media/messaging-api/sharing-bot/add-line-developers-oa-ja.png)
 
-![](https://developers.line.biz/media/messaging-api/coupon/coupon-message-ja.jpg)
+## ユーザーからLINE上の友だちにLINE公式アカウントをおすすめしてもらう
 
-## クーポンを終了する
+ユーザーがLINE公式アカウントを友だち追加済みである場合は、以下のLINE URLスキームを使ってユーザーからLINE上の友だちにLINE公式アカウントをおすすめしてもらうことができます。
 
-クーポンは、作成時に指定した有効期間を過ぎると自動的に終了しますが、有効期間中に「[クーポンを終了する](https://developers.line.biz/ja/reference/messaging-api/#discontinue-coupon)」エンドポイントを用いて手動で終了させることもできます。
+*   https://line.me/R/nv/recommendOA/`{LINE ID with @}` 
 
-sh
+たとえば、[リッチメニュー](https://developers.line.biz/ja/docs/messaging-api/using-rich-menus/)または[テンプレートメッセージ](https://developers.line.biz/ja/docs/messaging-api/message-types/#template-messages)の[URIアクションオブジェクト](https://developers.line.biz/ja/reference/messaging-api/#uri-action)にこのURLスキームを指定します。このLINE URLスキームついて詳しくは、「[LINE公式アカウントをシェアする](https://developers.line.biz/ja/docs/messaging-api/using-line-url-scheme/#sharing-line-official-account)」を参照してください。
 
-`curl -v -X PUT https://api.line.me/v2/bot/coupon/01JYNW8JMQVFBNWF1APF8Z3FS7/close \ -H 'Authorization: Bearer {channel access token}' \ -H 'Content-Type: application/json'`
+![](https://developers.line.biz/media/messaging-api/sharing-bot/recommend-line-developers-rich-menu.png)
 
-クーポンを終了させると、すでにクーポンをメッセージとして受信していたユーザーがクーポンを獲得できなくなると共に、そのクーポンを獲得済みのユーザーも利用できなくなります。
+## LINEログイン時にLINE公式アカウントの友だち追加を促す
 
-終了したクーポンを再び有効にすることはできません。
+ウェブアプリやネイティブアプリで[LINEログイン](https://developers.line.biz/ja/docs/line-login/overview/)を利用している場合は、LINE公式アカウントをLINEログインのチャネルにリンクすることによって、ユーザーがログインするときにLINE公式アカウントを友だち追加するオプションを表示できます。権限の付与に同意する画面にオプションを追加するか、ユーザーが同意した後で、LINE公式アカウントの追加画面を別途開くかを選択できます。
 
-詳しくは、『Messaging APIリファレンス』の「[クーポンを終了する](https://developers.line.biz/ja/reference/messaging-api/#discontinue-coupon)」を参照してください。
+LINE公式アカウントをLINEログインチャネルにリンクする方法について詳しくは、『LINEログインドキュメント』の「[LINEログインしたときにLINE公式アカウントを友だち追加する（友だち追加オプション）](https://developers.line.biz/ja/docs/line-login/link-a-bot/)」を参照してください。
 
-## 作成済みのクーポン一覧を確認する
+![bot_prompt=normalの場合は、同意画面に友だち追加するためのオプションが表示されます。bot_prompt=aggressiveの場合は、ユーザーが同意した後で友だち追加するためのオプションが表示されます。](https://developers.line.biz/media/line-login/link-a-bot/bot-prompt-ja.png)
 
-作成したクーポンのクーポンIDとクーポン名は、「[クーポンの一覧を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-coupons-list)」エンドポイントで確認できます。
+## 関連ページ
 
-sh
-
-`curl -v -X GET https://api.line.me/v2/bot/coupon \ -H 'Authorization: Bearer {channel access token}'`
-
-このクーポンの一覧には、Messaging APIで作成したクーポンだけでなく、[LINE Official Account Manager](https://manager.line.biz/)で作成したクーポンも含まれており、同じ一覧がLINE Official Account Managerでも確認できます。
-
-json
-
-`{   "items": [    {      "couponId": "01JZMWQ9HMDW9ENJP4C167CXP8",      "title": "年末年始クーポン"    },    {      "couponId": "01JZA9NPPFDJ3RFG8NA9DJ0NQT",      "title": "友だち限定クーポン"    }  ] }`
-
-クエリパラメータの`status`を用いて、有効なクーポンのみ、あるいは終了したクーポンのみを取得することもできます。詳しくは、『Messaging APIリファレンス』の「[クーポンの一覧を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-coupons-list)」を参照してください。
-
-## クーポンの詳細を確認する
-
-「[クーポンの詳細を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-coupon)」エンドポイントを使うと、クーポンIDを指定して特定のクーポンの詳細を確認できます。
-
-sh
-
-`curl -v -X GET https://api.line.me/v2/bot/coupon/01JYNW8JMQVFBNWF1APF8Z3FS7 \ -H 'Authorization: Bearer {channel access token}'`
-
-Messaging APIで作成したクーポンだけでなく、LINE Official Account Managerで作成したクーポンの詳細も取得できます。
-
-json
-
-`{   "couponId": "01K0B456W5Y6SBD3YH74YM6QE6",  "title": "友だち限定クーポン",  "description": "- クーポンを使用するには、この画面をスタッフに提示してください。\n- 使用済みのクーポンはご利用になれません。また、お客さまの操作で誤って「使用済み」にしてしまった場合も利用できなくなります。\n- 本クーポンは有効期間に関わらず、予告なく変更されたり、終了したりする場合があります。",  "acquisitionCondition": {    "type": "lottery",    "lotteryProbability": 50,    "maxAcquireCount": -1  },  "startTimestamp": 1752678000,  "endTimestamp": 1924959540,  "timezone": "ASIA_TOKYO",  "couponCode": "COUPONCODE123456",  "maxUseCountPerTicket": 1,  "maxTicketPerUser": 1,  "visibility": "UNLISTED",  "reward": {    "type": "discount",    "priceInfo": {      "type": "fixed",      "fixedAmount": 100,      "currency": "JPY"    }  },  "imageUrl": "https://oa-coupon.line-scdn-dev.net/0h9gbUqRVkZkhfLHhXMLYZHwdyaCosWGBAPFR7cD5tZidsTnofYDVfezt-ZAR3YER9OzRfK35XZwR6TH5uYDF2TnJ-cBNyfURpPRl2RSFSXQc0TiJhYCFiXiZ8XXk0",  "usageCondition": "1,000円以上のお支払いで利用可能",  "status": "RUNNING",  "createdTimestamp": 1752720120 }`
-
-詳しくは、『Messaging APIリファレンス』の「[クーポンの詳細を取得する](https://developers.line.biz/ja/reference/messaging-api/#get-coupon)」を参照してください。
-
-## 送信したクーポンの表示回数や使用回数を確認する
-
-メッセージとして送信したクーポンが表示された回数や、使用された回数などは[LINE Official Account Manager](https://manager.line.biz/)で確認できます。詳しくは、『LINEヤフー for Business』の「[分析 - クーポン](https://www.lycbiz.com/jp/manual/OfficialAccountManager/insight_coupon/)」を参照してください。
-
-## クーポンの画像が表示されるサイズ
-
-クーポンの画像は、クーポンの作成時に`imageUrl`で画像のURLを指定することで表示できます。正方形の画像を指定した場合、トーク画面ではアスペクト比が1.51:1（幅：高さ）になるため、画像の上下が一部切れた状態で表示されます。
-
-![](https://developers.line.biz/media/messaging-api/coupon/how-images-look.jpg)
-
-> [!TIP]
-> クーポンの画像はどうやって作ればいい？
-> クーポンの画像は『LINEヤフーマーケティングキャンパス』の「[無料でもらえるテンプレート画像まとめ](https://lymcampus.jp/line-official-account/courses/template/lessons/6-1-1)」や、[LINE Creative Lab](https://creativelab.line.biz/)のテンプレートを利用することもできます。
-> 
-> ![Sample coupon image](https://developers.line.biz/media/messaging-api/coupon/sample-coupon-image-100-yen-off.jpg)
-
-html pre.shiki code .sQhOw, html code.shiki .sQhOw{--shiki-default:#FFA657}html pre.shiki code .sFSAA, html code.shiki .sFSAA{--shiki-default:#79C0FF}html pre.shiki code .s9uIt, html code.shiki .s9uIt{--shiki-default:#A5D6FF}html pre.shiki code .suJrU, html code.shiki .suJrU{--shiki-default:#FF7B72}html pre.shiki code .sZEs4, html code.shiki .sZEs4{--shiki-default:#E6EDF3}html .default .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html .shiki span {color: var(--shiki-default);background: var(--shiki-default-bg);font-style: var(--shiki-default-font-style);font-weight: var(--shiki-default-font-weight);text-decoration: var(--shiki-default-text-decoration);}html pre.shiki code .sPWt5, html code.shiki .sPWt5{--shiki-default:#7EE787}
+*   [LINE URLスキームでLINEの機能を使う](https://developers.line.biz/ja/docs/messaging-api/using-line-url-scheme/)
+*   [Messaging APIリファレンス](https://developers.line.biz/ja/reference/messaging-api/)
+*   [LINE Social Plugins](https://developers.line.biz/ja/docs/line-social-plugins/)
+*   [LINE Official Account Manager](https://manager.line.biz/)
